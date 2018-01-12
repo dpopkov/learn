@@ -1,11 +1,11 @@
-# Pro Java for Web
-# books code
-pj4w/books_code/
-
 # In all projects
 **/.idea/
 **/target/
 **/*.iml
+
+# Pro Java for Web
+# books code
+pj4w/books_code/
 
 # Compiled class file
 *.class
