@@ -16,8 +16,24 @@
     </context-param>
 
     <!-- Servlets -->
+    <servlet>
+        <servlet-name>servletParameterServlet</servlet-name>
+        <servlet-class>com.wrox.pj4w.ch03.servlets.ServletParameterServlet</servlet-class>
+        <init-param>
+            <param-name>database</param-name>
+            <param-value>CustomerSupport</param-value>
+        </init-param>
+        <init-param>
+            <param-name>server</param-name>
+            <param-value>10.0.12.5</param-value>
+        </init-param>
+    </servlet>
 
     <!-- Servlet mapping -->
+    <servlet-mapping>
+        <servlet-name>servletParameterServlet</servlet-name>
+        <url-pattern>/servletParameters</url-pattern>
+    </servlet-mapping>
 
     <welcome-file-list>
         <welcome-file>/index.html</welcome-file>
