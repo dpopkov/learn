@@ -113,7 +113,7 @@ public class TicketServlet extends HttpServlet {
         if (filePart != null) {
             Attachment attachment = processAttachment(filePart);
             if (attachment != null) {
-                ticket.addAttachemn(attachment);
+                ticket.addAttachment(attachment);
             }
         }
 

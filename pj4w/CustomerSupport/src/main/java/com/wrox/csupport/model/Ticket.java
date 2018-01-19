@@ -42,7 +42,7 @@ public class Ticket {
         return attachments.values();
     }
 
-    public void addAttachemn(Attachment attachment) {
+    public void addAttachment(Attachment attachment) {
         attachments.put(attachment.getName(), attachment);
     }
 
