@@ -3,7 +3,7 @@
     private final int five = 0;
     protected String cowboy = "rodeo";
 
-    public long addFive(long number) {
+    private long addFive(long number) {
         return number + 5L;
     }
 
@@ -33,6 +33,7 @@
     <title>Java usage in JSP pages</title>
 </head>
 <body>
+<%@include file="header.jsp"%>
 <h2>Java usage in JSP pages</h2>
 <p><%=addFive(seven)%>
 </p>

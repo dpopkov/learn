@@ -18,8 +18,12 @@
 <p>This text is in Russian language: Здравствуй, Мир</p>
 
 <p>Try to go to <a href="java-usage.jsp">java-usage page</a></p>
-<p>Next paragraph is JSP commented</p>
+<p>Go to <a href="dynamicIncluder.jsp">dynamic Includer</a></p>
+<p>Go to <a href="greeting.jsp">Greeting page</a></p>
+<p>Go to <a href="checkboxes.jsp">Checkboxes page</a></p>
+<p>Go to <a href="contextParameters.jsp">Context parameters page</a></p>
 
+<p>Next paragraph is JSP commented</p>
 <%-- JSP comment
 <p>Try to go to <a href="java-usage.jsp">java-usage page</a></p>--%>
 
