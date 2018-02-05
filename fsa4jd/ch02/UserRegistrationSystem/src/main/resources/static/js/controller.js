@@ -5,12 +5,15 @@ app.controller('registerUserController',
                 method: 'POST',
                 url: 'http://localhost:8080/api/user/',
                 data: $scope.user
-            }).then(function (response) {
-                $location.path("/list-all-users");
-                $route.reload();
-            }, function (errResponse) {
-                $scope.errorMessage = errResponse.data.errorMessage;
-            });
+            }).then(
+                function (response) {
+                    $location.path("/list-all-users");
+                    $route.reload();
+                },
+                function (errResponse) {
+                    $scope.errorMessage = errResponse.data.errorMessage;
+                }
+            );
         };
 
         $scope.resetForm = function () {
@@ -57,7 +60,7 @@ app.controller('usersDetailsController',
 
         $scope.submitUserForm = function () {
             $http({
-                method: 'POST',
+                method: 'PUT',
                 url: 'http://localhost:8080/api/user/',
                 data: $scope.user
             }).then(
