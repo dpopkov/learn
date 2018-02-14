@@ -17,5 +17,6 @@ Dependency: javax.servlet-api
 Configure JSP properties in web.xml  
 Add base.jspf  
 Add index.jsp which redirects to /tickets  
+Add JSP pages ticketForm, viewTicket, listTicket  
 
 Dependency: javax.servlet.jsp.jstl-api  
