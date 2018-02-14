@@ -134,39 +134,18 @@ public class TicketServlet extends HttpServlet {
         return attachment;
     }
 
-    private void viewTicket(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private void viewTicket(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String idString = req.getParameter("ticketId");
         Ticket ticket = getTicket(idString, resp);
         if (ticket == null) {
             return;
         }
 
-        PrintWriter writer = writeHeader(resp);
+        req.setAttribute("ticketId", idString);
+        req.setAttribute("ticket", ticket);
 
-        writer.append("<h2>Ticket #").append(idString)
-                .append(": ").append(ticket.getSubject()).append("</h2>\r\n")
-                .append("<i>Customer Name - ").append(ticket.getCustomerName())
-                .append("</i><br/><br/>\r\n")
-                .append(ticket.getBody()).append("<br/><br/>\r\n");
-
-        if (ticket.getNumberOfAttachments() > 0) {
-            writer.append("Attachments: ");
-            int i = 0;
-            for (Attachment attachment : ticket.getAttachments()) {
-                if (i++ > 0) {
-                    writer.append(", ");
-                }
-                writer.append("<a href=\"tickets?action=download&ticketId=")
-                        .append(idString).append("&attachment=")
-                        .append(attachment.getName()).append("\">")
-                        .append(attachment.getName()).append("</a>");
-            }
-            writer.append("<br/><br/>\r\n");
-        }
-
-        writer.append("<a href=\"tickets\">Return to list tickets</a>\r\n");
-
-        writeFooter(writer);
+        req.getRequestDispatcher("/WEB-INF/jsp/view/viewTicket.jsp")
+                .forward(req, resp);
     }
 
     private void downloadAttachment(HttpServletRequest req, HttpServletResponse resp) throws IOException {
