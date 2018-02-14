@@ -212,27 +212,4 @@ public class TicketServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/view/listTickets.jsp")
                 .forward(req, resp);
     }
-
-    /**
-     * Writes header for every html page.
-     * @param resp response object used for writing
-     * @return PrintWriter which may be used for subsequent writing
-     */
-    private PrintWriter writeHeader(HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/html");
-        resp.setCharacterEncoding("UTF-8");
-
-        PrintWriter writer = resp.getWriter();
-        writer.append("<!DOCTYPE html>\r\n")
-                .append("<html>\r\n")
-                .append("    <head>\r\n")
-                .append("        <title>Customer Support</title>\r\n")
-                .append("    </head>\r\n")
-                .append("    <body>\r\n");
-        return writer;
-    }
-
-    private void writeFooter(PrintWriter writer) {
-        writer.append("    </body>\r\n").append("</html>\r\n");
-    }
 }
