@@ -11,3 +11,11 @@ Upload files from a form.
 Make app safe for multithreading.  
 
 Dependency: javax.servlet-api  
+
+### 4. Using JSPs to Display Content
+
+Configure JSP properties in web.xml  
+Add base.jspf  
+Add index.jsp which redirects to /tickets  
+
+Dependency: javax.servlet.jsp.jstl-api  
