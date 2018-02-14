@@ -41,7 +41,7 @@ public class TicketServlet extends HttpServlet {
         }
         switch (action) {
             case "create":
-                showTicketForm(resp);
+                showTicketForm(req, resp);
                 break;
             case "view":
                 viewTicket(req, resp);
@@ -74,28 +74,13 @@ public class TicketServlet extends HttpServlet {
     }
 
     /**
-     * Displays form for entering ticket info. The form sends POST to the same servlet.
+     * Forwards to form for entering ticket info. The form sends POST to the same servlet.
      * @param resp response used for appending content
      * @throws IOException if an output exception occurred when writing page header
      */
-    private void showTicketForm(HttpServletResponse resp) throws IOException {
-        PrintWriter writer = writeHeader(resp);
-
-        writer.append("<h2>Create a Ticket</h2>\r\n");
-        writer.append("<form method=\"POST\" action=\"tickets\" enctype=\"multipart/form-data\">\r\n");
-        writer.append("    <input type=\"hidden\" name=\"action\" value=\"create\"/>\r\n");
-        writer.append("    Your Name<br/>\r\n");
-        writer.append("    <input type=\"text\" name=\"customerName\"/><br/><br/>\r\n");
-        writer.append("    Subject<br/>\r\n");
-        writer.append("    <input type=\"text\" name=\"subject\"/><br/><br/>\r\n");
-        writer.append("    Body<br/>\r\n");
-        writer.append("    <textarea name=\"body\" rows=\"5\" cols=\"30\"></textarea><br/><br/>\r\n");
-        writer.append("    <b>Attachments</b><br/>\r\n");
-        writer.append("    <input type=\"file\" name=\"file1\"/><br/><br/>\r\n"); // todo: how can I attach more than 1 file
-        writer.append("    <input type=\"submit\" value=\"Submit\"/>\r\n");
-        writer.append("</form>\r\n");
-
-        writeFooter(writer);
+    private void showTicketForm(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        req.getRequestDispatcher("/WEB-INF/jsp/view/ticketForm.jsp")
+                .forward(req, resp);
     }
 
     /**
