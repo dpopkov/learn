@@ -20,5 +20,7 @@
         }
     }
 %>
+<p><a href="<c:url value="/shop?action=emptyCart" />">Empty Cart</a></p>
+
 </body>
 </html>

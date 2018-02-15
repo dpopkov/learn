@@ -38,11 +38,19 @@ public class StoreServlet extends HttpServlet {
             case "viewCart":
                 viewCart(req, resp);
                 break;
+            case "emptyCart":
+                emptyCart(req, resp);
+                break;
             case "browse":
             default:
                 browse(req, resp);
                 break;
         }
+    }
+
+    private void emptyCart(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        req.getSession().removeAttribute("cart");
+        resp.sendRedirect("shop?action=viewCart");
     }
 
     private void addToCart(HttpServletRequest req, HttpServletResponse resp) throws IOException {
