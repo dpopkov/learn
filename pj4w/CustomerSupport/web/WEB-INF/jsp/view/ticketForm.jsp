@@ -4,6 +4,7 @@
     <title>Customer Support</title>
 </head>
 <body>
+<p><%@include file="/WEB-INF/jsp/logoutLink.jsp" %></p>
 <h2>Create a Ticket</h2>
 <form method="post" action="tickets" enctype="multipart/form-data">
     <input type="hidden" name="action" value="create"/>

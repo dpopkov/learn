@@ -10,6 +10,7 @@
     <title>Customer Support</title>
 </head>
 <body>
+<p><%@include file="/WEB-INF/jsp/logoutLink.jsp" %></p>
 <h2>Ticket #<%= ticketId %>: <%= ticket.getSubject()%></h2>
 <i>Customer Name - <%= ticket.getCustomerName()%></i><br/><br/>
 <%= ticket.getBody() %><br/><br/>

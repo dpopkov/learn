@@ -11,10 +11,12 @@
     <title>Customer Support</title>
 </head>
 <body>
+
+<p><%@include file="/WEB-INF/jsp/logoutLink.jsp" %></p>
+
 <h2>Tickets</h2>
 
 <p><a href="tickets?action=create">Create Tickets</a></p>
-
 <%
     if (ticketDatabase.size() == 0) {
 %><p><i>There are no tickets in the system.</i></p><%
