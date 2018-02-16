@@ -20,3 +20,7 @@ Add index.jsp which redirects to /tickets
 Add JSP pages ticketForm, viewTicket, listTicket  
 
 Dependency: javax.servlet.jsp.jstl-api  
+
+### 5. Maintaining State Using Sessions
+
+Dependencies: none

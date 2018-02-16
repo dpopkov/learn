@@ -1,4 +1,3 @@
-<%@ page session="false" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="com.wrox.csupport.model.Ticket" %>
 <%
