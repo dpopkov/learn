@@ -1,6 +1,7 @@
-package com.wrox.csupport.listeners;
+package com.wrox.csupport.sessions;
 
 import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionIdListener;
 import javax.servlet.http.HttpSessionListener;
@@ -15,18 +16,24 @@ public class SessionListener implements HttpSessionListener, HttpSessionIdListen
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        System.out.println(date() + ": Session " + se.getSession().getId() + " created");
+        HttpSession session = se.getSession();
+        SessionRegistry.addSession(session);
+        System.out.println(date() + ": Session " + session.getId() + " created");
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
-        System.out.println(date() + ": Session " + se.getSession().getId() + " destroyed");
+        HttpSession session = se.getSession();
+        SessionRegistry.removeSession(session);
+        System.out.println(date() + ": Session " + session.getId() + " destroyed");
     }
 
     /* Method of HttpSessionIdListener */
     @Override
     public void sessionIdChanged(HttpSessionEvent event, String oldSessionId) {
-        System.out.println(date() + ": Session ID " + oldSessionId + " changed to " + event.getSession().getId());
+        HttpSession session = event.getSession();
+        SessionRegistry.updateSessionId(session, oldSessionId);
+        System.out.println(date() + ": Session ID " + oldSessionId + " changed to " + session.getId());
     }
 
     private String date() {
