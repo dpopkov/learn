@@ -100,7 +100,7 @@ public class TicketServlet extends HttpServlet {
      */
     private void createTicket(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         Ticket ticket = new Ticket();
-        ticket.setCustomerName(req.getParameter("customerName"));
+        ticket.setCustomerName((String)req.getSession().getAttribute("username"));
         ticket.setSubject(req.getParameter("subject"));
         ticket.setBody(req.getParameter("body"));
 

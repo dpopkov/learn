@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
                     .forward(req, resp);
         } else {
             session.setAttribute("username", username);
-            req.changeSessionId();    // todo Try to do Session Fixation
+            req.changeSessionId();
             resp.sendRedirect("tickets");
         }
     }
