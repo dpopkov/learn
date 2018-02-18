@@ -1,4 +1,4 @@
-<%-- @elvariable id="user" type="com.wrox.pj4w.ch06.model.User" --%>
+<%--@elvariable id="user" type="com.wrox.pj4w.ch06.model.User"--%>
 <!DOCTYPE html>
 <html>
 <head>
