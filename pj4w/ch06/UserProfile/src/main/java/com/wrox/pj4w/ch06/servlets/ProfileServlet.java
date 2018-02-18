@@ -30,6 +30,8 @@ public class ProfileServlet extends HttpServlet {
         user.setPermissions(permissions);
 
         req.setAttribute("user", user);
+//        req.getSession().setAttribute("user", user);    // now 'user' is available in page4session.jsp
+//        req.getServletContext().setAttribute("user", user);    // now 'user' is available in page4app.jsp (for all users)
         req.getRequestDispatcher("/WEB-INF/jsp/view/profile.jsp")
                 .forward(req, resp);
     }
