@@ -10,6 +10,16 @@ public class User {
     private String lastName;
     private Map<String, Boolean> permissions = new Hashtable<>();
 
+    public User() {
+    }
+
+    public User(Long userId, String username, String firstName, String lastName) {
+        this.userId = userId;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public Long getUserId() {
         return userId;
     }
