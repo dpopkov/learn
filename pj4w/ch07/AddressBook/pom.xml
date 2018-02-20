@@ -78,6 +78,11 @@
     <build>
         <finalName>AddressBook</finalName>
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+            </resource>
+        </resources>
         <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
 
         <plugins>

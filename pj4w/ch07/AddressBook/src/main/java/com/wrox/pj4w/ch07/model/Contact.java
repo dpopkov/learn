@@ -2,6 +2,7 @@ package com.wrox.pj4w.ch07.model;
 
 import java.time.Instant;
 import java.time.MonthDay;
+import java.util.Date;
 
 public class Contact implements Comparable<Contact> {
     private String firstName;
@@ -21,6 +22,10 @@ public class Contact implements Comparable<Contact> {
         this.address = address;
         this.birthDay = birthDay;
         this.dateCreated = dateCreated;
+    }
+
+    public Date getOldDateCreated() {
+        return new Date(this.dateCreated.toEpochMilli());
     }
 
     public String getFirstName() {

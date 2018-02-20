@@ -7,14 +7,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.jstl.core.Config;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.Month;
 import java.time.MonthDay;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 @WebServlet("/list")
 public class ListServlet extends HttpServlet {
@@ -36,6 +34,10 @@ public class ListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String language = req.getParameter("language");
+        if ("french".equalsIgnoreCase(language)) {
+            Config.set(req, Config.FMT_LOCALE, Locale.FRANCE);
+        }
         if (req.getParameter("empty") != null) {
             req.setAttribute("contacts", Collections.<Contact>emptySet());
         } else {

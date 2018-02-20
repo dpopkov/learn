@@ -1,16 +1,17 @@
 <%--@elvariable id="contacts" type="java.util.SortedSet"--%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Address Book</title>
+    <title><fmt:message key="title.browser" /></title>
 </head>
 <body>
 
-<h2>Address Book Contacts</h2>
+<h2><fmt:message key="title.page" /></h2>
 
 <c:choose>
     <c:when test="${fn:length(contacts) == 0}">
-        <i>There are no contacts in the address book.</i>
+        <i><fmt:message key="message.noContacts" /></i>
     </c:when>
     <c:otherwise>
         <c:forEach items="${contacts}" var="contact">
@@ -20,9 +21,15 @@
             <c:out value="${contact.address}"/><br/>
             <c:out value="${contact.phoneNumber}"/><br/>
             <c:if test="${contact.birthDay != null}">
-                Birthday: ${contact.birthDay}<br/>
+                <fmt:message key="label.birthday" />:
+                ${contact.birthDay.month.getDisplayName(
+                    'FULL', pageContext.response.locale)
+                }&nbsp;${contact.birthDay.dayOfMonth}<br/>
             </c:if>
-            Created: ${contact.dateCreated}<br/><br/>
+            <fmt:message key="label.creationDate" />:
+            <fmt:formatDate value="${contact.oldDateCreated}" type="both"
+                            dateStyle="long" timeStyle="long"/>
+            <br/><br/>
         </c:forEach>
     </c:otherwise>
 </c:choose>

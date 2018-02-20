@@ -10,7 +10,7 @@
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
-            <url-pattern>*.jspp</url-pattern>
+            <url-pattern>*.jspf</url-pattern>
             <page-encoding>UTF-8</page-encoding>
             <scripting-invalid>false</scripting-invalid> <!-- Permits Java code in JSP -->
             <include-prelude>/WEB-INF/jsp/base.jspf</include-prelude>
@@ -26,6 +26,11 @@
         </cookie-config>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
+
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>AddressBook-messages</param-value>
+    </context-param>
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
