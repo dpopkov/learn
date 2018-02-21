@@ -27,8 +27,16 @@ Configure sessions.
 Add LoginServlet and login page.  
 Add SessionListener and SessionRegistry.  
 
-Dependencies: none
-
 ### 6. Using the Expression Language in JSPs
 
+Use scoped EL variables.  
+Use Collections in EL expressions.  
+Replace Java code in JSP pages with EL.
+
 Dependencies: javax.el-api
+
+### 7. Using the Java Standard Tag Library
+
+Use Core Tag Library (c namespace)  
+Use Internationalization and Formatting (fmt namespace)
+
