@@ -24,6 +24,10 @@ public class IndexServlet extends HttpServlet {
             req.setAttribute("calendar", Calendar.getInstance());
             req.setAttribute("instant", Instant.now());
             view = "dates";
+        } else if (req.getParameter("text") != null) {
+            req.setAttribute("shortText", "This is short text.");
+            req.setAttribute("longText", "This is really long text that should get cut off at 32 characters.");
+            view = "text";
         }
 
         req.getRequestDispatcher("/WEB-INF/jsp/view/" + view + ".jsp")
