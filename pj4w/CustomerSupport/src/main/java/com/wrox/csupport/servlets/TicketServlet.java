@@ -15,6 +15,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.time.OffsetDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -103,6 +104,7 @@ public class TicketServlet extends HttpServlet {
         ticket.setCustomerName((String)req.getSession().getAttribute("username"));
         ticket.setSubject(req.getParameter("subject"));
         ticket.setBody(req.getParameter("body"));
+        ticket.setDateCreated(OffsetDateTime.now());
 
         Part filePart = req.getPart("file1");
         if (filePart != null) {

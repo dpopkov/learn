@@ -1,16 +1,5 @@
 <%--@elvariable id="ticketDatabase" type="java.util.Map<Integer,com.wrox.csupport.model.Ticket>"--%>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Customer Support</title>
-</head>
-<body>
-
-<p><%@include file="/WEB-INF/jsp/logoutLink.jsp" %></p>
-
-<h2>Tickets</h2>
-
-<p><a href="tickets?action=create">Create Tickets</a></p>
+<template:basic htmlTitle="Tickets" bodyTitle="Tickets">
 
 <c:choose>
     <c:when test="${ticketDatabase.size() == 0}">
@@ -23,13 +12,13 @@
                         <c:param name="action" value="view" />
                         <c:param name="ticketId" value="${entry.key}" />
                     </c:url>">
-                <c:out value="${entry.value.subject}" />
-            </a>
-            (customer: <c:out value="${entry.value.customerName}" />)
-            <br/>
+                <c:out value="${wrox:abbreviate(entry.value.subject, 60)}" />
+            </a><br/>
+            <c:out value="${entry.value.customerName}" /> created ticket
+            <wrox:formatDate value="${entry.value.dateCreated}" type="both"
+                             timeStyle="short" dateStyle="medium" /><br/>
         </c:forEach>
     </c:otherwise>
 </c:choose>
 
-</body>
-</html>
+</template:basic>

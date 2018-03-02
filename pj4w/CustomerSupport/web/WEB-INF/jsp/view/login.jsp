@@ -1,12 +1,5 @@
 <%--@elvariable id="loginFailed type="java.lang.Boolean"--%>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Customer Support</title>
-</head>
-<body>
-
-<h2>Login</h2>
+<template:loggedOut htmlTitle="Log In" bodyTitle="Log In">
 
 <p>You must log in to access the customer support site.</p>
 
@@ -23,6 +16,4 @@
     <input type="password" name="password" /><br/><br/>
     <input type="submit" value="Log In" />
 </form>
-
-</body>
-</html>
+</template:loggedOut>

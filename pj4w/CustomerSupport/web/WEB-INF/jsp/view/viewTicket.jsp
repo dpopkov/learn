@@ -1,15 +1,9 @@
 <%--@elvariable id="ticketId" type="java.lang.String"--%>
 <%--@elvariable id="ticket" type"com.wrox.csupport.model.Ticket"--%>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Customer Support</title>
-</head>
-<body>
-<p><%@include file="/WEB-INF/jsp/logoutLink.jsp" %></p>
+<template:basic htmlTitle="${ticket.subject}" bodyTitle="Ticket #${ticketId}: ${ticket.subject}">
 
-<h2>Ticket #${ticketId}: <c:out value="${ticket.subject}" /></h2>
-<i>Customer Name - <c:out value="${ticket.customerName}" /></i><br/><br/>
+<i>Customer Name - <c:out value="${ticket.customerName}" /><br/>
+Created <wrox:formatDate value="${ticket.dateCreated}" type="both" timeStyle="long" dateStyle="full" /></i><br/><br/>
 
 <c:out value="${ticket.body}" /><br/><br/>
 <c:if test="${ticket.numberOfAttachments > 0}">
@@ -23,6 +17,5 @@
             </c:url>"><c:out value="${attachment.name}" /></a>
     </c:forEach>
 </c:if>
-<p><a href="<c:url value="/tickets" />">Return to list tickets</a></p>
-</body>
-</html>
+
+</template:basic>

@@ -1,5 +1,6 @@
 package com.wrox.csupport.model;
 
+import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -8,6 +9,7 @@ public class Ticket {
     private String customerName;
     private String subject;
     private String body;
+    private OffsetDateTime dateCreated;
     private Map<String, Attachment> attachments = new LinkedHashMap<>();
 
     public String getCustomerName() {
@@ -48,5 +50,13 @@ public class Ticket {
 
     public int getNumberOfAttachments() {
         return attachments.size();
+    }
+
+    public OffsetDateTime getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(OffsetDateTime dateCreated) {
+        this.dateCreated = dateCreated;
     }
 }

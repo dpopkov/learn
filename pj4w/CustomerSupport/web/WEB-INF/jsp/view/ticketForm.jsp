@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Customer Support</title>
-</head>
-<body>
-<p><%@include file="/WEB-INF/jsp/logoutLink.jsp" %></p>
-<h2>Create a Ticket</h2>
+<%--<p><%@include file="/WEB-INF/jsp/logoutLink.jsp" %></p>--%>
+
+<template:basic htmlTitle="Create a Ticket" bodyTitle="Create a Ticket">
 <form method="post" action="tickets" enctype="multipart/form-data">
     <input type="hidden" name="action" value="create"/>
     <input type="text" name="subject" placeholder="Subject"><br/><br/>
@@ -14,5 +9,4 @@
     <input type="file" name="file1"/><br/><br/>
     <input type="submit" value="Submit"/>
 </form>
-</body>
-</html>
+</template:basic>
