@@ -1,5 +1,7 @@
 package com.wrox.csupport.sessions;
 
+import com.wrox.csupport.utils.HttpSessionUtils;
+
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
@@ -7,6 +9,7 @@ import javax.servlet.http.HttpSessionIdListener;
 import javax.servlet.http.HttpSessionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 
 @WebListener
 public class SessionListener implements HttpSessionListener, HttpSessionIdListener {
@@ -18,14 +21,15 @@ public class SessionListener implements HttpSessionListener, HttpSessionIdListen
     public void sessionCreated(HttpSessionEvent se) {
         HttpSession session = se.getSession();
         SessionRegistry.addSession(session);
-        System.out.println(date() + ": Session " + session.getId() + " created");
+        System.out.println(date() + ": " + HttpSessionUtils.toString(session) + " created");
+
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
         HttpSession session = se.getSession();
         SessionRegistry.removeSession(session);
-        System.out.println(date() + ": Session " + session.getId() + " destroyed");
+        System.out.println(date() + ": " + HttpSessionUtils.toString(session) + " destroyed");
     }
 
     /* Method of HttpSessionIdListener */
