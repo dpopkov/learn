@@ -3,3 +3,4 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="wrox" uri="http://www.wrox.com/jsp/tld/wrox"%>
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/template" %>
+<%@ taglib prefix="csupp" uri="http://jee.example.com/jsp/tld/csupp"%>

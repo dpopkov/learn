@@ -29,5 +29,7 @@
     </tbody>
 </table>
 
+<csupp:systemOutPrintSessionId/>
+
 </body>
 </html>

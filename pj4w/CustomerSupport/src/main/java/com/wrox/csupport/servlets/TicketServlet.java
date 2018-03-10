@@ -85,9 +85,7 @@ public class TicketServlet extends HttpServlet {
     }
 
     /**
-     * Forwards to form for entering ticket info. The form sends POST to the same servlet.
-     * @param resp response used for appending content
-     * @throws IOException if an output exception occurred when writing page header
+     * Forwards to JSP page containing form for entering ticket info. The form sends POST to the same servlet.
      */
     private void showTicketForm(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         req.getRequestDispatcher("/WEB-INF/jsp/view/ticketForm.jsp")
