@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+
+<h3>Index</h3>
+
+<p><a href="longRunningServlet">longRunningServlet with default time</a></p>
+<p><a href="longRunningServlet?time=5000">longRunningServlet time=5sec</a></p>
+<p><a href="AsyncLongRunningServlet">AsyncLongRunningServlet with default time</a></p>
+<form method="get" action="AsyncLongRunningServlet">
+    Milliseconds: <input type="text" name="time" /><br/>
+    <input type="submit" value="Run AsyncLongRunningServlet with specified time" />
+</form>
+
+</body>
+</html>
