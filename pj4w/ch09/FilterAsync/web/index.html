@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+
+<h3>Index</h3>
+
+<p><a href="regular">nonAsyncServlet</a></p>
+<p><a href="async">AsyncServlet</a></p>
+<p><a href="async?unwrap=on">AsyncServlet unwrap</a></p>
+<p><a href="async?timeout=3000">AsyncServlet timeout=3000</a></p>
+
+<h3>AsyncServlet parameters form:</h3>
+<form method="get" action="async">
+    timeout: <input type="text" name="timeout" /><br/>
+    <input type="checkbox" name="unwrap" /> unwrap<br/>
+    <input type="submit" value="Run AsyncServlet" />
+</form>
+</body>
+</html>
