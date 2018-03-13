@@ -10,10 +10,13 @@ public class PrintSessionId extends TagSupport {
     @Override
     public int doEndTag() throws JspException {
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+
         String uri = request.getRequestURI();
         String pageName = uri.substring(uri.lastIndexOf("/") + 1);
-        HttpSession session = pageContext.getSession();
-        System.out.println("JSP page = " + pageName + ", Session ID = " + session.getId());
+
+        HttpSession session = request.getSession(false);
+        System.out.println("JSP page = " + pageName + ", Session" +
+                (session != null ? " ID = " + session.getId() : " is NULL"));
 
         return Tag.EVAL_PAGE;
     }
