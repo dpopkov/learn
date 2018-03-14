@@ -61,6 +61,7 @@ public class ClusterNodeServlet extends HttpServlet {
         }
     }
 
+    @OnClose
     public void onClose(CloseReason reason) {
         CloseReason.CloseCode code = reason.getCloseCode();
         if (code != CloseReason.CloseCodes.NORMAL_CLOSURE) {
