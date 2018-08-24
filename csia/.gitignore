@@ -1,2 +1,5 @@
 # txt files in root folder of csia project
 /*.txt
+
+# Temporary java files for research
+Tmp*.java
