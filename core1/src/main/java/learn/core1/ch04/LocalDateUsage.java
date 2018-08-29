@@ -3,6 +3,9 @@ package learn.core1.ch04;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
+/**
+ * Example of LocalDate usage.
+ */
 public class LocalDateUsage {
     public static void main(String[] args) {
         LocalDate date = LocalDate.now();
