@@ -11,14 +11,29 @@ import java.time.LocalDate;
 public class Employee {
     private static final int INITIAL_ID = 1;
 
-    private static int nextId = INITIAL_ID;
+    private static int nextId;
 
-    /*
     static {
+        resetNextId();
+        /*
         Random generator = new Random();
         nextId = generator.nextInt(10_000);
+        */
     }
-    */
+
+    public static int getNextId() {
+        return nextId;
+    }
+
+    public static void resetNextId() {
+        nextId = INITIAL_ID;
+    }
+
+    private static int assignId() {
+        int r = nextId;
+        nextId++;
+        return r;
+    }
 
     private int id; // = Employee.assignId();
     private final String name;
@@ -85,16 +100,6 @@ public class Employee {
     public void raiseSalary(double byPercent) {
         double raise = salary * byPercent / 100;
         salary += raise;
-    }
-
-    public static int getNextId() {
-        return nextId;
-    }
-
-    private static int assignId() {
-        int r = nextId;
-        nextId++;
-        return r;
     }
 
     @Override

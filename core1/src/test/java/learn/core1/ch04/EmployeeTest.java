@@ -1,5 +1,6 @@
 package learn.core1.ch04;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -9,6 +10,11 @@ import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.junit.Assert.assertThat;
 
 public class EmployeeTest {
+    @Before
+    public void setUpEmployee() {
+        Employee.resetNextId();
+    }
+
     @Test
     public void whenNameAndSalaryThenConstructs() {
         Employee employee = new Employee("Name1", 100_000);
