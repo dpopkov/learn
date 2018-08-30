@@ -79,7 +79,7 @@ public class Employee extends Person {
     }
 
     private void augmentNameWithId() {
-        this.name = this.name + " #" + id;
+        super.addSuffixToName(" #" + id);
     }
 
     public int getId() {

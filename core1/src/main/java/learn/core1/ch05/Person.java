@@ -1,7 +1,7 @@
 package learn.core1.ch05;
 
 public abstract class Person {
-    protected String name;
+    private String name;
 
     public Person(String name) {
         this.name = name;
@@ -12,4 +12,8 @@ public abstract class Person {
     }
 
     public abstract String getDescription();
+
+    protected void addSuffixToName(String suffix) {
+        this.name = this.name + suffix;
+    }
 }
