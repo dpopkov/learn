@@ -1,6 +1,9 @@
 package learn.core1.ch04;
 
+import learn.core1.ch05.Person;
+
 import java.time.LocalDate;
+import java.util.Locale;
 
 /**
  * Represents an employee with id, name, salary and hire date.
@@ -8,35 +11,28 @@ import java.time.LocalDate;
  *
  * @see learn.core1.ch04.EmployeeUsage
  */
-public class Employee {
+public class Employee extends Person {
     private static final int INITIAL_ID = 1;
 
     private static int nextId;
 
     static {
         resetNextId();
-        /*
-        Random generator = new Random();
-        nextId = generator.nextInt(10_000);
-        */
     }
 
     public static int getNextId() {
         return nextId;
     }
 
-    public static void resetNextId() {
+    /**
+     * Resets {@code nextId} field.
+     * This method has package access for unit testing purposes.
+     */
+    static void resetNextId() {
         nextId = INITIAL_ID;
     }
 
-    private static int assignId() {
-        int r = nextId;
-        nextId++;
-        return r;
-    }
-
     private int id; // = Employee.assignId();
-    private final String name;
     private double salary;
     private final LocalDate hireDay;
 
@@ -52,7 +48,7 @@ public class Employee {
      * @param salary
      */
     public Employee(String name, double salary) {
-        this.name = name;
+        super(name);
         this.salary = salary;
         this.hireDay = LocalDate.now();
     }
@@ -62,7 +58,8 @@ public class Employee {
      * @param salary
      */
     public Employee(double salary) {
-        this.name = "Employee #" + id;
+        super("Employee");
+        augmentNameWithId();
         this.salary = salary;
         this.hireDay = LocalDate.now();
     }
@@ -76,17 +73,17 @@ public class Employee {
      * @param day
      */
     public Employee(String name, double salary, int year, int month, int day) {
-        this.name = name;
+        super(name);
         this.salary = salary;
         this.hireDay = LocalDate.of(year, month, day);
     }
 
-    public int getId() {
-        return id;
+    private void augmentNameWithId() {
+        this.name = this.name + " #" + id;
     }
 
-    public String getName() {
-        return name;
+    public int getId() {
+        return id;
     }
 
     public double getSalary() {
@@ -103,10 +100,17 @@ public class Employee {
     }
 
     @Override
+    public String getDescription() {
+        return String.format(Locale.US,
+                "an employee with a salary of $%.2f",
+                getSalary());
+    }
+
+    @Override
     public String toString() {
         return "Employee{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + getName() + '\'' +
                 ", salary=" + salary +
                 ", hireDay=" + hireDay +
                 '}';

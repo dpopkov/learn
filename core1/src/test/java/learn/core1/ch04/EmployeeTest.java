@@ -47,4 +47,10 @@ public class EmployeeTest {
         assertThat(e.getSalary(), closeTo(100_000, 0.1));
         assertThat(e.getHireDay(), is(LocalDate.of(2000, 5, 17)));
     }
+
+    @Test
+    public void whenSalary100ThenDescriptionCorresponds() {
+        Employee e = new Employee("Name1", 100);
+        assertThat(e.getDescription(), is("an employee with a salary of $100.00"));
+    }
 }
