@@ -4,6 +4,7 @@ import learn.core1.ch05.Person;
 
 import java.time.LocalDate;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Represents an employee with id, name, salary and hire date.
@@ -114,5 +115,16 @@ public class Employee extends Person {
                 ", salary=" + salary +
                 ", hireDay=" + hireDay +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object otherObject) {
+        if (this == otherObject) return true;
+        if (otherObject == null) return false;
+        if (getClass() != otherObject.getClass()) return false;
+        Employee other = (Employee) otherObject;
+        return Objects.equals(this.getName(), other.getName())
+                && this.salary == other.salary
+                && Objects.equals(this.hireDay, other.hireDay);
     }
 }
