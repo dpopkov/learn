@@ -1,7 +1,6 @@
 package learn.core1.ch04;
 
 import java.time.LocalDate;
-import java.util.Random;
 
 /**
  * Represents an employee with id, name, salary and hire date.
@@ -10,12 +9,16 @@ import java.util.Random;
  * @see learn.core1.ch04.EmployeeUsage
  */
 public class Employee {
-    private static int nextId;
+    private static final int INITIAL_ID = 1;
 
+    private static int nextId = INITIAL_ID;
+
+    /*
     static {
         Random generator = new Random();
         nextId = generator.nextInt(10_000);
     }
+    */
 
     private int id; // = Employee.assignId();
     private final String name;
