@@ -26,7 +26,7 @@ public class NumberArgs {
      * @param args array of command line arguments (if null then standard input will be used)
      * @param prompts array of prompt strings (will be used if values are received from standard input)
      */
-    public NumberArgs(String[] args, String[] prompts) {
+    public NumberArgs(String[] args, String... prompts) {
         if (args.length > 0) {
             cmdArgs = true;
             this.args = args;
