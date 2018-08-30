@@ -21,18 +21,34 @@ public class Manager extends Employee {
     }
 
     public static void main(String[] args) {
-        Manager[] ma = new Manager[2];
+        Manager[] managers = new Manager[2];
         Manager m0 = new Manager("Manager1", 100_000, 2000, 1, 1);
-        ma[0] = m0;
+        managers[0] = m0;
 
-        Employee e = new Employee("Jack", 10_000);
-        Employee[] ea = new Employee[2];
-        ea[0] = m0;
-        ea[1] = e;
+        Employee jack = new Employee("Jack", 10_000);
+        Employee[] employees = new Employee[2];
+        employees[0] = m0;
+        employees[1] = jack;
 
-        ea = ma;
-        System.out.println(ea[0].getName());
-        ea[1] = e;
-        System.out.println(ea[1].getName());
+        Employee[] likeEmployees = managers;
+        System.out.println(likeEmployees[0].getName());
+
+        // How to get a runtime exception:
+        /*likeEmployees[1] = jack;    // java.lang.ArrayStoreException
+        System.out.println(likeEmployees[1].getName());*/
+
+        if (likeEmployees[0] instanceof Manager) {
+            Manager managerAgain = (Manager) likeEmployees[0];
+            managerAgain.raiseSalary(5);
+            System.out.println(managerAgain.getSalary());
+        }
+
+        if (employees[1] instanceof Manager) {
+            Manager wannabe = (Manager) employees[1];   // java.lang.ClassCastException
+            wannabe.raiseSalary(100500);
+            System.out.println(wannabe.getSalary());
+        } else {
+            System.out.println("Can not cast non Manager to Manager");
+        }
     }
 }
