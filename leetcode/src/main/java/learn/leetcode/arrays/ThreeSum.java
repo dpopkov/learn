@@ -22,45 +22,31 @@ import java.util.*;
  */
 public class ThreeSum {
     public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> r = new ArrayList<>();
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 2; i < nums.length; i++) {
+            map.put(nums[i], i);
+        }
+        Set<List<Integer>> set = new LinkedHashSet<>();
+        List<Integer> triplet;
+        Integer candidate;
+        int foundIndex, a, b;
         for (int i = 0; i < nums.length - 2; i++) {
             for (int j = i + 1; j < nums.length - 1; j++) {
-                for (int k = j + 1; k < nums.length; k++) {
-                    if (nums[i] + nums[j] + nums[k] == 0) {
-                        r.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                a = nums[i];
+                b = nums[j];
+                int compliment = -(a + b);
+                candidate = map.get(compliment);
+                if (candidate != null) {
+                    foundIndex = candidate;
+                    if (foundIndex != i && foundIndex != j) {
+                        triplet = Arrays.asList(a, b, nums[foundIndex]);
+                        triplet.sort(Comparator.naturalOrder());
+                        set.add(triplet);
                     }
                 }
             }
         }
-        Set<Integer> s = new HashSet<>();
-        List<Integer> li = new ArrayList<>();
-        li.addAll(s);
-        return r;
+        return new ArrayList<>(set);
     }
+
 }
-/*
-java.lang.AssertionError:
-Expected: is <[[-1, 0, 1], [-1, -1, 2]]>
-     but: was <[[-1, 0, 1], [-1, 2, -1], [0, 1, -1]]>
-Expected :is <[[-1, 0, 1], [-1, -1, 2]]>
-
-Actual   :<[[-1, 0, 1], [-1, 2, -1], [0, 1, -1]]>
- */
-
-
-/*
-    public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> r = new ArrayList<>();
-        for (int i = 0; i < nums.length - 2; i++) {
-            for (int j = i + 1; j < nums.length - 1; j++) {
-                for (int k = j + 1; k < nums.length; k++) {
-                    if (nums[i] + nums[j] + nums[k] == 0) {
-                        r.add(Arrays.asList(nums[i], nums[j], nums[k]));
-                    }
-                }
-            }
-        }
-        return r;
-    }
-
- */
