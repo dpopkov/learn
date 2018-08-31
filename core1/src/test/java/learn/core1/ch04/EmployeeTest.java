@@ -7,9 +7,7 @@ import java.time.LocalDate;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.number.IsCloseTo.closeTo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class EmployeeTest {
     @Before
@@ -58,7 +56,7 @@ public class EmployeeTest {
         assertThat(e.getDescription(), is("an employee with a salary of $100.00"));
     }
 
-    /* Test equals() */
+    /* Test equals() and hashCode */
     @Test
     public void whenHaveSameNameSalaryHireDateThenEqual() {
         Employee e1 = new Employee("Name1", 100, 2000, 1, 2);
@@ -75,5 +73,13 @@ public class EmployeeTest {
         assertNotEquals(e1, e2);
         assertNotEquals(e1, e3);
         assertNotEquals(e1, e4);
+    }
+
+    @Test
+    public void whenEqualThenSameHashcode() {
+        Employee e1 = new Employee("Name1", 100, 2000, 1, 2);
+        Employee e2 = new Employee("Name1", 100, 2000, 1, 2);
+        assertNotSame(e1, e2);
+        assertThat(e1.hashCode(), is(e2.hashCode()));
     }
 }

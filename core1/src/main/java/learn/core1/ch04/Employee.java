@@ -125,4 +125,9 @@ public class Employee extends Person {
         return this.salary == other.salary
                 && Objects.equals(this.hireDay, other.hireDay);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), salary, hireDay);
+    }
 }
