@@ -119,12 +119,10 @@ public class Employee extends Person {
 
     @Override
     public boolean equals(Object otherObject) {
-        if (this == otherObject) return true;
-        if (otherObject == null) return false;
+        if (!super.equals(otherObject)) return false;
         if (getClass() != otherObject.getClass()) return false;
         Employee other = (Employee) otherObject;
-        return Objects.equals(this.getName(), other.getName())
-                && this.salary == other.salary
+        return this.salary == other.salary
                 && Objects.equals(this.hireDay, other.hireDay);
     }
 }

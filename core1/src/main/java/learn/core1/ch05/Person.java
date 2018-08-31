@@ -1,5 +1,7 @@
 package learn.core1.ch05;
 
+import java.util.Objects;
+
 public abstract class Person {
     private String name;
 
@@ -15,5 +17,14 @@ public abstract class Person {
 
     protected void addSuffixToName(String suffix) {
         this.name = this.name + suffix;
+    }
+
+    @Override
+    public boolean equals(Object otherObject) {
+        if (this == otherObject) return true;
+        if (otherObject == null) return false;
+        if (getClass() != otherObject.getClass()) return false;
+        Person other = (Person) otherObject;
+        return Objects.equals(this.name, other.name);
     }
 }

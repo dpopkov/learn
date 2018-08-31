@@ -17,6 +17,7 @@ public class EmployeeTest {
         Employee.resetNextId();
     }
 
+    /* Test Constructors */
     @Test
     public void whenNameAndSalaryThenConstructs() {
         Employee employee = new Employee("Name1", 100_000);
@@ -50,12 +51,14 @@ public class EmployeeTest {
         assertThat(e.getHireDay(), is(LocalDate.of(2000, 5, 17)));
     }
 
+    /* Test getDescription */
     @Test
     public void whenSalary100ThenDescriptionCorresponds() {
         Employee e = new Employee("Name1", 100);
         assertThat(e.getDescription(), is("an employee with a salary of $100.00"));
     }
 
+    /* Test equals() */
     @Test
     public void whenHaveSameNameSalaryHireDateThenEqual() {
         Employee e1 = new Employee("Name1", 100, 2000, 1, 2);
