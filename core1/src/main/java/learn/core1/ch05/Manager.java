@@ -20,6 +20,23 @@ public class Manager extends Employee {
         return baseSalary + this.bonus;
     }
 
+    @Override
+    public boolean equals(Object otherObject) {
+        if (!super.equals(otherObject)) return false;
+        Manager other = (Manager) otherObject;
+        return this.bonus == other.bonus;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() + 17 * Double.hashCode(bonus);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "{bonus=" + bonus + "}";
+    }
+
     public static void main(String[] args) {
         Manager[] managers = new Manager[2];
         Manager m0 = new Manager("Manager1", 100_000, 2000, 1, 1);

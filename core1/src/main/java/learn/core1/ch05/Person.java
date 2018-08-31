@@ -27,4 +27,14 @@ public abstract class Person {
         Person other = (Person) otherObject;
         return Objects.equals(this.name, other.name);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "{name=" + name + "}";
+    }
 }

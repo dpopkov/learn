@@ -109,9 +109,8 @@ public class Employee extends Person {
 
     @Override
     public String toString() {
-        return "Employee{" +
+        return super.toString() + "{" +
                 "id=" + id +
-                ", name='" + getName() + '\'' +
                 ", salary=" + salary +
                 ", hireDay=" + hireDay +
                 '}';
@@ -128,6 +127,6 @@ public class Employee extends Person {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), salary, hireDay);
+        return super.hashCode() + 17 * Objects.hash(salary, hireDay);
     }
 }

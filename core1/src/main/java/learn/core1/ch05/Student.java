@@ -13,4 +13,9 @@ public class Student extends Person {
         return String.format("a student majoring in %s",
                 this.major);
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "{major=" + major + "}";
+    }
 }
