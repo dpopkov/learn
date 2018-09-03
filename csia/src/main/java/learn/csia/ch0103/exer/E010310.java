@@ -1,6 +1,6 @@
 package learn.csia.ch0103.exer;
 
-import learn.csia.utils.NumberArgs;
+import learn.csia.utils.CliAppArgs;
 
 /**
  * 1.3.10 Write a program that takes an integer command-line argument n, uses
@@ -9,7 +9,7 @@ import learn.csia.utils.NumberArgs;
  */
 public class E010310 {
     public static void main(String[] args) {
-        int n = new NumberArgs(args, "Number of values").nextInt();
+        int n = new CliAppArgs(args, "Number of values").nextInt();
         double sum = 0.0, randomValue;
         for (int i = 0; i < n; i++) {
             randomValue = Math.random();

@@ -6,8 +6,8 @@ import java.util.Scanner;
  * This class combines input from command line arguments or numbers entered in standard input.
  * It will use input from one of them, but not both.
  */
-public class NumberArgs {
-    private boolean cmdArgs = false;
+public class CliAppArgs {
+    private boolean cmdArgs;
     private int currentIdx = 0;
     private String[] args;
     private Scanner in;
@@ -17,7 +17,7 @@ public class NumberArgs {
      * Creates input object using specified command line arguments.
      * @param args array of command line arguments (if null then standard input will be used)
      */
-    public NumberArgs(String[] args) {
+    public CliAppArgs(String[] args) {
         this(args, null);
     }
 
@@ -26,7 +26,7 @@ public class NumberArgs {
      * @param args array of command line arguments (if null then standard input will be used)
      * @param prompts array of prompt strings (will be used if values are received from standard input)
      */
-    public NumberArgs(String[] args, String... prompts) {
+    public CliAppArgs(String[] args, String... prompts) {
         if (args.length > 0) {
             cmdArgs = true;
             this.args = args;
@@ -64,6 +64,16 @@ public class NumberArgs {
         } else {
             printPrompt();
             return in.nextLong();
+        }
+    }
+
+    public String nextString() {
+        if (cmdArgs) {
+            checkCurrentIdx();
+            return getCmdArgument();
+        } else {
+            printPrompt();
+            return in.next();
         }
     }
 

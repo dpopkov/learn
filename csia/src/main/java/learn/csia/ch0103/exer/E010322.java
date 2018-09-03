@@ -1,6 +1,6 @@
 package learn.csia.ch0103.exer;
 
-import learn.csia.utils.NumberArgs;
+import learn.csia.utils.CliAppArgs;
 
 /**
  * 1.3.22 Write a code fragment that puts the binary representation of a positive
@@ -8,7 +8,7 @@ import learn.csia.utils.NumberArgs;
  */
 public class E010322 {
     public static void main(String[] args) {
-        int n = new NumberArgs(args, "Enter positive integer").nextInt();
+        int n = new CliAppArgs(args, "Enter positive integer").nextInt();
 
         String result = new E010322().numberToString2(n);
         System.out.println(result);

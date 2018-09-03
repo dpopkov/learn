@@ -1,10 +1,10 @@
 package learn.csia.ch0103;
 
-import learn.csia.utils.NumberArgs;
+import learn.csia.utils.CliAppArgs;
 
 public class Sqrt {
     public static void main(String[] args) {
-        NumberArgs in = new NumberArgs(args, new String[] {"Enter argument"});
+        CliAppArgs in = new CliAppArgs(args, "Enter argument");
         double c = in.nextDouble();
         double EPSILON = 1e-15;
         double t = c;

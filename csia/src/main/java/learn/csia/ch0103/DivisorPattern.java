@@ -1,10 +1,10 @@
 package learn.csia.ch0103;
 
-import learn.csia.utils.NumberArgs;
+import learn.csia.utils.CliAppArgs;
 
 public class DivisorPattern {
     public static void main(String[] args) {
-        NumberArgs in = new NumberArgs(args, new String[] {"Enter number of rows and columns"});
+        CliAppArgs in = new CliAppArgs(args, "Enter number of rows and columns");
         int n = in.nextInt();
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n; j++) {

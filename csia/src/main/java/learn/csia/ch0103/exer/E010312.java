@@ -1,6 +1,6 @@
 package learn.csia.ch0103.exer;
 
-import learn.csia.utils.NumberArgs;
+import learn.csia.utils.CliAppArgs;
 
 /**
  * 1.3.12 Write a program FunctionGrowth that prints a table of the values log n, n,
@@ -23,7 +23,7 @@ public class E010312 {
     }
 
     public static void main(String[] args) {
-        int n = new NumberArgs(args, "Enter n").nextInt();
+        int n = new CliAppArgs(args, "Enter n").nextInt();
         new FunctionGrowth().print(n);
     }
 }

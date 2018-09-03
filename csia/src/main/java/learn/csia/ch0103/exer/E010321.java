@@ -1,6 +1,6 @@
 package learn.csia.ch0103.exer;
 
-import learn.csia.utils.NumberArgs;
+import learn.csia.utils.CliAppArgs;
 
 /**
  * 1.3.21 Modify Binary to get a program that takes two integer commandline
@@ -11,7 +11,7 @@ public class E010321 {
     private static final String[] digitCharacters = "0123456789ABCDEF".split("");
 
     public static void main(String[] args) {
-        NumberArgs in = new NumberArgs(args, "Number to convert", "Base");
+        CliAppArgs in = new CliAppArgs(args, "Number to convert", "Base");
         long i = in.nextLong();
         int k = in.nextInt();
 

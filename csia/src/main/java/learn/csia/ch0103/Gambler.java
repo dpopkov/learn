@@ -1,10 +1,10 @@
 package learn.csia.ch0103;
 
-import learn.csia.utils.NumberArgs;
+import learn.csia.utils.CliAppArgs;
 
 public class Gambler {
     public static void main(String[] args) {
-        NumberArgs in = new NumberArgs(args, new String[] {"Initial stake", "Walkaway goal", "Number of trials"});
+        CliAppArgs in = new CliAppArgs(args, "Initial stake", "Walkaway goal", "Number of trials");
         int stake = in.nextInt();
         int goal = in.nextInt();
         int trials = in.nextInt();

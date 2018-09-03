@@ -1,10 +1,10 @@
 package learn.csia.ch0103;
 
-import learn.csia.utils.NumberArgs;
+import learn.csia.utils.CliAppArgs;
 
 public class HarmonicNumber {
     public static void main(String[] args) {
-        NumberArgs in = new NumberArgs(args, new String[] {"Enter number of terms in sum"});
+        CliAppArgs in = new CliAppArgs(args, "Enter number of terms in sum");
         int n = in.nextInt();
         double sum = 0.0;
         for (int i = 1; i <= n; i++) {

@@ -1,10 +1,10 @@
 package learn.csia.ch0103;
 
-import learn.csia.utils.NumberArgs;
+import learn.csia.utils.CliAppArgs;
 
 public class Binary {
     public static void main(String[] args) {
-        NumberArgs in = new NumberArgs(args, new String[] {"Enter integer to convert"});
+        CliAppArgs in = new CliAppArgs(args, "Enter integer to convert");
         int n = in.nextInt();
         int power = 1;
         while (power <= n / 2) {
