@@ -27,7 +27,8 @@ public class Inventory {
         return null;
     }
 
-    public Guitar search(Guitar searchInfo) {
+    public List<Guitar> search(Guitar searchInfo) {
+        List<Guitar> result = new LinkedList<>();
         Builder builder = searchInfo.getBuilder();
         String model = searchInfo.getModel();
         Type type = searchInfo.getType();
@@ -49,8 +50,8 @@ public class Inventory {
             if (topWood != g.getTopWood()) {
                 continue;
             }
-            return g;
+            result.add(g);
         }
-        return null;
+        return result;
     }
 }
