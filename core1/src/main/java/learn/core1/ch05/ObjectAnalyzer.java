@@ -7,6 +7,9 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 
 public class ObjectAnalyzer {
+    /**
+     * Keeps track of objects that were already visited in order to avoid infinite cycles of references.
+     */
     private ArrayList<Object> visited = new ArrayList<>();
 
     /**
@@ -17,7 +20,7 @@ public class ObjectAnalyzer {
      */
     public String toString(Object obj) {
         if (obj == null) return "null";
-        if (visited.contains(obj)) return "...";
+        if (visited.contains(obj)) return "...";    // avoiding infinite recursion
         visited.add(obj);
         Class cl = obj.getClass();
         if (cl == String.class) return (String) obj;
