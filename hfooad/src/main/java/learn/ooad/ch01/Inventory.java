@@ -2,19 +2,16 @@ package learn.ooad.ch01;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 public class Inventory {
-    private List<Guitar> guitars;
+    private final List<Guitar> guitars;
 
     public Inventory() {
         this.guitars = new LinkedList<>();
     }
 
-    public void addGuitar(String serialNumber, double price, Builder builder, String model,
-                          Type type, Wood backWood, Wood topWood) {
-        Guitar guitar = new Guitar(serialNumber, price, builder, model,
-                            type, backWood, topWood);
+    public void addGuitar(String serialNumber, double price, GuitarSpec spec) {
+        Guitar guitar = new Guitar(serialNumber, price, spec);
         guitars.add(guitar);
     }
 
@@ -27,27 +24,10 @@ public class Inventory {
         return null;
     }
 
-    public List<Guitar> search(Guitar searchInfo) {
+    public List<Guitar> search(GuitarSpec spec) {
         List<Guitar> result = new LinkedList<>();
-        Builder builder = searchInfo.getBuilder();
-        String model = searchInfo.getModel();
-        Type type = searchInfo.getType();
-        Wood backWood = searchInfo.getBackWood();
-        Wood topWood = searchInfo.getTopWood();
         for (Guitar g : guitars) {
-            if (builder != g.getBuilder()) {
-                continue;
-            }
-            if (!Objects.equals(model, g.getModel())) {
-                continue;
-            }
-            if (type != g.getType()) {
-                continue;
-            }
-            if (backWood != g.getBackWood()) {
-                continue;
-            }
-            if (topWood != g.getTopWood()) {
+            if (!spec.equals(g.getSpec())) {
                 continue;
             }
             result.add(g);
