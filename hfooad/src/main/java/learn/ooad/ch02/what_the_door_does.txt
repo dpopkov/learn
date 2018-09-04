@@ -1,0 +1,11 @@
+Todd and Gina's Dog Door, version 2.0
+What the Door Does
+
+1. Fido barks to be let out.
+2. Todd or Gina hears Fido barking.
+3. Todd or Gina presses the button on the remote control.
+4. The dog door opens.
+5. Fido goes outside.
+6. Fido does his business.
+7. Fido goes back inside.
+8. The door shuts automatically.
