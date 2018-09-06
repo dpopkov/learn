@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @see learn.core1.ch04.EmployeeUsage
  */
-public class Employee extends Person {
+public class Employee extends Person implements Comparable<Employee> {
     private static final int INITIAL_ID = 1;
 
     private static int nextId;
@@ -128,5 +128,10 @@ public class Employee extends Person {
     @Override
     public int hashCode() {
         return super.hashCode() + 17 * Objects.hash(salary, hireDay);
+    }
+
+    @Override
+    public final int compareTo(Employee other) {
+        return Double.compare(this.getSalary(), other.getSalary());
     }
 }
