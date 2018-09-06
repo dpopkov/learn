@@ -24,8 +24,8 @@ public class CompoundInterest {
             }
         }
 
-        for (int j = 0; j < interestRate.length; j++) {
-            System.out.printf("%9.0f%%", 100 * interestRate[j]);
+        for (double rate : interestRate) {
+            System.out.printf("%9.0f%%", 100 * rate);
         }
         System.out.println();
 

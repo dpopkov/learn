@@ -33,7 +33,7 @@ public class Employee extends Person implements Comparable<Employee> {
         nextId = INITIAL_ID;
     }
 
-    private int id; // = Employee.assignId();
+    private final int id; // = Employee.assignId();
     private double salary;
     private final LocalDate hireDay;
 
@@ -45,8 +45,8 @@ public class Employee extends Person implements Comparable<Employee> {
 
     /**
      * Constructs employee with name and salary.
-     * @param name
-     * @param salary
+     * @param name name of employee
+     * @param salary salary of employee
      */
     public Employee(String name, double salary) {
         super(name);
@@ -56,7 +56,7 @@ public class Employee extends Person implements Comparable<Employee> {
 
     /**
      * Constructs employee with salary.
-     * @param salary
+     * @param salary salary of employee
      */
     public Employee(double salary) {
         super("Employee");
@@ -67,11 +67,11 @@ public class Employee extends Person implements Comparable<Employee> {
 
     /**
      * Constructs employee with name, salary and hire date.
-     * @param name
-     * @param salary
-     * @param year
-     * @param month
-     * @param day
+     * @param name name
+     * @param salary salary
+     * @param year year (e.g. 2001)
+     * @param month month (1-12)
+     * @param day day of month
      */
     public Employee(String name, double salary, int year, int month, int day) {
         super(name);

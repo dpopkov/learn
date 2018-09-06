@@ -60,7 +60,7 @@ public class ArrayListUsage {
             System.out.println("Do not use EmployeeDB for Employees!");
         }
 
-        @SuppressWarnings("unchecked")  // I need an exception
+        @SuppressWarnings({"unchecked", "SameParameterValue"})  // I need an exception
         ArrayList find(String query) {
             ArrayList result = new ArrayList();
             for (Object element : list) {

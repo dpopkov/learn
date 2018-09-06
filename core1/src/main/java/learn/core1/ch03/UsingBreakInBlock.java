@@ -4,6 +4,7 @@ package learn.core1.ch03;
  * Example of how to use break in a block of code.
  */
 public class UsingBreakInBlock {
+    @SuppressWarnings("ConstantConditions")
     public static void main(String[] args) {
         String s = "one";
         System.out.println("s = " + s);

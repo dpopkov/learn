@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class UsingBreak {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        int n = -1;
+        int n;
         read_data:
         while(true) {
             int sum = 0;
@@ -22,6 +22,7 @@ public class UsingBreak {
             }
             System.out.printf("Sum of 4 numbers: %d%n", sum);
         }
+        //noinspection ConstantConditions
         if (n < 0) {
             System.out.println("Negative input: " + n);
         } else {

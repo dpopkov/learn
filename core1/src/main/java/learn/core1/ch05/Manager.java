@@ -47,6 +47,7 @@ public class Manager extends Employee {
         employees[0] = m0;
         employees[1] = jack;
 
+        //noinspection UnnecessaryLocalVariable
         Employee[] likeEmployees = managers;
         System.out.println(likeEmployees[0].getName());
 

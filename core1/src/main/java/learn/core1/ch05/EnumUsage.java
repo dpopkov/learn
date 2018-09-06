@@ -3,10 +3,11 @@ package learn.core1.ch05;
 import java.util.Scanner;
 
 public class EnumUsage {
+    @SuppressWarnings("unused")
     private enum Size {
         SMALL("S"), MEDIUM("M"), LARGE("L"), EXTRA_LARGE("XL");
 
-        private String abbreviation;
+        private final String abbreviation;
 
         Size(String abbreviation) {
             this.abbreviation = abbreviation;

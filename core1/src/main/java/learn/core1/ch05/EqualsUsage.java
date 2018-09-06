@@ -6,12 +6,15 @@ import learn.core1.ch04.Employee;
  * This program demonstrates the equals method.
  */
 public class EqualsUsage {
+    @SuppressWarnings("SpellCheckingInspection")
     public static void main(String[] args) {
         Employee alice1 = new Employee("Alice Adams", 75_000, 1987, 12, 15);
+        //noinspection UnnecessaryLocalVariable
         Employee alice2 = alice1;
         Employee alice3 = new Employee("Alice Adams", 75_000, 1987, 12, 15);
         Employee bob = new Employee("Bob Brandson", 50_000, 1989, 10, 1);
 
+        //noinspection ConstantConditions
         System.out.println("alice1 == alice2: " + (alice1 == alice2));
         System.out.println("alice1 == alice3: " + (alice1 == alice3));
         System.out.println("alice1.equals(alice3): " + alice1.equals(alice3));

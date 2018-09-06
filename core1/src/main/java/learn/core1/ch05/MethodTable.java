@@ -16,7 +16,7 @@ public class MethodTable {
     /**
      * Prints a table with x- and y-values for a method.
      * @param from the lower bound for the x-values
-     * @param to the upper bould for the x-values
+     * @param to the upper bound for the x-values
      * @param n number of rows in the table
      * @param method a method with a double parameter and double return value
      */

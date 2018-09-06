@@ -1,7 +1,5 @@
 package learn.core1.ch04;
 
-import java.awt.*;
-
 /**
  * Example of usage {@code Employee} class.
  */
@@ -25,7 +23,5 @@ public class EmployeeUsage {
 
         int n = Employee.getNextId();
         System.out.printf("Next available id = %d%n", n);
-
-        Window w;
     }
 }

@@ -10,7 +10,7 @@ public class ObjectAnalyzer {
     /**
      * Keeps track of objects that were already visited in order to avoid infinite cycles of references.
      */
-    private ArrayList<Object> visited = new ArrayList<>();
+    private final ArrayList<Object> visited = new ArrayList<>();
 
     /**
      * Converts an object to a string representation that lists all fields.
