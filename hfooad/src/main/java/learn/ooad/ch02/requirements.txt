@@ -7,3 +7,7 @@ if the door is closed, and closes the dog door if the
 door is open.
 3. Once the dog door has opened, it should close
 automatically if the door isn't already closed.
+4. A bark recognizer must be able to tell when a dog
+is barking.
+5. The bark recognizer must open the dog door when
+it hears barking.
