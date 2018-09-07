@@ -4,7 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Remote {
-    private static final int CLOSE_DELAY = 5_000;
+    public static final int CLOSE_DELAY = 5_000;
 
     private DogDoor door;
 
