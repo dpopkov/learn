@@ -1,5 +1,5 @@
 package learn.hfdp.ch01;
 
-public interface Flyable {
+public interface FlyBehavior {
     void fly();
 }

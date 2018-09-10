@@ -13,13 +13,9 @@ public class Main {
         for (Duck duck : ducks) {
             System.out.println();
             duck.display();
-            if (duck instanceof Quackable) {
-                ((Quackable)duck).quack();
-            }
+            duck.performQuack();
             duck.swim();
-            if (duck instanceof Flyable) {
-                ((Flyable)duck).fly();
-            }
+            duck.performFly();
         }
     }
 }

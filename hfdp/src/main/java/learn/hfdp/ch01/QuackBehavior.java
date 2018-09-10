@@ -1,5 +1,5 @@
 package learn.hfdp.ch01;
 
-public interface Quackable {
+public interface QuackBehavior {
     void quack();
 }
