@@ -10,6 +10,7 @@ public class Main {
         ducks.add(new RedheadDuck());
         ducks.add(new RubberDuck());
         ducks.add(new DecoyDuck());
+        ducks.add(new ModelDuck());
         for (Duck duck : ducks) {
             System.out.println();
             duck.display();
@@ -17,5 +18,10 @@ public class Main {
             duck.swim();
             duck.performFly();
         }
+        System.out.println("\nChanging behavior:");
+        Duck model = new ModelDuck();
+        model.performFly();
+        model.setFlyBehavior(new FlyRocketPowered());
+        model.performFly();
     }
 }
