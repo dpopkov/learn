@@ -5,14 +5,4 @@ public class DecoyDuck extends Duck {
     public void display() {
         System.out.println("Looks like decoy.");
     }
-
-    @Override
-    public void quack() {
-        // does nothing
-    }
-
-    @Override
-    public void fly() {
-        // does nothing
-    }
 }
