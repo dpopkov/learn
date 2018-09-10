@@ -2,6 +2,9 @@ package learn.csia.ch0103.exer;
 
 import learn.csia.utils.CliAppArgs;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * 1.3.34 Ramanujan’s taxi. Srinivasa Ramanujan was an Indian mathematician
  * who became famous for his intuition for numbers. When the English mathematician G. H. Hardy
@@ -18,17 +21,20 @@ public class E010334 {
     public static void main(String[] args) {
         CliAppArgs in = new CliAppArgs(args);
         int n = in.nextInt();
+        Set<Integer> found = new HashSet<>();
         for (int a = 1; a < n; a++) {
-            for (int b = 1; b < n; b++) {
+            for (int b = a; b < n; b++) {
                 for (int c = 1; c < n; c++) {
-                    int lastLeft = 1;
                     if (c == a || c == b) continue;
-                    for (int d = 1; d < n; d++) {
+                    for (int d = c; d < n; d++) {
                         if (d == a || d == b) continue;
                         int left = a * a * a + b * b * b;
-                        if (left != lastLeft && left == c * c * c + d * d * d) {
+                        if (left > n || left < 0) {
+                            break;
+                        }
+                        if (left == c * c * c + d * d * d && !found.contains(left)) {
                             System.out.printf("%d ^ 3 + %d ^ 3 == %d ^ 3 + %d ^ 3 == %d%n", a, b, c, d, left);
-                            lastLeft = left;
+                            found.add(left);
                         }
                     }
                 }
