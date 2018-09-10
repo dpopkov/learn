@@ -1,12 +1,17 @@
 package learn.hfdp.ch01;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        Duck[] ducks = new Duck[3];
-        ducks[0] = new MallardDuck();
-        ducks[1] = new RedheadDuck();
-        ducks[2] = new RubberDuck();
+        List<Duck> ducks = new ArrayList<>();
+        ducks.add(new MallardDuck());
+        ducks.add(new RedheadDuck());
+        ducks.add(new RubberDuck());
+        ducks.add(new DecoyDuck());
         for (Duck duck : ducks) {
+            System.out.println();
             duck.display();
             duck.quack();
             duck.swim();
