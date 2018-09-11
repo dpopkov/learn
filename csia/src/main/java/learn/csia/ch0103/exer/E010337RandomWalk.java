@@ -13,21 +13,40 @@ import java.util.Random;
  * a 2n-by-2n square centered at the starting point.
  */
 public class E010337RandomWalk {
-    private Random random = new Random();
+    private enum Direction {
+        RIGHT(1, 0), DOWN(0, 1), LEFT(-1, 0), UP(0, -1);
+
+        private final int dx;
+        private final int dy;
+
+        Direction(int dx, int dy) {
+            this.dx = dx;
+            this.dy = dy;
+        }
+    }
+
+    private static final Direction[] directions = Direction.values();
+    private static final Random random = new Random();
+
+    private int x;
+    private int y;
+
+    public E010337RandomWalk() {
+        this.x = 0;
+        this.y = 0;
+    }
 
     public void simulate(int n) {
-        int x = 0;
-        int y = 0;
         while (-n <= x && x <= n && -n <= y && y <= n) {
-            int direction = random.nextInt(4);
-            switch (direction) {
-                case 0: x++; break;
-                case 1: y--; break;
-                case 2: x--; break;
-                case 3: y++; break;
-            }
+            step();
             System.out.printf("(%d, %d)%n", x, y);
         }
+    }
+
+    private void step() {
+        Direction dir = directions[random.nextInt(directions.length)];
+        x += dir.dx;
+        y += dir.dy;
     }
 
     public static void main(String[] args) {
