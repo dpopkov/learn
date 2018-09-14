@@ -7,6 +7,8 @@ import java.util.Scanner;
  * It will use input from one of them, but not both.
  */
 public class CliAppArgs {
+    private static final String[] NO_PROMPTS = {};
+
     private boolean cmdArgs;
     private int currentIdx = 0;
     private String[] args;
@@ -18,7 +20,7 @@ public class CliAppArgs {
      * @param args array of command line arguments (if null then standard input will be used)
      */
     public CliAppArgs(String[] args) {
-        this(args, null);
+        this(args, NO_PROMPTS);
     }
 
     /**
