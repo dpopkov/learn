@@ -33,3 +33,6 @@ hs_err_pid*
 # In all projects Tmp java files for research and temporary coding
 **/Tmp*.java
 
+# IO files in project "ijpds":
+ijpds/io/
+
