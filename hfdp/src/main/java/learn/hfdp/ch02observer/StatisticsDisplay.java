@@ -1,29 +1,34 @@
 package learn.hfdp.ch02observer;
 
+import java.util.Observable;
+import java.util.Observer;
+
 public class StatisticsDisplay implements Observer, DisplayElement {
     private double maxTemp = 0.0f;
     private double minTemp = 200;
     private double tempSum= 0.0f;
     private int numReadings;
-    private WeatherData weatherData;
 
     public StatisticsDisplay(WeatherData weatherData) {
-        this.weatherData = weatherData;
-        this.weatherData.registerObserver(this);
+        weatherData.addObserver(this);
     }
 
     @Override
-    public void update(Measurements measurements) {
-        tempSum += measurements.getTemperature();
-        numReadings++;
+    public void update(Observable o, Object arg) {
+        if (o instanceof WeatherData) {
+            WeatherData weatherData = (WeatherData) o;
+            Measurements measurements = weatherData.getMeasurements();
+            tempSum += measurements.getTemperature();
+            numReadings++;
 
-        if (measurements.getTemperature() > maxTemp) {
-            maxTemp = measurements.getTemperature();
+            if (measurements.getTemperature() > maxTemp) {
+                maxTemp = measurements.getTemperature();
+            }
+            if (measurements.getTemperature() < minTemp) {
+                minTemp = measurements.getTemperature();
+            }
+            display();
         }
-        if (measurements.getTemperature() < minTemp) {
-            minTemp = measurements.getTemperature();
-        }
-        display();
     }
 
     @Override
