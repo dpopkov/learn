@@ -1,6 +1,6 @@
 package learn.ijpds.ch07arrays;
 
-class IntResult {
+public class IntResult {
     private final int value;
     private final boolean success;
     private final String message;
