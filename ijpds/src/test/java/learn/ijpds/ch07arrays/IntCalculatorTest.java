@@ -10,7 +10,7 @@ import java.io.PrintStream;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-public class CalculatorTest {
+public class IntCalculatorTest {
 
     private static final PrintStream STD_OUT = System.out;
     private ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -28,8 +28,8 @@ public class CalculatorTest {
     @Test
     public void whenMainDoesNotHas3ArgumentsThenExitWithMessage() {
         String[] args = {};
-        Calculator.main(args);
-        assertResult("Usage: java Calculator operand1 operator operand2");
+        IntCalculator.main(args);
+        assertResult("Usage: java IntCalculator operand1 operator operand2");
     }
 
     @Test
@@ -62,9 +62,14 @@ public class CalculatorTest {
         assertResult("5 / 2 = 2");
     }
 
+    @Test(expected = java.lang.NumberFormatException.class)
+    public void whenNonNumericThenTerminate() {
+        evaluateExpression("ab" , "+", "cd");
+    }
+
     private void evaluateExpression(String op1, String operator, String op2) {
         String[] args = {op1, operator, op2};
-        Calculator.main(args);
+        IntCalculator.main(args);
     }
 
     private void assertResult(String s) {
