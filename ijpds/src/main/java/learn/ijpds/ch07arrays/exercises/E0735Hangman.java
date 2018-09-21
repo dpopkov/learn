@@ -11,6 +11,7 @@ import java.util.Scanner;
 public class E0735Hangman {
     private static final String[] WORDS = {"write", "game", "random", "generate",
             "prompt", "letter", "display", "correct", "finish", "continue", "declare"};
+    private static final char NOT_GUESSED = '*';
 
     public static void main(String[] args) {
         Random random = new Random();
@@ -18,44 +19,57 @@ public class E0735Hangman {
         do {
             String word = WORDS[random.nextInt(WORDS.length)];
             char[] letters = new char[word.length()];
-            Arrays.fill(letters, '*');
-            boolean running = true;
-            boolean missed;
+            Arrays.fill(letters, NOT_GUESSED);
             int missCount = 0;
-            while (running) {
+            while (isNotComplete(letters)) {
                 System.out.printf("(Guess) Enter a letter in word %s > ", String.valueOf(letters));
-                char ch = in.nextLine().charAt(0);
-                int idx = findLetter(letters, ch);
-                if (idx > -1) {
-                    System.out.println("     " + ch + " is already in the word");
-                } else {
-                    missed = true;
-                    for (int start = 0;
-                             start < word.length() && (idx = word.indexOf(ch, start)) >= 0;
-                             start = idx + 1) {
-                        missed = false;
-                        letters[idx] = ch;
-                    }
-                    if (missed) {
-                        missCount++;
-                    }
-                    running = !isComplete(letters);
+                String line = in.nextLine();
+                if (line.isEmpty()) {
+                    System.out.println("Enter a character.");
+                    continue;
+                }
+                char letter = line.charAt(0);
+                if (findLetter(letters, letter) > -1) {
+                    System.out.println("     " + letter + " is already in the word");
+                    continue;
+                }
+                if (!characterInWord(letter, word, letters)) {
+                    missCount++;
                 }
             }
-            System.out.printf("The word is %s. You missed %d time%n", word, missCount);
+            System.out.printf("The word is %s. You missed %d times%n", word, missCount);
             System.out.print("Do you want to guess another word? (y/n): ");
         } while ("y".equals(in.nextLine()));
     }
 
-    private static boolean isComplete(char[] letters) {
-        boolean complete = true;
+    /**
+     * Tries to find the specified character in the word and puts found characters into
+     * array of letters.
+     * @param ch letter
+     * @param word word to find the character in
+     * @param letters array of word letters
+     * @return true if character was found in word, false otherwise
+     */
+    private static boolean characterInWord(char ch, String word, char[] letters) {
+        boolean found = false;
+        for (int start = 0, index;
+                 start < word.length() && (index = word.indexOf(ch, start)) >= 0;
+                 start = index + 1) {
+            found = true;
+            letters[index] = ch;
+        }
+        return found;
+    }
+
+    private static boolean isNotComplete(char[] letters) {
+        boolean notComplete = false;
         for (char c : letters) {
-            if (c == '*') {
-                complete = false;
+            if (c == NOT_GUESSED) {
+                notComplete = true;
                 break;
             }
         }
-        return complete;
+        return notComplete;
     }
 
     private static int findLetter(char[] letters, char ch) {
