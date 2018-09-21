@@ -1,6 +1,7 @@
 package learn.ijpds.ch07arrays.exercises;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -13,11 +14,17 @@ public class E0735Hangman {
             "prompt", "letter", "display", "correct", "finish", "continue", "declare"};
     private static final char NOT_GUESSED = '*';
 
-    public static void main(String[] args) {
-        Random random = new Random();
-        Scanner in = new Scanner(System.in);
+    private List<String> words;
+    private Random random = new Random();
+    private Scanner in = new Scanner(System.in);
+
+    public E0735Hangman(List<String> words) {
+        this.words = words;
+    }
+
+    public void run() {
         do {
-            String word = WORDS[random.nextInt(WORDS.length)];
+            String word = words.get(random.nextInt(words.size()));
             char[] letters = new char[word.length()];
             Arrays.fill(letters, NOT_GUESSED);
             int missCount = 0;
@@ -40,6 +47,11 @@ public class E0735Hangman {
             System.out.printf("The word is %s. You missed %d times%n", word, missCount);
             System.out.print("Do you want to guess another word? (y/n): ");
         } while ("y".equals(in.nextLine()));
+    }
+
+    public static void main(String[] args) {
+        E0735Hangman hangman = new E0735Hangman(Arrays.asList(WORDS));
+        hangman.run();
     }
 
     /**
