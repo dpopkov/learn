@@ -1,7 +1,7 @@
 package learn.ijpds.ch19generics;
 
 public class Max {
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "UnusedReturnValue"})
     public static Comparable max(Comparable o1, Comparable o2) {
         return o1.compareTo(o2) > 0 ? o1 : o2;
     }

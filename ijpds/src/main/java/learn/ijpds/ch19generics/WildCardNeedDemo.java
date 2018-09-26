@@ -9,6 +9,7 @@ public class WildCardNeedDemo {
 //        System.out.println("The max number is " + max(intStack));
     }
 
+    @SuppressWarnings("unused")
     public static double max(GenericStack<Number> stack) {
         double max = stack.pop().doubleValue();
         while (!stack.isEmpty()) {
