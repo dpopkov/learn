@@ -7,6 +7,7 @@ fsa4jd - Full Stack AngularJS for Java Developers
 hfdp - Head First Design Patterns  
 hfooad - Head First Object-Oriented Analysis and Design  
 ijpds - Inroduction to Java Programming and Data Structures  
+jlf2e - Java Language Features, 2nd edition  
 leetcode - leetcode.com  
 pj4w - Professional Java for Web Applications  
 threads3e - Java Threads, Third Edition  
