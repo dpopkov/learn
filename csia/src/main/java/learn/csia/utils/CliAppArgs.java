@@ -79,6 +79,40 @@ public class CliAppArgs {
         }
     }
 
+    public String nextLine() {
+        if (cmdArgs) {
+            return getCmlLine();
+        } else {
+            printPrompt();
+            return in.nextLine();
+        }
+    }
+
+    private String getCmlLine() {
+        checkCurrentIdx();
+        if (!args[currentIdx].startsWith("\"")) {
+            return getCmdArgument();
+        }
+        boolean done = false;
+        StringBuilder builder = new StringBuilder();
+        boolean first = true;
+        while (!done && currentIdx < args.length) {
+            String token = args[currentIdx++];
+            if (first) {
+                token = token.substring(1);
+                first = false;
+            } else {
+                builder.append(" ");
+            }
+            if (token.endsWith("\"")) {
+                done = true;
+                token = token.substring(0, token.length() - 1);
+            }
+            builder.append(token);
+        }
+        return builder.toString();
+    }
+
     private String getCmdArgument() {
         return args[currentIdx++];
     }

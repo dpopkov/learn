@@ -1,12 +1,21 @@
 package learn.csia.utils;
 
+import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 
 public class CliAppArgsTest {
+
+    private static final InputStream STANDARD_INPUT = System.in;
+
     @Test
     public void whenIntInArgsThenInt() {
         String[] args = {"3", "77"};
@@ -37,5 +46,50 @@ public class CliAppArgsTest {
         CliAppArgs in = new CliAppArgs(args);
         Assert.assertThat(in.nextString(), is("Jack"));
         Assert.assertThat(in.nextString(), is("Sparrow"));
+    }
+
+    @Test
+    public void whenLineInStandardInputThenGetLine() {
+        String inputString = "One input line";
+        System.setIn(new ByteArrayInputStream(inputString.getBytes()));
+
+        CliAppArgs in = new CliAppArgs(new String[] {}, "prompt");
+        String result = in.nextLine();
+        Assert.assertThat(result, Is.is(inputString));
+
+        System.setIn(STANDARD_INPUT);
+    }
+
+    @Test
+    public void whenLineInArgsThenGetLine() {
+        CliAppArgs cli = new CliAppArgs(new String[]{"\"One", "input", "line\""}, "prompt");
+        String result = cli.nextLine();
+        Assert.assertThat(result, Is.is("One input line"));
+    }
+
+    @Test
+    public void whenOneWordInArgsThenGetLine() {
+        CliAppArgs cli = new CliAppArgs(new String[]{"One"}, "prompt");
+        String result = cli.nextLine();
+        Assert.assertThat(result, Is.is("One"));
+    }
+
+    @Test
+    public void whenLineInStandardInputThenPrompt() {
+        String inputString = "One input line";
+        System.setIn(new ByteArrayInputStream(inputString.getBytes()));
+
+        PrintStream stdOut = System.out;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        System.setOut(ps);
+
+        CliAppArgs in = new CliAppArgs(new String[] {}, "prompt42");
+        String result = in.nextLine();
+        Assert.assertThat(result, Is.is(inputString));
+        Assert.assertThat(baos.toString(), Is.is("prompt42: "));
+
+        System.setIn(STANDARD_INPUT);
+        System.setOut(stdOut);
     }
 }
