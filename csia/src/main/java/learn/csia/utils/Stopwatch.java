@@ -4,14 +4,30 @@ import java.util.Scanner;
 
 public class Stopwatch {
     private long started;
+    private long elapsed;
+    private boolean running;
+
+    public long getElapsed() {
+        if (running) {
+            throw new IllegalStateException("Stopwatch is not stopped yet.");
+        }
+        return elapsed;
+    }
 
     public void start() {
-        this.started = System.currentTimeMillis();
+        if (running) {
+            throw new IllegalStateException("Stopwatch is started already.");
+        }
+        started = System.currentTimeMillis();
+        running = true;
     }
 
     public long stop() {
-        long elapsed = System.currentTimeMillis() - started;
-        started = 0;
+        if (!running) {
+            throw new IllegalStateException("Stopwatch is not started yet.");
+        }
+        elapsed = System.currentTimeMillis() - started;
+        running = false;
         return elapsed;
     }
 
