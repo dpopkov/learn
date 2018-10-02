@@ -3,7 +3,7 @@ package learn.threads3e.ch02;
 import java.util.Vector;
 
 public class CharacterEventHandler {
-    private Vector<CharacterListener> listeners = new Vector<>();
+    private final Vector<CharacterListener> listeners = new Vector<>();
 
     public void addCharacterListener(CharacterListener listener) {
         listeners.add(listener);
