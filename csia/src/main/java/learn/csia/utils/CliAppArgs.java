@@ -7,7 +7,7 @@ import java.util.Scanner;
  * It will use input from one of them, but not both.
  */
 public class CliAppArgs {
-    private static final String[] NO_PROMPTS = {};
+    private static final String[] NO_PROMPTS = null;
 
     private boolean cmdArgs;
     private int currentIdx = 0;

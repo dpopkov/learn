@@ -15,6 +15,7 @@ import static org.hamcrest.number.IsCloseTo.closeTo;
 public class CliAppArgsTest {
 
     private static final InputStream STANDARD_INPUT = System.in;
+    private static final PrintStream STANDARD_OUTPUT = System.out;
 
     @Test
     public void whenIntInArgsThenInt() {
@@ -30,6 +31,17 @@ public class CliAppArgsTest {
         CliAppArgs in = new CliAppArgs(args);
         Assert.assertThat(in.nextDouble(), closeTo(3.4, 0.1));
         Assert.assertThat(in.nextDouble(), closeTo(77.8, 0.1));
+    }
+
+    @Test
+    public void whenNoPromptsThenPrintDefaultPrompt() {
+        System.setIn(new ByteArrayInputStream("42".getBytes()));
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(baos));
+        new CliAppArgs(new String[0]).nextInt();
+        Assert.assertThat(baos.toString(), is("> "));
+        System.setOut(STANDARD_OUTPUT);
+        System.setIn(STANDARD_INPUT);
     }
 
     @Test
