@@ -14,7 +14,7 @@ public class E2013Postfix {
     E2013Postfix() {
         operators = new HashMap<>();
         operators.put("+", (a, b) -> a + b);
-        operators.put("-", (a, b) -> a + b);
+        operators.put("-", (a, b) -> a - b);
         operators.put("*", (a, b) -> a * b);
         operators.put("/", (a, b) -> a / b);
     }

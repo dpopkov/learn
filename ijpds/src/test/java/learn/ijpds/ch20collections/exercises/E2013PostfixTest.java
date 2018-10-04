@@ -20,4 +20,11 @@ public class E2013PostfixTest {
         int result = postfix.evaluate("2 2 + 3 * 6 /");
         assertThat(result, is(2));
     }
+
+    @Test
+    public void when6Minus4Then2() {
+        E2013Postfix postfix = new E2013Postfix();
+        int result = postfix.evaluate("6 4 -");
+        assertThat(result, is(2));
+    }
 }
