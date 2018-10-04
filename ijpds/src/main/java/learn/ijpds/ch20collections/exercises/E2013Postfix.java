@@ -11,7 +11,7 @@ import java.util.function.BiFunction;
 public class E2013Postfix {
     private Map<String, BiFunction<Integer, Integer, Integer>> operators;
 
-    E2013Postfix() {
+    public E2013Postfix() {
         operators = new HashMap<>();
         operators.put("+", (a, b) -> a + b);
         operators.put("-", (a, b) -> a - b);
