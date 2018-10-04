@@ -25,13 +25,13 @@ public class Rational extends Number implements Comparable<Rational> {
     }
 
     public Rational add(Rational second) {
-        long n = n = numerator * second.getDenominator() + denominator * second.getNumerator();
+        long n = numerator * second.getDenominator() + denominator * second.getNumerator();
         long d = denominator * second.getDenominator();
         return new Rational(n, d);
     }
 
     public Rational subtract(Rational second) {
-        long n = n = numerator * second.getDenominator() - denominator * second.getNumerator();
+        long n = numerator * second.getDenominator() - denominator * second.getNumerator();
         long d = denominator * second.getDenominator();
         return new Rational(n, d);
     }
