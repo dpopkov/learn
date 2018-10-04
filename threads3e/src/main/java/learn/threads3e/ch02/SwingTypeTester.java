@@ -23,6 +23,8 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
         JPanel p = new JPanel();
         final JButton startButton = new JButton("Start");
         p.add(startButton);
+        final JButton stopButton = new JButton("Stop");
+        p.add(stopButton);
         final JButton quitButton = new JButton("Quit");
         p.add(quitButton);
         add(p, BorderLayout.SOUTH);
@@ -46,8 +48,15 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
             displayCanvas.setCharacterSource(producer);
             producer.start();
             startButton.setEnabled(false);
+            stopButton.setEnabled(true);
             feedbackCanvas.setEnabled(true);
             feedbackCanvas.requestFocus();
+        });
+        stopButton.addActionListener(e -> {
+            producer.setDone();
+            startButton.setEnabled(true);
+            stopButton.setEnabled(false);
+            feedbackCanvas.setEnabled(false);
         });
         quitButton.addActionListener(e -> quit());
         pack();

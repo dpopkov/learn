@@ -9,6 +9,10 @@ public class RandomCharacterGenerator extends Thread implements CharacterSource 
 
     private final Random random = new Random();
     private final CharacterEventHandler handler = new CharacterEventHandler();
+    /**
+     * The thread should periodically query this flag to determine if it should exit.
+     */
+    private volatile boolean done = false;
 
     /* CharacterSource methods */
     @Override
@@ -29,7 +33,7 @@ public class RandomCharacterGenerator extends Thread implements CharacterSource 
     /* Thread method */
     @Override
     public void run() {
-        for (; ; ) {
+        while (!done) {
             nextCharacter();
             try {
                 Thread.sleep(getPauseTime());
@@ -37,6 +41,10 @@ public class RandomCharacterGenerator extends Thread implements CharacterSource 
                 e.printStackTrace();
             }
         }
+    }
+
+    public void setDone() {
+        done = true;
     }
 
     private int getPauseTime() {
