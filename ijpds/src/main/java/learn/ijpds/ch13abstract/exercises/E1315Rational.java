@@ -12,8 +12,13 @@ public class E1315Rational extends Number implements Comparable<E1315Rational> {
     private BigInteger numerator;
     private BigInteger denominator;
 
+    @SuppressWarnings("unused")
     public E1315Rational() {
         this(BigInteger.ZERO, BigInteger.ONE);
+    }
+
+    public E1315Rational(String numerator, String denominator) {
+        this(new BigInteger(numerator), new BigInteger(denominator));
     }
 
     public E1315Rational(BigInteger numerator, BigInteger denominator) {
