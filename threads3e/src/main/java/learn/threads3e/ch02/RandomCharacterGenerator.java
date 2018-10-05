@@ -9,10 +9,15 @@ public class RandomCharacterGenerator extends Thread implements CharacterSource 
 
     private final Random random = new Random();
     private final CharacterEventHandler handler = new CharacterEventHandler();
+    private MinMax pauseRange;
     /**
      * The thread should periodically query this flag to determine if it should exit.
      */
     private volatile boolean done = false;
+
+    public RandomCharacterGenerator(MinMax pauseRange) {
+        this.pauseRange = pauseRange;
+    }
 
     /* CharacterSource methods */
     @Override
@@ -41,6 +46,7 @@ public class RandomCharacterGenerator extends Thread implements CharacterSource 
                 e.printStackTrace();
             }
         }
+        System.out.println("random generator stopped.");
     }
 
     public void setDone() {
@@ -48,6 +54,6 @@ public class RandomCharacterGenerator extends Thread implements CharacterSource 
     }
 
     private int getPauseTime() {
-        return Math.max(MIN_PAUSE, random.nextInt(MAX_PAUSE));
+        return Math.max(pauseRange.getMinValue(), random.nextInt(pauseRange.getMaxValue()));
     }
 }

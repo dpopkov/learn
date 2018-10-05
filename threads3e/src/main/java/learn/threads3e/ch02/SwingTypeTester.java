@@ -1,5 +1,7 @@
 package learn.threads3e.ch02;
 
+import learn.csia.utils.CliAppArgs;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -12,8 +14,10 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
     private final CharacterDisplayCanvas displayCanvas = new CharacterDisplayCanvas();
     private final CharacterDisplayCanvas feedbackCanvas = new CharacterDisplayCanvas(this);
     private RandomCharacterGenerator producer;
+    private MinMax minMaxPause;
 
-    private SwingTypeTester() throws HeadlessException {
+    private SwingTypeTester(MinMax minMaxPause) throws HeadlessException {
+        this.minMaxPause = minMaxPause;
         initComponents();
     }
 
@@ -44,7 +48,7 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
             }
         });
         startButton.addActionListener(e -> {
-            producer = new RandomCharacterGenerator();
+            producer = new RandomCharacterGenerator(minMaxPause);
             displayCanvas.setCharacterSource(producer);
             producer.start();
             startButton.setEnabled(false);
@@ -89,6 +93,9 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
 
     /* Entry point main method */
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new SwingTypeTester().setVisible(true));
+        CliAppArgs cli = new CliAppArgs(args, "Minimum pause milliseconds", "Maximum pause milliseconds");
+        int minPause = cli.nextInt();
+        int maxPause = cli.nextInt();
+        SwingUtilities.invokeLater(() -> new SwingTypeTester(new MinMax(minPause, maxPause)).setVisible(true));
     }
 }
