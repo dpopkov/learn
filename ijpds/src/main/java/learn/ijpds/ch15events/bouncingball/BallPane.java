@@ -11,8 +11,8 @@ public class BallPane extends Pane {
     public final double radius = 20;
     private double x = radius, y = radius;
     private double dx = 1, dy = 1;
-    private Circle circle = new Circle(x, y, radius);
-    private Timeline animation;
+    private final Circle circle = new Circle(x, y, radius);
+    private final Timeline animation;
 
     public BallPane() {
         circle.setFill(Color.GREEN);
