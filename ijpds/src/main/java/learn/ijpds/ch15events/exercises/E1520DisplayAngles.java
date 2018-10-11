@@ -80,14 +80,16 @@ public class E1520DisplayAngles extends Application {
                 Text text = texts.get(i);
                 Line prev = lines.get(i - 1 >= 0 ? i - 1 : lines.size() - 1);
                 Line next = lines.get(i);
-                double prevAngle = computeAngle(prev);
+                double angle = Angle.between(prev.getEndX(), prev.getEndY(), prev.getStartX(), prev.getStartY(),
+                        next.getStartX(), next.getStartY(), next.getEndX(), next.getEndY());
+               /* double prevAngle = computeAngle(prev);
                 System.out.println("i = " + i);
                 prevAngle = Angle.reverse(prevAngle);
                 System.out.println("prevAngle = " + prevAngle);
                 double nextAngle = computeAngle(next);
                 System.out.println("nextAngle = " + nextAngle);
                 double angle = Math.abs(nextAngle - prevAngle);
-                System.out.println("angle = " + angle);
+                System.out.println("angle = " + angle);*/
                 Circle c = circles.get(i);
                 text.setX(c.getCenterX() + RADIUS * 2);
                 text.setY(c.getCenterY() - RADIUS);

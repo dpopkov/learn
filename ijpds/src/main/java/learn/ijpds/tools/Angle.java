@@ -34,6 +34,28 @@ public class Angle {
     }
 
     /**
+     * Angle between 2 lines with given coordinates.
+     * @param x1 first line start X
+     * @param y1 first line start Y
+     * @param x2 first line end X
+     * @param y2 first line end Y
+     * @param x3 second line start X
+     * @param y3 second line start Y
+     * @param x4 second line end X
+     * @param y4 second line end Y
+     * @return angle between lines
+     */
+    public static double between(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
+        double a1 = get(x1, y1, x2, y2);
+        double a2 = get(x3, y3, x4, y4);
+        double a = Math.abs(a2 - a1);
+        if (a > 90.0) {
+            a = 360.0 - a;
+        }
+        return a;
+    }
+
+    /**
      * Reverses angle to 180 degrees.
      * @param angle angle in degrees
      * @return reversed angle
