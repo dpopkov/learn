@@ -12,8 +12,7 @@ public class DisplayClock extends Application {
     @Override
     public void start(Stage primaryStage) {
         ClockPane clock = new ClockPane();
-        String time = String.format("%d:%02d:%02d", clock.getHour(), clock.getMinute(), clock.getSecond());
-        Label current = new Label(time);
+        Label current = new Label(clock.getCurrentTime());
 
         BorderPane pane = new BorderPane();
         pane.setCenter(clock);

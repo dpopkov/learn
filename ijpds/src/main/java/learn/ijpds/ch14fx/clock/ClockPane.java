@@ -69,6 +69,10 @@ public class ClockPane extends Pane {
         paintClock();
     }
 
+    public String getCurrentTime() {
+        return String.format("%d:%02d:%02d", getHour(), getMinute(), getSecond());
+    }
+
     private void paintClock() {
         double radius = Math.min(getWidth(), getHeight()) * 0.8 * 0.5;
         double centerX = getWidth() / 2;
