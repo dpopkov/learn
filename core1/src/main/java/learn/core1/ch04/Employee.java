@@ -34,13 +34,19 @@ public class Employee extends Person implements Comparable<Employee> {
     }
 
     private final int id; // = Employee.assignId();
+
     private double salary;
     private final LocalDate hireDay;
-
     // object initialization block runs first
+
     {
         id = nextId;
         nextId++;
+    }
+
+    public Employee() {
+        super("default");
+        this.hireDay = LocalDate.now();
     }
 
     /**
