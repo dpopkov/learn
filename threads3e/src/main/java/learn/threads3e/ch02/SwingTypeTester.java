@@ -14,7 +14,7 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
     private final CharacterDisplayCanvas displayCanvas = new CharacterDisplayCanvas();
     private final CharacterDisplayCanvas feedbackCanvas = new CharacterDisplayCanvas(this);
     private RandomCharacterGenerator producer;
-    private MinMax minMaxPause;
+    private final MinMax minMaxPause;
 
     private SwingTypeTester(MinMax minMaxPause) throws HeadlessException {
         this.minMaxPause = minMaxPause;
@@ -27,7 +27,9 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
         JPanel p = new JPanel();
         final JButton startButton = new JButton("Start");
         p.add(startButton);
-        final JButton stopButton = new JButton("Stop");
+        final JButton stopSlowButton = new JButton("Stop Slow");
+        p.add(stopSlowButton);
+        final JButton stopButton = new JButton("Stop Quick");
         p.add(stopButton);
         final JButton quitButton = new JButton("Quit");
         p.add(quitButton);
@@ -52,14 +54,23 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
             displayCanvas.setCharacterSource(producer);
             producer.start();
             startButton.setEnabled(false);
+            stopSlowButton.setEnabled(true);
             stopButton.setEnabled(true);
             feedbackCanvas.setEnabled(true);
             feedbackCanvas.requestFocus();
         });
-        stopButton.addActionListener(e -> {
+        stopSlowButton.addActionListener(e -> {
             producer.setDone();
             startButton.setEnabled(true);
             stopButton.setEnabled(false);
+            stopSlowButton.setEnabled(false);
+            feedbackCanvas.setEnabled(false);
+        });
+        stopButton.addActionListener(e -> {
+            producer.interrupt();
+            startButton.setEnabled(true);
+            stopButton.setEnabled(false);
+            stopSlowButton.setEnabled(false);
             feedbackCanvas.setEnabled(false);
         });
         quitButton.addActionListener(e -> quit());
