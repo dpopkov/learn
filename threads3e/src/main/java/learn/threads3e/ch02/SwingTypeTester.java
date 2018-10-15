@@ -14,6 +14,7 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
     private final CharacterDisplayCanvas displayCanvas = new CharacterDisplayCanvas();
     private final CharacterDisplayCanvas feedbackCanvas = new CharacterDisplayCanvas(this);
     private RandomCharacterGenerator producer;
+    private Thread producerThread;
     private final MinMax minMaxPause;
 
     private SwingTypeTester(MinMax minMaxPause) throws HeadlessException {
@@ -52,7 +53,8 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
         startButton.addActionListener(e -> {
             producer = new RandomCharacterGenerator(minMaxPause);
             displayCanvas.setCharacterSource(producer);
-            producer.start();
+            producerThread = new Thread(producer);
+            producerThread.start();
             startButton.setEnabled(false);
             stopSlowButton.setEnabled(true);
             stopButton.setEnabled(true);
@@ -67,7 +69,7 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
             feedbackCanvas.setEnabled(false);
         });
         stopButton.addActionListener(e -> {
-            producer.interrupt();
+            producerThread.interrupt();
             startButton.setEnabled(true);
             stopButton.setEnabled(false);
             stopSlowButton.setEnabled(false);

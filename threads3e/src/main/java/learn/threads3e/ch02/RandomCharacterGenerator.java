@@ -2,7 +2,7 @@ package learn.threads3e.ch02;
 
 import java.util.Random;
 
-public class RandomCharacterGenerator extends Thread implements CharacterSource {
+public class RandomCharacterGenerator implements Runnable, CharacterSource {
     private static final char[] CHARS = "abcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
     private static final int MIN_PAUSE = 1000;
     private static final int MAX_PAUSE = 5000;
@@ -51,7 +51,7 @@ public class RandomCharacterGenerator extends Thread implements CharacterSource 
     }
 
     private boolean threadNotFinished() {
-        boolean interrupted = isInterrupted();
+        boolean interrupted = Thread.currentThread().isInterrupted();
         if (interrupted) {
             System.out.println("Generator is interrupted.");
         }
