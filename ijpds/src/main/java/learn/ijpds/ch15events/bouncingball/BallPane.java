@@ -2,6 +2,7 @@ package learn.ijpds.ch15events.bouncingball;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -36,6 +37,10 @@ public class BallPane extends Pane {
 
     public void decreaseSpeed() {
         animation.setRate(animation.getRate() > 0 ? animation.getRate() - 0.1 : 0);
+    }
+
+    public DoubleProperty rateProperty() {
+        return animation.rateProperty();
     }
 
     private void moveBall() {
