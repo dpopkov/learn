@@ -1,6 +1,7 @@
 package learn.ijpds.ch16fxui.exercises;
 
 import javafx.application.Application;
+import javafx.beans.InvalidationListener;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -14,10 +15,15 @@ public class E1608TwoCircles extends Application {
     private final Label lbStatus = new Label("Two circles intersect?");
     private final Circle circle1 = new Circle(50, 60, 30);
     private final Circle circle2 = new Circle(180, 56, 40);
-    {
+
+    public E1608TwoCircles() {
+        initCircles();
+    }
+
+    private void initCircles() {
         circle1.setFill(Color.TRANSPARENT);
-        circle1.setStroke(Color.BLACK);
         circle2.setFill(Color.TRANSPARENT);
+        circle1.setStroke(Color.BLACK);
         circle2.setStroke(Color.BLACK);
         circle1.setOnMouseDragged(e -> {
             circle1.setCenterX(e.getX());
@@ -27,9 +33,23 @@ public class E1608TwoCircles extends Application {
             circle2.setCenterX(e.getX());
             circle2.setCenterY(e.getY());
         });
+        InvalidationListener moveListener = ob -> checkIntersection();
+        circle1.centerXProperty().addListener(moveListener);
+        circle1.centerYProperty().addListener(moveListener);
+        circle2.centerXProperty().addListener(moveListener);
+        circle2.centerYProperty().addListener(moveListener);
     }
 
-    // TODO: Check circles for intersection
+    private void checkIntersection() {
+        double dx = circle2.getCenterX() - circle1.getCenterX();
+        double dy = circle2.getCenterY() - circle1.getCenterY();
+        double distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance <= circle1.getRadius() + circle2.getRadius()) {
+            lbStatus.setText("Two circles intersect? Yes");
+        } else {
+            lbStatus.setText("Two circles intersect? No");
+        }
+    }
 
     @Override
     public void start(Stage primaryStage) {
