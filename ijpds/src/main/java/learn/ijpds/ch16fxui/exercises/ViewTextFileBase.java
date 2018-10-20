@@ -9,11 +9,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import learn.ijpds.tools.Text;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public abstract class ViewTextFileBase extends Application {
     private final String title;
@@ -50,11 +48,10 @@ public abstract class ViewTextFileBase extends Application {
     protected String readFile(String path) {
         String text = null;
         try {
-            text = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+            text = Text.readFile(path);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return text;
     }
-
 }
