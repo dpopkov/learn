@@ -38,4 +38,12 @@ public class ControlledRunningFan extends BorderPane {
         this.setCenter(fanPane);
         this.setBottom(slSpeed);
     }
+
+    public void play() {
+        fanPane.play();
+    }
+
+    public void pause() {
+        fanPane.pause();
+    }
 }
