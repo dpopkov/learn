@@ -9,4 +9,5 @@
   * Sampling without replacement
   * Coupon Collector simulation
   * Sieve of Eratosthenes
+  * Self avoiding walk (G)
   
