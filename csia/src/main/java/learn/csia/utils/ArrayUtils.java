@@ -33,6 +33,15 @@ public class ArrayUtils {
         return result;
     }
 
+    public static <T> void printTwoDimensional(T[][] a) {
+        for (T[] b : a) {
+            for (T c : b) {
+                System.out.print(c + " ");
+            }
+            System.out.println();
+        }
+    }
+
     public static void printTwoDimensional(int[][] a) {
         for (int[] b : a) {
             for (int c : b) {
