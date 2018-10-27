@@ -1,9 +1,10 @@
 /* 10.2 */
 package learn.ijpds.ch10oop;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Loan {
+public class Loan implements Serializable {
     private double annualInterestRate;
     private int numberOfYears;
     private double loanAmount;
