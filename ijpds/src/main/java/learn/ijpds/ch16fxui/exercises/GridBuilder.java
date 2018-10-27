@@ -1,6 +1,7 @@
 package learn.ijpds.ch16fxui.exercises;
 
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -18,9 +19,9 @@ public class GridBuilder {
         grid.setPadding(new Insets(GAP));
     }
 
-    public void appendRow(String labelText, Control control) {
+    public void appendRow(String labelText, Node node) {
         grid.add(new Label(labelText), 0, row);
-        grid.add(control,1, row++);
+        grid.add(node,1, row++);
     }
 
     public GridPane getGrid() {
