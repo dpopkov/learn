@@ -5,6 +5,8 @@ import learn.csia.utils.CliAppArgs;
 import java.io.*;
 
 public class CopyWithBlocks {
+    public static final int DEFAULT_BLOCK_SIZE = 1024 * 4;
+
     /**
      * Main method.
      * @param args args[0] source file, args[1] target file
@@ -15,11 +17,15 @@ public class CopyWithBlocks {
     }
 
     public static void copyFile(File sourceFile, File targetFile) throws IOException {
+        copyFile(sourceFile, targetFile, DEFAULT_BLOCK_SIZE);
+    }
+
+    public static void copyFile(File sourceFile, File targetFile, int bufferBlockSize) throws IOException {
         try (
                 BufferedInputStream input = new BufferedInputStream(new FileInputStream(sourceFile));
                 BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(targetFile))
         ) {
-            byte[] block = new byte[1024 * 4];
+            byte[] block = new byte[bufferBlockSize];
             int r, numberOfBytesCopied = 0;
             while ((r = input.read(block)) != -1) {
                 output.write(block, 0, r);

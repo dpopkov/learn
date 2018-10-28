@@ -2,7 +2,6 @@ package learn.ijpds.ch16fxui.exercises;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 

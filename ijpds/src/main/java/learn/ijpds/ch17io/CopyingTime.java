@@ -34,18 +34,26 @@ public class CopyingTime {
 
         File targetFile3 = new File(source + ".3");
         started = System.currentTimeMillis();
-        Copy.copyFileWithoutBuffered(sourceFile, targetFile3);
+        CopyWithBlocks.copyFile(sourceFile, targetFile3, CopyWithBlocks.DEFAULT_BLOCK_SIZE * 4);
         ms = System.currentTimeMillis() - started;
         System.out.println("3: " + ms + " milliseconds");
+
+        File targetFile4 = new File(source + ".4");
+        started = System.currentTimeMillis();
+        Copy.copyFileWithoutBuffered(sourceFile, targetFile4);
+        ms = System.currentTimeMillis() - started;
+        System.out.println("4: " + ms + " milliseconds");
 
         /*
         Result of tests on 10mb file:
         10485760 bytes copied
         1: 326 milliseconds     (Buffered streams)
         10485760 bytes copied
-        2: 26 milliseconds      (Buffered streams with byte array as buffer)
+        2: 26 milliseconds      (Buffered streams with byte array as buffer size 4*1024) - NOT STABLE comparing 3:
         10485760 bytes copied
-        3: 42797 milliseconds   (raw FileInput/FileOutputStream-s)
+        3: 18 milliseconds      (Buffered streams with byte array as buffer size 16*1024) - NOT STABLE comparing 2:
+        10485760 bytes copied
+        4: 42797 milliseconds   (raw FileInput/FileOutputStream-s)
          */
     }
 }
