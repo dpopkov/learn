@@ -3,6 +3,7 @@ package learn.ijpds.tools;
 import org.junit.Test;
 
 import static learn.ijpds.tools.BitsTools.toBinary;
+import static learn.ijpds.tools.BitsTools.toHex;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -87,5 +88,17 @@ public class BitsToolsTest {
     public void whenConvertByteMinus128ThenGet10000000() {
         String expected = "10000000";
         assertThat(toBinary((byte)-128), is(expected));
+    }
+
+    @Test
+    public void whenConvert255ToHexThenFF() {
+        String expected = "FF";
+        assertThat(toHex(255), is(expected));
+    }
+
+    @Test
+    public void whenConvert13ToHexThen0D() {
+        String expected = "0D";
+        assertThat(toHex(13), is(expected));
     }
 }
