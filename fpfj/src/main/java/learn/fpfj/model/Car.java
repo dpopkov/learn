@@ -51,4 +51,24 @@ public class Car {
                 ", passengers=" + passengers +
                 (trunkContent != null ? ", trunkContent=" + trunkContent : " no trunk") + '}';
     }
+
+    static class RedCarCriterion implements CarCriterion {
+        @Override
+        public boolean test(Car c) {
+            return c.getColor().equals("Red");
+        }
+    }
+
+    static class GasLevelCarCriterion implements CarCriterion {
+        private int threshold;
+
+        public GasLevelCarCriterion(int threshold) {
+            this.threshold = threshold;
+        }
+
+        @Override
+        public boolean test(Car c) {
+            return c.getGasLevel() >= threshold;
+        }
+    }
 }
