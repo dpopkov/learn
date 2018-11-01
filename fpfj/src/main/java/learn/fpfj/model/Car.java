@@ -53,18 +53,15 @@ public class Car {
     }
 
     public static CarCriterion getRedCarCriterion() {
-        /*return new RedCarCriterion();*/
         return RED_CAR_CRITERION;
     }
 
-    private static final RedCarCriterion RED_CAR_CRITERION = new RedCarCriterion();
-
-    private static class RedCarCriterion implements CarCriterion {
+    private static final CarCriterion RED_CAR_CRITERION = new CarCriterion() {
         @Override
         public boolean test(Car c) {
             return c.getColor().equals("Red");
         }
-    }
+    };
 
     public static CarCriterion getCarLevelCarCriterion(int threshold) {
         return new GasLevelCarCriterion(threshold);
