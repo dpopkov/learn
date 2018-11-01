@@ -44,7 +44,7 @@ public class CarScratch {
                 Car.withGasColorPassengers(6, "Red", "Ender", "Hyrum", "Locke", "Bonzo")
         );
         showAll(cars);
-        showAll(getCarsByCriterion(cars, new Car.RedCarCriterion()));
+        showAll(getCarsByCriterion(cars, Car.getRedCarCriterion()));
         showAll(getCarsByCriterion(cars, new Car.GasLevelCarCriterion(6)));
 
         cars.sort(new PassengerCountOrder());

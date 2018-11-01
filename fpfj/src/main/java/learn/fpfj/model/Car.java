@@ -52,6 +52,13 @@ public class Car {
                 (trunkContent != null ? ", trunkContent=" + trunkContent : " no trunk") + '}';
     }
 
+    public static CarCriterion getRedCarCriterion() {
+        /*return new RedCarCriterion();*/
+        return RED_CAR_CRITERION;
+    }
+
+    private static final RedCarCriterion RED_CAR_CRITERION = new RedCarCriterion();
+
     static class RedCarCriterion implements CarCriterion {
         @Override
         public boolean test(Car c) {
