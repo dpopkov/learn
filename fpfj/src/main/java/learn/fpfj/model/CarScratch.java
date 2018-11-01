@@ -52,6 +52,5 @@ public class CarScratch {
 
         cars.sort(Car.getGasComparator());
         showAll(cars);
-
     }
 }
