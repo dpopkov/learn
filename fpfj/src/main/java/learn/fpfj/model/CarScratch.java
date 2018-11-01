@@ -1,5 +1,6 @@
 package learn.fpfj.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,6 +12,16 @@ public class CarScratch {
         System.out.println("--------------------------------------------------------------- ");
     }
 
+    public static List<Car> getColoredCars(Iterable<Car> in, String color) {
+        List<Car> output = new ArrayList<>();
+        for (Car c : in) {
+            if (color.equals(c.getColor())) {
+                output.add(c);
+            }
+        }
+        return output;
+    }
+
     @SuppressWarnings("SpellCheckingInspection")
     public static void main(String[] args) {
         List<Car> cars = Arrays.asList(
@@ -20,6 +31,8 @@ public class CarScratch {
                 Car.withGasColorPassengers(7, "Green", "Valentine", "Gillian", "Anne", "Dr. Mahmoud"),
                 Car.withGasColorPassengers(6, "Red", "Ender", "Hyrum", "Locke", "Bonzo")
         );
+        showAll(cars);
+        showAll(getColoredCars(cars, "Black"));
         showAll(cars);
     }
 }
