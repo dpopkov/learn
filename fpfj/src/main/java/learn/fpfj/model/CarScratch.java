@@ -49,5 +49,9 @@ public class CarScratch {
 
         cars.sort(new PassengerCountOrder());
         showAll(cars);
+
+        cars.sort(Car.getGasComparator());
+        showAll(cars);
+
     }
 }
