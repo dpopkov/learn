@@ -15,6 +15,18 @@ public class RecursivePalindrome {
         return isPalindrome(s, low + 1, high - 1);
     }
 
+    @SuppressWarnings("unused")
+    private static boolean isPalindromeNonRecursive(String s) {
+        for (int low = 0, high = s.length() - 1;
+                low < high;
+                low++, high--) {
+            if (s.charAt(low) != s.charAt(high)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @SuppressWarnings("SpellCheckingInspection")
     public static void main(String[] args) {
         String[] words = {"moon", "noon", "a", "aba", "ab", "abdxcxdba"};
