@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class CharacterDisplayCanvas extends JComponent implements CharacterListener {
     private final FontMetrics fm;
+    /** Buffer for the painted character. */
     private final char[] tmpChar = new char[1];
     private final int fontHeight;
 
@@ -19,6 +20,9 @@ public class CharacterDisplayCanvas extends JComponent implements CharacterListe
         setCharacterSource(cs);
     }
 
+    /**
+     * Registers itself to be notified when a character from source is available.
+     */
     public void setCharacterSource(CharacterSource cs) {
         cs.addCharacterListener(this);
     }

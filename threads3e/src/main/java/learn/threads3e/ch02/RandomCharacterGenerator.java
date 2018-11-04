@@ -32,7 +32,11 @@ public class RandomCharacterGenerator implements Runnable, CharacterSource {
 
     @Override
     public void nextCharacter() {
-        handler.fireNewCharacter(this, CHARS[random.nextInt(CHARS.length)]);
+        handler.fireNewCharacter(this, getRandomCharacter());
+    }
+
+    private char getRandomCharacter() {
+        return CHARS[random.nextInt(CHARS.length)];
     }
 
     /* Thread method */

@@ -2,6 +2,9 @@ package learn.threads3e.ch02;
 
 import java.util.Vector;
 
+/**
+ * This class fires the events when character from source is available.
+ */
 public class CharacterEventHandler {
     private final Vector<CharacterListener> listeners = new Vector<>();
 

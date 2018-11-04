@@ -1,7 +1,5 @@
 package learn.threads3e.ch02;
 
-import learn.csia.utils.CliAppArgs;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -16,6 +14,9 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
     private RandomCharacterGenerator producer;
     private Thread producerThread;
     private final MinMax minMaxPause;
+    private final JButton startButton = new JButton("Start");
+    private final JButton stopSlowButton = new JButton("Stop Slow");
+    private final JButton stopQuickButton = new JButton("Stop Quick");
 
     private SwingTypeTester(MinMax minMaxPause) throws HeadlessException {
         this.minMaxPause = minMaxPause;
@@ -26,12 +27,9 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
         add(displayCanvas, BorderLayout.NORTH);
         add(feedbackCanvas, BorderLayout.CENTER);
         JPanel p = new JPanel();
-        final JButton startButton = new JButton("Start");
         p.add(startButton);
-        final JButton stopSlowButton = new JButton("Stop Slow");
         p.add(stopSlowButton);
-        final JButton stopButton = new JButton("Stop Quick");
-        p.add(stopButton);
+        p.add(stopQuickButton);
         final JButton quitButton = new JButton("Quit");
         p.add(quitButton);
         add(p, BorderLayout.SOUTH);
@@ -55,25 +53,15 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
             displayCanvas.setCharacterSource(producer);
             producerThread = new Thread(producer);
             producerThread.start();
-            startButton.setEnabled(false);
-            stopSlowButton.setEnabled(true);
-            stopButton.setEnabled(true);
-            feedbackCanvas.setEnabled(true);
-            feedbackCanvas.requestFocus();
+            disableStart();
         });
         stopSlowButton.addActionListener(e -> {
             producer.setDone();
-            startButton.setEnabled(true);
-            stopButton.setEnabled(false);
-            stopSlowButton.setEnabled(false);
-            feedbackCanvas.setEnabled(false);
+            enableStart();
         });
-        stopButton.addActionListener(e -> {
+        stopQuickButton.addActionListener(e -> {
             producerThread.interrupt();
-            startButton.setEnabled(true);
-            stopButton.setEnabled(false);
-            stopSlowButton.setEnabled(false);
-            feedbackCanvas.setEnabled(false);
+            enableStart();
         });
         quitButton.addActionListener(e -> quit());
         pack();
@@ -89,7 +77,6 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
     public void removeCharacterListener(CharacterListener listener) {
         handler.removeCharacterListener(listener);
     }
-
     @Override
     public void nextCharacter() {
         throw new IllegalStateException("We don't produce on demand");
@@ -100,15 +87,33 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
         handler.fireNewCharacter(this, c);
     }
 
+    private void disableStart() {
+        startButton.setEnabled(false);
+        stopSlowButton.setEnabled(true);
+        stopQuickButton.setEnabled(true);
+        feedbackCanvas.setEnabled(true);
+        feedbackCanvas.requestFocus();
+    }
+
+    private void enableStart() {
+        startButton.setEnabled(true);
+        stopQuickButton.setEnabled(false);
+        stopSlowButton.setEnabled(false);
+        feedbackCanvas.setEnabled(false);
+    }
+
     private void quit() {
         System.exit(0);
     }
 
     /* Entry point main method */
     public static void main(String[] args) {
-        CliAppArgs cli = new CliAppArgs(args, "Minimum pause milliseconds", "Maximum pause milliseconds");
-        int minPause = cli.nextInt();
-        int maxPause = cli.nextInt();
+        if (args.length != 2) {
+            System.out.println("Usage: java " + SwingTypeTester.class.getName() + " minPause maxPause");
+            System.exit(1);
+        }
+        int minPause = Integer.parseInt(args[0]);
+        int maxPause = Integer.parseInt(args[1]);
         SwingUtilities.invokeLater(() -> new SwingTypeTester(new MinMax(minPause, maxPause)).setVisible(true));
     }
 }
