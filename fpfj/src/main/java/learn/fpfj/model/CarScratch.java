@@ -12,8 +12,13 @@ class PassengerCountOrder implements Comparator<Car> {
     }
 }
 
+@FunctionalInterface
 interface CarCriterion {
     boolean test(Car c);
+}
+
+interface Strange {
+    boolean stuff(Car c);
 }
 
 public class CarScratch {
@@ -45,12 +50,22 @@ public class CarScratch {
         );
         showAll(cars);
         showAll(getCarsByCriterion(cars, Car.getRedCarCriterion()));
-        showAll(getCarsByCriterion(cars, Car.getCarLevelCarCriterion(6)));
+        showAll(getCarsByCriterion(cars, Car.getGasLevelCarCriterion(6)));
 
         cars.sort(new PassengerCountOrder());
         showAll(cars);
 
         cars.sort(Car.getGasComparator());
         showAll(cars);
+
+        showAll(getCarsByCriterion(cars, c -> c.getPassengers().size() == 2));
+        showAll(getCarsByCriterion(cars, Car.getFourPassengerCriterion()));
+
+        /* Making context for lambda using cast to functional interface. */
+        boolean b = ((CarCriterion)(c -> c.getColor().equals("Red"))).test(cars.get(0));
+        System.out.println("0th car is red = " + b);
+        /* Cast to other functional interface changes the type of lambda. */
+        boolean b2 = ((Strange)(c -> c.getColor().equals("Red"))).stuff(cars.get(0));
+        System.out.println("0th car is still red = " + b2);
     }
 }

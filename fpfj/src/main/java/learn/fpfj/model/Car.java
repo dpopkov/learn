@@ -53,13 +53,17 @@ public class Car {
                 (trunkContent != null ? ", trunkContent=" + trunkContent : " no trunk") + '}';
     }
 
+    public static CarCriterion getFourPassengerCriterion() {
+        return c -> c.getPassengers().size() == 4;
+    }
+
     public static CarCriterion getRedCarCriterion() {
         return RED_CAR_CRITERION;
     }
 
     private static final CarCriterion RED_CAR_CRITERION = c -> c.getColor().equals("Red");
 
-    public static CarCriterion getCarLevelCarCriterion(int threshold) {
+    public static CarCriterion getGasLevelCarCriterion(int threshold) {
         return new GasLevelCarCriterion(threshold);
     }
 
