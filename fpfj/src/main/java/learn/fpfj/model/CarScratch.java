@@ -1,5 +1,6 @@
 package learn.fpfj.model;
 
+import java.time.LocalDate;
 import java.util.*;
 
 class PassengerCountOrder implements Comparator<Car> {
@@ -64,5 +65,15 @@ public class CarScratch {
         /* Cast to other functional interface changes the type of lambda. */
         boolean b2 = ((Strange)(c -> c.getColor().equals("Red"))).stuff(cars.get(0));
         System.out.println("0th car is still red = " + b2);
+
+        List<String> colors = Arrays.asList("LightCoral", "pink", "Orange", "Gold", "plum", "Blue", "limegreen");
+        showAll(getByCriterion(colors, st -> st.length() > 4));
+        showAll(getByCriterion(colors, st -> Character.isUpperCase(st.charAt(0))));
+
+        LocalDate today = LocalDate.now();
+        List<LocalDate> dates = Arrays.asList(today, today.plusDays(1), today.plusDays(7),
+                today.minusDays(1)
+        );
+        showAll(getByCriterion(dates, d -> d.isAfter(today)));
     }
 }
