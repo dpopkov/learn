@@ -1,9 +1,6 @@
 package learn.fpfj.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 class PassengerCountOrder implements Comparator<Car> {
     @Override
@@ -13,8 +10,8 @@ class PassengerCountOrder implements Comparator<Car> {
 }
 
 @FunctionalInterface
-interface CarCriterion {
-    boolean test(Car c);
+interface Criterion<E> {
+    boolean test(E e);
 }
 
 interface Strange {
@@ -22,16 +19,16 @@ interface Strange {
 }
 
 public class CarScratch {
-    public static void showAll(List<Car> lc) {
-        for (Car c : lc) {
+    public static <T> void showAll(List<T> lc) {
+        for (T c : lc) {
             System.out.println(c);
         }
         System.out.println("--------------------------------------------------------------- ");
     }
 
-    public static List<Car> getCarsByCriterion(Iterable<Car> in, CarCriterion criterion) {
-        List<Car> output = new ArrayList<>();
-        for (Car c : in) {
+    public static <T> List<T> getByCriterion(Iterable<T> in, Criterion<T> criterion) {
+        List<T> output = new ArrayList<>();
+        for (T c : in) {
             if (criterion.test(c)) {
                 output.add(c);
             }
@@ -49,8 +46,8 @@ public class CarScratch {
                 Car.withGasColorPassengers(6, "Red", "Ender", "Hyrum", "Locke", "Bonzo")
         );
         showAll(cars);
-        showAll(getCarsByCriterion(cars, Car.getRedCarCriterion()));
-        showAll(getCarsByCriterion(cars, Car.getGasLevelCarCriterion(6)));
+        showAll(getByCriterion(cars, Car.getRedCarCriterion()));
+        showAll(getByCriterion(cars, Car.getGasLevelCarCriterion(6)));
 
         cars.sort(new PassengerCountOrder());
         showAll(cars);
@@ -58,11 +55,11 @@ public class CarScratch {
         cars.sort(Car.getGasComparator());
         showAll(cars);
 
-        showAll(getCarsByCriterion(cars, c -> c.getPassengers().size() == 2));
-        showAll(getCarsByCriterion(cars, Car.getFourPassengerCriterion()));
+        showAll(getByCriterion(cars, c -> c.getPassengers().size() == 2));
+        showAll(getByCriterion(cars, Car.getFourPassengerCriterion()));
 
         /* Making context for lambda using cast to functional interface. */
-        boolean b = ((CarCriterion)(c -> c.getColor().equals("Red"))).test(cars.get(0));
+        boolean b = ((Criterion<Car>)(c -> c.getColor().equals("Red"))).test(cars.get(0));
         System.out.println("0th car is red = " + b);
         /* Cast to other functional interface changes the type of lambda. */
         boolean b2 = ((Strange)(c -> c.getColor().equals("Red"))).stuff(cars.get(0));
