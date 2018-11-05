@@ -20,6 +20,18 @@ public class CharacterDisplayCanvas extends JComponent implements CharacterListe
         setCharacterSource(cs);
     }
 
+    public int getFontHeight() {
+        return fontHeight;
+    }
+
+    public boolean charBufferEmpty() {
+        return tmpChar[0] == 0;
+    }
+
+    public char[] getCharBuffer() {
+        return tmpChar;
+    }
+
     /**
      * Registers itself to be notified when a character from source is available.
      */

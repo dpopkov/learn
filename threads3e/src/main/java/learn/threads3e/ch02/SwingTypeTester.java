@@ -9,7 +9,7 @@ import java.awt.event.WindowEvent;
 
 public class SwingTypeTester extends JFrame implements CharacterSource {
     private final CharacterEventHandler handler = new CharacterEventHandler();
-    private final CharacterDisplayCanvas displayCanvas = new CharacterDisplayCanvas();
+    private final AnimatedCharacterDisplayCanvas displayCanvas = new AnimatedCharacterDisplayCanvas();
     private final CharacterDisplayCanvas feedbackCanvas = new CharacterDisplayCanvas(this);
     private RandomCharacterGenerator producer;
     private Thread producerThread;
@@ -51,16 +51,21 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
         startButton.addActionListener(e -> {
             producer = new RandomCharacterGenerator(minMaxPause);
             displayCanvas.setCharacterSource(producer);
+            displayCanvas.setDone(false);
+            Thread displayThread = new Thread(displayCanvas);
             producerThread = new Thread(producer);
             producerThread.start();
+            displayThread.start();
             disableStart();
         });
         stopSlowButton.addActionListener(e -> {
             producer.setDone();
+            displayCanvas.setDone(true);
             enableStart();
         });
         stopQuickButton.addActionListener(e -> {
             producerThread.interrupt();
+            displayCanvas.setDone(true);
             enableStart();
         });
         quitButton.addActionListener(e -> quit());
