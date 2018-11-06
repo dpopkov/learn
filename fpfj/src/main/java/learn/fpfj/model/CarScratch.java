@@ -20,6 +20,18 @@ interface Strange {
 }
 
 public class CarScratch {
+    public static <T> Criterion<T> negate(Criterion<T> crit) {
+        return t -> !crit.test(t);
+    }
+
+    public static <T> Criterion<T> and(Criterion<T> first, Criterion<T> second) {
+        return t -> first.test(t) && second.test(t);
+    }
+
+    public static <T> Criterion<T> or(Criterion<T> first, Criterion<T> second) {
+        return t -> first.test(t) || second.test(t);
+    }
+
     public static <T> void showAll(List<T> lc) {
         for (T c : lc) {
             System.out.println(c);
@@ -50,9 +62,22 @@ public class CarScratch {
         showAll(getByCriterion(cars, Car.getRedCarCriterion()));
         showAll(getByCriterion(cars, Car.getGasLevelCarCriterion(6)));
 
-        showAll(getByCriterion(cars, Car.getGasLevelCarCriterion(7)));
+        /*showAll(getByCriterion(cars, Car.getGasLevelCarCriterion(7)));
         showAll(getByCriterion(cars, Car.getGasLevelCarCriterion(4)));
+        showAll(getByCriterion(cars, Car.getColorCriterion("Green", "Red")));*/
 
-        showAll(getByCriterion(cars, Car.getColorCriterion("Green", "Red")));
+        Criterion<Car> level7 = Car.getGasLevelCarCriterion(7);
+        showAll(getByCriterion(cars, level7));
+        Criterion<Car> notLevel7 = negate(level7);
+        showAll(getByCriterion(cars, notLevel7));
+
+        Criterion<Car> isRed = Car.getColorCriterion("Red");
+        Criterion<Car> fourPassengers = Car.getFourPassengerCriterion();
+        Criterion<Car> redFourPassengers = and(isRed, fourPassengers);
+        showAll(getByCriterion(cars, redFourPassengers));
+
+        Criterion<Car> isBlack = Car.getColorCriterion("Black");
+        Criterion<Car> blackOrFourPassengers = or(isBlack, fourPassengers);
+        showAll(getByCriterion(cars, blackOrFourPassengers));
     }
 }
