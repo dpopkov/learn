@@ -3,6 +3,7 @@ This repository aggregates examples and exercises from various books and resourc
 
 core1 - Core Java vol1  
 csia - Computer Science. An Interdisciplinary Approach  
+dsai - Data Structures and Algorithms in Java, 2nd edition  
 fsa4jd - Full Stack AngularJS for Java Developers  
 fpfj - Functional Programming For Java  
 hfdp - Head First Design Patterns  
