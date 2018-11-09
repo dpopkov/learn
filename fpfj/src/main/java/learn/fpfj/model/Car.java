@@ -1,6 +1,7 @@
 package learn.fpfj.model;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class Car {
     private int gasLevel;
@@ -50,21 +51,21 @@ public class Car {
                 (trunkContent != null ? ", trunkContent=" + trunkContent : " no trunk") + '}';
     }
 
-    public static Criterion<Car> getFourPassengerCriterion() {
+    public static Predicate<Car> getFourPassengerCriterion() {
         return c -> c.getPassengers().size() == 4;
     }
 
-    public static Criterion<Car> getRedCarCriterion() {
-        return RED_CAR_CRITERION;
+    public static Predicate<Car> getRedCarPredicate() {
+        return RED_CAR_PREDICATE;
     }
 
-    private static final Criterion<Car> RED_CAR_CRITERION = c -> c.getColor().equals("Red");
+    private static final Predicate<Car> RED_CAR_PREDICATE = c -> c.getColor().equals("Red");
 
-    public static Criterion<Car> getGasLevelCarCriterion(int threshold) {
+    public static Predicate<Car> getGasLevelCarCriterion(int threshold) {
         return car -> car.getGasLevel() >= threshold;
     }
 
-    public static Criterion<Car> getColorCriterion(String... colors) {
+    public static Predicate<Car> getColorCriterion(String... colors) {
         Set<String> colorSet = new HashSet<>(Arrays.asList(colors));
         return car -> colorSet.contains(car.color);
     }

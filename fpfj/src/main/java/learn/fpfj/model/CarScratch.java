@@ -1,6 +1,7 @@
 package learn.fpfj.model;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class CarScratch {
     public static <T> void showAll(List<T> lc) {
@@ -10,10 +11,10 @@ public class CarScratch {
         System.out.println("--------------------------------------------------------------- ");
     }
 
-    public static <T> List<T> getByCriterion(Iterable<T> in, Criterion<T> criterion) {
+    public static <T> List<T> getByCriterion(Iterable<T> in, Predicate<T> predicate) {
         List<T> output = new ArrayList<>();
         for (T c : in) {
-            if (criterion.test(c)) {
+            if (predicate.test(c)) {
                 output.add(c);
             }
         }
@@ -30,21 +31,21 @@ public class CarScratch {
                 Car.withGasColorPassengers(6, "Red", "Ender", "Hyrum", "Locke", "Bonzo")
         );
         showAll(cars);
-        showAll(getByCriterion(cars, Car.getRedCarCriterion()));
+        showAll(getByCriterion(cars, Car.getRedCarPredicate()));
         showAll(getByCriterion(cars, Car.getGasLevelCarCriterion(6)));
 
-        Criterion<Car> level7 = Car.getGasLevelCarCriterion(7);
+        Predicate<Car> level7 = Car.getGasLevelCarCriterion(7);
         showAll(getByCriterion(cars, level7));
-        Criterion<Car> notLevel7 = level7.negate();
+        Predicate<Car> notLevel7 = level7.negate();
         showAll(getByCriterion(cars, notLevel7));
 
-        Criterion<Car> isRed = Car.getColorCriterion("Red");
-        Criterion<Car> fourPassengers = Car.getFourPassengerCriterion();
-        Criterion<Car> redFourPassengers = isRed.and(fourPassengers);
+        Predicate<Car> isRed = Car.getColorCriterion("Red");
+        Predicate<Car> fourPassengers = Car.getFourPassengerCriterion();
+        Predicate<Car> redFourPassengers = isRed.and(fourPassengers);
         showAll(getByCriterion(cars, redFourPassengers));
 
-        Criterion<Car> isBlack = Car.getColorCriterion("Black");
-        Criterion<Car> blackOrFourPassengers = isBlack.or(fourPassengers);
+        Predicate<Car> isBlack = Car.getColorCriterion("Black");
+        Predicate<Car> blackOrFourPassengers = isBlack.or(fourPassengers);
         showAll(getByCriterion(cars, blackOrFourPassengers));
     }
 }
