@@ -2,8 +2,17 @@ package learn.fpfj.model;
 
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.function.ToIntFunction;
 
 public class CarScratch {
+    public static <T> ToIntFunction<T> compareWithThis(T target, Comparator<T> comp) {
+        return x -> comp.compare(x, target);
+    }
+
+    public static <T> Predicate<T> comparesGreater(ToIntFunction<T> func) {
+        return x -> func.applyAsInt(x) > 0;
+    }
+
     public static <T> void showAll(List<T> lc) {
         for (T c : lc) {
             System.out.println(c);
@@ -47,5 +56,20 @@ public class CarScratch {
         Predicate<Car> isBlack = Car.getColorCriterion("Black");
         Predicate<Car> blackOrFourPassengers = isBlack.or(fourPassengers);
         showAll(getByCriterion(cars, blackOrFourPassengers));
+
+        Car bert = Car.withGasColorPassengers(5, "", "");
+        ToIntFunction<Car> compareWithBert = compareWithThis(bert, Car.getGasComparator());
+
+        System.out.println();
+        cars.forEach(car -> System.out.printf("Comparing %s with bert gives %s%n", car,
+                compareWithBert.applyAsInt(car)));
+
+        System.out.println();
+        Predicate<Car> greaterThanBert = comparesGreater(compareWithBert);
+        cars.forEach(car -> System.out.printf("%s is %s than bert%n", car,
+                greaterThanBert.test(car) ? "more" : "less"));
+
+        System.out.println();
+        showAll(getByCriterion(cars, greaterThanBert));
     }
 }
