@@ -20,31 +20,32 @@ public class SuperIterable<E> implements Iterable<E> {
 
     public SuperIterable<E> filter(Predicate<E> predicate) {
         List<E> results = new ArrayList<>();
-        for(E e : self) {
+        self.forEach(e -> {
             if (predicate.test(e)) {
                 results.add(e);
             }
-        }
+        });
         return new SuperIterable<>(results);
     }
 
+    /*public void forEvery(Consumer<E> consumer) {
+        for (E e : self) {
+            consumer.accept(e);
+        }
+    }*/
+
+    @SuppressWarnings("Convert2MethodRef")
     public static void main(String[] args) {
         SuperIterable<String> strings = new SuperIterable<>(
                 Arrays.asList("LightCoral", "pink", "Orange", "Gold", "plum", "Blue", "limeGreen")
         );
-        for (String s : strings) {
-            System.out.println(s);
-        }
+        strings.forEach(s -> System.out.println("> " + s));
 
         SuperIterable<String> upper = strings.filter(s -> Character.isUpperCase(s.charAt(0)));
         System.out.println("------------------------");
-        for (String s : upper) {
-            System.out.println(s);
-        }
+        upper.forEach(s -> System.out.println("> " + s));
 
         System.out.println("------------------------");
-        for (String s : strings) {
-            System.out.println(s);
-        }
+        strings.forEach(s -> System.out.println("> " + s));
     }
 }
