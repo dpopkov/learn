@@ -3,6 +3,8 @@ package learn.dsai.ch02arrays.array2;
 import learn.dsai.tools.ArrayTools;
 
 public class HighArray {
+    private static final int INDEX_OF_NOT_FOUND = -1;
+
     private final long[] a;
     private int nElems;
 
@@ -16,31 +18,15 @@ public class HighArray {
     }
 
     public boolean find(long key) {
-        boolean found = false;
-        for (int i = 0; i < nElems; i++) {
-            if (a[i] == key) {
-                found = true;
-                break;
-            }
-        }
-        return found;
+        return findIndex(key) != INDEX_OF_NOT_FOUND;
     }
 
-    @SuppressWarnings("ManualArrayCopy")
     public boolean delete(long value) {
-        int j;
-        for (j = 0; j < nElems; j++) {
-            if (a[j] == value) {
-                break;
-            }
-        }
-        if (j == nElems) {
+        int j = findIndex(value);
+        if (j == INDEX_OF_NOT_FOUND) {
             return false;
         } else {
-            for (int k = j; k < nElems - 1; k++) {
-                a[k] = a[k + 1];
-            }
-            nElems--;
+            removeAtIndex(j);
             return true;
         }
     }
@@ -52,5 +38,51 @@ public class HighArray {
 
     public void display() {
         System.out.println(ArrayTools.toString(a, nElems));
+    }
+
+    public int getSize() {
+        return nElems;
+    }
+
+    public long getMax() {
+        long rsl = -1;
+        for (int i = 0; i < nElems; i++) {
+            if(a[i] > rsl) {
+                rsl = a[i];
+            }
+        }
+        return rsl;
+    }
+
+    public long removeMax() {
+        if (nElems == 0) {
+            return -1L;
+        }
+        int iMax = 0;
+        for (int i = 1; i < nElems; i++) {
+            if (a[i] > a[iMax]) {
+                iMax = i;
+            }
+        }
+        long maxValue = a[iMax];
+        removeAtIndex(iMax);
+        return maxValue;
+    }
+
+    private int findIndex(long key) {
+        for (int i = 0; i < nElems; i++) {
+            if (a[i] == key) {
+                return i;
+            }
+        }
+        return INDEX_OF_NOT_FOUND;
+    }
+
+    @SuppressWarnings("ManualArrayCopy")
+    private void removeAtIndex(int index) {
+        for (int k = index; k < nElems - 1; k++) {
+            a[k] = a[k + 1];
+        }
+        nElems--;
     }
 }

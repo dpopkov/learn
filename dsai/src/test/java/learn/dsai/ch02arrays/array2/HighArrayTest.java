@@ -60,4 +60,31 @@ public class HighArrayTest {
         arr.insert(22);
         assertFalse(arr.find(33));
     }
+
+    @Test
+    public void whenGetMaxFromEmpty() {
+        assertThat(arr.getMax(), is(-1L));
+    }
+
+    @Test
+    public void whenGetMax() {
+        arr.insert(11L);
+        arr.insert(22L);
+        assertThat(arr.getMax(), is(22L));
+    }
+
+    @Test
+    public void whenRemovingMaxFromEmpty() {
+        long max = arr.removeMax();
+        assertThat(max, is(-1L));
+    }
+
+    @Test
+    public void whenRemovingMax() {
+        arr.insert(11L);
+        arr.insert(22L);
+        long max = arr.removeMax();
+        assertThat(max, is(22L));
+        assertThat(arr.toString(), is("[11]"));
+    }
 }
