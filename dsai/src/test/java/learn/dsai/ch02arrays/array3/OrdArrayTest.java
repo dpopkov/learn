@@ -33,8 +33,30 @@ public class OrdArrayTest {
     }
 
     @Test
-    public void whenFindNonExisting() {
+    public void whenInsertDuplicate() {
+        arr.insert(33L);
+        arr.insert(11L);
+        arr.insert(22L);
+        arr.insert(22L);
+        assertThat(arr.toString(), is("[11, 22, 22, 33]"));
+    }
+
+    @Test
+    public void whenInsertInOrder() {
+        arr.insert(12L);
+        arr.insert(23L);
+        assertThat(arr.toString(), is("[12, 23]"));
+    }
+
+    @Test
+    public void whenFindNonExistingInEmpty() {
         assertThat(arr.find(11), is(-1));
+    }
+
+    @Test
+    public void whenFindNonExisting() {
+        arr.insert(10);
+        assertThat(arr.find(11), is(-2));
     }
 
     @Test
@@ -93,5 +115,18 @@ public class OrdArrayTest {
         assertThat(arr.size(), is(0));
         arr.insert(33L);
         assertThat(arr.size(), is(1));
+    }
+
+    @Test
+    public void whenMerging() {
+        arr.insert(33L);
+        arr.insert(22L);
+        arr.insert(11L);
+        OrdArray arr2 = new OrdArray(3);
+        arr2.insert(12L);
+        arr2.insert(21L);
+        arr2.insert(34L);
+        OrdArray result = OrdArray.merge(arr, arr2);
+        assertThat(result.toString(), is("[11, 12, 21, 22, 33, 34]"));
     }
 }

@@ -17,18 +17,19 @@ public class OrdArray {
     }
 
     public void insert(long value) {
-        int i;
-        for (i = nElems; i > 0 && a[i - 1] > value; i--) {
+        int pos = find(value);
+        pos = (pos < 0) ? -(pos + 1) : pos;
+        for (int i = nElems; i > pos; i--) {
             a[i] = a[i - 1];
         }
-        a[i] = value;
+        a[pos] = value;
         nElems++;
     }
 
     public int find(long key) {
         int low = 0;
         int high = nElems - 1;
-        int pos = 0;
+        int pos;
         while (low <= high) {
             pos = low + (high - low) / 2;
             if (a[pos] == key) {
@@ -39,7 +40,7 @@ public class OrdArray {
                 low = pos + 1;
             }
         }
-        return -pos - 1;
+        return -low - 1;
     }
 
     public boolean delete(long value) {
@@ -62,5 +63,29 @@ public class OrdArray {
 
     public void display() {
         System.out.println(this.toString());
+    }
+
+    private void add(long value) {
+        a[nElems++] = value;
+    }
+
+    public static OrdArray merge(OrdArray left, OrdArray right) {
+        int capacity = left.nElems + right.nElems;
+        int iLeft = 0, iRight = 0;
+        OrdArray result = new OrdArray(capacity);
+        for (int i = 0; i < capacity; i++) {
+            if (iLeft < left.nElems && iRight < right.nElems) {
+                if (left.a[iLeft] < right.a[iRight]) {
+                    result.add(left.a[iLeft++]);
+                } else {
+                    result.add(right.a[iRight++]);
+                }
+            } else if (iLeft < left.nElems) {
+                result.add(left.a[iLeft++]);
+            } else if (iRight < right.nElems) {
+                result.add(right.a[iRight++]);
+            }
+        }
+        return result;
     }
 }

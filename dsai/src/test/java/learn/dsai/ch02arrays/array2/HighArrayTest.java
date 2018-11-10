@@ -87,4 +87,18 @@ public class HighArrayTest {
         assertThat(max, is(22L));
         assertThat(arr.toString(), is("[11]"));
     }
+
+    @Test
+    public void testNoDuplicates() {
+        arr.insert(12L);
+        arr.insert(12L);
+        arr.insert(11L);
+        arr.insert(11L);
+        arr.insert(12L);
+        arr.insert(11L);
+        arr.insert(12L);
+        arr.insert(12L);
+        arr.noDuplicates();
+        assertThat(arr.toString(), is("[12, 11]"));
+    }
 }

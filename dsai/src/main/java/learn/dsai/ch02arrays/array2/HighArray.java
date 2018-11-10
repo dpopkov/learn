@@ -85,4 +85,38 @@ public class HighArray {
         }
         nElems--;
     }
+
+    @SuppressWarnings("ManualArrayCopy")
+    public void noDuplicates() {
+        int last = nElems - 1;
+        for (int i = 1; i <= last;) {
+            if (hasDuplicatesBefore(i)) {
+                int newLast = swapWithNonDuplicate(i, last);
+                int numDeleted = last - newLast + 1;
+                nElems -= numDeleted;
+                last = newLast - 1;
+            } else {
+                i++;
+            }
+        }
+    }
+
+    private int swapWithNonDuplicate(int i, int j) {
+        while (j > i && a[j] == a[i]) {
+            j--;
+        }
+        long t = a[i];
+        a[i] = a[j];
+        a[j] = t;
+        return j;
+    }
+
+    private boolean hasDuplicatesBefore(int index) {
+        for (int i = index - 1; i >= 0; i--) {
+            if (a[i] == a[index]) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
