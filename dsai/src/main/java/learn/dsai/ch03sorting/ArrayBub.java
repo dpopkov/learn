@@ -1,25 +1,12 @@
 package learn.dsai.ch03sorting;
 
-import learn.dsai.tools.ArrayTools;
-
 /**
  * Demonstrates bubble sort.
  */
-public class ArrayBub {
-    private final long[] a;
-    private int nElems;
+public class ArrayBub extends ArrayLong {
 
     public ArrayBub(int max) {
-        a = new long[max];
-        nElems = 0;
-    }
-
-    public void insert(long value) {
-        a[nElems++] = value;
-    }
-
-    public void display() {
-        System.out.println(ArrayTools.toString(a, nElems));
+        super(max);
     }
 
     public void bubbleSort() {
@@ -30,6 +17,11 @@ public class ArrayBub {
                 }
             }
         }
+    }
+
+    @Override
+    public void sort() {
+        bubbleSort();
     }
 
     private void swapNext(int j) {
