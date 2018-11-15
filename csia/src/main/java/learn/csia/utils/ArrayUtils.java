@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ArrayUtils {
@@ -13,6 +14,27 @@ public class ArrayUtils {
             total += d;
         }
         return total;
+    }
+
+    public static int sum(int[] a) {
+        int total = 0;
+        for (double d : a) {
+            total += d;
+        }
+        return total;
+    }
+
+    public static String toString(double[] a, String format) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("[");
+        for (int i = 0; i < a.length; i++) {
+            if (i > 0) {
+                builder.append(", ");
+            }
+            builder.append(String.format(Locale.ENGLISH, format, a[i]));
+        }
+        builder.append("]");
+        return builder.toString();
     }
 
     public static double[] averageOfRows(int[][] a, double[] weights) {
