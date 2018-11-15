@@ -13,7 +13,7 @@ public class ArrayBub extends ArrayLong {
         for (int last = nElems - 1; last > 0; last--) {
             for (int j = 0; j < last; j++) {
                 if (a[j] > a[j + 1]) {
-                    swapNext(j);
+                    swap(j, j + 1);
                 }
             }
         }
@@ -22,12 +22,5 @@ public class ArrayBub extends ArrayLong {
     @Override
     public void sort() {
         bubbleSort();
-    }
-
-    private void swapNext(int j) {
-        int next = j + 1;
-        long t = a[j];
-        a[j] = a[next];
-        a[next] = t;
     }
 }

@@ -27,10 +27,4 @@ public class ArraySel extends ArrayLong {
     public void sort() {
         selectionSort();
     }
-
-    private void swap(int j, int k) {
-        long t = a[j];
-        a[j] = a[k];
-        a[k] = t;
-    }
 }

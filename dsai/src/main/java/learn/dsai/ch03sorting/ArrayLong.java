@@ -23,5 +23,16 @@ public abstract class ArrayLong {
         System.out.println(ArrayTools.toString(a, nElems));
     }
 
+    @Override
+    public String toString() {
+        return ArrayTools.toString(a, nElems);
+    }
+
     public abstract void sort();
+
+    protected void swap(int j, int i) {
+        long t = a[j];
+        a[j] = a[i];
+        a[i] = t;
+    }
 }
