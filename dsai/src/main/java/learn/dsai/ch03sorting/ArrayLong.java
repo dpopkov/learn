@@ -11,6 +11,10 @@ public abstract class ArrayLong {
         nElems = 0;
     }
 
+    public boolean isNotFull() {
+        return nElems < a.length;
+    }
+
     public void insert(long value) {
         a[nElems++] = value;
     }
