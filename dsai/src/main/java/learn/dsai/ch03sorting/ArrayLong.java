@@ -5,10 +5,16 @@ import learn.dsai.tools.ArrayTools;
 public abstract class ArrayLong {
     protected final long[] a;
     protected int nElems;
+    private final int maxCapacity;
 
     public ArrayLong(int max) {
         a = new long[max];
         nElems = 0;
+        maxCapacity = max;
+    }
+
+    public int getMaxCapacity() {
+        return maxCapacity;
     }
 
     public boolean isNotFull() {
