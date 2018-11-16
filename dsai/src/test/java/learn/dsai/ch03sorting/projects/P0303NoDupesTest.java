@@ -19,4 +19,19 @@ public class P0303NoDupesTest {
         arr.noDupes();
         assertThat(arr.toString(), is("[1, 2, 3]"));
     }
+
+    @Test
+    public void testNoDupesInPlace() {
+        P0303NoDupes arr = new P0303NoDupes(10);
+        arr.insert(2);
+        arr.insert(1);
+        arr.insert(2);
+        arr.insert(3);
+        arr.insert(3);
+        arr.insert(3);
+        arr.insert(3);
+        arr.insert(1);
+        arr.noDupesInPlace();
+        assertThat(arr.toString(), is("[1, 2, 3]"));
+    }
 }
