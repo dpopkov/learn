@@ -80,33 +80,31 @@ public class ScoreLabel extends JLabel implements CharacterListener {
     }
 
     @Override
-    public void newCharacter(CharacterEvent ce) {
-            if (ce.getSource() == generator) {
-                try {
-                    scoreLock.lock();
-                    /* If previous character not typed correctly: 1-point penalty. */
-                    if (charBuffer != TYPED_CORRECTLY) {
-                        score--;
-                        setScore();
-                    }
-                    charBuffer = ce.getCharacter();
-                } finally {
-                    scoreLock.unlock();
-                }
-            } else {
-                try {
-                    scoreLock.lock();
-                    /* If character does not match: 1-point penalty. */
-                    if (charBuffer != ce.getCharacter()) {
-                        score--;
-                    } else {
-                        score++;
-                        charBuffer = TYPED_CORRECTLY;
-                    }
-                    setScore();
-                } finally {
-                    scoreLock.unlock();
-                }
-            }
+    public synchronized void newCharacter(CharacterEvent ce) {
+        if (ce.getSource() == generator) {
+            newGeneratorCharacter(ce.getCharacter());
+        } else {
+            newTypistCharacter(ce.getCharacter());
+        }
+    }
+
+    private synchronized void newGeneratorCharacter(int character) {
+        /* If previous character not typed correctly: 1-point penalty. */
+        if (charBuffer != TYPED_CORRECTLY) {
+            score--;
+            setScore();
+        }
+        charBuffer = character;
+    }
+
+    private synchronized void newTypistCharacter(int character) {
+        /* If character does not match: 1-point penalty. */
+        if (charBuffer != character) {
+            score--;
+        } else {
+            score++;
+            charBuffer = TYPED_CORRECTLY;
+        }
+        setScore();
     }
 }
