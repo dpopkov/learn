@@ -5,6 +5,8 @@ import learn.threads3e.ch02.CharacterListener;
 import learn.threads3e.ch02.CharacterSource;
 
 import javax.swing.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ScoreLabel extends JLabel implements CharacterListener {
     private static final int TYPED_CORRECTLY = -1;
@@ -12,6 +14,7 @@ public class ScoreLabel extends JLabel implements CharacterListener {
     private volatile int score = 0;
     private int charBuffer = TYPED_CORRECTLY;
     private CharacterSource generator = null, typist = null;
+    private Lock scoreLock = new ReentrantLock();
 
     public ScoreLabel(CharacterSource generator, CharacterSource typist) {
         this.generator = generator;
@@ -28,30 +31,47 @@ public class ScoreLabel extends JLabel implements CharacterListener {
         this(null, null);
     }
 
-    public synchronized void resetGenerator(CharacterSource newGenerator) {
-        if (generator != null) {
-            generator.removeCharacterListener(this);
-        }
-        generator = newGenerator;
-        if (generator != null) {
-            generator.addCharacterListener(this);
+    @SuppressWarnings("Duplicates")
+    public void resetGenerator(CharacterSource newGenerator) {
+        try {
+            scoreLock.lock();
+            if (generator != null) {
+                generator.removeCharacterListener(this);
+            }
+            generator = newGenerator;
+            if (generator != null) {
+                generator.addCharacterListener(this);
+            }
+        } finally {
+            scoreLock.unlock();
         }
     }
 
-    public synchronized void resetTypist(CharacterSource newTypist) {
-        if (typist != null) {
-            typist.removeCharacterListener(this);
-        }
-        typist = newTypist;
-        if (typist != null) {
-            typist.addCharacterListener(this);
+    @SuppressWarnings("Duplicates")
+    public void resetTypist(CharacterSource newTypist) {
+        try {
+            scoreLock.lock();
+            if (typist != null) {
+                typist.removeCharacterListener(this);
+            }
+            typist = newTypist;
+            if (typist != null) {
+                typist.addCharacterListener(this);
+            }
+        } finally {
+            scoreLock.unlock();
         }
     }
 
     public synchronized void resetScore() {
-        score = 0;
-        charBuffer = TYPED_CORRECTLY;
-        setScore();
+        try {
+            scoreLock.lock();
+            score = 0;
+            charBuffer = TYPED_CORRECTLY;
+            setScore();
+        } finally {
+            scoreLock.unlock();
+        }
     }
 
     private void setScore() {
@@ -60,23 +80,28 @@ public class ScoreLabel extends JLabel implements CharacterListener {
     }
 
     @Override
-    public synchronized void newCharacter(CharacterEvent ce) {
-        if (ce.getSource() == generator) {
-            /* If previous character not typed correctly. */
-            if (charBuffer != TYPED_CORRECTLY) {
-                score--;
+    public void newCharacter(CharacterEvent ce) {
+        try {
+            scoreLock.lock();
+            if (ce.getSource() == generator) {
+                /* If previous character not typed correctly: 1-point penalty. */
+                if (charBuffer != TYPED_CORRECTLY) {
+                    score--;
+                    setScore();
+                }
+                charBuffer = ce.getCharacter();
+            } else {
+                /* If character does not match: 1-point penalty. */
+                if (charBuffer != ce.getCharacter()) {
+                    score--;
+                } else {
+                    score++;
+                    charBuffer = TYPED_CORRECTLY;
+                }
                 setScore();
             }
-            charBuffer = ce.getCharacter();
-        } else {
-            /* If character does not match. */
-            if (charBuffer != ce.getCharacter()) {
-                score--;
-            } else {
-                score++;
-                charBuffer = TYPED_CORRECTLY;
-            }
-            setScore();
+        } finally {
+            scoreLock.unlock();
         }
     }
 }
