@@ -3,7 +3,7 @@ package learn.threads3e.ch02;
 import java.awt.*;
 
 public class AnimatedCharacterDisplayCanvas extends CharacterDisplayCanvas implements CharacterListener, Runnable {
-    private volatile boolean done = false;
+    private boolean done = false;
     private int curX = 0;
 
     public AnimatedCharacterDisplayCanvas() {
@@ -30,7 +30,7 @@ public class AnimatedCharacterDisplayCanvas extends CharacterDisplayCanvas imple
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         while (!done) {
             repaint();
             try {
@@ -41,7 +41,7 @@ public class AnimatedCharacterDisplayCanvas extends CharacterDisplayCanvas imple
         }
     }
 
-    public void setDone(boolean done) {
+    public synchronized void setDone(boolean done) {
         this.done = done;
     }
 }
