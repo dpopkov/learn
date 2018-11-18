@@ -30,8 +30,8 @@ public class AnimatedCharacterDisplayCanvas extends CharacterDisplayCanvas imple
     }
 
     @Override
-    public synchronized void run() {
-        while (!done) {
+    public void run() {
+        while (!isDone()) {
             repaint();
             try {
                 Thread.sleep(100);
@@ -39,6 +39,10 @@ public class AnimatedCharacterDisplayCanvas extends CharacterDisplayCanvas imple
                 break;
             }
         }
+    }
+
+    public synchronized boolean isDone() {
+        return done;
     }
 
     public synchronized void setDone(boolean done) {
