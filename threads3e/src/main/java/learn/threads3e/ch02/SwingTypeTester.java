@@ -1,5 +1,7 @@
 package learn.threads3e.ch02;
 
+import learn.threads3e.ch03synch.ScoreLabel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -17,6 +19,7 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
     private final JButton startButton = new JButton("Start");
     private final JButton stopSlowButton = new JButton("Stop Slow");
     private final JButton stopQuickButton = new JButton("Stop Quick");
+    private ScoreLabel scoreLabel;
 
     private SwingTypeTester(MinMax minMaxPause) throws HeadlessException {
         this.minMaxPause = minMaxPause;
@@ -27,6 +30,8 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
         add(displayCanvas, BorderLayout.NORTH);
         add(feedbackCanvas, BorderLayout.CENTER);
         JPanel p = new JPanel();
+        scoreLabel = new ScoreLabel(null, this);
+        p.add(scoreLabel);
         p.add(startButton);
         p.add(stopSlowButton);
         p.add(stopQuickButton);
@@ -50,6 +55,7 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
         });
         startButton.addActionListener(e -> {
             producer = new RandomCharacterGenerator(minMaxPause);
+            scoreLabel.resetGenerator(producer);
             displayCanvas.setCharacterSource(producer);
             displayCanvas.setDone(false);
             Thread displayThread = new Thread(displayCanvas);
@@ -60,16 +66,20 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
         });
         stopSlowButton.addActionListener(e -> {
             producer.setDone();
-            displayCanvas.setDone(true);
-            enableStart();
+            reset();
         });
         stopQuickButton.addActionListener(e -> {
             producerThread.interrupt();
-            displayCanvas.setDone(true);
-            enableStart();
+            reset();
         });
         quitButton.addActionListener(e -> quit());
         pack();
+    }
+
+    private void reset() {
+        displayCanvas.setDone(true);
+        scoreLabel.resetScore();
+        enableStart();
     }
 
     /* CharacterSource methods */
