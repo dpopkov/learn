@@ -1,0 +1,24 @@
+Infix to Postfix Translation Rules
+----------------------------------
+Item Read from Input        Action
+(Infix)
+----------------------------------
+Operand                     Write it to output (postfix)
+Open parenthesis '('        Push it on stack
+Close parenthesis ')'       While stack not empty, repeat the following:
+                                Pop an item,
+                                If item is not '(', write it to output.
+                                If item is '(', quit loop.
+Operator (opThis)           If stack is empty,
+                                Push opThis
+                            Otherwise
+                                While stack is not empty, repeat:
+                                    Pop an item,
+                                    If item is '(', push it, or
+                                    If item is an operator (opTop), and
+                                        If opTop < opThis, push opTop, or
+                                        If opTop >= opThis, output opTop
+                                    Quit loop if opTop < opThis or item is '('
+                                Push opThis
+No more items               While stack not empty,
+                                Pop item, output it.
