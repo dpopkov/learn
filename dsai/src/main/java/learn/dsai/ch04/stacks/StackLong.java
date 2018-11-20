@@ -1,6 +1,8 @@
 /* 4.1 */
 package learn.dsai.ch04.stacks;
 
+import java.util.StringJoiner;
+
 public class StackLong {
     private final int maxSize;
     private final long[] stackArray;
@@ -30,5 +32,14 @@ public class StackLong {
 
     public boolean isFull() {
         return top == maxSize - 1;
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+        for (int i = 0; i <= top; i++) {
+            joiner.add(Long.toString(stackArray[i]));
+        }
+        return joiner.toString();
     }
 }

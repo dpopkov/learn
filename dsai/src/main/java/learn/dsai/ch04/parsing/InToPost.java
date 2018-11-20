@@ -7,14 +7,18 @@ import learn.dsai.ch04.stacks.StackChar;
  * Converts expression in infix notation to postfix notation.
  */
 public class InToPost {
-    private final static boolean LOG = false;
-
+    private final boolean log;
     private final StackChar stack;
     private final String input;
     private final StringBuilder output = new StringBuilder();
 
     public InToPost(String input) {
+        this(input, false);
+    }
+
+    public InToPost(String input, boolean log) {
         this.input = input;
+        this.log = log;
         stack = new StackChar(input.length());
     }
 
@@ -90,7 +94,7 @@ public class InToPost {
     }
 
     private void displayStack(String s) {
-        if (LOG) {
+        if (log) {
             System.out.print(s);
             System.out.print("Stack (bottom-->top): ");
             System.out.println(stack);
