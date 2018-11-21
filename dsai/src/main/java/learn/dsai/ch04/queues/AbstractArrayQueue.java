@@ -1,5 +1,6 @@
 package learn.dsai.ch04.queues;
 
+import java.util.NoSuchElementException;
 import java.util.StringJoiner;
 
 /**
@@ -11,6 +12,13 @@ public abstract class AbstractArrayQueue implements Queue {
     protected int front;
     protected int size;
 
+    public AbstractArrayQueue(int capacity) {
+        values = new long[capacity];
+        rear = -1;
+        front = 0;
+        size = 0;
+    }
+
     public boolean isFull() {
         return size == values.length;
     }
@@ -20,6 +28,9 @@ public abstract class AbstractArrayQueue implements Queue {
     }
 
     public long peekFront() {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
         return values[front];
     }
 

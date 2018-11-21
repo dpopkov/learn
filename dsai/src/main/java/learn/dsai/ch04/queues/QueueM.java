@@ -1,13 +1,13 @@
 package learn.dsai.ch04.queues;
 
+import java.util.NoSuchElementException;
+
 /**
  * My implementation of queue.
  */
 public class QueueM extends AbstractArrayQueue implements Queue {
-    public QueueM(int size) {
-        values = new long[size];
-        rear = -1;
-        front = 0;
+    public QueueM(int capacity) {
+        super(capacity);
     }
 
     public void insert(long value) {
@@ -20,6 +20,9 @@ public class QueueM extends AbstractArrayQueue implements Queue {
     }
 
     public long remove() {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
         long value = values[front];
         front = nextIndex(front);
         size--;

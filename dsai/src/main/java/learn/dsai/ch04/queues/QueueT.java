@@ -7,8 +7,8 @@ public class QueueT extends AbstractArrayQueue implements Queue {
     private final int maxSize;
 
     public QueueT(int maxSize) {
+        super(maxSize);
         this.maxSize = maxSize;
-        values = new long[maxSize];
         front = 0;
         rear = -1;
         size = 0;
