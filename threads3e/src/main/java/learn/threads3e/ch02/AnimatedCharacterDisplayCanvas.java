@@ -3,8 +3,9 @@ package learn.threads3e.ch02;
 import java.awt.*;
 
 public class AnimatedCharacterDisplayCanvas extends CharacterDisplayCanvas implements CharacterListener, Runnable {
-    private volatile boolean done = false;
+    private boolean done = false;
     private int curX = 0;
+    private Thread timer;
 
     public AnimatedCharacterDisplayCanvas() {
     }
@@ -30,18 +31,29 @@ public class AnimatedCharacterDisplayCanvas extends CharacterDisplayCanvas imple
     }
 
     @Override
-    public void run() {
-        while (!done) {
-            repaint();
+    public synchronized void run() {
+        while (true) {
             try {
-                Thread.sleep(100);
+                if (done) {
+                    wait();
+                } else {
+                    repaint();
+                    wait(100);
+                }
             } catch (InterruptedException e) {
                 break;
             }
         }
     }
 
-    public void setDone(boolean done) {
+    public synchronized void setDone(boolean done) {
         this.done = done;
+        if (timer == null) {
+            timer = new Thread(this);
+            timer.start();
+        }
+        if (!this.done) {
+            notify();
+        }
     }
 }

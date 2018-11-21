@@ -58,10 +58,9 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
             scoreLabel.resetGenerator(producer);
             displayCanvas.setCharacterSource(producer);
             displayCanvas.setDone(false);
-            Thread displayThread = new Thread(displayCanvas);
             producerThread = new Thread(producer);
             producerThread.start();
-            displayThread.start();
+            displayCanvas.setDone(false);
             disableStart();
         });
         stopSlowButton.addActionListener(e -> {
