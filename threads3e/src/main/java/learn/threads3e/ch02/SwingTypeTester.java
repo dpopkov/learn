@@ -14,11 +14,9 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
     private final AnimatedCharacterDisplayCanvas displayCanvas = new AnimatedCharacterDisplayCanvas();
     private final CharacterDisplayCanvas feedbackCanvas = new CharacterDisplayCanvas(this);
     private RandomCharacterGenerator producer;
-    private Thread producerThread;
     private final MinMax minMaxPause;
     private final JButton startButton = new JButton("Start");
-    private final JButton stopSlowButton = new JButton("Stop Slow");
-    private final JButton stopQuickButton = new JButton("Stop Quick");
+    private final JButton stopButton = new JButton("Stop");
     private ScoreLabel scoreLabel;
 
     private SwingTypeTester(MinMax minMaxPause) throws HeadlessException {
@@ -33,8 +31,7 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
         scoreLabel = new ScoreLabel(null, this);
         p.add(scoreLabel);
         p.add(startButton);
-        p.add(stopSlowButton);
-        p.add(stopQuickButton);
+        p.add(stopButton);
         final JButton quitButton = new JButton("Quit");
         p.add(quitButton);
         add(p, BorderLayout.SOUTH);
@@ -58,19 +55,15 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
             scoreLabel.resetGenerator(producer);
             displayCanvas.setCharacterSource(producer);
             displayCanvas.setDone(false);
-            producerThread = new Thread(producer);
-            producerThread.start();
+            producer.setDone(false);
             displayCanvas.setDone(false);
             disableStart();
         });
-        stopSlowButton.addActionListener(e -> {
-            producer.setDone();
+        stopButton.addActionListener(e -> {
+            producer.setDone(true);
             reset();
         });
-        stopQuickButton.addActionListener(e -> {
-            producerThread.interrupt();
-            reset();
-        });
+
         quitButton.addActionListener(e -> quit());
         pack();
     }
@@ -103,16 +96,14 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
 
     private void disableStart() {
         startButton.setEnabled(false);
-        stopSlowButton.setEnabled(true);
-        stopQuickButton.setEnabled(true);
+        stopButton.setEnabled(true);
         feedbackCanvas.setEnabled(true);
         feedbackCanvas.requestFocus();
     }
 
     private void enableStart() {
         startButton.setEnabled(true);
-        stopQuickButton.setEnabled(false);
-        stopSlowButton.setEnabled(false);
+        stopButton.setEnabled(false);
         feedbackCanvas.setEnabled(false);
     }
 

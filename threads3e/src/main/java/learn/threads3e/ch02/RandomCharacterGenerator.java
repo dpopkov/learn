@@ -13,7 +13,8 @@ public class RandomCharacterGenerator implements Runnable, CharacterSource {
     /**
      * The thread should periodically query this flag to determine if it should exit.
      */
-    private volatile boolean done = false;
+    private boolean done = false;
+    private Thread thread;
 
     public RandomCharacterGenerator(MinMax pauseRange) {
         this.pauseRange = pauseRange;
@@ -41,32 +42,31 @@ public class RandomCharacterGenerator implements Runnable, CharacterSource {
 
     /* Thread method */
     @Override
-    public void run() {
-        while (threadNotFinished()) {
-            nextCharacter();
+    public synchronized void run() {
+        while (true) {
             try {
-                Thread.sleep(getPauseTime());
+                if (done) {
+                    wait();
+                } else {
+                    nextCharacter();
+                    wait(getPauseTime());
+                }
             } catch (InterruptedException e) {
-                System.out.println("Generator interrupted when sleeping");
                 break;
             }
         }
         System.out.println("random generator stopped.");
     }
 
-    private boolean threadNotFinished() {
-        boolean interrupted = Thread.currentThread().isInterrupted();
-        if (interrupted) {
-            System.out.println("Generator is interrupted.");
+    public synchronized void setDone(boolean done) {
+        this.done = done;
+        if (thread == null) {
+            thread = new Thread(this);
+            thread.start();
         }
-        if (done) {
-            System.out.println("Generator is stopped by flag.");
+        if (!this.done) {
+            notify();
         }
-        return !(interrupted || done);
-    }
-
-    public void setDone() {
-        done = true;
     }
 
     private int getPauseTime() {
