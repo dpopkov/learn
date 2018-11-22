@@ -29,6 +29,7 @@ public class SwingTypeTester extends JFrame implements CharacterSource {
         add(feedbackCanvas, BorderLayout.CENTER);
         JPanel p = new JPanel();
         scoreLabel = new ScoreLabel(null, this);
+        scoreLabel.setText("  ");
         p.add(scoreLabel);
         p.add(startButton);
         p.add(stopButton);

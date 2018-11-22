@@ -1,6 +1,10 @@
 package learn.threads3e.ch02;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class RandomCharacterGenerator implements Runnable, CharacterSource {
     private static final char[] CHARS = "abcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
@@ -15,6 +19,8 @@ public class RandomCharacterGenerator implements Runnable, CharacterSource {
      */
     private boolean done = false;
     private Thread thread;
+    private Lock lock = new ReentrantLock();
+    private Condition condition = lock.newCondition();
 
     public RandomCharacterGenerator(MinMax pauseRange) {
         this.pauseRange = pauseRange;
@@ -42,30 +48,40 @@ public class RandomCharacterGenerator implements Runnable, CharacterSource {
 
     /* Thread method */
     @Override
-    public synchronized void run() {
-        while (true) {
-            try {
-                if (done) {
-                    wait();
-                } else {
-                    nextCharacter();
-                    wait(getPauseTime());
+    public void run() {
+        try {
+            lock.lock();
+            while (true) {
+                try {
+                    if (done) {
+                        condition.await();
+                    } else {
+                        nextCharacter();
+                        condition.await(getPauseTime(), TimeUnit.MILLISECONDS);
+                    }
+                } catch (InterruptedException e) {
+                    return;
                 }
-            } catch (InterruptedException e) {
-                break;
             }
+        } finally {
+            lock.unlock();
         }
-        System.out.println("random generator stopped.");
     }
 
-    public synchronized void setDone(boolean done) {
-        this.done = done;
-        if (thread == null) {
-            thread = new Thread(this);
-            thread.start();
-        }
-        if (!this.done) {
-            notify();
+    @SuppressWarnings("Duplicates")
+    public void setDone(boolean done) {
+        try {
+            lock.lock();
+            this.done = done;
+            if (thread == null) {
+                thread = new Thread(this);
+                thread.start();
+            }
+            if (!this.done) {
+                condition.signal();
+            }
+        } finally {
+            lock.unlock();
         }
     }
 

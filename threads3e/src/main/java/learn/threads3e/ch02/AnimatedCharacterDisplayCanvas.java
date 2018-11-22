@@ -1,10 +1,16 @@
 package learn.threads3e.ch02;
 
 import java.awt.*;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class AnimatedCharacterDisplayCanvas extends CharacterDisplayCanvas implements CharacterListener, Runnable {
     private boolean done = false;
     private int curX = 0;
+    private Lock lock = new ReentrantLock();
+    private Condition condition = lock.newCondition();
     private Thread timer;
 
     public AnimatedCharacterDisplayCanvas() {
@@ -31,29 +37,40 @@ public class AnimatedCharacterDisplayCanvas extends CharacterDisplayCanvas imple
     }
 
     @Override
-    public synchronized void run() {
-        while (true) {
-            try {
-                if (done) {
-                    wait();
-                } else {
-                    repaint();
-                    wait(100);
+    public void run() {
+        try {
+            lock.lock();
+            while (true) {
+                try {
+                    if (done) {
+                        condition.await();
+                    } else {
+                        repaint();
+                        condition.await(100, TimeUnit.MILLISECONDS);
+                    }
+                } catch (InterruptedException e) {
+                    return;
                 }
-            } catch (InterruptedException e) {
-                break;
             }
+        } finally {
+            lock.unlock();
         }
     }
 
-    public synchronized void setDone(boolean done) {
-        this.done = done;
-        if (timer == null) {
-            timer = new Thread(this);
-            timer.start();
-        }
-        if (!this.done) {
-            notify();
+    @SuppressWarnings("Duplicates")
+    public void setDone(boolean done) {
+        try {
+            lock.lock();
+            this.done = done;
+            if (timer == null) {
+                timer = new Thread(this);
+                timer.start();
+            }
+            if (!this.done) {
+                condition.signal();
+            }
+        } finally {
+            lock.unlock();
         }
     }
 }
