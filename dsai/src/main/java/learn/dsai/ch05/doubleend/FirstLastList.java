@@ -10,7 +10,6 @@ public class FirstLastList {
         return first == null;
     }
 
-
     public void insertFirst(int data) {
         Link link = new Link(data);
         if (isEmpty()) {
