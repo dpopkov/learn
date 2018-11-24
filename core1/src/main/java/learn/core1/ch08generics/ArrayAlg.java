@@ -49,8 +49,8 @@ public class ArrayAlg {
     }
 
     public static void main(String[] args) {
-//        useGetMiddle();
-        useMinMax();
+        useGetMiddle();
+//        useMinMax();
     }
 
     private static void useMinMax() {
@@ -72,6 +72,15 @@ public class ArrayAlg {
 
         double middle2 = ArrayAlg.<Double>getMiddle(3.14, 1729.0, 0.0);
         System.out.println("middle2 = " + middle2);
+
+        double middle3 = ArrayAlg.getMiddle(1.0, 2.0, 3.0);
+        System.out.println("middle3 = " + middle3);
+
+        int middle4 = ArrayAlg.getMiddle(1, 2, 3);
+        System.out.println("middle4 = " + middle4);
+
+        Number middle5 = ArrayAlg.getMiddle(1.0, 2, 3);
+        System.out.println("middle5 = " + middle5);
 
         /* Use this type of error in order to see which type
         the compiler infers for a generic method call: */
