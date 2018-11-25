@@ -1,10 +1,20 @@
 package learn.dsai.ch05.doubly;
 
+import learn.dsai.ch05.iterators.ListIterator;
+
 import java.util.StringJoiner;
 
 public class DoublyLinkedList {
     private Link first;
     private Link last;
+
+    public Link getFirst() {
+        return first;
+    }
+
+    public Link getLast() {
+        return last;
+    }
 
     public boolean isEmpty() {
         return first == null;
@@ -105,6 +115,9 @@ public class DoublyLinkedList {
         System.out.println("List (last-->first): " + toString(false));
     }
 
+    public ListIterator getIterator() {
+        return new ListIterator(this);
+    }
 
     @Override
     public String toString() {
