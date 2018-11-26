@@ -4,6 +4,10 @@ import learn.dsai.ch05.adt.Link;
 
 import java.util.StringJoiner;
 
+/**
+ * Sorted single linked list that stores elements of type {@code long} in
+ * ascending order.
+ */
 public class SortedList {
     private Link first;
 
