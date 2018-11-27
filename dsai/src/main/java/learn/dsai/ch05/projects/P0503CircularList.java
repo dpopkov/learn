@@ -6,6 +6,11 @@ import java.util.StringJoiner;
 
 public class P0503CircularList {
     private Link current;
+    private int size;
+
+    public int getSize() {
+        return size;
+    }
 
     public boolean isEmpty() {
         return current == null;
@@ -25,6 +30,7 @@ public class P0503CircularList {
             link.next = current.next;
             current.next = link;
         }
+        size++;
     }
 
     public Link search(long key) {
@@ -63,6 +69,7 @@ public class P0503CircularList {
                     prev.next = lnk.next;
                 }
                 lnk.next = null;
+                size--;
                 return true;
             }
             prev = lnk;
@@ -83,6 +90,7 @@ public class P0503CircularList {
             current.next = current.next.next;
         }
         link.next = null;
+        size--;
         return link.data;
     }
 
