@@ -21,4 +21,8 @@ public class StackT<T> {
     public T peek() {
         return array[top];
     }
+
+    public boolean isEmpty() {
+        return top == -1;
+    }
 }
