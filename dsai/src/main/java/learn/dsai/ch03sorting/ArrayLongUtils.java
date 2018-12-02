@@ -18,6 +18,6 @@ public class ArrayLongUtils {
         stopwatch.start();
         arr.sort();
         stopwatch.stop();
-        System.out.printf("%s finished in %d milliseconds%n", label, stopwatch.getElapsed());
+        System.out.printf("%-10s finished in %5d milliseconds%n", label, stopwatch.getElapsed());
     }
 }
