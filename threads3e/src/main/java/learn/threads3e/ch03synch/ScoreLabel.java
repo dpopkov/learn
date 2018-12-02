@@ -5,20 +5,20 @@ import learn.threads3e.ch02.CharacterListener;
 import learn.threads3e.ch02.CharacterSource;
 
 import javax.swing.*;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ScoreLabel extends JLabel implements CharacterListener {
     private static final int TYPED_CORRECTLY = -1;
 
-    private volatile int score = 0;
-    private int charBuffer = TYPED_CORRECTLY;
-    private CharacterSource generator = null, typist = null;
-    private Lock scoreLock = new ReentrantLock();
+    private AtomicInteger score = new AtomicInteger(0);
+    private AtomicInteger charBuffer = new AtomicInteger(TYPED_CORRECTLY);
+    private AtomicReference<CharacterSource> generator;
+    private AtomicReference<CharacterSource> typist;
 
     public ScoreLabel(CharacterSource generator, CharacterSource typist) {
-        this.generator = generator;
-        this.typist = typist;
+        this.generator = new AtomicReference<>(generator);
+        this.typist = new AtomicReference<>(typist);
         if (generator != null) {
             generator.addCharacterListener(this);
         }
@@ -33,77 +33,66 @@ public class ScoreLabel extends JLabel implements CharacterListener {
 
     @SuppressWarnings("Duplicates")
     public void resetGenerator(CharacterSource newGenerator) {
-        try {
-            scoreLock.lock();
-            if (generator != null) {
-                generator.removeCharacterListener(this);
-            }
-            generator = newGenerator;
-            if (generator != null) {
-                generator.addCharacterListener(this);
-            }
-        } finally {
-            scoreLock.unlock();
+        if (newGenerator != null) {
+            newGenerator.addCharacterListener(this);
+        }
+        CharacterSource oldGenerator = generator.getAndSet(newGenerator);
+        if (oldGenerator != null) {
+            oldGenerator.removeCharacterListener(this);
         }
     }
 
     @SuppressWarnings("Duplicates")
     public void resetTypist(CharacterSource newTypist) {
-        try {
-            scoreLock.lock();
-            if (typist != null) {
-                typist.removeCharacterListener(this);
-            }
-            typist = newTypist;
-            if (typist != null) {
-                typist.addCharacterListener(this);
-            }
-        } finally {
-            scoreLock.unlock();
+        if (newTypist != null) {
+            newTypist.addCharacterListener(this);
+        }
+        CharacterSource oldTypist = typist.getAndSet(newTypist);
+        if (oldTypist != null) {
+            oldTypist.removeCharacterListener(this);
         }
     }
 
-    public synchronized void resetScore() {
-        try {
-            scoreLock.lock();
-            score = 0;
-            charBuffer = TYPED_CORRECTLY;
-            setScore();
-        } finally {
-            scoreLock.unlock();
-        }
+    public void resetScore() {
+        score.set(0);
+        charBuffer.set(TYPED_CORRECTLY);
+        setScore();
     }
 
     private void setScore() {
         /* This method will be explained later in chapter 7. */
-        SwingUtilities.invokeLater(() -> setText(Integer.toString(score)));
+        SwingUtilities.invokeLater(() -> setText(Integer.toString(score.get())));
     }
 
     @Override
-    public synchronized void newCharacter(CharacterEvent ce) {
-        if (ce.getSource() == generator) {
+    public void newCharacter(CharacterEvent ce) {
+        if (ce.getSource() == generator.get()) {
             newGeneratorCharacter(ce.getCharacter());
-        } else {
+        } else if (ce.getSource() == typist.get()) {
             newTypistCharacter(ce.getCharacter());
         }
     }
 
-    private synchronized void newGeneratorCharacter(int character) {
+    private void newGeneratorCharacter(int character) {
         /* If previous character not typed correctly: 1-point penalty. */
-        if (charBuffer != TYPED_CORRECTLY) {
-            score--;
+        int oldChar = charBuffer.getAndSet(character);
+        if (oldChar != TYPED_CORRECTLY) {
+            score.decrementAndGet();
             setScore();
         }
-        charBuffer = character;
     }
 
-    private synchronized void newTypistCharacter(int character) {
+    private void newTypistCharacter(int character) {
         /* If character does not match: 1-point penalty. */
-        if (charBuffer != character) {
-            score--;
-        } else {
-            score++;
-            charBuffer = TYPED_CORRECTLY;
+        while (true) {
+            int oldChar = charBuffer.get();
+            if (oldChar != character) {
+                score.decrementAndGet();
+                break;
+            } else if (charBuffer.compareAndSet(oldChar, TYPED_CORRECTLY)) {
+                score.incrementAndGet();
+                break;
+            }
         }
         setScore();
     }
