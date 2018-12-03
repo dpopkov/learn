@@ -1,76 +1,69 @@
 package learn.threads3e.ch02;
 
 import java.awt.*;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AnimatedCharacterDisplayCanvas extends CharacterDisplayCanvas implements CharacterListener, Runnable {
-    private boolean done = false;
-    private int curX = 0;
-    private Lock lock = new ReentrantLock();
-    private Condition condition = lock.newCondition();
+    private AtomicBoolean done = new AtomicBoolean(true);
+    private AtomicInteger curX = new AtomicInteger(0);
+    private AtomicInteger tempChar = new AtomicInteger(0);
     private Thread timer;
 
     public AnimatedCharacterDisplayCanvas() {
+        startAnimationThread();
     }
 
     public AnimatedCharacterDisplayCanvas(CharacterSource cs) {
         super(cs);
+        startAnimationThread();
+    }
+
+    private void startAnimationThread() {
+        if (timer == null) {
+            timer = new Thread(this);
+            timer.start();
+        }
     }
 
     @Override
     public synchronized void newCharacter(CharacterEvent ce) {
-        curX = 0;
-        super.newCharacter(ce);
+        curX.set(0);
+        tempChar.set(ce.getCharacter());
+        repaint();
     }
 
     @Override
     protected synchronized void paintComponent(Graphics gc) {
+        char[] localTmpChar = new char[1];
+        localTmpChar[0] = (char) tempChar.get();
+        int localCurX = curX.get();
+
         Dimension d = getSize();
         gc.clearRect(0, 0, d.width, d.height);
-        if (super.charBufferEmpty()) {
+        if (localTmpChar[0] == 0) {
             return;
         }
-        gc.drawChars(super.getCharBuffer(), 0, 1, curX++, super.getFontHeight());
+        gc.drawChars(localTmpChar, 0, 1, localCurX, super.getFontHeight());
+        curX.getAndIncrement();
     }
 
     @Override
     public void run() {
-        try {
-            lock.lock();
-            while (true) {
-                try {
-                    if (done) {
-                        condition.await();
-                    } else {
-                        repaint();
-                        condition.await(100, TimeUnit.MILLISECONDS);
-                    }
-                } catch (InterruptedException e) {
-                    return;
+        while (true) {
+            try {
+                System.out.println("curX = " + curX.get());    // shows that it never stops!
+                Thread.sleep(100);
+                if (!done.get()) {
+                    repaint();
                 }
+            } catch (InterruptedException e) {
+                return;
             }
-        } finally {
-            lock.unlock();
         }
     }
 
-    @SuppressWarnings("Duplicates")
     public void setDone(boolean done) {
-        try {
-            lock.lock();
-            this.done = done;
-            if (timer == null) {
-                timer = new Thread(this);
-                timer.start();
-            }
-            if (!this.done) {
-                condition.signal();
-            }
-        } finally {
-            lock.unlock();
-        }
+        this.done.set(done);
     }
 }
