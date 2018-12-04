@@ -25,6 +25,12 @@ public abstract class ArrayLong {
         a[nElems++] = value;
     }
 
+    public void insert(long[] values) {
+        for (long v : values) {
+            insert(v);
+        }
+    }
+
     public long get(int index) {
         return a[index];
     }
