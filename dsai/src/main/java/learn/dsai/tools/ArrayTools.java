@@ -66,4 +66,39 @@ public class ArrayTools {
         }
         return i;
     }
+
+    /**
+     * Checks whether the specified array is partitioned.
+     * To partition data is to divide it into two groups, so that all the items with a key value higher than
+     * a specified amount are in one group, and all the items with a lower key value are in another.
+     * @param array checked array
+     * @param rightPartStart starting index of right group
+     * @return true if elements of the left group are not greater than elements of the right group,
+     *          false otherwise
+     */
+    public static boolean isPartitioned(long[] array, int rightPartStart) {
+        long leftMax = max(array, 0, rightPartStart);
+        long rightMin = min(array, rightPartStart, array.length);
+        return leftMax <= rightMin;
+    }
+
+    public static long max(long[] array, int from, int to) {
+        long maxValue = array[from];
+        for (int i = from + 1; i < to; i++) {
+            if (array[i] > maxValue) {
+                maxValue = array[i];
+            }
+        }
+        return maxValue;
+    }
+
+    public static long min(long[] array, int from, int to) {
+        long minValue = array[from];
+        for (int i = from + 1; i < to; i++) {
+            if (array[i] < minValue) {
+                minValue = array[i];
+            }
+        }
+        return minValue;
+    }
 }

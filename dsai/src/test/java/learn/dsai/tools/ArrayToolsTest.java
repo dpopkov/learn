@@ -22,4 +22,14 @@ public class ArrayToolsTest {
         String result = ArrayTools.toString(a, a.length);
         assertThat(result, is(expected));
     }
+
+    @Test
+    public void testIsPartitioned() {
+        long[] values = {5, 4, 3, 8, 7, 6};
+        boolean result = ArrayTools.isPartitioned(values, 3);
+        assertThat(result, is(true));
+        values = new long[] {6, 4, 3, 8, 7, 5};
+        result = ArrayTools.isPartitioned(values, 3);
+        assertThat(result, is(false));
+    }
 }

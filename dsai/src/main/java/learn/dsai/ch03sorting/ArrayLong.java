@@ -2,6 +2,12 @@ package learn.dsai.ch03sorting;
 
 import learn.dsai.tools.ArrayTools;
 
+import java.util.Arrays;
+
+/**
+ * Base class for containers that use array of longs as underlying storage.
+ * Implements methods {@code insert(long)}, {@code get(int)}, {@code toString()}.
+ */
 public abstract class ArrayLong {
     protected final long[] a;
     protected int nElems;
@@ -37,6 +43,10 @@ public abstract class ArrayLong {
 
     public int getSize() {
         return nElems;
+    }
+
+    public long[] getValues() {
+        return Arrays.copyOf(a, nElems);
     }
 
     public void display() {
