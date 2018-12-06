@@ -7,31 +7,26 @@ import learn.dsai.ch03sorting.ArraySel;
 import learn.dsai.ch06rec.merge.ArrayMerge;
 import learn.dsai.ch07advsort.ArraySh;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
-
-import static learn.dsai.ch03sorting.ArrayLongUtils.fillAndSort;
+import java.util.function.IntFunction;
 
 public class E01TimingRandom {
-    private final static int MAX_SIZE = 100_000;
+    private final static int MAX_SIZE = 20_000;
+
+    private static List<IntFunction<? extends ArrayLong>> constructors = Arrays.asList(
+            ArrayBub::new,
+            ArraySel::new,
+            ArrayIns::new,
+            ArrayMerge::new,
+            ArraySh::new
+    );
 
     public static void main(String[] args) {
-        sortRandom(new ArrayBub(MAX_SIZE), "ArrayBub");
-        sortRandom(new ArraySel(MAX_SIZE), "ArraySel");
-        sortRandom(new ArrayIns(MAX_SIZE), "ArrayIns");
-        sortRandom(new ArrayMerge(MAX_SIZE), "ArrayMerge");
-        sortRandom(new ArraySh(MAX_SIZE), "ArraySh");
-    }
-    /*
-    Results 2018-12-04:
-    ArrayBub   finished in 21638 milliseconds
-    ArraySel   finished in  5223 milliseconds
-    ArrayIns   finished in  1151 milliseconds
-    ArrayMerge finished in    15 milliseconds
-    ArraySh    finished in    19 milliseconds
-     */
-
-    private static void sortRandom(ArrayLong arr, String label) {
-        fillAndSort(arr, E01TimingRandom::fillRandom, label);
+        SortingExperiment testRandom = new SortingExperiment("Sorting random data:",
+                constructors, MAX_SIZE, E01TimingRandom::fillRandom);
+        testRandom.run();
     }
 
     private static void fillRandom(ArrayLong arr) {
@@ -41,3 +36,11 @@ public class E01TimingRandom {
         }
     }
 }
+/*
+Results 2018-12-04:
+ArrayBub   finished in 21638 milliseconds
+ArraySel   finished in  5223 milliseconds
+ArrayIns   finished in  1151 milliseconds
+ArrayMerge finished in    15 milliseconds
+ArraySh    finished in    19 milliseconds
+ */
