@@ -2,6 +2,7 @@
 This repository aggregates examples and exercises from various books and resources.
 
 core1 - Core Java vol1  
+core2 - Core Java vol2  
 csia - Computer Science. An Interdisciplinary Approach  
 dsai - Data Structures and Algorithms in Java, 2nd edition  
 fsa4jd - Full Stack AngularJS for Java Developers  
