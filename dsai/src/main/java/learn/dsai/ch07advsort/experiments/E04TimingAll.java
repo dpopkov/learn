@@ -5,6 +5,8 @@ import learn.dsai.ch03sorting.ArrayIns;
 import learn.dsai.ch03sorting.ArrayLong;
 import learn.dsai.ch03sorting.ArraySel;
 import learn.dsai.ch06rec.merge.ArrayMerge;
+import learn.dsai.ch07advsort.ArrayQ2Sort;
+import learn.dsai.ch07advsort.ArrayQ2SortTb;
 import learn.dsai.ch07advsort.ArrayQSort;
 import learn.dsai.ch07advsort.ArraySh;
 
@@ -15,7 +17,7 @@ import java.util.function.Consumer;
 import java.util.function.IntFunction;
 
 public class E04TimingAll {
-    private final static int MAX_SIZE = 10_000; // a value of 20_000 causes StackOverflowError
+    private final static int MAX_SIZE = 40_000; // a value of 20_000 and more causes StackOverflowError
                                                 // in experiment with fillSorted in ArrayQSort.recQuickSort()
     private static final List<IntFunction<? extends ArrayLong>> constructors = Arrays.asList(
             ArrayBub::new,
@@ -23,14 +25,16 @@ public class E04TimingAll {
             ArrayIns::new,
             ArrayMerge::new,
             ArraySh::new,
-            ArrayQSort::new
+            /*ArrayQSort::new,*/
+            ArrayQ2SortTb::new/*,
+            ArrayQ2Sort::new*/
     );
 
     public static void main(String[] args) {
         String[] titles = {
-                "Sorting random data:",
-                "Sorting inversed data:",
-                "Sorting sorted data:"
+                "Sorting random data",
+                "Sorting inversed data",
+                "Sorting sorted data"
         };
         List<Consumer<ArrayLong>> fillers = Arrays.asList(
                 E04TimingAll::fillRandom,
@@ -40,12 +44,7 @@ public class E04TimingAll {
         for (int i = 0; i < titles.length; i++) {
             SortingExperiment experiment = new SortingExperiment(titles[i], constructors,
                     MAX_SIZE, fillers.get(i));
-            experiment.start();
-            try {
-                experiment.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            experiment.run();
         }
     }
 
@@ -72,27 +71,27 @@ public class E04TimingAll {
 }
 
 /*
-Results 2018-12-06 (on size 10_000):
+Results 2018-12-07 (on size 40_000):
 ------------------------------------
-Sorting random data:
-ArrayBub   finished in   236 milliseconds
-ArraySel   finished in    62 milliseconds
-ArrayIns   finished in    17 milliseconds
-ArrayMerge finished in     3 milliseconds
-ArraySh    finished in     5 milliseconds
-ArrayQSort finished in     2 milliseconds
-Sorting inversed data:
-ArrayBub   finished in   107 milliseconds
-ArraySel   finished in    57 milliseconds
-ArrayIns   finished in    26 milliseconds
-ArrayMerge finished in     0 milliseconds
-ArraySh    finished in     1 milliseconds
-ArrayQSort finished in    10 milliseconds
-Sorting sorted data:
-ArrayBub   finished in    63 milliseconds
-ArraySel   finished in    61 milliseconds
-ArrayIns   finished in     0 milliseconds
-ArrayMerge finished in     1 milliseconds
-ArraySh    finished in     0 milliseconds
-ArrayQSort finished in    94 milliseconds
+Sorting random data
+ArrayBub       finished in  3540 milliseconds
+ArraySel       finished in   862 milliseconds
+ArrayIns       finished in   169 milliseconds
+ArrayMerge     finished in     7 milliseconds
+ArraySh        finished in     9 milliseconds
+ArrayQ2SortTb  finished in     7 milliseconds
+Sorting inversed data
+ArrayBub       finished in  1486 milliseconds
+ArraySel       finished in   837 milliseconds
+ArrayIns       finished in   355 milliseconds
+ArrayMerge     finished in     1 milliseconds
+ArraySh        finished in     1 milliseconds
+ArrayQ2SortTb  finished in     1 milliseconds
+Sorting sorted data
+ArrayBub       finished in   703 milliseconds
+ArraySel       finished in   508 milliseconds
+ArrayIns       finished in     0 milliseconds
+ArrayMerge     finished in     1 milliseconds
+ArraySh        finished in     1 milliseconds
+ArrayQ2SortTb  finished in     1 milliseconds
  */

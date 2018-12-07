@@ -33,7 +33,7 @@ public class SortingExperiment implements Runnable {
     }
 
     public void start() {
-        thread = new Thread(this);
+        thread = new Thread(this, "Thread - " + title);
         thread.start();
     }
 
