@@ -2,9 +2,16 @@ package learn.dsai.ch07advsort;
 
 import learn.dsai.ch03sorting.ArrayLong;
 
-public class ArraySh extends ArrayLong {
-    public ArraySh(int max) {
+public class ArrayShLogged extends ArrayLong {
+    private final boolean logging;
+
+    public ArrayShLogged(int max) {
+        this(max, true);
+    }
+
+    public ArrayShLogged(int max, boolean logging) {
         super(max);
+        this.logging = logging;
     }
 
     @Override
@@ -26,6 +33,9 @@ public class ArraySh extends ArrayLong {
                     j -= h;
                 }
                 a[j] = m;
+                if (logging) {
+                    display();
+                }
             }
             h = (h - 1) / 3;
         }
