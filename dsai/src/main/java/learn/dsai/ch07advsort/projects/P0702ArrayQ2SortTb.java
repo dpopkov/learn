@@ -1,15 +1,24 @@
-package learn.dsai.ch07advsort;
+package learn.dsai.ch07advsort.projects;
 
 import learn.dsai.ch03sorting.ArrayLong;
 
 /**
  * Demonstrates improved version of quick sort that uses 'median-of-three' pivot value.
  * Textbook implementation.
+ * Counts the number of copies and comparisons.
  */
 @SuppressWarnings("StatementWithEmptyBody")
-public class ArrayQ2SortTb extends ArrayLong {
-    public ArrayQ2SortTb(int max) {
+public class P0702ArrayQ2SortTb extends ArrayLong {
+    private int numCopies;
+    private int numComparisons;
+
+    public P0702ArrayQ2SortTb(int max) {
         super(max);
+    }
+
+    public void displayStats() {
+        System.out.println("numCopies      = " + numCopies);
+        System.out.println("numComparisons = " + numComparisons);
     }
 
     @Override
@@ -38,6 +47,7 @@ public class ArrayQ2SortTb extends ArrayLong {
             if (a[left] > a[right]) {
                 swap(left, right);
             }
+            numComparisons++;
         } else if (size == 3) {
             int m = left + 1;
             if (a[left] > a[m]) {
@@ -49,6 +59,7 @@ public class ArrayQ2SortTb extends ArrayLong {
             if (a[left] > a[m]) {
                 swap(left, m);
             }
+            numComparisons += 3;
         }
         // else size == 1
     }
@@ -66,6 +77,7 @@ public class ArrayQ2SortTb extends ArrayLong {
         if (a[m] > a[right]) {
             swap(m, right);
         }
+        numComparisons += 3;
         swap(m, right - 1);
         return a[right - 1];
     }
@@ -75,8 +87,12 @@ public class ArrayQ2SortTb extends ArrayLong {
         int leftPtr = left;
         int rightPtr = right - 1;
         while (true) {
-            while (a[++leftPtr] < pivot) ; // nop
-            while (a[--rightPtr] > pivot) ; // nop
+            while (a[++leftPtr] < pivot) {
+                numComparisons++;
+            }
+            while (a[--rightPtr] > pivot) {
+                numComparisons++;
+            }
             if (leftPtr >= rightPtr) {
                 break;
             } else {
@@ -85,5 +101,11 @@ public class ArrayQ2SortTb extends ArrayLong {
         }
         swap(leftPtr, right - 1);
         return leftPtr;
+    }
+
+    @Override
+    protected void swap(int j, int i) {
+        super.swap(j, i);
+        numCopies += 3;
     }
 }
