@@ -4,11 +4,10 @@ import learn.dsai.ch03sorting.ArrayLong;
 
 /**
  * Demonstrates improved version of quick sort that uses 'median-of-three' pivot value.
- * Textbook implementation.
  */
 @SuppressWarnings("StatementWithEmptyBody")
-public class ArrayQ2SortTb extends ArrayLong {
-    public ArrayQ2SortTb(int max) {
+public class ArrayQ2Sort extends ArrayLong {
+    public ArrayQ2Sort(int max) {
         super(max);
     }
 
@@ -17,6 +16,7 @@ public class ArrayQ2SortTb extends ArrayLong {
         recQuickSort(0, nElems - 1);
     }
 
+    @SuppressWarnings("Duplicates")
     private void recQuickSort(int left, int right) {
         int size = right - left + 1;
         if (size <= 3) {
@@ -31,7 +31,7 @@ public class ArrayQ2SortTb extends ArrayLong {
 
     /** Manual sorting of sub-arrays of length 3 or less. */
     @SuppressWarnings("Duplicates")
-    void manualSort(int left, int right) {
+    private void manualSort(int left, int right) {
         int size = right - left + 1;
         if (size == 2) {
             if (a[left] > a[right]) {
