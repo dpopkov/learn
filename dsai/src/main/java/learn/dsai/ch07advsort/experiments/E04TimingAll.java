@@ -5,10 +5,7 @@ import learn.dsai.ch03sorting.ArrayIns;
 import learn.dsai.ch03sorting.ArrayLong;
 import learn.dsai.ch03sorting.ArraySel;
 import learn.dsai.ch06rec.merge.ArrayMerge;
-import learn.dsai.ch07advsort.ArrayQ2Sort;
-import learn.dsai.ch07advsort.ArrayQ2SortTb;
-import learn.dsai.ch07advsort.ArrayQSort;
-import learn.dsai.ch07advsort.ArraySh;
+import learn.dsai.ch07advsort.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,17 +14,18 @@ import java.util.function.Consumer;
 import java.util.function.IntFunction;
 
 public class E04TimingAll {
-    private final static int MAX_SIZE = 40_000; // a value of 20_000 and more causes StackOverflowError
+    private final static int MAX_SIZE = 100_000; // a value of 20_000 and more causes StackOverflowError
                                                 // in experiment with fillSorted in ArrayQSort.recQuickSort()
     private static final List<IntFunction<? extends ArrayLong>> constructors = Arrays.asList(
-            ArrayBub::new,
+            /*ArrayBub::new,*/
             ArraySel::new,
             ArrayIns::new,
             ArrayMerge::new,
             ArraySh::new,
             /*ArrayQSort::new,*/
             ArrayQ2SortTb::new/*,
-            ArrayQ2Sort::new*/
+            ArrayQ2Sort::new*/,
+            ArrayQ3SortTb::new
     );
 
     public static void main(String[] args) {
@@ -71,27 +69,27 @@ public class E04TimingAll {
 }
 
 /*
-Results 2018-12-07 (on size 40_000):
+Results 2018-12-08 (on size 100_000):
 ------------------------------------
 Sorting random data
-ArrayBub       finished in  3540 milliseconds
-ArraySel       finished in   862 milliseconds
-ArrayIns       finished in   169 milliseconds
-ArrayMerge     finished in     7 milliseconds
-ArraySh        finished in     9 milliseconds
-ArrayQ2SortTb  finished in     7 milliseconds
+ArraySel       finished in  6349 milliseconds
+ArrayIns       finished in  1157 milliseconds
+ArrayMerge     finished in    15 milliseconds
+ArraySh        finished in    21 milliseconds
+ArrayQ2SortTb  finished in    15 milliseconds
+ArrayQ3SortTb  finished in    14 milliseconds
 Sorting inversed data
-ArrayBub       finished in  1486 milliseconds
-ArraySel       finished in   837 milliseconds
-ArrayIns       finished in   355 milliseconds
-ArrayMerge     finished in     1 milliseconds
-ArraySh        finished in     1 milliseconds
-ArrayQ2SortTb  finished in     1 milliseconds
+ArraySel       finished in  6001 milliseconds
+ArrayIns       finished in  2408 milliseconds
+ArrayMerge     finished in     4 milliseconds
+ArraySh        finished in     4 milliseconds
+ArrayQ2SortTb  finished in     3 milliseconds
+ArrayQ3SortTb  finished in     2 milliseconds
 Sorting sorted data
-ArrayBub       finished in   703 milliseconds
-ArraySel       finished in   508 milliseconds
+ArraySel       finished in  3043 milliseconds
 ArrayIns       finished in     0 milliseconds
-ArrayMerge     finished in     1 milliseconds
-ArraySh        finished in     1 milliseconds
-ArrayQ2SortTb  finished in     1 milliseconds
+ArrayMerge     finished in     4 milliseconds
+ArraySh        finished in     2 milliseconds
+ArrayQ2SortTb  finished in     3 milliseconds
+ArrayQ3SortTb  finished in     2 milliseconds
  */
