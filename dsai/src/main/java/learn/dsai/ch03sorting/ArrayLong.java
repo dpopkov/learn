@@ -19,6 +19,12 @@ public abstract class ArrayLong {
         maxCapacity = max;
     }
 
+    public ArrayLong(long[] values) {
+        a = Arrays.copyOf(values, values.length);
+        nElems = values.length;
+        maxCapacity = values.length;
+    }
+
     public int getMaxCapacity() {
         return maxCapacity;
     }
