@@ -17,6 +17,15 @@ public class P0701ArrayParTest {
     }
 
     @Test
+    public void testPartitionItWhenRightElementIsMaximum() {
+        P0701ArrayPar arr = new P0701ArrayPar(10);
+        long[] values = {3, 1, 2, 7, 8, 9, 4, 6, 5, 10};
+        arr.insert(values);
+        int p = arr.partitionIt(0, arr.getSize() - 1);
+        assertTrue(ArrayTools.isPartitioned(arr.getValues(), p));
+    }
+
+    @Test
     public void testPartitionItWhen3Elems() {
         P0701ArrayPar arr = new P0701ArrayPar(3);
         long[] values = {9, 8, 7};
