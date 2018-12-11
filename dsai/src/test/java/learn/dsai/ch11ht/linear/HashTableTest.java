@@ -52,6 +52,30 @@ public class HashTableTest {
     }
 
     @Test
+    public void testInsertAfterRehash() {
+        HashTable table = new HashTable(3);
+        table.insert(new DataItem(11L));
+        DataItem found = table.find(11L);
+        assertNotNull(found);
+        assertThat(found.getKey(), is(11L));
+        table.insert(new DataItem(21L));
+        assertThat(table.find(11L).getKey(), is(11L));
+        assertThat(table.find(21L).getKey(), is(21L));
+
+        table.insert(new DataItem(22L));
+        assertThat(table.find(11L).getKey(), is(11L));
+        assertThat(table.find(21L).getKey(), is(21L));
+        assertThat(table.find(22L).getKey(), is(22L));
+
+        table.insert(new DataItem(33L));
+        assertThat(table.find(11L).getKey(), is(11L));
+        assertThat(table.find(21L).getKey(), is(21L));
+        assertThat(table.find(22L).getKey(), is(22L));
+        assertThat(table.find(33L).getKey(), is(33L));
+        assertThat(table.getSize(), is(4));
+    }
+
+    @Test
     public void testDelete() {
         HashTable table = new HashTable();
         table.insert(new DataItem(11L));
