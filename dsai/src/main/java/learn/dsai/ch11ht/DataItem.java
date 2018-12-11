@@ -10,4 +10,9 @@ public class DataItem {
     public long getKey() {
         return key;
     }
+
+    @Override
+    public String toString() {
+        return "{" + key + "}";
+    }
 }
