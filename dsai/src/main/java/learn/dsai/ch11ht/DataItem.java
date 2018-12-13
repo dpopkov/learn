@@ -1,7 +1,10 @@
 package learn.dsai.ch11ht;
 
+/**
+ * Data item that contains {@code long} values.
+ */
 public class DataItem {
-    private long key;
+    private final long key;
 
     public DataItem(long key) {
         this.key = key;

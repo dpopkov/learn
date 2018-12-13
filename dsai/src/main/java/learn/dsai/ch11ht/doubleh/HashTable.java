@@ -1,33 +1,23 @@
 package learn.dsai.ch11ht.doubleh;
 
+import learn.dsai.ch11ht.ArrayHashTable;
 import learn.dsai.ch11ht.DataItem;
-
-import java.util.StringJoiner;
+import learn.dsai.ch11ht.HashTableLong;
 
 /**
  * Demonstrates hash table with double hashing.
  */
-public class HashTable {
+public class HashTable extends ArrayHashTable implements HashTableLong {
     private static final int DEFAULT_CAPACITY = 11;
-    private static final DataItem DELETED = new DataItem(-1L);
     private static final int SECOND_HASH_CONST = 5;
 
-    private DataItem[] items;
-    private int size;
-
     public HashTable() {
-        this(DEFAULT_CAPACITY);
-    }
-
-    /** Constructor is used for unit-testing purposes. */
-    HashTable(int capacity) {
-        items = new DataItem[capacity];
+        super(DEFAULT_CAPACITY);
     }
 
     /** Constructor is used for unit-testing purposes. */
     HashTable(DataItem[] items, int size) {
-        this.items = items;
-        this.size = size;
+        super(items, size);
     }
 
     /**
@@ -37,6 +27,7 @@ public class HashTable {
      * @param key key to find
      * @return found item or null
      */
+    @Override
     public DataItem find(long key) {
         int hash = hashFunc1(key);
         if (items[hash] != null && items[hash].getKey() == key) {
@@ -55,6 +46,7 @@ public class HashTable {
         return null;
     }
 
+    @Override
     public void insert(DataItem item) {
         if (size + 1 > items.length * 0.66) {
             rehash();
@@ -74,18 +66,8 @@ public class HashTable {
         }
     }
 
-    private void rehash() {
-        int newCapacity = getPrimeAfter(items.length * 2);
-        DataItem[] newItems = new DataItem[newCapacity];
-        for (DataItem item : items) {
-            if (item != null && item != DELETED) {
-                insertTo(newItems, item);
-            }
-        }
-        items = newItems;
-    }
-
-    private void insertTo(DataItem[] newItems, DataItem item) {
+    @Override
+    public void insertTo(DataItem[] newItems, DataItem item) {
         int hash = (int) (item.getKey() % newItems.length);
         int step = hashFunc2(item.getKey());
         while (newItems[hash] != null) {
@@ -95,6 +77,7 @@ public class HashTable {
         newItems[hash] = item;
     }
 
+    @Override
     public DataItem delete(long key) {
         int hash = hashFunc1(key);
         int step = hashFunc2(key);
@@ -112,10 +95,6 @@ public class HashTable {
         return item;
     }
 
-    public int getSize() {
-        return size;
-    }
-
     private int hashFunc1(long key) {
         return (int) (key % items.length);
     }
@@ -129,39 +108,5 @@ public class HashTable {
      */
     private int hashFunc2(long key) {
         return (int) (SECOND_HASH_CONST - (key % SECOND_HASH_CONST));
-    }
-
-    @Override
-    public String toString() {
-        StringJoiner joiner = new StringJoiner(" ", "[", "]");
-        for (DataItem item : items) {
-            joiner.add(item != null && item != DELETED
-                    ? Long.toString(item.getKey()) : "**");
-        }
-        return joiner.toString();
-    }
-
-    public void display() {
-        System.out.println("Table: " + toString());
-    }
-
-    private static int getPrimeAfter(int min) {
-        for (int j = min + 1; true; j++) {
-            if (isPrime(j)) {
-                return j;
-            }
-        }
-    }
-
-    private static boolean isPrime(int x) {
-        if (x > 2 && x % 2 == 0) {
-            return false;
-        }
-        for (int i = 3; i * i <= x; i += 2) {
-            if (x % i == 0) {
-                return false;
-            }
-        }
-        return true;
     }
 }
