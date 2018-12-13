@@ -87,8 +87,9 @@ public class HashTable {
 
     private void insertTo(DataItem[] newItems, DataItem item) {
         int hash = (int) (item.getKey() % newItems.length);
+        int step = hashFunc2(item.getKey());
         while (newItems[hash] != null) {
-            hash++;
+            hash += step;
             hash %= newItems.length;
         }
         newItems[hash] = item;

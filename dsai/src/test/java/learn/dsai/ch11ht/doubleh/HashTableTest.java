@@ -1,6 +1,7 @@
 package learn.dsai.ch11ht.doubleh;
 
 import learn.dsai.ch11ht.DataItem;
+import learn.dsai.tools.ArrayTools;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -46,7 +47,8 @@ public class HashTableTest {
     @Test
     public void testInsertAfterRehash() {
         HashTable table = new HashTable();
-        long[] values = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+        long[] values = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17};
+        ArrayTools.shuffle(values);
         assertInsertAll(table, values);
     }
 

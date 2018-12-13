@@ -1,8 +1,11 @@
 package learn.dsai.tools;
 
+import java.util.Random;
+import java.util.Set;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
-@SuppressWarnings("unused")
 public class ArrayTools {
 
     public static <T> String toString(T[] array) {
@@ -100,5 +103,21 @@ public class ArrayTools {
             }
         }
         return minValue;
+    }
+
+    public static void shuffle(long[] array) {
+        Random random = new Random();
+        for (int i = 0; i < array.length - 1; i++) {
+            int j = i + random.nextInt(array.length - i);
+            long temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+    }
+
+    public static boolean containSameElements(long[] a1, long[] a2) {
+        Set<Long> set1 = LongStream.of(a1).boxed().collect(Collectors.toSet());
+        Set<Long> set2 = LongStream.of(a2).boxed().collect(Collectors.toSet());
+        return set1.equals(set2);
     }
 }
