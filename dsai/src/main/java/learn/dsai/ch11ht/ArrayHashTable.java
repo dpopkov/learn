@@ -26,6 +26,13 @@ public abstract class ArrayHashTable implements HashTableLong {
         return size;
     }
 
+    /** This method should be implemented in concrete {@code HashTableLong}
+     * implementation as it is used in rehashing.
+     * @param newItems new array of items
+     * @param item existing item
+     */
+    public abstract void insertTo(DataItem[] newItems, DataItem item);
+
     protected void rehash() {
         int newCapacity = getPrimeAfter(items.length * 2);
         DataItem[] newItems = new DataItem[newCapacity];

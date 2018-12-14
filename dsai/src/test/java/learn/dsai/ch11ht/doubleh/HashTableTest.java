@@ -1,6 +1,7 @@
 package learn.dsai.ch11ht.doubleh;
 
 import learn.dsai.ch11ht.DataItem;
+import learn.dsai.ch11ht.KeyLong;
 import learn.dsai.tools.ArrayTools;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ public class HashTableTest {
                 new DataItem(11), null, new DataItem(17)
         };
         HashTable table = new HashTable(items, 3);
-        DataItem result = table.find(10L);
+        KeyLong result = table.find(10L);
         assertThat(result.getKey(), is(10L));
         result = table.find(17L);
         assertThat(result.getKey(), is(17L));
@@ -27,7 +28,7 @@ public class HashTableTest {
         DataItem[] items = new DataItem[] {
                 null, null, new DataItem(9), null, null, null, new DataItem(16)};
         HashTable table = new HashTable(items, 2);
-        DataItem result = table.find(1L);
+        KeyLong result = table.find(1L);
         assertNull(result);
         result = table.find(23L);
         assertNull(result);
@@ -36,10 +37,10 @@ public class HashTableTest {
     @Test
     public void testInsert() {
         HashTable table = new HashTable();
-        table.insert(new DataItem(11L));
-        DataItem found = table.find(11L);
+        table.insert(11L);
+        KeyLong found = table.find(11L);
         assertThat(found.getKey(), is(11L));
-        table.insert(new DataItem(22L));
+        table.insert(22L);
         assertThat(table.find(11L).getKey(), is(11L));
         assertThat(table.find(22L).getKey(), is(22L));
     }
@@ -54,9 +55,9 @@ public class HashTableTest {
 
     private void assertInsertAll(HashTable table, long[] values) {
         for (int i = 0; i < values.length; i++) {
-            table.insert(new DataItem(values[i]));
+            table.insert(values[i]);
             for (int j = 0; j <= i; j++) {
-                DataItem found = table.find(values[j]);
+                KeyLong found = table.find(values[j]);
                 assertNotNull(found);
                 assertThat(found.getKey(), is(values[j]));
                 assertThat(table.getSize(), is(i + 1));
@@ -67,11 +68,11 @@ public class HashTableTest {
     @Test
     public void testDelete() {
         HashTable table = new HashTable();
-        table.insert(new DataItem(11L));
-        table.insert(new DataItem(22L));
+        table.insert(11L);
+        table.insert(22L);
         assertThat(table.find(11L).getKey(), is(11L));
         assertThat(table.find(22L).getKey(), is(22L));
-        DataItem deleted = table.delete(11L);
+        KeyLong deleted = table.delete(11L);
         assertNotNull(deleted);
         assertThat(deleted.getKey(), is(11L));
         assertNull(table.find(11L));

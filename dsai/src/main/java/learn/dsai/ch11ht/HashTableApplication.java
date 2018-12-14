@@ -12,12 +12,12 @@ public class HashTableApplication {
 
     private void initialize(int initialNumber) {
         for (int i = 0; i < initialNumber; i++) {
-            table.insert(new DataItem((long) (Math.random() * 100)));
+            table.insert((long) (Math.random() * 100));
         }
     }
 
     public void run(Scanner in) {
-        DataItem item;
+        KeyLong item;
         long key;
         boolean done = false;
         while (!done) {
@@ -29,7 +29,7 @@ public class HashTableApplication {
                     break;
                 case "i":
                     key = getKey(in, "Enter key value to insert: ");
-                    table.insert(new DataItem(key));
+                    table.insert(key);
                     break;
                 case "d":
                     key = getKey(in, "Enter key value to delete: ");

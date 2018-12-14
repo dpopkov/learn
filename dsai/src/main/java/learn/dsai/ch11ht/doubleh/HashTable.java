@@ -3,6 +3,7 @@ package learn.dsai.ch11ht.doubleh;
 import learn.dsai.ch11ht.ArrayHashTable;
 import learn.dsai.ch11ht.DataItem;
 import learn.dsai.ch11ht.HashTableLong;
+import learn.dsai.ch11ht.KeyLong;
 
 /**
  * Demonstrates hash table with double hashing.
@@ -28,7 +29,7 @@ public class HashTable extends ArrayHashTable implements HashTableLong {
      * @return found item or null
      */
     @Override
-    public DataItem find(long key) {
+    public KeyLong find(long key) {
         int hash = hashFunc1(key);
         if (items[hash] != null && items[hash].getKey() == key) {
             return items[hash];
@@ -47,7 +48,8 @@ public class HashTable extends ArrayHashTable implements HashTableLong {
     }
 
     @Override
-    public void insert(DataItem item) {
+    public void insert(long keyValue) {
+        DataItem item = new DataItem(keyValue);
         if (size + 1 > items.length * 0.66) {
             rehash();
         }
@@ -78,7 +80,7 @@ public class HashTable extends ArrayHashTable implements HashTableLong {
     }
 
     @Override
-    public DataItem delete(long key) {
+    public KeyLong delete(long key) {
         int hash = hashFunc1(key);
         int step = hashFunc2(key);
         DataItem item = null;

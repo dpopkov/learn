@@ -3,6 +3,7 @@ package learn.dsai.ch11ht.linear;
 import learn.dsai.ch11ht.ArrayHashTable;
 import learn.dsai.ch11ht.DataItem;
 import learn.dsai.ch11ht.HashTableLong;
+import learn.dsai.ch11ht.KeyLong;
 
 /**
  * Demonstrates hash table with linear probing.
@@ -31,7 +32,7 @@ public class HashTable extends ArrayHashTable implements HashTableLong {
      * @return found item or null
      */
     @Override
-    public DataItem find(long key) {
+    public KeyLong find(long key) {
         int hash = hashFunc(key);
         while (items[hash] != null) {
             if (items[hash].getKey() == key) {
@@ -45,7 +46,8 @@ public class HashTable extends ArrayHashTable implements HashTableLong {
     }
 
     @Override
-    public void insert(DataItem item) {
+    public void insert(long keyValue) {
+        DataItem item = new DataItem(keyValue);
         if (size + 1 > items.length * 0.66) {
             rehash();
         }
