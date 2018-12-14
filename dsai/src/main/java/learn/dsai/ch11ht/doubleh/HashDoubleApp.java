@@ -1,19 +1,16 @@
-package learn.dsai.ch11ht.linear;
+package learn.dsai.ch11ht.doubleh;
 
 import learn.dsai.ch11ht.HashTableApplication;
 
 import java.util.Scanner;
 
-public class HashTableApp {
+public class HashDoubleApp {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        System.out.print("Enter capacity of hash table: ");
-        int capacity = in.nextInt();
         System.out.print("Enter initial number of items: ");
         int n = in.nextInt();
         in.skip("\\s");
-        HashTable table = new HashTable(capacity);
-        HashTableApplication app = new HashTableApplication(table, n);
+        HashTableApplication app = new HashTableApplication(new HashTable(), n);
         app.run(in);
     }
 }
