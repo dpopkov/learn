@@ -25,7 +25,7 @@ public class HashTableApplication {
             String choice = in.nextLine();
             switch (choice) {
                 case "s":
-                    System.out.println("Table: " + table);
+                    System.out.println(table);
                     break;
                 case "i":
                     key = getKey(in, "Enter key value to insert: ");
