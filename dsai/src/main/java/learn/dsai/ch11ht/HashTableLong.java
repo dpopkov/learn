@@ -7,4 +7,5 @@ public interface HashTableLong {
     KeyLong find(long key);
     void insert(long keyValue);
     KeyLong delete(long key);
+    int getSize();
 }

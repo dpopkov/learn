@@ -1,3 +1,4 @@
+/* 11.1 */
 package learn.dsai.ch11ht.linear;
 
 import learn.dsai.ch11ht.ArrayHashTable;

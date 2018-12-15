@@ -30,4 +30,18 @@ public class HashTableTest {
         assertThat(table.delete(22L).getKey(), is(22L));
         assertNull(table.delete(22L));
     }
+
+    @Test
+    public void testGetSize() {
+        assertThat(table.getSize(), is(0));
+        table.insert(11L);
+        assertThat(table.getSize(), is(1));
+        table.insert(22L);
+        assertThat(table.getSize(), is(2));
+        table.delete(11L);
+        table.delete(33L);
+        assertThat(table.getSize(), is(1));
+        table.delete(22L);
+        assertThat(table.getSize(), is(0));
+    }
 }

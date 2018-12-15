@@ -22,6 +22,7 @@ public abstract class ArrayHashTable implements HashTableLong {
         this.size = size;
     }
 
+    @Override
     public int getSize() {
         return size;
     }

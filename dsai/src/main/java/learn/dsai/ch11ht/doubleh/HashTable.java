@@ -1,3 +1,4 @@
+/* 11.2 */
 package learn.dsai.ch11ht.doubleh;
 
 import learn.dsai.ch11ht.ArrayHashTable;

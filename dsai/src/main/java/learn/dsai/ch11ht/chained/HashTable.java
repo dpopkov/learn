@@ -1,3 +1,4 @@
+/* 11.3 */
 package learn.dsai.ch11ht.chained;
 
 import learn.dsai.ch11ht.HashTableLong;
@@ -10,12 +11,18 @@ import java.util.StringJoiner;
  */
 public class HashTable implements HashTableLong {
     private final SortedList[] array;
+    private int size;
 
     public HashTable(int hashArraySize) {
         array = new SortedList[hashArraySize];
         for (int i = 0; i < array.length; i++) {
             array[i] = new SortedList();
         }
+    }
+
+    @Override
+    public int getSize() {
+        return size;
     }
 
     @Override
@@ -28,6 +35,7 @@ public class HashTable implements HashTableLong {
     public void insert(long keyValue) {
         int hash = hashFunc(keyValue);
         array[hash].insert(new Link(keyValue));
+        size++;
     }
 
     private int hashFunc(long keyValue) {
@@ -37,7 +45,11 @@ public class HashTable implements HashTableLong {
     @Override
     public KeyLong delete(long key) {
         int hash = hashFunc(key);
-        return array[hash].delete(key);
+        Link deleted = array[hash].delete(key);
+        if (deleted != null) {
+            size--;
+        }
+        return deleted;
     }
 
     @Override
