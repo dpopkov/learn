@@ -6,20 +6,22 @@ import java.util.StringJoiner;
 
 /**
  * Base class should be used for hash tables that
- * use array of items as underlying container.
+ * use array of generic items as underlying container.
  */
-public abstract class ArrayHashTable implements HashTableLong {
-    protected static final DataItem DELETED = new DataItem(-1L);
+public abstract class ArrayHashTableT<T> implements HashTableT<T> {
+    @SuppressWarnings("unchecked")
+    protected static final DataItemT DELETED = new DataItemT(null);
 
-    protected DataItem[] items;
+    protected DataItemT<T>[] items;
     protected int size;
 
     /** Constructor is used for unit-testing purposes. */
-    public ArrayHashTable(int capacity) {
-        items = new DataItem[capacity];
+    @SuppressWarnings("unchecked")
+    public ArrayHashTableT(int capacity) {
+        items = (DataItemT<T>[]) new DataItemT[capacity];
     }
 
-    public ArrayHashTable(DataItem[] items, int size) {
+    public ArrayHashTableT(DataItemT<T>[] items, int size) {
         this.items = items;
         this.size = size;
     }
@@ -34,12 +36,12 @@ public abstract class ArrayHashTable implements HashTableLong {
      * @param newItems new array of items
      * @param item existing item
      */
-    public abstract void insertTo(DataItem[] newItems, DataItem item);
+    public abstract void insertTo(DataItemT<T>[] newItems, DataItemT<T> item);
 
     protected void rehash() {
         int newCapacity = getPrimeAfter(items.length * 2);
-        DataItem[] newItems = new DataItem[newCapacity];
-        for (DataItem item : items) {
+        @SuppressWarnings("unchecked") DataItemT<T>[] newItems = new DataItemT[newCapacity];
+        for (DataItemT<T> item : items) {
             if (item != null && item != DELETED) {
                 insertTo(newItems, item);
             }
@@ -58,9 +60,9 @@ public abstract class ArrayHashTable implements HashTableLong {
     @Override
     public String toString() {
         StringJoiner joiner = new StringJoiner(" ", "[", "]");
-        for (DataItem item : items) {
+        for (DataItemT<T> item : items) {
             joiner.add(item != null && item != DELETED
-                    ? Long.toString(item.getKey()) : "**");
+                    ? item.getKey().toString() : "**");
         }
         return joiner.toString();
     }
