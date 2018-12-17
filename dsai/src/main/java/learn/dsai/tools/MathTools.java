@@ -16,6 +16,23 @@ public class MathTools {
         return Integer.numberOfTrailingZeros(x);
     }
 
+    public static int pow(int x, int p) {
+        if (p < 0) {
+            throw new IllegalArgumentException("Negative exponent: " + p);
+        }
+        int rst = 1;
+        while (p > 0) {
+            if (p % 2 == 0) {
+                x *= x;
+                p /= 2;
+            } else {
+                rst *= x;
+                p--;
+            }
+        }
+        return rst;
+    }
+
     public static boolean isPrime(int x) {
         if (x > 2 && x % 2 == 0) {
             return false;
