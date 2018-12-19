@@ -3,6 +3,10 @@ package learn.dsai.ch08trees;
 import java.util.StringJoiner;
 import java.util.function.LongConsumer;
 
+/**
+ * Binary tree that contains values of type {@code long}.
+ * This tree allows duplicate values.
+ */
 public class TreeLong {
     private NodeLong root;
 
@@ -30,16 +34,14 @@ public class TreeLong {
                 if (parent.left == null) {
                     parent.left = node;
                     break;
-                } else {
-                    parent = parent.left;
                 }
+                parent = parent.left;
             } else {
                 if (parent.right == null) {
                     parent.right = node;
                     break;
-                } else {
-                    parent = parent.right;
                 }
+                parent = parent.right;
             }
         }
     }
@@ -112,50 +114,38 @@ public class TreeLong {
                     successorParent = successor;
                     successor = successor.left;
                 }
-                if (successorParent != null) {
-                    successorParent.left = null;
+                if (successor != current.right) {
+                    successorParent.left = successor.right;
+                    successor.right = current.right;
                 }
-                if (leftChild) {
+                if (current == root) {
+                    root = successor;
+                } else if (leftChild) {
                     parent.left = successor;
                 } else {
                     parent.right = successor;
                 }
                 successor.left = current.left;
-
-
-                /*NodeLong mostRight = findRight(current.left);
-                if (leftChild) {
-                    parent.left = current.left;
-                } else {
-                    parent.right = current.left;
-                }
-                mostRight.right = current.right;*/
             } else if (current.left == null && current.right == null) {
-                /*if (parent == null) { // current == root
+                if (parent == null) { // current == root
                     root = null;
-                    return current;
-                }*/
-                if (leftChild) {
+                } else if (leftChild) {
                     parent.left = null;
                 } else {
                     parent.right = null;
                 }
             } else if (current.left != null) {
-                /*if (parent == null) {
+                if (parent == null) {
                     root = current.left;
-                    return current;
-                }*/
-                if (leftChild) {
+                } else if (leftChild) {
                     parent.left = current.left;
                 } else {
                     parent.right = current.left;
                 }
             } else {    // current.right != null
-                /*if (parent == null) {
+                if (parent == null) {
                     root = current.right;
-                    return current;
-                }*/
-                if (leftChild) {
+                } else if (leftChild) {
                     parent.left = current.right;
                 } else {
                     parent.right = current.right;
@@ -163,20 +153,5 @@ public class TreeLong {
             }
         }
         return current;
-    }
-
-    NodeLong findLeft(NodeLong parent) {
-        if (parent.left == null) {
-            return parent;
-        }
-        return findRight(parent.left);
-    }
-
-
-    NodeLong findRight(NodeLong parent) {
-        if (parent.right == null) {
-            return parent;
-        }
-        return findRight(parent.right);
     }
 }

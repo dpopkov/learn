@@ -1,6 +1,5 @@
 package learn.dsai.ch08trees;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.*;
@@ -75,30 +74,57 @@ public class TreeLongTest {
     }
 
     @Test
-    public void testFindRight() {
-        TreeLong tree = new TreeLong();
-        tree.insert(new long[] {22, 11, 33});
-        NodeLong top = tree.find(22);
-        NodeLong node = tree.findRight(top);
-        assertThat(node.data, is(33L));
-        tree.insert(32);
-        assertThat(tree.findRight(top).data, is(33L));
-        tree.insert(34);
-        assertThat(tree.findRight(top).data, is(34L));
-    }
-
-    @Test
-    public void testDeleteNodeWithLeftAndRight() {
+    public void testDeleteNodeWithLeftAndRightWhenSuccessorIsRight() {
         TreeLong tree = new TreeLong();
         tree.insert(new long[] {22, 11, 33, 32, 44});
-        NodeLong deleted;
-        deleted = tree.delete(33);
+        NodeLong deleted = tree.delete(33);
         assertNotNull(deleted);
         assertThat(deleted.data, is(33L));
         assertThat(tree.toString(), is("[11, 22, 32, 44]"));
     }
 
-    @Ignore
+    @Test
+    public void testDeleteNodeWithLeftAndRightWhenSuccessorIsLeftAfterRight() {
+        TreeLong tree = new TreeLong();
+        tree.insert(new long[] {22, 11, 33, 32, 44, 40, 50});
+        NodeLong deleted = tree.delete(33);
+        assertNotNull(deleted);
+        assertThat(deleted.data, is(33L));
+        assertThat(tree.toString(), is("[11, 22, 32, 40, 44, 50]"));
+    }
+
+    @Test
+    public void testDeleteNodeWithLeftAndRightWhenSuccessorIsLeftAfterRightAndHasSubNode() {
+        TreeLong tree = new TreeLong();
+        tree.insert(new long[] {22, 11, 33, 32, 44, 40, 50, 42});
+        NodeLong deleted = tree.delete(33);
+        assertNotNull(deleted);
+        assertThat(deleted.data, is(33L));
+        assertThat(tree.toString(), is("[11, 22, 32, 40, 42, 44, 50]"));
+    }
+
+    @Test
+    public void testDeleteRootWithoutSubNodes() {
+        TreeLong tree = new TreeLong();
+        tree.insert(new long[] {22});
+        NodeLong deleted;
+        deleted = tree.delete(22);
+        assertNotNull(deleted);
+        assertThat(deleted.data, is(22L));
+        assertThat(tree.toString(), is("[]"));
+    }
+
+    @Test
+    public void testDeleteRootWithSubNode() {
+        TreeLong tree = new TreeLong();
+        tree.insert(new long[] {22, 33});
+        NodeLong deleted;
+        deleted = tree.delete(22);
+        assertNotNull(deleted);
+        assertThat(deleted.data, is(22L));
+        assertThat(tree.toString(), is("[33]"));
+    }
+
     @Test
     public void testDeleteRoot() {
         TreeLong tree = new TreeLong();
