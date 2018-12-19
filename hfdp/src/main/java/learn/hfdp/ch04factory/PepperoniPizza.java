@@ -1,23 +1,12 @@
 package learn.hfdp.ch04factory;
 
 public class PepperoniPizza extends Pizza {
-    @Override
-    public void prepare() {
-
-    }
-
-    @Override
-    public void bake() {
-
-    }
-
-    @Override
-    public void cut() {
-
-    }
-
-    @Override
-    public void box() {
-
+    public PepperoniPizza() {
+        name = "Pepperoni Pizza";
+        dough = "Crust";
+        sauce = "Marinara sauce";
+        toppings.add("Sliced Pepperoni");
+        toppings.add("Sliced Onion");
+        toppings.add("Grated parmesan cheese");
     }
 }

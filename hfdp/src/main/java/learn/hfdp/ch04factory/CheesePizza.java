@@ -1,23 +1,11 @@
 package learn.hfdp.ch04factory;
 
 public class CheesePizza extends Pizza {
-    @Override
-    public void prepare() {
-
-    }
-
-    @Override
-    public void bake() {
-
-    }
-
-    @Override
-    public void cut() {
-
-    }
-
-    @Override
-    public void box() {
-
+    public CheesePizza() {
+        name = "Cheese Pizza";
+        dough = "Regular Crust";
+        sauce = "Marinara Pizza Sauce";
+        toppings.add("Fresh Mozzarella");
+        toppings.add("Parmesan");
     }
 }
