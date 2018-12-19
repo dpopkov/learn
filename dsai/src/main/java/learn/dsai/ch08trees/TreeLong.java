@@ -1,5 +1,7 @@
 package learn.dsai.ch08trees;
 
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.StringJoiner;
 import java.util.function.LongConsumer;
 
@@ -8,6 +10,8 @@ import java.util.function.LongConsumer;
  * This tree allows duplicate values.
  */
 public class TreeLong {
+    private static final String DOTS = "................................................................";
+
     private NodeLong root;
 
     public NodeLong find(long key) {
@@ -153,5 +157,59 @@ public class TreeLong {
             }
         }
         return current;
+    }
+
+    /**
+     * Builds string representation of the tree as pseudo graphic.
+     * Allows up to 5 levels of tree. If there are more levels, then
+     * the values at level greater than 5 will not be separated.
+     * @return pseudo graphic representation of the tree
+     */
+    public String buildForDisplay() {
+        StringBuilder builder = new StringBuilder();
+        Deque<NodeLong> globalStack = new LinkedList<>();
+        globalStack.push(root);
+        int nBlanks = 32;
+        boolean isRowEmpty = false;
+        appendLine(builder);
+        while (!isRowEmpty) {
+            Deque<NodeLong> localStack = new LinkedList<>();
+            isRowEmpty = true;
+            appendIndentation(builder, nBlanks);
+            while (!globalStack.isEmpty()) {
+                NodeLong temp = globalStack.pop();
+                if (temp != null) {
+                    builder.append(temp.data);
+                    localStack.push(temp.left);
+                    localStack.push(temp.right);
+                    if (temp.left != null || temp.right != null) {
+                        isRowEmpty = false;
+                    }
+                } else {
+                    builder.append("--");
+                    localStack.push(null);
+                    localStack.push(null);
+                }
+                appendIndentation(builder, nBlanks * 2 - 2);
+            }
+            builder.append(System.lineSeparator());
+            nBlanks /= 2;
+            while (!localStack.isEmpty()) {
+                globalStack.push(localStack.pop());
+            }
+        }
+        appendLine(builder);
+        return builder.toString();
+    }
+
+    private void appendLine(StringBuilder builder) {
+        builder.append(DOTS);
+        builder.append(System.lineSeparator());
+    }
+
+    private void appendIndentation(StringBuilder builder, int nBlanks) {
+        for (int j = 0; j < nBlanks; j++) {
+            builder.append(' ');
+        }
     }
 }
