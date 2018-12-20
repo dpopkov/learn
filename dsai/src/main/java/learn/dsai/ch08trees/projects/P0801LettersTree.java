@@ -1,12 +1,11 @@
 package learn.dsai.ch08trees.projects;
 
-import java.util.Deque;
-import java.util.LinkedList;
+import learn.dsai.ch08trees.BTreeDisplayBuilder;
+
+import java.util.StringJoiner;
 import java.util.function.IntConsumer;
 
 public class P0801LettersTree {
-    private static final String DOTS = "................................................................";
-
     private final NodeChar root;
 
     public P0801LettersTree(String s) {
@@ -16,51 +15,14 @@ public class P0801LettersTree {
     }
 
     public String buildForDisplay() {
-        StringBuilder builder = new StringBuilder();
-        Deque<NodeChar> globalStack = new LinkedList<>();
-        globalStack.push(root);
-        int nBlanks = 32;
-        boolean isRowEmpty = false;
-        appendLine(builder);
-        while (!isRowEmpty) {
-            Deque<NodeChar> localStack = new LinkedList<>();
-            isRowEmpty = true;
-            appendIndentation(builder, nBlanks);
-            while (!globalStack.isEmpty()) {
-                NodeChar temp = globalStack.pop();
-                if (temp != null) {
-                    builder.append(temp.character);
-                    localStack.push(temp.left);
-                    localStack.push(temp.right);
-                    if (temp.left != null || temp.right != null) {
-                        isRowEmpty = false;
-                    }
-                } else {
-                    builder.append("--");
-                    localStack.push(null);
-                    localStack.push(null);
-                }
-                appendIndentation(builder, nBlanks * 2 - 2);
-            }
-            builder.append(System.lineSeparator());
-            nBlanks /= 2;
-            while (!localStack.isEmpty()) {
-                globalStack.push(localStack.pop());
-            }
-        }
-        appendLine(builder);
-        return builder.toString();
+        return new BTreeDisplayBuilder().buildForDisplay(root);
     }
 
-    private void appendLine(StringBuilder builder) {
-        builder.append(DOTS);
-        builder.append(System.lineSeparator());
-    }
-
-    private void appendIndentation(StringBuilder builder, int nBlanks) {
-        for (int j = 0; j < nBlanks; j++) {
-            builder.append(' ');
-        }
+    @Override
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+        inOrder(root, v -> joiner.add(Character.toString((char)v)));
+        return joiner.toString();
     }
 
     private void inOrder(NodeChar node, IntConsumer consumer) {

@@ -5,7 +5,7 @@ package learn.dsai.ch08trees;
  * The access level of fields of the node is default (package level)
  * for simplicity of tree implementation.
  */
-public class NodeLong {
+public class NodeLong implements BTreeNode {
     final long data;
     NodeLong left;
     NodeLong right;
@@ -17,5 +17,15 @@ public class NodeLong {
     @Override
     public String toString() {
         return Long.toString(data);
+    }
+
+    @Override
+    public BTreeNode getLeft() {
+        return left;
+    }
+
+    @Override
+    public BTreeNode getRight() {
+        return right;
     }
 }

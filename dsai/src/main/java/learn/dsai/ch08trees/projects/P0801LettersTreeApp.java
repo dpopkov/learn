@@ -8,6 +8,7 @@ public class P0801LettersTreeApp {
         System.out.print("Enter string: ");
         String s = in.nextLine();
         P0801LettersTree tree = new P0801LettersTree(s);
+        System.out.println("Tree as string: " + tree);
         System.out.println(tree.buildForDisplay());
     }
 }
