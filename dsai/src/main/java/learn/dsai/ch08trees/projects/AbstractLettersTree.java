@@ -35,12 +35,30 @@ public abstract class AbstractLettersTree {
         return joiner.toString();
     }
 
-    private void inOrder(NodeChar node, IntConsumer consumer) {
+    protected void inOrder(NodeChar node, IntConsumer consumer) {
         if (node == null) {
             return;
         }
         inOrder(node.left, consumer);
         consumer.accept(node.character);
         inOrder(node.right, consumer);
+    }
+
+    protected void preOrder(NodeChar node, IntConsumer consumer) {
+        if (node == null) {
+            return;
+        }
+        consumer.accept(node.character);
+        preOrder(node.left, consumer);
+        preOrder(node.right, consumer);
+    }
+
+    protected void postOrder(NodeChar node, IntConsumer consumer) {
+        if (node == null) {
+            return;
+        }
+        postOrder(node.left, consumer);
+        postOrder(node.right, consumer);
+        consumer.accept(node.character);
     }
 }
