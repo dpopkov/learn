@@ -6,10 +6,12 @@ public class PizzaStore {
         Pizza pizza;
         if ("cheese".equals(type)) {
             pizza = new CheesePizza();
-        } else if ("greek".equals(type)) {
-            pizza = new GreekPizza();
         } else if ("pepperoni".equals(type)) {
             pizza = new PepperoniPizza();
+        } else if ("clam".equals(type)) {
+            pizza = new ClamPizza();
+        } else if ("veggie".equals(type)) {
+            pizza = new VeggiePizza();
         } else {
             pizza = new CheesePizza();
         }
