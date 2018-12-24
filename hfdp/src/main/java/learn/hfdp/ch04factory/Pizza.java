@@ -1,6 +1,7 @@
 package learn.hfdp.ch04factory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public abstract class Pizza {
     private static final String NL = System.lineSeparator();
@@ -9,6 +10,16 @@ public abstract class Pizza {
     protected String dough;
     protected String sauce;
     protected final ArrayList<String> toppings = new ArrayList<>();
+
+    public Pizza(String name, String dough, String sauce) {
+        this.name = name;
+        this.dough = dough;
+        this.sauce = sauce;
+    }
+
+    protected void addToppings(String... toppings) {
+        Collections.addAll(this.toppings, toppings);
+    }
 
     public String getName() {
         return name;
