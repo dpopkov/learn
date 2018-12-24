@@ -1,20 +1,14 @@
 package learn.hfdp.ch04factory;
 
 public class PizzaStore {
+    SimplePizzaFactory factory;
+
+    public PizzaStore(SimplePizzaFactory factory) {
+        this.factory = factory;
+    }
 
     public Pizza orderPizza(String type) {
-        Pizza pizza;
-        if ("cheese".equals(type)) {
-            pizza = new CheesePizza();
-        } else if ("pepperoni".equals(type)) {
-            pizza = new PepperoniPizza();
-        } else if ("clam".equals(type)) {
-            pizza = new ClamPizza();
-        } else if ("veggie".equals(type)) {
-            pizza = new VeggiePizza();
-        } else {
-            pizza = new CheesePizza();
-        }
+        Pizza pizza = factory.create(type);
         pizza.prepare();
         pizza.bake();
         pizza.cut();
