@@ -16,4 +16,9 @@ The Decorator Pattern attaches additional responsibilities to an object
 dynamically. Decorators provide a flexible alternative to subclassing 
 for extending functionality.
 
-#### Factory     - Chapter 4. Baking with OO Goodness
+#### Factory     - Chapter 4. Baking with OO Goodness.
+All Factory patterns encapsulate object creation.  
+The Factory Method Pattern defines an interface for creating an object, 
+but lets subclass decide which class to instantiate. Factory Method lets
+a class defer instantiation to subclasses.
+

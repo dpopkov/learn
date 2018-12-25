@@ -4,7 +4,7 @@ import learn.hfdp.ch04factory.Pizza;
 
 public class NYStyleCheesePizza extends Pizza {
     public NYStyleCheesePizza() {
-        super("NYStyle Cheese Pizza", "Regular Crust", "Marinara Pizza Sauce");
-        addToppings("Fresh Mozzarella", "Parmesan");
+        super("NY Style Cheese Pizza", "Thin Crust Dough", "Marinara Sauce");
+        addToppings("Grated Reggiano Cheese");
     }
 }
