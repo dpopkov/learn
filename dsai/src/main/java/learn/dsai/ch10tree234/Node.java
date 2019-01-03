@@ -33,7 +33,6 @@ public class Node {
             i--;
         }
         connect(i + 1, node);
-//        nodes[i + 1] = node;
     }
 
     public Node getNode(int index) {
@@ -72,11 +71,12 @@ public class Node {
         return index;
     }
 
-    /** Inserts item to non full node. */
+    /** Inserts item to non full node. All items are sorted. */
     public int insertItem(DataItem item) {
         int j = numItems;
         while (j > 0 && items[j - 1].getData() > item.getData()) {
             items[j] = items[j - 1];
+            nodes[j + 1] = nodes[j];
             j--;
         }
         items[j] = item;
