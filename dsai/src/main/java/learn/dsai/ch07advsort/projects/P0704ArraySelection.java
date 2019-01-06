@@ -1,7 +1,6 @@
 package learn.dsai.ch07advsort.projects;
 
 import learn.dsai.ch03sorting.ArrayLong;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Using partitioning to find a k-th largest or k-th smallest element.
@@ -13,7 +12,7 @@ public class P0704ArraySelection extends ArrayLong {
 
     @Override
     public void sort() {
-        throw new NotImplementedException();
+        throw new AssertionError("Not implemented method");
     }
 
     public long findNthLargest(int n) {

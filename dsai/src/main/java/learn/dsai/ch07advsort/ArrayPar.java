@@ -2,7 +2,6 @@
 package learn.dsai.ch07advsort;
 
 import learn.dsai.ch03sorting.ArrayLong;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Demonstrates partitioning an array.
@@ -14,7 +13,7 @@ public class ArrayPar extends ArrayLong {
 
     @Override
     public void sort() {
-        throw new NotImplementedException();
+        throw new AssertionError("Not implemented method");
     }
 
     public int partitionIt(int left, int right, long pivot) {

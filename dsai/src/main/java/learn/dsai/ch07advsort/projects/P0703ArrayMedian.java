@@ -2,7 +2,6 @@
 package learn.dsai.ch07advsort.projects;
 
 import learn.dsai.ch03sorting.ArrayLong;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Using partitioning to find a median of an array.
@@ -14,7 +13,7 @@ public class P0703ArrayMedian extends ArrayLong {
 
     @Override
     public void sort() {
-        throw new NotImplementedException();
+        throw new AssertionError("Not implemented method");
     }
 
     public int median() {
