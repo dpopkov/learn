@@ -2,6 +2,9 @@ package learn.dsai.ch08trees2;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.core.Is.*;
 import static org.junit.Assert.*;
 
@@ -59,7 +62,49 @@ public class BSTreeTest {
         assertThat(tree.find(15), is(15));
     }
 
-    /*@Test
-    public void delete() {
-    }*/
+    @Test
+    public void whenInOrderThenIteratesAscendingElements() {
+        BSTree<Integer> tree = new BSTree<>();
+        tree.insert(5, 2, 8, 1, 3, 6, 9);
+        List<Integer> buffer = new ArrayList<>();
+        tree.inOrder(buffer::add);
+        assertThat(buffer, is(List.of(1, 2, 3, 5, 6, 8, 9)));
+    }
+
+    @Test
+    public void whenMinimumThenReturnsTheLowerElement() {
+        BSTree<Integer> tree = new BSTree<>();
+        tree.insert(5, 2, 8, 1, 3, 6, 9);
+        assertThat(tree.minimum(), is(1));
+    }
+
+    @Test
+    public void whenMaximumThenReturnsTheHighestElement() {
+        BSTree<Integer> tree = new BSTree<>();
+        tree.insert(5, 2, 8, 1, 3, 9, 6);
+        assertThat(tree.maximum(), is(9));
+    }
+
+    @Test
+    public void whenDeleteLeafNodeThenDeleted() {
+        BSTree<Integer> tree = new BSTree<>();
+        tree.insert(2, 1);
+        assertNotNull(tree.find(1));
+        boolean rst = tree.delete(1);
+        assertThat(rst, is(true));
+        assertNull(tree.find(1));
+    }
+
+    @Test
+    public void whenDelete2ndLevelLeafNodeThenDeleted() {
+        BSTree<Integer> tree = new BSTree<>();
+        tree.insert(4, 2, 1, 3);
+        assertNotNull(tree.find(3));
+        boolean rst = tree.delete(3);
+        assertThat(rst, is(true));
+        assertNull(tree.find(3));
+    }
+
+    // TODO: Test return value false of method delete
+    //TODO: Test delete leaf root
 }

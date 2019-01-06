@@ -1,5 +1,7 @@
 package learn.dsai.ch08trees2;
 
+import java.util.function.Consumer;
+
 /**
  * Binary Search Tree.
  */
@@ -57,18 +59,68 @@ public class BSTree<T extends Comparable<T>> {
         }
     }
 
-    public void insert(T... values) {
+    @SafeVarargs
+    public final void insert(T... values) {
         for (T value : values) {
             insert(value);
         }
     }
 
+    public void inOrder(Consumer<T> consumer) {
+        inOrder(root, consumer);
+    }
+
+    private void inOrder(Node<T> node, Consumer<T> consumer) {
+        if (node != null) {
+            inOrder(node.left, consumer);
+            consumer.accept(node.data);
+            inOrder(node.right, consumer);
+        }
+    }
+
+    public T minimum() {
+        Node<T> node = root;
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node.data;
+    }
+
+    public T maximum() {
+        Node<T> node = root;
+        while (node.right != null) {
+            node = node.right;
+        }
+        return node.data;
+    }
+
     public boolean delete(T value) {
-        return false;
+        Node<T> parent = root;
+        Node<T> node = root;
+        boolean leftChild = false;
+        while (node != null && !node.data.equals(value)) {
+            parent = node;
+            if (value.compareTo(parent.data) < 0) {
+                node = parent.left;
+                leftChild = true;
+            } else {
+                node = parent.right;
+                leftChild = false;
+            }
+        }
+        if (node == null) {
+            return false;
+        }
+        if (leftChild) {
+            parent.left = null;
+        } else {
+            parent.right = null;
+        }
+        return true;
     }
 
     static class Node<T extends Comparable<T>> {
-        T data;
+        final T data;
         Node<T> left;
         Node<T> right;
 
