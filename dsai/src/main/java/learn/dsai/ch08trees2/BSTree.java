@@ -1,5 +1,6 @@
 package learn.dsai.ch08trees2;
 
+import java.util.StringJoiner;
 import java.util.function.Consumer;
 
 /**
@@ -111,12 +112,63 @@ public class BSTree<T extends Comparable<T>> {
         if (node == null) {
             return false;
         }
-        if (leftChild) {
-            parent.left = null;
+        if (node.left == null && node.right == null) {
+            if (node == root) {
+                root = null;
+            } else if (leftChild) {
+                parent.left = null;
+            } else {
+                parent.right = null;
+            }
+        } else if (node.left == null) {
+            if (node == root) {
+                root = node.right;
+            } else if (leftChild) {
+                parent.left = node.right;
+            } else {
+                parent.right = node.right;
+            }
+        } else if (node.right == null) {
+            if (node == root) {
+                root = node.left;
+            } else if (leftChild) {
+                parent.left = node.left;
+            } else {
+                parent.right = node.left;
+            }
         } else {
-            parent.right = null;
+            Node<T> successor = getSuccessor(node);
+            successor.left = node.left;
+            if (node == root) {
+                root = successor;
+            } else if (leftChild) {
+                parent.left = successor;
+            } else {
+                parent.right = successor;
+            }
         }
         return true;
+    }
+
+    private Node<T> getSuccessor(Node<T> node) {
+        Node<T> parent = node;
+        Node<T> current = node.right;
+        while (current.left != null) {
+            parent = current;
+            current = current.left;
+        }
+        if (parent != node) {
+            parent.left = current.right;
+            current.right = node.right;
+        }
+        return current;
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+        inOrder(e -> joiner.add(e.toString()));
+        return joiner.toString();
     }
 
     static class Node<T extends Comparable<T>> {
