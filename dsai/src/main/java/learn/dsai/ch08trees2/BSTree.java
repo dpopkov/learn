@@ -112,42 +112,29 @@ public class BSTree<T extends Comparable<T>> {
         if (node == null) {
             return false;
         }
-        if (node.left == null && node.right == null) {
-            if (node == root) {
-                root = null;
-            } else if (leftChild) {
-                parent.left = null;
-            } else {
-                parent.right = null;
-            }
-        } else if (node.left == null) {
-            if (node == root) {
-                root = node.right;
-            } else if (leftChild) {
-                parent.left = node.right;
-            } else {
-                parent.right = node.right;
-            }
-        } else if (node.right == null) {
-            if (node == root) {
-                root = node.left;
-            } else if (leftChild) {
-                parent.left = node.left;
-            } else {
-                parent.right = node.left;
-            }
+        Node<T> delNode = node;
+        if (delNode.left == null && delNode.right == null) {
+            updateLinks(parent, leftChild, delNode, null);
+        } else if (delNode.left == null) {
+            updateLinks(parent, leftChild, delNode, delNode.right);
+        } else if (delNode.right == null) {
+            updateLinks(parent, leftChild, delNode, delNode.left);
         } else {
-            Node<T> successor = getSuccessor(node);
-            successor.left = node.left;
-            if (node == root) {
-                root = successor;
-            } else if (leftChild) {
-                parent.left = successor;
-            } else {
-                parent.right = successor;
-            }
+            Node<T> successor = getSuccessor(delNode);
+            successor.left = delNode.left;
+            updateLinks(parent, leftChild, delNode, successor);
         }
         return true;
+    }
+
+    private void updateLinks(Node<T> parent, boolean leftChild, Node<T> toDelete, Node<T> substitute) {
+        if (toDelete == root) {
+            root = substitute;
+        } else if (leftChild) {
+            parent.left = substitute;
+        } else {
+            parent.right = substitute;
+        }
     }
 
     private Node<T> getSuccessor(Node<T> node) {
