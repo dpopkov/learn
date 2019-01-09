@@ -158,7 +158,11 @@ public class BSTree<T extends Comparable<T>> {
         return joiner.toString();
     }
 
-    static class Node<T extends Comparable<T>> {
+    BNode<T> getRoot() {
+        return root;
+    }
+
+    static class Node<T extends Comparable<T>> implements BNode<T> {
         final T data;
         Node<T> left;
         Node<T> right;
@@ -170,6 +174,21 @@ public class BSTree<T extends Comparable<T>> {
         @Override
         public String toString() {
             return data.toString();
+        }
+
+        @Override
+        public T getData() {
+            return data;
+        }
+
+        @Override
+        public BNode<T> getLeft() {
+            return left;
+        }
+
+        @Override
+        public BNode<T> getRight() {
+            return right;
         }
     }
 }
