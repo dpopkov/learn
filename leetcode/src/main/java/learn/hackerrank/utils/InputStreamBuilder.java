@@ -27,6 +27,15 @@ public class InputStreamBuilder {
         stringBuilder.append(NL);
     }
 
+    public void appendLn(int[] numbers) {
+        int last = numbers.length - 1;
+        for (int i = 0; i < last; i++) {
+            append(numbers[i]);
+            stringBuilder.append(' ');
+        }
+        appendLn(numbers[last]);
+    }
+
     public void append(int[] numbers) {
         for (int n : numbers) {
             appendLn(n);
