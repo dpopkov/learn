@@ -9,6 +9,7 @@ public class BSTreeApp {
         Integer[] values = {50, 25, 75, 12, 37, 43, 30, 33, 87, 93, 97};
         final int cellWidth = 2;
         tree.insert(values);
+        TreeStringBuilder<Integer> builder = new TreeStringBuilder<>(cellWidth, true);
         int value;
         outerLoop: while (true) {
             System.out.print("Enter first letter of show, ");
@@ -16,7 +17,7 @@ public class BSTreeApp {
             String choice = in.nextLine();
             switch (choice) {
                 case "s":
-                    System.out.println(new TreeStringBuilder<>(tree.getRoot(), cellWidth).toString());
+                    System.out.println(builder.build(tree.getRoot()));
                     break;
                 case "i":
                     value = getInt("Enter value to insert: ", in);

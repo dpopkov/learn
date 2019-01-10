@@ -3,24 +3,25 @@ package learn.dsai.ch08trees2;
 import java.util.Deque;
 import java.util.LinkedList;
 
-public class TreeStringBuilder<T> {
+public class TreeStringBuilder<T> implements BTreeStringBuilder<T> {
     private static final String NL = System.lineSeparator();
 
-    private final StringBuilder builder = new StringBuilder();
-    private final BNode<T> root;
+    private StringBuilder builder;
     private final int cellWidth;
     private final String cellFormat;
     private final String emptyCell;
+    private final boolean useHorizontals;
 
-    public TreeStringBuilder( BNode<T> root, int cellWidth) {
-        this.root = root;
+    public TreeStringBuilder(int cellWidth, boolean useHorizontals) {
         this.cellWidth = cellWidth;
+        this.useHorizontals = useHorizontals;
         cellFormat = String.format("%%%ds", cellWidth);
         emptyCell = makeEmpty(cellWidth);
-        build();
     }
 
-    private void build() {
+    @Override
+    public String build(BNode<T> root) {
+        builder = new StringBuilder();
         Deque<BNode<T>> globalStack = new LinkedList<>();
         globalStack.push(root);
         int height = getHeight(root);
@@ -28,7 +29,9 @@ public class TreeStringBuilder<T> {
         int innerGap = maxWidth;
         int indent = maxWidth / 2;
         boolean lastRow = false;
-        addLine(maxWidth * cellWidth);
+        if (useHorizontals) {
+            addLine(maxWidth * cellWidth);
+        }
         while (!lastRow) {
             Deque<BNode<T>> localStack = new LinkedList<>();
             lastRow = true;
@@ -60,7 +63,10 @@ public class TreeStringBuilder<T> {
                 globalStack.push(localStack.pop());
             }
         }
-        addLine(maxWidth * cellWidth);
+        if (useHorizontals) {
+            addLine(maxWidth * cellWidth);
+        }
+        return builder.toString();
     }
 
     private String formatNode(BNode<T> temp) {
@@ -84,11 +90,6 @@ public class TreeStringBuilder<T> {
                     recursiveTreeHeight(starting, node.getRight())
             );
         }
-    }
-
-    @Override
-    public String toString() {
-        return builder.toString();
     }
 
     private void addSpaces(int numSpaces) {
