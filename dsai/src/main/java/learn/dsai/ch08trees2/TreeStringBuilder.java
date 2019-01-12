@@ -3,18 +3,26 @@ package learn.dsai.ch08trees2;
 import java.util.Deque;
 import java.util.LinkedList;
 
+import static learn.dsai.tools.Constants.NL;
+
 public class TreeStringBuilder<T> implements BTreeStringBuilder<T> {
-    private static final String NL = System.lineSeparator();
+    public static final char EMPTY_NODE_DEFAULT_CHAR = '-';
 
     private StringBuilder builder;
     private final int cellWidth;
     private final String cellFormat;
     private final String emptyCell;
     private final boolean useHorizontals;
+    private final char emptyNodeChar;
 
     public TreeStringBuilder(int cellWidth, boolean useHorizontals) {
+        this(cellWidth, useHorizontals, EMPTY_NODE_DEFAULT_CHAR);
+    }
+
+    public TreeStringBuilder(int cellWidth, boolean useHorizontals, char emptyNodeChar) {
         this.cellWidth = cellWidth;
         this.useHorizontals = useHorizontals;
+        this.emptyNodeChar = emptyNodeChar;
         cellFormat = String.format("%%%ds", cellWidth);
         emptyCell = makeEmpty(cellWidth);
     }
@@ -108,7 +116,7 @@ public class TreeStringBuilder<T> implements BTreeStringBuilder<T> {
     private String makeEmpty(int length) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            builder.append('-');
+            builder.append(emptyNodeChar);
         }
         return builder.toString();
     }

@@ -2,13 +2,11 @@ package learn.dsai.ch08trees2.projects;
 
 import org.junit.Test;
 
+import static learn.dsai.tools.Constants.NL;
 import static org.hamcrest.core.Is.*;
 import static org.junit.Assert.*;
 
 public class P0803PyramidTreeTest {
-
-    private static final String NL = System.lineSeparator();
-
     @Test
     public void testAdd() {
         P0803PyramidTree tree = new P0803PyramidTree();

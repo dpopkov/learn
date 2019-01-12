@@ -4,10 +4,9 @@ import org.hamcrest.core.Is;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static learn.dsai.tools.Constants.NL;
 
 public class P0802BalancedCharTreeTest {
-    private static final String NL = System.lineSeparator();
-
     @Test
     public void test() {
         char[] chars = {'A', 'B', 'C', 'D'};

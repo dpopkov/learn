@@ -2,12 +2,11 @@ package learn.dsai.ch08trees2;
 
 import org.junit.Test;
 
+import static learn.dsai.tools.Constants.NL;
 import static org.hamcrest.core.Is.*;
 import static org.junit.Assert.*;
 
 public class TreeStringBuilderTest {
-    private static final String NL = System.lineSeparator();
-
     @Test
     public void testBuildingNotFullTree() {
         BSTree.Node<Integer> root = new BSTree.Node<>(40);
@@ -15,11 +14,11 @@ public class TreeStringBuilderTest {
         tree.insert(20);
         tree.insert(10);
         tree.insert(60);
-        TreeStringBuilder<Integer> builder = new TreeStringBuilder<>(2, true);
+        TreeStringBuilder<Integer> builder = new TreeStringBuilder<>(2, true, ' ');
         String expected = ".............." + NL
                 + "      40" + NL
                 + "  20      60" + NL
-                + "10  --  --  --" + NL
+                + "10            " + NL
                 + ".............." + NL;
         assertThat(builder.build(root), is(expected));
     }
