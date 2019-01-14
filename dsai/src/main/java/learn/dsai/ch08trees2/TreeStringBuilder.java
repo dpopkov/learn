@@ -14,15 +14,25 @@ public class TreeStringBuilder<T> implements BTreeStringBuilder<T> {
     private final String emptyCell;
     private final boolean useHorizontals;
     private final char emptyNodeChar;
+    private final boolean useGetData;
 
     public TreeStringBuilder(int cellWidth, boolean useHorizontals) {
-        this(cellWidth, useHorizontals, EMPTY_NODE_DEFAULT_CHAR);
+        this(cellWidth, useHorizontals, EMPTY_NODE_DEFAULT_CHAR, true);
+    }
+
+    public TreeStringBuilder(int cellWidth, boolean useHorizontals, boolean useGetData) {
+        this(cellWidth, useHorizontals, EMPTY_NODE_DEFAULT_CHAR, useGetData);
     }
 
     public TreeStringBuilder(int cellWidth, boolean useHorizontals, char emptyNodeChar) {
+        this(cellWidth, useHorizontals, emptyNodeChar, true);
+    }
+
+    public TreeStringBuilder(int cellWidth, boolean useHorizontals, char emptyNodeChar, boolean useGetData) {
         this.cellWidth = cellWidth;
         this.useHorizontals = useHorizontals;
         this.emptyNodeChar = emptyNodeChar;
+        this.useGetData = useGetData;
         cellFormat = String.format("%%%ds", cellWidth);
         emptyCell = makeEmpty(cellWidth);
     }
@@ -78,7 +88,7 @@ public class TreeStringBuilder<T> implements BTreeStringBuilder<T> {
     }
 
     private String formatNode(BNode<T> temp) {
-        return String.format(cellFormat, temp.getData().toString());
+        return String.format(cellFormat, useGetData ? temp.getData().toString() : temp.toString());
     }
 
     int getHeight(BNode<T> node) {
