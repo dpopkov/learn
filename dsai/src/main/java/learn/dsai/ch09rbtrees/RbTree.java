@@ -18,6 +18,10 @@ public class RbTree<T> {
         this.root = root;
     }
 
+    RbNode<T> getRoot() {
+        return root;
+    }
+
     public void add(T value) {
         RbNode<T> n = new RbNode<>(value);
         if (root == null) {
@@ -42,12 +46,38 @@ public class RbTree<T> {
         node.black = !node.black;
     }
 
-    void rotateLeft(RbNode<T> node) {
-
+    void rotateLeft(RbNode<T> parent, RbNode<T> node) {
+        if (node.right == null) {
+            throw new IllegalStateException("Can not rotate left when has no right sub-node");
+        }
+        if (node == root || parent == null) {
+            root = node.right;
+        } else {
+            if (node == parent.left) {
+                parent.left = node.right;
+            } else {
+                parent.right = node.right;
+            }
+        }
+        node.right.left = node;
+        node.right = null;   // TODO: check this
     }
 
-    void rotateRight(RbNode<T> node) {
-
+    void rotateRight(RbNode<T> parent, RbNode<T> node) {
+        if (node.left == null) {
+            throw new IllegalStateException("Can not rotate right when has no left sub-node");
+        }
+        if (node == root || parent == null) {
+            root = node.left;
+        } else {
+            if (node == parent.left) {
+                parent.left = node.left;
+            } else {
+                parent.right = node.left;
+            }
+        }
+        node.left.right = node;
+        node.left = null;   // TODO: check this
     }
 
     boolean isRedBlackCorrect() {

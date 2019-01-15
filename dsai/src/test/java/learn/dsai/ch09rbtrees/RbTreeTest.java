@@ -75,6 +75,14 @@ public class RbTreeTest {
     }
 
     @Test
+    public void whenFlipAndAttachRedSubNodeThenRedBlackCorrect() {
+        standardThreeNodesInit();
+        tree.flipColor(root);
+        root.left.left = new RbNode<>(12);
+        assertTrue(tree.isRedBlackCorrect());
+    }
+
+    @Test
     public void whenAttachingNodesThenRedBlackCorrect() {
         root = new RbNode<>(50, true);
         tree = new RbTree<>(root);
@@ -99,6 +107,38 @@ public class RbTreeTest {
         assertTrue(tree.isRedBlackCorrect());
         root.left.left = new RbNode<>(12);
         assertFalse(tree.isRedBlackCorrect());
+    }
+
+    @Test
+    public void whenRotateRightRootThenRotated() {
+        standardThreeNodesInit();
+        tree.rotateRight(null, root);
+        root = tree.getRoot();
+        assertThat(root.data, is(25));
+        assertThat(root.right.data, is(50));
+        assertThat(root.right.right.data, is(75));
+    }
+
+    @Test
+    public void whenRotateRightThenRotated() {
+        standardThreeNodesInit();
+        root.left.left = new RbNode<>(12);
+        root.left.right = new RbNode<>(37);
+        tree.rotateRight(root, root.left);
+        assertThat(root.left.data, is(12));
+        assertThat(root.left.right.data, is(25));
+        assertThat(root.left.right.right.data, is(37));
+    }
+
+    @Test
+    public void whenRotateLeftThenRotated() {
+        standardThreeNodesInit();
+        root.left.left = new RbNode<>(12);
+        root.left.right = new RbNode<>(37);
+        tree.rotateLeft(root, root.left);
+        assertThat(root.left.data, is(37));
+        assertThat(root.left.left.data, is(25));
+        assertThat(root.left.left.left.data, is(12));
     }
 
     private void standardThreeNodesInit() {
