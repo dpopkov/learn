@@ -5,8 +5,8 @@ import learn.dsai.ch08trees2.BNode;
 public class RbNode<T> implements BNode<T> {
     final T data;
     boolean black;
-    RbNode left;
-    RbNode right;
+    RbNode<T> left;
+    RbNode<T> right;
 
     public RbNode(T data) {
         this.data = data;

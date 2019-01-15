@@ -4,6 +4,7 @@ import learn.dsai.ch08trees2.TreeStringBuilder;
 
 /**
  * Red-Black tree.
+ *
  * @param <T> type of the element
  */
 public class RbTree<T> {
@@ -37,7 +38,7 @@ public class RbTree<T> {
         node.right.black = colorForChildren;
     }
 
-    private void chaingeNodeColor(RbNode<T> node) {
+    private void changeNodeColor(RbNode<T> node) {
         node.black = !node.black;
     }
 
@@ -49,14 +50,34 @@ public class RbTree<T> {
 
     }
 
+    boolean isRedBlackCorrect() {
+        if (root.isRed()) {
+            return false;
+        }
+        return isRedBlackCorrect(root.left) && isRedBlackCorrect(root.right);
+    }
+
     /**
      * Checks whether the sub-tree is red-black correct.
+     *
      * @param node root node of the sub-tree
      * @return true if correct
      */
     boolean isRedBlackCorrect(RbNode<T> node) {
-        // TODO: implement
-        return false;
+        if (node == null) {
+            return true;
+        }
+        if (node.isRed()
+                && ((node.left != null && node.left.isRed())
+                || (node.right != null && node.right.isRed()))) {
+            return false;
+        }
+        if (node.isBlack()
+                && ((node.left != null && node.left.isBlack() && (node.right == null || node.right.isRed()))
+                || ((node.right != null && node.right.isBlack() && (node.left == null || node.left.isRed()))))) {
+            return false;
+        }
+        return isRedBlackCorrect(node.left) && isRedBlackCorrect(node.right);
     }
 
     @Override
