@@ -7,10 +7,12 @@ import static org.hamcrest.core.Is.*;
 import static org.junit.Assert.*;
 
 public class RbTreeTest {
+    private RbNode<Integer> root;
+    private RbTree<Integer> tree;
 
     @Test
     public void whenAddFirstElementThenContainsIt() {
-        RbTree<Integer> tree = new RbTree<>();
+        tree = new RbTree<>();
         tree.add(10);
         assertThat(tree.toString(), is("" +
                 "R:10" + NL
@@ -19,10 +21,10 @@ public class RbTreeTest {
 
     @Test
     public void whenFlipColorThenColorsChange() {
-        RbNode<Integer> root = new RbNode<>(10, false);
+        root = new RbNode<>(10, false);
         root.left = new RbNode<>(5, true);
         root.right = new RbNode<>(15, true);
-        RbTree<Integer> tree = new RbTree<>(root);
+        tree = new RbTree<>(root);
         assertThat(root.isRed(), is(true));
         assertThat(root.left.isBlack(), is(true));
         assertThat(root.right.isBlack(), is(true));
@@ -42,40 +44,40 @@ public class RbTreeTest {
 
     @Test
     public void whenRootIsNotBlackThenNotRedBlackCorrect() {
-        RbNode<Integer> root = new RbNode<>(10, false);
-        var tree = new RbTree<>(root);
+        root = new RbNode<>(10, false);
+        tree = new RbTree<>(root);
         assertFalse(tree.isRedBlackCorrect());
     }
 
     @Test
     public void whenRootIsBlackThenRedBlackCorrect() {
-        RbNode<Integer> root = new RbNode<>(10, true);
-        var tree = new RbTree<>(root);
+        root = new RbNode<>(10, true);
+        tree = new RbTree<>(root);
         assertTrue(tree.isRedBlackCorrect(root));
     }
 
     @Test
     public void whenNodeRedChildrenRedThenNotRedBlackCorrect() {
-        RbNode<Integer> root = new RbNode<>(10, false);
+        root = new RbNode<>(10, false);
         root.left = new RbNode<>(5, false);
         root.right = new RbNode<>(15, false);
-        var tree = new RbTree<>(root);
+        tree = new RbTree<>(root);
         assertFalse(tree.isRedBlackCorrect(root));
     }
 
     @Test
     public void whenNodeRedChildrenBlackThenRedBlackCorrect() {
-        RbNode<Integer> root = new RbNode<>(10, false);
+        root = new RbNode<>(10, false);
         root.left = new RbNode<>(5, true);
         root.right = new RbNode<>(15, true);
-        var tree = new RbTree<>(root);
+        tree = new RbTree<>(root);
         assertTrue(tree.isRedBlackCorrect(root));
     }
 
     @Test
     public void whenAttachingNodesThenRedBlackCorrect() {
-        RbNode<Integer> root = new RbNode<>(50, true);
-        RbTree<Integer> tree = new RbTree<>(root);
+        root = new RbNode<>(50, true);
+        tree = new RbTree<>(root);
         assertTrue(tree.isRedBlackCorrect());
         root.left = new RbNode<>(25);
         assertTrue(tree.isRedBlackCorrect());
@@ -93,12 +95,16 @@ public class RbTreeTest {
 
     @Test
     public void whenAttachRedSubNodeThenRedBlackNotCorrect() {
-        RbNode<Integer> root = new RbNode<>(50, true);
-        RbTree<Integer> tree = new RbTree<>(root);
-        root.left = new RbNode<>(25);
-        root.right = new RbNode<>(75);
+        standardThreeNodesInit();
         assertTrue(tree.isRedBlackCorrect());
         root.left.left = new RbNode<>(12);
         assertFalse(tree.isRedBlackCorrect());
+    }
+
+    private void standardThreeNodesInit() {
+        root = new RbNode<>(50, true);
+        tree = new RbTree<>(root);
+        root.left = new RbNode<>(25);
+        root.right = new RbNode<>(75);
     }
 }
