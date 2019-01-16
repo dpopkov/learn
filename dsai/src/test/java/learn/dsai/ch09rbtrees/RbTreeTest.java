@@ -11,6 +11,22 @@ public class RbTreeTest {
     private RbTree<Integer> tree;
 
     @Test
+    public void testAddNonBalanced() {
+        tree = new RbTree<>();
+        tree.addNonBalanced(25, 12, 50);
+        assertThat(tree.toString(), is(""
+                + "    R:25" + NL
+                + "R:12    R:50" + NL
+        ));
+        tree.addNonBalanced(11, 18, 37, 75);
+        assertThat(tree.toString(), is(""
+                + "            R:25" + NL
+                + "    R:12            R:50" + NL
+                + "R:11    R:18    R:37    R:75" + NL
+        ));
+    }
+
+    @Test
     public void whenAddFirstElementThenContainsIt() {
         tree = new RbTree<>();
         tree.add(10);
@@ -110,6 +126,48 @@ public class RbTreeTest {
     }
 
     @Test
+    public void whenAttachTwoSubNodesThenRedBlackNotCorrect() {
+        standardThreeNodesInit();
+        assertTrue(tree.isRedBlackCorrect());
+        tree.flipColor(root);
+        root.left.left = new RbNode<>(12);
+        assertTrue(tree.isRedBlackCorrect());
+        root.left.left.left = new RbNode<>(6);
+        assertFalse(tree.isRedBlackCorrect());
+    }
+
+    /* Test Black Height */
+    @Test
+    public void whenOneBlackThenBlackHeightEqual() {
+        root = new RbNode<>(20, true);
+        tree = new RbTree<>(root);
+        assertThat(tree.blackHeightsEqual(root), is(true));
+    }
+
+    @Test
+    public void whenSubNodesRedBlackThenBlackHeightNotEqual() {
+        root = new RbNode<>(20, true);
+        tree = new RbTree<>(root);
+        root.left = new RbNode<>(10, false);
+        root.right = new RbNode<>(30, true);
+        assertThat(tree.blackHeightsEqual(root), is(false));
+    }
+
+    @Test
+    public void whenSubNodesRedBlackButSubSubNodesDifferThenBlackHeightEqual() {
+        root = new RbNode<>(50, true);
+        tree = new RbTree<>(root);
+        root.left = new RbNode<>(25, false);
+        root.right = new RbNode<>(75, true);
+        root.left.left = new RbNode<>(12, true);
+        root.left.right = new RbNode<>(37, true);
+        root.right.left = new RbNode<>(60, false);
+        root.right.right = new RbNode<>(85, false);
+        assertThat(tree.blackHeightsEqual(root), is(true));
+    }
+
+    /* Test Rotations */
+    @Test
     public void whenRotateRightRootThenRotated() {
         standardThreeNodesInit();
         tree.rotateRight(null, root);
@@ -139,6 +197,34 @@ public class RbTreeTest {
         assertThat(root.left.data, is(37));
         assertThat(root.left.left.data, is(25));
         assertThat(root.left.left.left.data, is(12));
+    }
+
+    @Test
+    public void whenRotateRightThenCrossoverNodeMovesRight() {
+        standardThreeNodesInit();
+        root.left.left = new RbNode<>(12);
+        root.left.right = new RbNode<>(37);
+        tree.rotateRight(null, root);
+        root = tree.getRoot();
+        assertThat(root.data, is(25));
+        assertThat(root.left.data, is(12));
+        assertThat(root.right.data, is(50));
+        assertThat(root.right.left.data, is(37));
+        assertThat(root.right.right.data, is(75));
+    }
+
+    @Test
+    public void whenRotateLeftThenCrossoverNodeMovesLeft() {
+        standardThreeNodesInit();
+        root.right.left = new RbNode<>(60);
+        root.right.right = new RbNode<>(85);
+        tree.rotateLeft(null, root);
+        root = tree.getRoot();
+        assertThat(root.data, is(75));
+        assertThat(root.right.data, is(85));
+        assertThat(root.left.data, is(50));
+        assertThat(root.left.left.data, is(25));
+        assertThat(root.left.right.data, is(60));
     }
 
     private void standardThreeNodesInit() {

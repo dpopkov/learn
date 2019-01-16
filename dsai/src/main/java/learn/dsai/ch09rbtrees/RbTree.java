@@ -7,7 +7,7 @@ import learn.dsai.ch08trees2.TreeStringBuilder;
  *
  * @param <T> type of the element
  */
-public class RbTree<T> {
+public class RbTree<T extends Comparable<T>> {
     private RbNode<T> root;
     private TreeStringBuilder<T> builder;
 
@@ -26,6 +26,43 @@ public class RbTree<T> {
         RbNode<T> n = new RbNode<>(value);
         if (root == null) {
             root = n;
+        }
+    }
+
+    /**
+     * Adds new value the the tree without balancing.
+     * This method should be used for testing purposes only.
+     * @param value new value to insert
+     */
+    void addNonBalanced(T value) {
+        RbNode<T> node = new RbNode<>(value);
+        if (root == null) {
+            root = node;
+        } else {
+            RbNode<T> parent = root;
+            RbNode<T> current = parent;
+            boolean leftChild = false;
+            while (current != null) {
+                parent = current;
+                if (parent.data.compareTo(value) > 0) {
+                    leftChild = true;
+                    current = parent.left;
+                } else {
+                    leftChild = false;
+                    current = parent.right;
+                }
+            }
+            if (leftChild) {
+                parent.left = node;
+            } else {
+                parent.right = node;
+            }
+        }
+    }
+
+    void addNonBalanced(T... values) {
+        for (T value : values) {
+            addNonBalanced(value);
         }
     }
 
@@ -59,8 +96,9 @@ public class RbTree<T> {
                 parent.right = node.right;
             }
         }
+        RbNode<T> crossNode = node.right.left;
         node.right.left = node;
-        node.right = null;   // TODO: check this
+        node.right = crossNode;
     }
 
     void rotateRight(RbNode<T> parent, RbNode<T> node) {
@@ -76,8 +114,9 @@ public class RbTree<T> {
                 parent.right = node.left;
             }
         }
+        RbNode<T> crossNode = node.left.right;
         node.left.right = node;
-        node.left = null;   // TODO: check this
+        node.left = crossNode;
     }
 
     boolean isRedBlackCorrect() {
@@ -105,9 +144,37 @@ public class RbTree<T> {
         if (node.isBlack()
                 && ((node.left != null && node.left.isBlack() && (node.right == null || node.right.isRed()))
                 || ((node.right != null && node.right.isBlack() && (node.left == null || node.left.isRed()))))) {
+            // TODO: fix the case when left or right red sub-node has black sub-nodes
             return false;
         }
         return isRedBlackCorrect(node.left) && isRedBlackCorrect(node.right);
+    }
+
+    boolean blackHeightsEqual(RbNode<T> node) {
+        if (node.left == null && node.right == null) {
+            return true;
+        }
+        return blackHeightToLeafOrNullChild(node.left) == blackHeightToLeafOrNullChild(node.right);
+    }
+
+    // не могу измерить высоту от одного узла, так как с одного узла
+    // могут начинаться несколько путей до leaf или null-child
+    private int blackHeightToLeafOrNullChild(RbNode<T> node) {
+        /* Null Child */
+        if (node == null) {
+            return 0;
+        }
+        /* Leaf */
+        if (node.left == null && node.right == null) {
+            if (node.isBlack()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+        int leftPath = blackHeightToLeafOrNullChild(node.left);
+        int rightPath = blackHeightToLeafOrNullChild(node.right);
+        return Math.min(leftPath, rightPath);
     }
 
     @Override
