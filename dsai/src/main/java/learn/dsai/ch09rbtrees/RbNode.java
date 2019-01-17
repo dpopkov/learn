@@ -3,6 +3,9 @@ package learn.dsai.ch09rbtrees;
 import learn.dsai.ch08trees2.BNode;
 
 public class RbNode<T> implements BNode<T> {
+    static final boolean RED = false;
+    static final boolean BLACK = true;
+
     final T data;
     boolean black;
     RbNode<T> left;

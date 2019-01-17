@@ -26,6 +26,13 @@ public class RbTree<T extends Comparable<T>> {
         RbNode<T> n = new RbNode<>(value);
         if (root == null) {
             root = n;
+        } else {
+            /*
+            On the way down the tree to find the insertion point,
+            you perform a color flip
+            whenever you find a black node with two red children
+             */
+            // TODO: implement
         }
     }
 
@@ -157,24 +164,20 @@ public class RbTree<T extends Comparable<T>> {
         return blackHeightToLeafOrNullChild(node.left) == blackHeightToLeafOrNullChild(node.right);
     }
 
-    // не могу измерить высоту от одного узла, так как с одного узла
-    // могут начинаться несколько путей до leaf или null-child
     private int blackHeightToLeafOrNullChild(RbNode<T> node) {
-        /* Null Child */
+        /* This node is a null child */
         if (node == null) {
             return 0;
         }
-        /* Leaf */
+        int blackness = node.isBlack() ? 1 : 0;
+        /* This nod is a leaf */
         if (node.left == null && node.right == null) {
-            if (node.isBlack()) {
-                return 1;
-            } else {
-                return 0;
-            }
+            return blackness;
         }
+        /* This node is not a leaf */
         int leftPath = blackHeightToLeafOrNullChild(node.left);
         int rightPath = blackHeightToLeafOrNullChild(node.right);
-        return Math.min(leftPath, rightPath);
+        return blackness + Math.min(leftPath, rightPath);
     }
 
     @Override

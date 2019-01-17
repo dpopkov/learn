@@ -2,6 +2,7 @@ package learn.dsai.ch09rbtrees;
 
 import org.junit.Test;
 
+import static learn.dsai.ch09rbtrees.RbNode.*;
 import static learn.dsai.tools.Constants.NL;
 import static org.hamcrest.core.Is.*;
 import static org.junit.Assert.*;
@@ -37,9 +38,9 @@ public class RbTreeTest {
 
     @Test
     public void whenFlipColorThenColorsChange() {
-        root = new RbNode<>(10, false);
-        root.left = new RbNode<>(5, true);
-        root.right = new RbNode<>(15, true);
+        root = new RbNode<>(10, RED);
+        root.left = new RbNode<>(5, BLACK);
+        root.right = new RbNode<>(15, BLACK);
         tree = new RbTree<>(root);
         assertThat(root.isRed(), is(true));
         assertThat(root.left.isBlack(), is(true));
@@ -60,32 +61,32 @@ public class RbTreeTest {
 
     @Test
     public void whenRootIsNotBlackThenNotRedBlackCorrect() {
-        root = new RbNode<>(10, false);
+        root = new RbNode<>(10, RED);
         tree = new RbTree<>(root);
         assertFalse(tree.isRedBlackCorrect());
     }
 
     @Test
     public void whenRootIsBlackThenRedBlackCorrect() {
-        root = new RbNode<>(10, true);
+        root = new RbNode<>(10, BLACK);
         tree = new RbTree<>(root);
         assertTrue(tree.isRedBlackCorrect(root));
     }
 
     @Test
     public void whenNodeRedChildrenRedThenNotRedBlackCorrect() {
-        root = new RbNode<>(10, false);
-        root.left = new RbNode<>(5, false);
-        root.right = new RbNode<>(15, false);
+        root = new RbNode<>(10, RED);
+        root.left = new RbNode<>(5, RED);
+        root.right = new RbNode<>(15, RED);
         tree = new RbTree<>(root);
         assertFalse(tree.isRedBlackCorrect(root));
     }
 
     @Test
     public void whenNodeRedChildrenBlackThenRedBlackCorrect() {
-        root = new RbNode<>(10, false);
-        root.left = new RbNode<>(5, true);
-        root.right = new RbNode<>(15, true);
+        root = new RbNode<>(10, RED);
+        root.left = new RbNode<>(5, BLACK);
+        root.right = new RbNode<>(15, BLACK);
         tree = new RbTree<>(root);
         assertTrue(tree.isRedBlackCorrect(root));
     }
@@ -139,30 +140,30 @@ public class RbTreeTest {
     /* Test Black Height */
     @Test
     public void whenOneBlackThenBlackHeightEqual() {
-        root = new RbNode<>(20, true);
+        root = new RbNode<>(20, BLACK);
         tree = new RbTree<>(root);
         assertThat(tree.blackHeightsEqual(root), is(true));
     }
 
     @Test
     public void whenSubNodesRedBlackThenBlackHeightNotEqual() {
-        root = new RbNode<>(20, true);
+        root = new RbNode<>(20, BLACK);
         tree = new RbTree<>(root);
-        root.left = new RbNode<>(10, false);
-        root.right = new RbNode<>(30, true);
+        root.left = new RbNode<>(10, RED);
+        root.right = new RbNode<>(30, BLACK);
         assertThat(tree.blackHeightsEqual(root), is(false));
     }
 
     @Test
     public void whenSubNodesRedBlackButSubSubNodesDifferThenBlackHeightEqual() {
-        root = new RbNode<>(50, true);
+        root = new RbNode<>(50, BLACK);
         tree = new RbTree<>(root);
-        root.left = new RbNode<>(25, false);
-        root.right = new RbNode<>(75, true);
-        root.left.left = new RbNode<>(12, true);
-        root.left.right = new RbNode<>(37, true);
-        root.right.left = new RbNode<>(60, false);
-        root.right.right = new RbNode<>(85, false);
+        root.left = new RbNode<>(25, RED);
+        root.right = new RbNode<>(75, BLACK);
+        root.left.left = new RbNode<>(12, BLACK);
+        root.left.right = new RbNode<>(37, BLACK);
+        root.right.left = new RbNode<>(60, RED);
+        root.right.right = new RbNode<>(85, RED);
         assertThat(tree.blackHeightsEqual(root), is(true));
     }
 
