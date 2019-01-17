@@ -70,7 +70,7 @@ public class RbTreeTest {
     public void whenRootIsBlackThenRedBlackCorrect() {
         root = new RbNode<>(10, BLACK);
         tree = new RbTree<>(root);
-        assertTrue(tree.isRedBlackCorrect(root));
+        assertTrue(tree.isRedBlackCorrectByColor(root));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class RbTreeTest {
         root.left = new RbNode<>(5, RED);
         root.right = new RbNode<>(15, RED);
         tree = new RbTree<>(root);
-        assertFalse(tree.isRedBlackCorrect(root));
+        assertFalse(tree.isRedBlackCorrectByColor(root));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class RbTreeTest {
         root.left = new RbNode<>(5, BLACK);
         root.right = new RbNode<>(15, BLACK);
         tree = new RbTree<>(root);
-        assertTrue(tree.isRedBlackCorrect(root));
+        assertTrue(tree.isRedBlackCorrectByColor(root));
     }
 
     @Test

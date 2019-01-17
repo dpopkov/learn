@@ -28,11 +28,14 @@ public class RbTree<T extends Comparable<T>> {
             root = n;
         } else {
             /*
+            1. Color flips on the way down:
             On the way down the tree to find the insertion point,
             you perform a color flip
             whenever you find a black node with two red children
              */
             // TODO: implement
+            /* 2. Rotations on the way down */
+            /* 3. Rotations after the node is inserted */
         }
     }
 
@@ -127,10 +130,11 @@ public class RbTree<T extends Comparable<T>> {
     }
 
     boolean isRedBlackCorrect() {
+        /* Red-Black Rule 1: The root is always black */
         if (root.isRed()) {
             return false;
         }
-        return isRedBlackCorrect(root.left) && isRedBlackCorrect(root.right);
+        return isRedBlackCorrectByColor(root) && blackHeightsEqual(root);
     }
 
     /**
@@ -139,22 +143,23 @@ public class RbTree<T extends Comparable<T>> {
      * @param node root node of the sub-tree
      * @return true if correct
      */
-    boolean isRedBlackCorrect(RbNode<T> node) {
+    boolean isRedBlackCorrectByColor(RbNode<T> node) {
         if (node == null) {
             return true;
         }
+        /* Red-Black Rule 3: if the node is red its children must be black. */
         if (node.isRed()
                 && ((node.left != null && node.left.isRed())
                 || (node.right != null && node.right.isRed()))) {
             return false;
         }
+        /* Red-Black Rule 4: (part of it - when color is enough for detecting)*/
         if (node.isBlack()
-                && ((node.left != null && node.left.isBlack() && (node.right == null || node.right.isRed()))
-                || ((node.right != null && node.right.isBlack() && (node.left == null || node.left.isRed()))))) {
-            // TODO: fix the case when left or right red sub-node has black sub-nodes
+                && ((node.left != null && node.left.isBlack() && (node.right == null/* || node.right.isRed()*/))
+                || ((node.right != null && node.right.isBlack() && (node.left == null/* || node.left.isRed()*/))))) {
             return false;
         }
-        return isRedBlackCorrect(node.left) && isRedBlackCorrect(node.right);
+        return isRedBlackCorrectByColor(node.left) && isRedBlackCorrectByColor(node.right);
     }
 
     boolean blackHeightsEqual(RbNode<T> node) {
