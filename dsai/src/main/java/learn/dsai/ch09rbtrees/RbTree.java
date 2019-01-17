@@ -27,15 +27,44 @@ public class RbTree<T extends Comparable<T>> {
         if (root == null) {
             root = n;
         } else {
-            /*
-            1. Color flips on the way down:
-            On the way down the tree to find the insertion point,
-            you perform a color flip
-            whenever you find a black node with two red children
-             */
-            // TODO: implement
-            /* 2. Rotations on the way down */
+            RbNode<T> parent = root;
+            RbNode<T> childLink = root;
+            boolean leftChild = false;
+            while (childLink != null) {
+                parent = childLink;
+                /* 1. Color flips on the way down whenever you find
+                a black node with two red children */
+                if (parent.isBlack()
+                        && parent.left != null && parent.left.isRed()
+                        && parent.right != null && parent.right.isRed()) {
+                    flipColor(parent);
+                }
+                /* 2. Rotations on the way down */
+                // TODO: implement rotations
+
+                if (parent.data.compareTo(value) > 0) {
+                    childLink = parent.left;
+                    leftChild = true;
+                } else {
+                    childLink = parent.right;
+                    leftChild = false;
+                }
+            }
+            /* Now insert the node */
+            if (leftChild) {
+                parent.left = n;
+            } else {
+                parent.right = n;
+            }
             /* 3. Rotations after the node is inserted */
+            // TODO: implement rotation after insert
+        }
+    }
+
+    @SafeVarargs
+    public final void add(T... values) {
+        for (T value : values) {
+            add(value);
         }
     }
 
@@ -70,7 +99,8 @@ public class RbTree<T extends Comparable<T>> {
         }
     }
 
-    void addNonBalanced(T... values) {
+    @SafeVarargs
+    final void addNonBalanced(T... values) {
         for (T value : values) {
             addNonBalanced(value);
         }

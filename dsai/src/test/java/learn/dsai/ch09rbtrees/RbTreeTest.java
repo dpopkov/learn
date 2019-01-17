@@ -228,10 +228,35 @@ public class RbTreeTest {
         assertThat(root.left.right.data, is(60));
     }
 
+    /* Test restoring Red-Black rules */
+    @Test
+    public void whenAddToBlackRootAndRedChildrenThenFlipsColors() {
+        standardThreeNodesInit();
+        assertThat(root.isBlack(), is(true));
+        assertThat(root.left.isRed(), is(true));
+        assertThat(root.right.isRed(), is(true));
+        tree.add(12);
+        assertThat(root.isBlack(), is(true));
+        assertThat(root.left.isBlack(), is(true));
+        assertThat(root.right.isBlack(), is(true));
+    }
+
+    /* Test adding with Red-Black checks */
+    @Test
+    public void testAdd() {
+        tree = new RbTree<>();
+        tree.add(50, 25, 75, 12, 38, 60, 85);
+        assertThat(tree.toString(), is(""
+                + "            R:50" + NL
+                + "    R:25            R:75" + NL
+                + "R:12    R:38    R:60    R:85" + NL
+        ));
+    }
+
     private void standardThreeNodesInit() {
-        root = new RbNode<>(50, true);
+        root = new RbNode<>(50, BLACK);
         tree = new RbTree<>(root);
-        root.left = new RbNode<>(25);
-        root.right = new RbNode<>(75);
+        root.left = new RbNode<>(25, RED);
+        root.right = new RbNode<>(75, RED);
     }
 }
