@@ -13,6 +13,7 @@ public class RbNode<T> implements BNode<T> {
 
     public RbNode(T data) {
         this.data = data;
+        this.black = RED;
     }
 
     RbNode(T data, boolean black) {

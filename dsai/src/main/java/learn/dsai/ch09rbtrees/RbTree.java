@@ -25,15 +25,19 @@ public class RbTree<T extends Comparable<T>> {
     public void add(T value) {
         RbNode<T> n = new RbNode<>(value);
         if (root == null) {
+            n.black = RbNode.BLACK;
             root = n;
         } else {
+            RbNode<T> grandParent = null;
+            RbNode<T> grandGrandParent = null;
             RbNode<T> parent = root;
             RbNode<T> childLink = root;
             boolean leftChild = false;
             while (childLink != null) {
+                grandGrandParent = grandParent;
+                grandParent = parent;
                 parent = childLink;
-                /* 1. Color flips on the way down whenever you find
-                a black node with two red children */
+                /* 1. Color flips on the way down */
                 if (parent.isBlack()
                         && parent.left != null && parent.left.isRed()
                         && parent.right != null && parent.right.isRed()) {
@@ -57,7 +61,30 @@ public class RbTree<T extends Comparable<T>> {
                 parent.right = n;
             }
             /* 3. Rotations after the node is inserted */
-            // TODO: implement rotation after insert
+            if (parent.isRed()) {
+                /* Child is outside */
+                if (parent == grandParent.left && n == parent.left) {
+                    changeNodeColor(grandParent);
+                    changeNodeColor(parent);
+                    rotateRight(grandGrandParent, grandParent);
+                } else if (parent == grandParent.right && n == parent.right) {
+                    changeNodeColor(grandParent);
+                    changeNodeColor(parent);
+                    rotateLeft(grandGrandParent, grandParent);
+                }
+                /* Child is inside */
+                else if (parent == grandParent.left && n == parent.right) {
+                    changeNodeColor(grandParent);
+                    changeNodeColor(n);
+                    rotateLeft(grandParent, parent);
+                    rotateRight(grandGrandParent, grandParent);
+                } else {
+                    changeNodeColor(grandParent);
+                    changeNodeColor(n);
+                    rotateRight(grandParent, parent);
+                    rotateLeft(grandGrandParent, grandParent);
+                }
+            }
         }
     }
 

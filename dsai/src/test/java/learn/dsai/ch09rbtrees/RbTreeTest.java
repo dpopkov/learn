@@ -32,7 +32,7 @@ public class RbTreeTest {
         tree = new RbTree<>();
         tree.add(10);
         assertThat(tree.toString(), is("" +
-                "R:10" + NL
+                "B:10" + NL
         ));
     }
 
@@ -247,9 +247,73 @@ public class RbTreeTest {
         tree = new RbTree<>();
         tree.add(50, 25, 75, 12, 38, 60, 85);
         assertThat(tree.toString(), is(""
-                + "            R:50" + NL
-                + "    R:25            R:75" + NL
+                + "            B:50" + NL
+                + "    B:25            B:75" + NL
                 + "R:12    R:38    R:60    R:85" + NL
+        ));
+    }
+
+    @Test
+    public void whenAddLeftOutsideChildThenRotatesRight() {
+        tree = new RbTree<>();
+        tree.add(50, 25, 75);
+        assertThat(tree.toString(), is(""
+                + "    B:50" + NL
+                + "R:25    R:75" + NL
+        ));
+        tree.add(12, 11);
+        assertThat(tree.toString(), is(""
+                + "            B:50" + NL
+                + "    B:12            B:75" + NL
+                + "R:11    R:25    ----    ----" + NL
+        ));
+    }
+
+    @Test
+    public void whenAddRightOutsideChildThenRotatesLeft() {
+        tree = new RbTree<>();
+        tree.add(50, 25, 75);
+        assertThat(tree.toString(), is(""
+                + "    B:50" + NL
+                + "R:25    R:75" + NL
+        ));
+        tree.add(85, 95);
+        assertThat(tree.toString(), is(""
+                + "            B:50" + NL
+                + "    B:25            B:85" + NL
+                + "----    ----    R:75    R:95" + NL
+        ));
+    }
+
+    @Test
+    public void whenAddRightInsideChildThenRotatesLeftRotatesRight() {
+        tree = new RbTree<>();
+        tree.add(50, 25, 75);
+        assertThat(tree.toString(), is(""
+                + "    B:50" + NL
+                + "R:25    R:75" + NL
+        ));
+        tree.add(12, 18);
+        assertThat(tree.toString(), is(""
+                + "            B:50" + NL
+                + "    B:18            B:75" + NL
+                + "R:12    R:25    ----    ----" + NL
+        ));
+    }
+
+    @Test
+    public void whenAddLeftInsideChildThenRotatesRightRotatesLeft() {
+        tree = new RbTree<>();
+        tree.add(50, 25, 75);
+        assertThat(tree.toString(), is(""
+                + "    B:50" + NL
+                + "R:25    R:75" + NL
+        ));
+        tree.add(85, 80);
+        assertThat(tree.toString(), is(""
+                + "            B:50" + NL
+                + "    B:25            B:80" + NL
+                + "----    ----    R:75    R:85" + NL
         ));
     }
 
