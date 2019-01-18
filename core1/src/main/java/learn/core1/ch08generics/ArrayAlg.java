@@ -30,7 +30,8 @@ public class ArrayAlg {
      * @return a pair with the min and max value, or null if a
      * is null or empty
      */
-    public static <T extends Comparable<T>> Pair<T> minMax(T[] a) {
+    @SuppressWarnings("Duplicates")
+    public static <T extends Comparable<? super T>> Pair<T> minMax(T[] a) {
         if (a == null || a.length == 0) {
             return null;
         }
@@ -49,8 +50,8 @@ public class ArrayAlg {
     }
 
     public static void main(String[] args) {
-        useGetMiddle();
-//        useMinMax();
+//        useGetMiddle();
+        useMinMax();
     }
 
     private static void useMinMax() {
@@ -60,7 +61,7 @@ public class ArrayAlg {
                 LocalDate.of(1903, 12, 3), // J. von Neumann
                 LocalDate.of(1910, 6, 22), // K. Zuse
         };
-        Pair<ChronoLocalDate> mm = ArrayAlg.minMax(birthdays);
+        Pair<LocalDate> mm = ArrayAlg.minMax(birthdays);
         System.out.println("min = " + mm.getFirst());
         System.out.println("max = " + mm.getSecond());
     }

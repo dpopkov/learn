@@ -19,6 +19,7 @@ public class PairTest2 {
         System.out.println("max = " + mm.getSecond());
     }
 
+    @SuppressWarnings("Duplicates")
     @SafeVarargs
     private static <T extends Comparable<? super T>> Pair<T> minMax(T... values) {
         if (values == null || values.length == 0) {
