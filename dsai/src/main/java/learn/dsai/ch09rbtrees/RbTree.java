@@ -30,10 +30,12 @@ public class RbTree<T extends Comparable<T>> {
         } else {
             RbNode<T> grandParent = null;
             RbNode<T> grandGrandParent = null;
+            RbNode<T> grandGrandGrandParent = null;
             RbNode<T> parent = root;
             RbNode<T> childLink = root;
             boolean leftChild = false;
             while (childLink != null) {
+                grandGrandGrandParent = grandGrandParent;   // use grands because node has no link to parent
                 grandGrandParent = grandParent;
                 grandParent = parent;
                 parent = childLink;

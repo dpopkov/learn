@@ -241,9 +241,9 @@ public class RbTreeTest {
         assertThat(root.right.isBlack(), is(true));
     }
 
-    /* Test adding with Red-Black checks */
+    /* Test adding with rotations after insert */
     @Test
-    public void testAdd() {
+    public void whenAddInBestOrderThenBalanced() {
         tree = new RbTree<>();
         tree.add(50, 25, 75, 12, 38, 60, 85);
         assertThat(tree.toString(), is(""
@@ -315,6 +315,26 @@ public class RbTreeTest {
                 + "    B:25            B:80" + NL
                 + "----    ----    R:75    R:85" + NL
         ));
+    }
+
+    /* Test adding with rotations on the way down */
+    @Test
+    public void whenThenRotatesRight() {
+        tree = new RbTree<>();
+        tree.add(50, 25, 75, 12, 37);
+        assertThat(tree.toString(), is(""
+                + "            B:50" + NL
+                + "    B:25            B:75" + NL
+                + "R:12    R:37    ----    ----" + NL
+        ));
+        tree.add(11, 18);
+        assertThat(tree.toString(), is(""
+                + "                            B:50" + NL
+                + "            R:25                            B:75" + NL
+                + "    B:12            B:37            ----            ----" + NL
+                + "R:11    R:18    ----    ----    ----    ----    ----    ----" + NL
+        ));
+        // TODO: add(10) and make assert, tree should be balanced after rotation
     }
 
     private void standardThreeNodesInit() {
