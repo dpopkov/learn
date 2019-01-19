@@ -319,7 +319,7 @@ public class RbTreeTest {
 
     /* Test adding with rotations on the way down */
     @Test
-    public void whenThenRotatesRight() {
+    public void whenRedAndOutsideLeftRedChildOnWayDownThenRotatesRight() {
         tree = new RbTree<>();
         tree.add(50, 25, 75, 12, 37);
         assertThat(tree.toString(), is(""
@@ -334,7 +334,38 @@ public class RbTreeTest {
                 + "    B:12            B:37            ----            ----" + NL
                 + "R:11    R:18    ----    ----    ----    ----    ----    ----" + NL
         ));
-        // TODO: add(10) and make assert, tree should be balanced after rotation
+        tree.add(10);
+        assertThat(tree.toString(), is(""
+                + "                            B:25" + NL
+                + "            R:12                            R:50" + NL
+                + "    B:11            B:18            B:37            B:75" + NL
+                + "R:10    ----    ----    ----    ----    ----    ----    ----" + NL
+        ));
+    }
+
+    @Test
+    public void whenRedAndInsideRightRedChildOnWayDownThenRotatesLeftRotatesRight() {
+        tree = new RbTree<>();
+        tree.add(50, 25, 75, 12, 37);
+        assertThat(tree.toString(), is(""
+                + "            B:50" + NL
+                + "    B:25            B:75" + NL
+                + "R:12    R:37    ----    ----" + NL
+        ));
+        tree.add(31, 43);
+        assertThat(tree.toString(), is(""
+                + "                            B:50" + NL
+                + "            R:25                            B:75" + NL
+                + "    B:12            B:37            ----            ----" + NL
+                + "----    ----    R:31    R:43    ----    ----    ----    ----" + NL
+        ));
+        tree.add(28);
+        assertThat(tree.toString(), is(""
+                + "                            B:37" + NL
+                + "            R:25                            R:50" + NL
+                + "    B:12            B:31            B:43            B:75" + NL
+                + "----    ----    R:28    ----    ----    ----    ----    ----" + NL
+        ));
     }
 
     private void standardThreeNodesInit() {

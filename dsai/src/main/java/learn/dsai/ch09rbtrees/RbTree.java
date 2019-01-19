@@ -30,7 +30,7 @@ public class RbTree<T extends Comparable<T>> {
         } else {
             RbNode<T> grandParent = null;
             RbNode<T> grandGrandParent = null;
-            RbNode<T> grandGrandGrandParent = null;
+            RbNode<T> grandGrandGrandParent;
             RbNode<T> parent = root;
             RbNode<T> childLink = root;
             boolean leftChild = false;
@@ -44,9 +44,29 @@ public class RbTree<T extends Comparable<T>> {
                         && parent.left != null && parent.left.isRed()
                         && parent.right != null && parent.right.isRed()) {
                     flipColor(parent);
+                    /* 2. Rotations on the way down */
+                    if (parent.isRed() && grandParent.isRed()) {
+                        if (grandParent == grandGrandParent.left && parent == grandParent.left) {
+                            changeNodeColor(grandGrandParent);
+                            changeNodeColor(grandParent);
+                            rotateRight(grandGrandGrandParent, grandGrandParent);
+                        } else if (grandParent == grandGrandParent.right && parent == grandParent.right){
+                            changeNodeColor(grandGrandParent);
+                            changeNodeColor(grandParent);
+                            rotateLeft(grandGrandGrandParent, grandGrandParent);
+                        } else if (grandParent == grandGrandParent.left && parent == grandParent.right) {
+                            changeNodeColor(parent);
+                            changeNodeColor(grandGrandParent);
+                            rotateLeft(grandGrandParent, grandParent);
+                            rotateRight(grandGrandGrandParent, grandGrandParent);
+                        } else if (grandParent == grandGrandParent.right && parent == grandParent.left) {
+                            changeNodeColor(parent);
+                            changeNodeColor(grandGrandParent);
+                            rotateRight(grandGrandParent, grandParent);
+                            rotateLeft(grandGrandGrandParent, grandGrandParent);
+                        }
+                    }
                 }
-                /* 2. Rotations on the way down */
-                // TODO: implement rotations
 
                 if (parent.data.compareTo(value) > 0) {
                     childLink = parent.left;
