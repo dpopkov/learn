@@ -33,29 +33,33 @@
 
 ```Java
 class FileStore {
-    public String getWorkingDirectory()
-    public String save(int id, String message)
-    public void read(int id)
+    public String getWorkingDirectory() { return ""; }
+    public String save(int id, String message) { return ""; }
+    public void read(int id) {}
 }
 ```
 Подумайте, глядя на публичный API этого класса, и попробуйте понять что он делает, что делают эти методы. Например почему метод save возвращает строку? Что строка содержит? Может это message или id, преобразованный в строку? Или что-то совсем другое? Например код в виде строки? Неизвестно.
 Придется смотреть в документацию, или, если ее нет, то в исходный код:
 ```Java
-public String save(int id, String message) throws IOException {
-    Path path = Paths.get(getWorkingDirectory(), id + ".txt");
-    Files.write(path, message.getBytes());
-    return path.toString();
+class FileStore {
+    public String save(int id, String message) throws IOException {
+        Path path = Paths.get(getWorkingDirectory(), id + ".txt");
+        Files.write(path, message.getBytes());
+        return path.toString();
+    }
 }
 ```
 Можно увидеть что метод пишет сообщение в файл и возвращает путь. Проблема в том, что не было способа это понять, пока мы не посмотрели код метода.
 
 Как насчет метода read? Почему он возвращает void? Посмотрим:
 ```Java
-public void read(int id) throws IOException {
-    Path path = Paths.get(getWorkingDirectory(), id + ".txt");
-    String message = new String(Files.readAllBytes(path));
-    messageListener.newMessage(new MessageEvent(message));
-}
+class FileStore {
+    public void read(int id) throws IOException {
+        Path path = Paths.get(getWorkingDirectory(), id + ".txt");
+        String message = new String(Files.readAllBytes(path));
+        messageListener.newMessage(new MessageEvent(message));
+    }
+}    
 ```
 Недостаток этого кода в том, что трудно понять, что он делает, пока не прочитаешь полностью исходный код методов.
 
@@ -108,29 +112,35 @@ public void read(int id) throws IOException {
 
 Метод приведенный ниже очевидно является запросом:
 ```Java
-public void read(int id) throws IOException {
-    Path path = Paths.get(getWorkingDirectory(), id + ".txt");
-    String message = new String(Files.readAllBytes(path));
-    messageListener.newMessage(new MessageEvent(message));
+class FileStore {
+    public void read(int id) throws IOException {
+        Path path = Paths.get(getWorkingDirectory(), id + ".txt");
+        String message = new String(Files.readAllBytes(path));
+        messageListener.newMessage(new MessageEvent(message));
+    }
 }
 ```
 Однако он возвращает void. То есть, если смотреть на его сигнатуру, то он выглядит как Команда, а не как Запрос. Одна из причин, почему вышеприведенный код является отстойным, это то, что по сигнатурам не ясно, какой метод является Командой, а какой Запросом.
 
 Мы можем просто вернуть message:
 ```Java
-public String read(int id) throws IOException {
-    Path path = Paths.get(getWorkingDirectory(), id + ".txt");
-    String message = new String(Files.readAllBytes(path));
-    messageListener.newMessage(new MessageEvent(message));
-    return message;
+class FileStore {
+    public String read(int id) throws IOException {
+        Path path = Paths.get(getWorkingDirectory(), id + ".txt");
+        String message = new String(Files.readAllBytes(path));
+        messageListener.newMessage(new MessageEvent(message));
+        return message;
+    }
 }
 ```
 Остается передача события, которая является сторонним эффектом. Если вы хотите отправить событие, то вам нужен метод возвращающий void, то есть Команда. Если мы хотим соблюсти CQS принцип, то уберем отправку события:
 ```Java
-public String read(int id) throws IOException {
-    Path path = Paths.get(getWorkingDirectory(), id + ".txt");
-    String message = new String(Files.readAllBytes(path));
-    return message;
+class FileStore {
+    public String read(int id) throws IOException {
+        Path path = Paths.get(getWorkingDirectory(), id + ".txt");
+        String message = new String(Files.readAllBytes(path));
+        return message;
+    }
 }
 ```
 Теперь сигнатура дает примерное представление о том, что делает этот метод, а именно читает и возвращает строку ассоциированную с id. Даже без деталей реализации этого уже достаточно для понимания общей картины.
@@ -140,37 +150,45 @@ public String read(int id) throws IOException {
 
 Посмотрим на знакомый метод, который по сути является Командой:
 ```Java
-public String save(int id, String message) throws IOException {
-    Path path = Paths.get(getWorkingDirectory(), id + ".txt");
-    Files.write(path, message.getBytes());
-    return path.toString();
+class FileStore {
+    public String save(int id, String message) throws IOException {
+        Path path = Paths.get(getWorkingDirectory(), id + ".txt");
+        Files.write(path, message.getBytes());
+        return path.toString();
+    }
 }
 ```
 Но он возвращает строку. А мы только что усвоили, что Команда должна возвращать void. Данный же метод является одновременно и Командой и Запросом, то есть он нарушает CQS принцип. Превратим его в Запрос:
 ```Java
-public void save(int id, String message) throws IOException {
-    Path path = Paths.get(getWorkingDirectory(), id + ".txt");
-    Files.write(path, message.getBytes());
+class FileStore {
+    public void save(int id, String message) throws IOException {
+        Path path = Paths.get(getWorkingDirectory(), id + ".txt");
+        Files.write(path, message.getBytes());
+    }
 }
 ```
 Мы можете поспорить, что был выброшен важный кусок информации - path, который может быть нужен вызывающему. Поэтому добавим новый метод:
 ```Java
-public String getFileName(int id) {
-    return Paths.get(getWorkingDirectory(), id + ".txt").toString();
+class FileStore {
+    public String getFileName(int id) {
+        return Paths.get(getWorkingDirectory(), id + ".txt").toString();
+    }
 }
 ```
 Это нормальный Запрос, без сторонних эффектов, то есть его можно вызывать много раз, не боясь нарушить состояние системы.
 
 Можно заметить, что появилась возможность для рефакторинга - замены повторяющихся строк на вызов метода:
 ```Java
-public void save(int id, String message) throws IOException {
-    Path path = getFileName(id);
-    Files.write(path, message.getBytes());
-}
-public String read(int id) throws IOException {
-    Path path = getFileName(id);
-    String message = new String(Files.readAllBytes(path));
-    return message;
+class FileStore {
+    public void save(int id, String message) throws IOException {
+        Path path = getFileName(id);
+        Files.write(path, message.getBytes());
+    }
+    public String read(int id) throws IOException {
+        Path path = getFileName(id);
+        String message = new String(Files.readAllBytes(path));
+        return message;
+    }
 }
 ```
 Это иллюстрирует, что делать Запрос внутри Команды безопасно, так как Запрос не изменяет состояние системы.
@@ -215,15 +233,19 @@ class FileStore {
  
 Добавим конструктор:
 ```Java
-public FileStore(String workingDirectory) {
-    this.workingDirectory = workingDirectory;
+class FileStore {
+    public FileStore(String workingDirectory) {
+        this.workingDirectory = workingDirectory;
+    }
 }
 ```
 Но это только полдела, так как переданный аргумент тоже может быть null. Добавим защитную проверку:
 
 ```Java
-public FileStore(String workingDirectory) {
-    this.workingDirectory = Objects.requireNonNull(workingDirectory);
+class FileStore {
+    public FileStore(String workingDirectory) {
+        this.workingDirectory = Objects.requireNonNull(workingDirectory);
+    }
 }
 ```
 Теперь конструктор fails fast если аргумент null.
@@ -233,10 +255,15 @@ public FileStore(String workingDirectory) {
 
 Посмотрим еще раз на конструктор FileStore. Что если workingDirectory указывает на невалидный путь? Это невозможно проверить во время компиляции, то можно в рантайме:
 ```Java
-public FileStore(String workingDirectory) {
-    this.workingDirectory = Objects.requireNonNull(workingDirectory);
-    if (!new File(workingDirectory).exists()) {
-        throw new IllegalArgumentException("Working directory does not exist");
+class FileStore {
+    public FileStore(String workingDirectory) {
+        this.workingDirectory = Objects.requireNonNull(workingDirectory);
+        if (!new File(workingDirectory).exists()) {
+            throw new IllegalArgumentException("Working directory does not exist");
+        }
     }
 }
 ```
+
+### Output
+
