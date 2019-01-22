@@ -1,7 +1,7 @@
 package learn.dsai.ch10tree234;
 
 public class Tree234 {
-    private Node root;
+    protected Node root;
 
     /** Constructor for testing purposes only. */
     Tree234(Node root) {
