@@ -5,10 +5,10 @@ public class Node23<E extends Comparable<? super E>> {
     private static final int MAX_ITEMS = ORDER - 1;
     private static final int MAX_NODES = ORDER;
 
-    private E[] items;
+    private final E[] items;
     private int numItems;
     private Node23<E> parent;
-    private Node23<E>[] nodes;
+    private final Node23<E>[] nodes;
 
     @SuppressWarnings("unchecked")
     public Node23() {
@@ -83,6 +83,9 @@ public class Node23<E extends Comparable<? super E>> {
     }
 
     public void connect(Node23<E> subNode) {
+        if (subNode == null) {
+            return;
+        }
         for (int i = 0; i < numItems; i++) {
             if (items[i].compareTo(subNode.lastItem()) > 0) {
                 connect(i, subNode);
@@ -101,6 +104,13 @@ public class Node23<E extends Comparable<? super E>> {
         return nodes[index];
     }
 
+    public Node23<E> removeLastNode() {
+        int last = nodes.length - 1;
+        Node23<E> node = nodes[last];
+        nodes[last] = null;
+        return node;
+    }
+
     public Node23<E> findNext(E valueToInsert) {
         for (int i = 0; i < numItems; i++) {
             if (items[i].compareTo(valueToInsert) > 0) {
@@ -108,5 +118,15 @@ public class Node23<E extends Comparable<? super E>> {
             }
         }
         return nodes[numItems];
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < numItems; i++) {
+            builder.append("/");
+            builder.append(items[i].toString());
+        }
+        return builder.toString();
     }
 }

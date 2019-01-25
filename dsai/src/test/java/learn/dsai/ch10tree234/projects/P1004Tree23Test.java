@@ -61,6 +61,15 @@ public class P1004Tree23Test {
         assertThat(root.getNode(1).getItem(0), is(80));
         assertThat(root.getNode(2).getItem(0), is(90));
         assertThat(root.getNode(2).getItem(1), is(95));
+        tree.insert(99);
+        root = tree.getRoot();
+        assertThat(root.getItem(0), is(85));
+        assertThat(root.getNode(0).getItem(0), is(75));
+        assertThat(root.getNode(1).getItem(0), is(95));
+
+        assertThat(root.getNode(0).getNode(0).getItem(0), is(70));
+        assertThat(root.getNode(0).getNode(1).getItem(0), is(80));
+        assertThat(root.getNode(1).getNode(0).getItem(0), is(90));
+        assertThat(root.getNode(1).getNode(1).getItem(0), is(99));
     }
-    // TODO: test recursive split
 }

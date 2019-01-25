@@ -34,10 +34,11 @@ public class P1004Tree23<E extends Comparable<? super E>> {
         }
     }
 
-    private void split(Node23<E> node, E value) {
+    private Node23<E> split(Node23<E> node, E value) {
         E middleValue = node.squeezeMiddleValue(value);
         E rightValue = node.removeItem(1);
         Node23<E> rightNode = new Node23<>(rightValue);
+        rightNode.connect(node.removeLastNode());
         Node23<E> parent = node.getParent();
         if (parent == null) {
             Node23<E> newRoot = new Node23<>(middleValue);
@@ -45,8 +46,14 @@ public class P1004Tree23<E extends Comparable<? super E>> {
             newRoot.connect(rightNode);
             root = newRoot;
         } else {
-            parent.insert(middleValue);
-            parent.connect(rightNode);
+            if (parent.isFull()) {
+                Node23<E> parentRight = split(parent, middleValue);
+                parentRight.connect(rightNode);
+            } else {
+                parent.insert(middleValue);
+                parent.connect(rightNode);
+            }
         }
+        return rightNode;
     }
 }
