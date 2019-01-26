@@ -1,9 +1,11 @@
 package learn.core1.ch08generics.reflection2;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
+import java.io.IOException;
+import java.lang.reflect.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
@@ -11,20 +13,23 @@ import java.util.function.Consumer;
  * Uses the generic reflection API to print out what it discovers about a given class.
  */
 public class C080903GenericReflection {
-    private Consumer<String> consumer;
+    private final Consumer<String> consumer;
 
     public C080903GenericReflection(Consumer<String> consumer) {
         this.consumer = consumer;
     }
 
     public static void main(String[] args) {
-        String name = readClassName(args);
-        StringBuilder builder = new StringBuilder();
-        C080903GenericReflection genericReflection = new C080903GenericReflection(builder::append);
         try {
-            genericReflection.printGenericInfo(name);
-            System.out.println(builder.toString());
-        } catch (ClassNotFoundException e) {
+            String[] classNames = readClassNames(args);
+            StringBuilder builder = new StringBuilder();
+            C080903GenericReflection reflection = new C080903GenericReflection(builder::append);
+            for (String name : classNames) {
+                reflection.printGenericInfo(name);
+                System.out.printf("Generic info for class: %s%n%s%n%n", name, builder.toString());
+                builder.setLength(0);
+            }
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -38,8 +43,15 @@ public class C080903GenericReflection {
     }
 
     private void printClass(Class<?> cl) {
-        consumer.accept(cl.toString());
+        print(cl.toString());
         printTypes(cl.getTypeParameters(), "<", ", ", ">", true);
+        Type sc = cl.getGenericSuperclass();
+        if (sc != null) {
+            print(" extends ");
+            printType(sc, false);
+        }
+        printTypes(cl.getGenericInterfaces(), " implements ", ", ", "", false);
+        println();
     }
 
     private void printTypes(Type[] types, String pre, String sep, String suf, boolean isDefinition) {
@@ -47,28 +59,42 @@ public class C080903GenericReflection {
             return;
         }
         if (types.length > 0) {
-            consumer.accept(pre);
+            print(pre);
             for (int i = 0; i < types.length; i++) {
                 if (i > 0) {
-                    consumer.accept(sep);
+                    print(sep);
                 }
                 printType(types[i], isDefinition);
             }
-            consumer.accept(suf);
+            print(suf);
         }
     }
 
     private void printType(Type type, boolean isDefinition) {
         if (type instanceof Class) {
-            consumer.accept(((Class)type).getName());
+            print(((Class)type).getName());
         } else if (type instanceof TypeVariable) {
             TypeVariable t = (TypeVariable) type;
-            consumer.accept(t.getName());
+            print(t.getName());
             if (isDefinition) {
                 printTypes(t.getBounds(), " extends ", " & ", "", false);
             }
+        } else if (type instanceof WildcardType) {
+            WildcardType t = (WildcardType) type;
+            print("?");
+            printTypes(t.getUpperBounds(), " extends ", " & ", "", false);
+            printTypes(t.getLowerBounds(), " extends ", " & ", "", false);
+        } else if (type instanceof ParameterizedType) {
+            ParameterizedType t = (ParameterizedType) type;
+            Type owner = t.getOwnerType();
+            if (owner != null) {
+                printType(owner, false);
+                print(".");
+            }
+            printType(t.getRawType(), false);
+            printTypes(t.getActualTypeArguments(), "<", ", ", ">", false);
         }
-        // TODO: WildcardType
+        // TODO: GenericArrayType
     }
 
     private static boolean containsObjectClass(Type[] types) {
@@ -77,21 +103,42 @@ public class C080903GenericReflection {
 
     private void printMethod(Method m) {
         String name = m.getName();
-        consumer.accept(Modifier.toString(m.getModifiers()));
-        consumer.accept(" ");
+        print(Modifier.toString(m.getModifiers()));
+        print(" ");
         printTypes(m.getTypeParameters(), "<", ", ", ">", true);
-        // TODO: continue
+
+        printType(m.getGenericReturnType(), false);
+        print(" ");
+        print(name);
+        print("(");
+        printTypes(m.getGenericParameterTypes(), "", ", ", "", false);
+        print(")");
+        println();
     }
 
-    private static String readClassName(String[] args) {
-        String name;
-        if (args.length > 0) {
-            name = args[0];
+    private void print(String s) {
+        consumer.accept(s);
+    }
+
+    private void println() {
+        consumer.accept(System.lineSeparator());
+    }
+
+    private static String[] readClassNames(String[] args) throws IOException {
+        String[] names;
+        if (args.length == 2 && "--file".equals(args[0])) {
+            Path p = Paths.get(args[1]);
+            List<String> lines = Files.readAllLines(p);
+            names = new String[lines.size()];
+            names = lines.toArray(names);
+        } else if (args.length == 1) {
+            names = args;
         } else {
             Scanner in = new Scanner(System.in);
-            System.out.print("Enter class name (e.g. java.util.Collections): ");
-            name = in.nextLine();
+            System.out.print("Enter class names (e.g. java.util.Collections): ");
+            String n = in.nextLine();
+            names = new String[]{n};
         }
-        return name;
+        return names;
     }
 }
