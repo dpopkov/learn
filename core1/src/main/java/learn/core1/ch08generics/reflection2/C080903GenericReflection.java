@@ -93,8 +93,11 @@ public class C080903GenericReflection {
             }
             printType(t.getRawType(), false);
             printTypes(t.getActualTypeArguments(), "<", ", ", ">", false);
+        } else if (type instanceof GenericArrayType) {
+            GenericArrayType t = (GenericArrayType) type;
+            printType(t.getGenericComponentType(), isDefinition);
+            print("[]");
         }
-        // TODO: GenericArrayType
     }
 
     private static boolean containsObjectClass(Type[] types) {
@@ -133,11 +136,14 @@ public class C080903GenericReflection {
             names = lines.toArray(names);
         } else if (args.length == 1) {
             names = args;
-        } else {
+        } else if (args.length == 0) {
             Scanner in = new Scanner(System.in);
             System.out.print("Enter class names (e.g. java.util.Collections): ");
             String n = in.nextLine();
             names = new String[]{n};
+        } else {
+            System.out.println("Illegal number of arguments");
+            names = new String[0];
         }
         return names;
     }
