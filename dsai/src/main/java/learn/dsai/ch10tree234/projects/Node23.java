@@ -6,10 +6,11 @@ public class Node23<E extends Comparable<? super E>> {
     private static final int MAX_NODES = ORDER;
 
     private final E[] items;
+
     private int numItems;
+
     private Node23<E> parent;
     private final Node23<E>[] nodes;
-
     @SuppressWarnings("unchecked")
     public Node23() {
         items = (E[]) new Comparable[MAX_ITEMS];
@@ -25,6 +26,10 @@ public class Node23<E extends Comparable<? super E>> {
         this();
         insert(value1);
         insert(value2);
+    }
+
+    public int getNumItems() {
+        return numItems;
     }
 
     public Node23<E> getParent() {
@@ -86,13 +91,26 @@ public class Node23<E extends Comparable<? super E>> {
         if (subNode == null) {
             return;
         }
-        for (int i = 0; i < numItems; i++) {
+        // TODO: find index to insert shifting greater nodes to the right
+        int j;
+        for (j = MAX_NODES; j > 0; j--) {
+            if (nodes[j - 1] == null) {
+                continue;
+            }
+            if (nodes[j - 1].getItem(0).compareTo(subNode.lastItem()) > 0) {
+                nodes[j] = nodes[j - 1];
+            } else {
+                break;
+            }
+        }
+        connect(j, subNode);
+        /*for (int i = 0; i < numItems; i++) {
             if (items[i].compareTo(subNode.lastItem()) > 0) {
                 connect(i, subNode);
                 return;
             }
         }
-        connect(numItems, subNode);
+        connect(numItems, subNode);*/
     }
 
     public void connect(int index, Node23<E> subNode) {
