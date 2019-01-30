@@ -1,2 +1,5 @@
 # txt files in root folder of core1 project
 /*.txt
+
+# files in input folder
+/input/
