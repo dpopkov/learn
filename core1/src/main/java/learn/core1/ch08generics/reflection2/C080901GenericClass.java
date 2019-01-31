@@ -10,10 +10,10 @@ public class C080901GenericClass {
         Class<String> stringClass = String.class;
         System.out.println("stringClass.getName() = " + stringClass.getName());
         try {
-            String s = stringClass.newInstance();
+            String s = stringClass.getDeclaredConstructor().newInstance();
             System.out.println("s = " + s);
             System.out.println("s.length() = " + s.length());
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

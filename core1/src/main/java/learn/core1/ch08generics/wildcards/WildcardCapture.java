@@ -1,7 +1,6 @@
 package learn.core1.ch08generics.wildcards;
 
 import learn.core1.ch08generics.Pair;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 @SuppressWarnings("unused")
 public class WildcardCapture {
@@ -11,7 +10,7 @@ public class WildcardCapture {
         p.setFirst(p.getSecond());
         p.setSecond(t);
 */
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     public static <T> void swapHelper(Pair<T> p) {

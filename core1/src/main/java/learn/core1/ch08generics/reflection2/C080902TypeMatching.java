@@ -17,7 +17,8 @@ public class C080902TypeMatching {
      * @return pair of objects
      */
     static <T> Pair<T> makePair(Class<T> c) throws ReflectiveOperationException {
-        return new Pair<>(c.newInstance(), c.newInstance());
+        return new Pair<>(c.getDeclaredConstructor().newInstance(),
+                c.getDeclaredConstructor().newInstance());
     }
 
     public static void main(String[] args) throws ReflectiveOperationException {
