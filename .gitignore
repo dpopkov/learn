@@ -3,6 +3,11 @@
 **/target/
 **/*.iml
 
+# In all Eclipse projects
+**/.classpath
+**/.project
+**/.settings/
+
 # Pro Java for Web
 # books code
 pj4w/books_code/
