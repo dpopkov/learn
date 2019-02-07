@@ -1,6 +1,7 @@
 # learn
 This repository aggregates examples and exercises from various books and resources.
 
+bj6e - Big Java 6th Ed  
 core1 - Core Java vol1  
 core2 - Core Java vol2  
 csia - Computer Science. An Interdisciplinary Approach  
