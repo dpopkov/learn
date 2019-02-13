@@ -2,7 +2,6 @@ package learn.bj6e.ch11io;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -13,8 +12,6 @@ import java.util.Scanner;
  * ...
  */
 public class DataSetReader {
-    private double[] data;
-
     /**
      * Reads a data set.
      * @param filename the name of the file holding the data
@@ -24,8 +21,7 @@ public class DataSetReader {
      */
     public double[] readFile(String filename) throws FileNotFoundException, BadDataException {
         try (Scanner in = new Scanner(new File(filename))) {
-            data = readData(in);
-            return data;
+            return readData(in);
         }
     }
 
