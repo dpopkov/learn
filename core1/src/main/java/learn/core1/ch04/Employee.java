@@ -5,8 +5,6 @@ import learn.core1.ch05.Person;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Scanner;
-import java.util.function.Consumer;
 
 /**
  * Represents an employee with id, name, salary and hire date.
@@ -15,6 +13,9 @@ import java.util.function.Consumer;
  * @see learn.core1.ch04.EmployeeUsage
  */
 public class Employee extends Person implements Comparable<Employee> {
+    public static final int NAME_SIZE = 38;
+    public static final int RECORD_SIZE = Integer.BYTES + NAME_SIZE * 2 + Double.BYTES + Integer.BYTES * 3 ;
+
     private static final int INITIAL_ID = 1;
 
     private static int nextId;
@@ -88,7 +89,14 @@ public class Employee extends Person implements Comparable<Employee> {
         this.hireDay = LocalDate.of(year, month, day);
     }
 
-    private Employee(int id, String name, double salary, LocalDate hireDay) {
+    /**
+     * Constructor that is used in {@link EmployeeIO} static methods.
+     * @param id id
+     * @param name name
+     * @param salary salary
+     * @param hireDay hire day
+     */
+    public Employee(int id, String name, double salary, LocalDate hireDay) {
         super(name);
         this.id = id;
         this.salary = salary;
@@ -149,19 +157,5 @@ public class Employee extends Person implements Comparable<Employee> {
     @Override
     public final int compareTo(Employee other) {
         return Double.compare(this.getSalary(), other.getSalary());
-    }
-
-    public void printTo(Consumer<String> out, String fieldSeparator) {
-        out.accept(id + fieldSeparator + getName() + fieldSeparator + salary + fieldSeparator + hireDay);
-    }
-
-    public static Employee readFrom(Scanner in, String separatorRegex) {
-        String line = in.nextLine();
-        String[] tokens = line.split(separatorRegex);
-        int id = Integer.parseInt(tokens[0]);
-        String name = tokens[1];
-        double salary = Double.parseDouble(tokens[2]);
-        LocalDate hireDate = LocalDate.parse(tokens[3]);
-        return new Employee(id, name, salary, hireDate);
     }
 }

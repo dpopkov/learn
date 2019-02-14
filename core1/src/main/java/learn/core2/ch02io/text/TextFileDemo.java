@@ -1,6 +1,7 @@
 package learn.core2.ch02io.text;
 
 import learn.core1.ch04.Employee;
+import learn.core1.ch04.EmployeeIO;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class TextFileDemo {
         out.println(employees.length);
         Consumer<String> consumer = out::println;
         for (Employee e : employees) {
-            e.printTo(consumer, FIELD_SEPARATOR);
+            EmployeeIO.printTo(e, consumer, FIELD_SEPARATOR);
         }
     }
 
@@ -43,7 +44,7 @@ public class TextFileDemo {
         in.nextLine();
         Employee[] employees = new Employee[n];
         for (int i = 0; i < n; i++) {
-            employees[i] = Employee.readFrom(in, SEPARATOR_REGEX);
+            employees[i] = EmployeeIO.readFrom(in, SEPARATOR_REGEX);
         }
         return employees;
     }
