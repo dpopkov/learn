@@ -5,6 +5,8 @@ import learn.core1.ch05.Person;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Scanner;
+import java.util.function.Consumer;
 
 /**
  * Represents an employee with id, name, salary and hire date.
@@ -33,19 +35,17 @@ public class Employee extends Person implements Comparable<Employee> {
         nextId = INITIAL_ID;
     }
 
-    private final int id; // = Employee.assignId();
-
+    private final int id;
     private double salary;
     private final LocalDate hireDay;
-    // object initialization block runs first
 
-    {
-        id = nextId;
-        nextId++;
+    private static int assignId() {
+        return nextId++;
     }
 
     public Employee() {
         super("default");
+        id = assignId();
         this.hireDay = LocalDate.now();
     }
 
@@ -56,6 +56,7 @@ public class Employee extends Person implements Comparable<Employee> {
      */
     public Employee(String name, double salary) {
         super(name);
+        id = assignId();
         this.salary = salary;
         this.hireDay = LocalDate.now();
     }
@@ -66,6 +67,7 @@ public class Employee extends Person implements Comparable<Employee> {
      */
     public Employee(double salary) {
         super("Employee");
+        id = assignId();
         augmentNameWithId();
         this.salary = salary;
         this.hireDay = LocalDate.now();
@@ -81,8 +83,16 @@ public class Employee extends Person implements Comparable<Employee> {
      */
     public Employee(String name, double salary, int year, int month, int day) {
         super(name);
+        id = assignId();
         this.salary = salary;
         this.hireDay = LocalDate.of(year, month, day);
+    }
+
+    private Employee(int id, String name, double salary, LocalDate hireDay) {
+        super(name);
+        this.id = id;
+        this.salary = salary;
+        this.hireDay = hireDay;
     }
 
     private void augmentNameWithId() {
@@ -139,5 +149,19 @@ public class Employee extends Person implements Comparable<Employee> {
     @Override
     public final int compareTo(Employee other) {
         return Double.compare(this.getSalary(), other.getSalary());
+    }
+
+    public void printTo(Consumer<String> out, String fieldSeparator) {
+        out.accept(id + fieldSeparator + getName() + fieldSeparator + salary + fieldSeparator + hireDay);
+    }
+
+    public static Employee readFrom(Scanner in, String separatorRegex) {
+        String line = in.nextLine();
+        String[] tokens = line.split(separatorRegex);
+        int id = Integer.parseInt(tokens[0]);
+        String name = tokens[1];
+        double salary = Double.parseDouble(tokens[2]);
+        LocalDate hireDate = LocalDate.parse(tokens[3]);
+        return new Employee(id, name, salary, hireDate);
     }
 }
