@@ -2,6 +2,7 @@ package learn.core1.ch04;
 
 import learn.core1.ch05.Person;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Objects;

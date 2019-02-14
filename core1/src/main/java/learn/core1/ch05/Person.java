@@ -1,8 +1,9 @@
 package learn.core1.ch05;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class Person {
+public abstract class Person implements Serializable {
     private String name;
 
     public Person(String name) {

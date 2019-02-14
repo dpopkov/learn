@@ -4,6 +4,7 @@ import learn.core1.ch04.Employee;
 
 public class Manager extends Employee {
     private double bonus;
+    private Employee secretary;
 
     public Manager(String name, double salary, int year, int month, int day) {
         super(name, salary, year, month, day);
@@ -16,6 +17,14 @@ public class Manager extends Employee {
 
     public double getBonus() {
         return bonus;
+    }
+
+    public Employee getSecretary() {
+        return secretary;
+    }
+
+    public void setSecretary(Employee secretary) {
+        this.secretary = secretary;
     }
 
     @Override
@@ -38,7 +47,7 @@ public class Manager extends Employee {
 
     @Override
     public String toString() {
-        return super.toString() + "{bonus=" + bonus + "}";
+        return super.toString() + "{bonus=" + bonus + ", secretary=" + secretary.toString() + "}";
     }
 
     public static void main(String[] args) {
