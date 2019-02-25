@@ -15,6 +15,7 @@ public class EchoServer {
         try (ServerSocket s = new ServerSocket(port)) {
             System.out.println("Listening on port " + port);
             try (Socket incoming = s.accept()) {
+                System.out.println("Incoming connection from " + incoming.getInetAddress());
                 InputStream inStream = incoming.getInputStream();
                 OutputStream outStream = incoming.getOutputStream();
                 try (Scanner in = new Scanner(inStream, StandardCharsets.UTF_8)) {
