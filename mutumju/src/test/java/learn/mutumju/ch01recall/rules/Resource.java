@@ -1,4 +1,4 @@
-package learn.mutumju.ch01recall;
+package learn.mutumju.ch01recall.rules;
 
 /**
  * Represents an external resource and prints the output in the console.

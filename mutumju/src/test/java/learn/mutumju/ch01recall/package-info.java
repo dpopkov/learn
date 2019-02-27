@@ -19,7 +19,7 @@
  * MyTheorySingleDimensionVariablesTest - exploring JUnit theories for primitive variables<br>
  * MyTheoryArrayTest - exploring JUnit theories for arrays<br>
  * TheoryExternalDataTest - externalizing data using {@code @ParametersSuppliedBy, @ParameterSupplier}<br>
- * Dealing with JUnit rules:<br>
+ * Dealing with JUnit rules (all test classes in package 'rules'):<br>
  *          TimeoutRuleTest - the timeout rule applies the same timeout to all the test methods in a class<br>
  *          ExpectedExceptionRuleTest - allows to assert the expected exception type and the exception message<br>
  *          TemporaryFolderRuleTest - allows the creation of files and folders that are guaranteed to be deleted

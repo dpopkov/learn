@@ -1,4 +1,4 @@
-package learn.mutumju.ch01recall;
+package learn.mutumju.ch01recall.rules;
 
 import org.junit.*;
 import org.junit.rules.TestWatcher;

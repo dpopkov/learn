@@ -1,4 +1,4 @@
-package learn.mutumju.ch01recall;
+package learn.mutumju.ch01recall.rules;
 
 import org.junit.Ignore;
 import org.junit.Rule;
