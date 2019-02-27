@@ -1,6 +1,7 @@
 package learn.mutumju.ch01recall;
 
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -12,6 +13,7 @@ import static org.hamcrest.CoreMatchers.*;
  * to continue after the first problem is found.
  * The test will finish its execution, and at the end, notify all errors.
  */
+@Ignore("This class demonstrates collecting of fails, so it my be ignored")
 public class ErrorCollectorRuleTest {
     @Rule
     public ErrorCollector collector = new ErrorCollector();

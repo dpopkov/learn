@@ -27,5 +27,10 @@
  *          ErrorCollectorRuleTest - allows the execution of a test to continue after the first problem is found<br>
  *          VerifierRuleTest - {@code Verifier} rule can turn passing tests into failing tests
  *                              if a verification check fails.<br>
+ *          TestWatcherRuleTest - {@code TestWatcher} rule takes note of the testing action, without modifying it.<br>
+ *          TestNameRuleTest - {@code TestName} rule makes the current test name available inside test methods<br>
+ *
+ *          ExternalResourceRuleTest - {@code ExternalResource} rule makes the setup and cleanup work
+ *                                      the responsibility of the resource.<br>
  */
 package learn.mutumju.ch01recall;

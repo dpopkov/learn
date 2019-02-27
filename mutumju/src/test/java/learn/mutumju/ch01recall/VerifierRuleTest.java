@@ -1,5 +1,6 @@
 package learn.mutumju.ch01recall;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -13,6 +14,7 @@ import static org.junit.Assert.assertNull;
  * Verifier’s verify method is executed after each test execution. If the verify method
  * defines any assertions, and that assertion fails, then the test is marked as failed
  */
+@Ignore("This test demonstrates failing by rule, so it may be ignored")
 public class VerifierRuleTest {
 
     private String errorMsg = null;
