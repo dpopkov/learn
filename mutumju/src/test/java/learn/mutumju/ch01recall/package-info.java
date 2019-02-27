@@ -19,5 +19,13 @@
  * MyTheorySingleDimensionVariablesTest - exploring JUnit theories for primitive variables<br>
  * MyTheoryArrayTest - exploring JUnit theories for arrays<br>
  * TheoryExternalDataTest - externalizing data using {@code @ParametersSuppliedBy, @ParameterSupplier}<br>
+ * Dealing with JUnit rules:<br>
+ *          TimeoutRuleTest - the timeout rule applies the same timeout to all the test methods in a class<br>
+ *          ExpectedExceptionRuleTest - allows to assert the expected exception type and the exception message<br>
+ *          TemporaryFolderRuleTest - allows the creation of files and folders that are guaranteed to be deleted
+ *                                    when the test method finishes<br>
+ *          ErrorCollectorRuleTest - allows the execution of a test to continue after the first problem is found<br>
+ *          VerifierRuleTest - {@code Verifier} rule can turn passing tests into failing tests
+ *                              if a verification check fails.<br>
  */
 package learn.mutumju.ch01recall;
