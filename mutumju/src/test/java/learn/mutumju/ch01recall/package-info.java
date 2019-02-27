@@ -32,5 +32,9 @@
  *
  *          ExternalResourceRuleTest - {@code ExternalResource} rule makes the setup and cleanup work
  *                                      the responsibility of the resource.<br>
+ * Exploring Categories (all test classes in package 'categories':<br>
+ *          CrazyTestSuite - usage of {@code IncludeCategory} annotation<br>
+ *          CrazyTestExclusionSuite - usage of {@code ExcludeCategory} annotation
+ *                  - both test classes use {@code Categories} runner.<br>
  */
 package learn.mutumju.ch01recall;
