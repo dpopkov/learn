@@ -1,4 +1,4 @@
-package learn.ijpds.ch33netw;
+package learn.ijpds.ch33netw.areaserver;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -18,7 +18,14 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.function.Consumer;
 
+/**
+ * GUI app that creates connection to the specified host on the specified port number
+ * and a double value representing radius of a circle.
+ */
 public class ClientApp extends Application implements Consumer<String> {
+    private static final String HOST_NAME = "localhost";
+    private static final int PORT_NUMBER = 8000;
+
     private DataOutputStream toServer;
     private DataInputStream fromServer;
     private TextArea textArea;
@@ -49,20 +56,27 @@ public class ClientApp extends Application implements Consumer<String> {
                 toServer.writeDouble(radius);
                 toServer.flush();
                 double area = fromServer.readDouble();
-                textArea.appendText("Radius is " + radius + '\n'
-                                    + "Area received from the server is " + area + '\n');
+                display("Radius is " + radius + '\n'
+                        + "Area received from the server is " + area);
+            } catch (java.net.SocketException se) {
+                display("Server closed. Error: " + se);
             } catch (IOException e1) {
-                textArea.appendText("I/O error: " + e1.toString());
+                display("I/O error: " + e1.toString());
             }
         });
 
         try {
-            Socket socket = new Socket("localhost", 8000);
+            Socket socket = new Socket(HOST_NAME, PORT_NUMBER);
+            textArea.appendText("Created socket on port " + socket.getLocalPort() + '\n');
             fromServer = new DataInputStream(socket.getInputStream());
             toServer = new DataOutputStream(socket.getOutputStream());
         } catch (IOException e) {
-            textField.appendText("I/O error: " + e.toString());
+            display("I/O error: " + e.toString());
         }
+    }
+
+    private void display(String s) {
+        textArea.appendText(s + '\n');
     }
 
     @Override

@@ -1,4 +1,4 @@
-package learn.ijpds.ch33netw;
+package learn.ijpds.ch33netw.areaserver;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -9,8 +9,12 @@ import javafx.stage.Stage;
 
 import java.util.function.Consumer;
 
+/**
+ * GUI application that starts {@link AreaServer}.
+ */
 public class ServerApp extends Application implements Consumer<String> {
     private TextArea textArea;
+    private AreaServer server;
 
     @Override
     public void start(Stage primaryStage) {
@@ -19,12 +23,19 @@ public class ServerApp extends Application implements Consumer<String> {
         primaryStage.setTitle("AreaServer");
         primaryStage.setScene(scene);
         primaryStage.show();
-        AreaServer server = new AreaServer(this);
+        server = new AreaServer(this);
         server.start();
     }
 
     @Override
     public void accept(String s) {
-        Platform.runLater(() -> textArea.appendText(s));
+        Platform.runLater(() -> textArea.appendText(s + '\n'));
+    }
+
+    @Override
+    public void stop() throws Exception {
+        if (server != null) {
+            server.close();
+        }
     }
 }
