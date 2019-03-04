@@ -7,9 +7,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -101,5 +107,75 @@ public class StockBrokerTest {
         assertEquals(BigDecimal.ZERO, portfolio.getAvgPrice(stock));
         assertEquals(BigDecimal.ZERO, portfolio.getAvgPrice(stock));
         assertEquals(BigDecimal.ZERO, portfolio.getAvgPrice(stock));
+    }
+
+    /** This map is used in {@link #testUsingAnswer()} test. */
+    private static final Map<String, List<Stock>> stockMap = new HashMap<>();
+
+    private static class BuyAnswer implements Answer {
+        @SuppressWarnings("Duplicates")
+        @Override
+        public Object answer(InvocationOnMock invocation) {
+            Stock newStock = (Stock) invocation.getArguments()[0];
+            List<Stock> stocks = stockMap.get(newStock.getSymbol());
+            if (stocks != null) {
+                stocks.add(newStock);
+            } else {
+                stocks = new ArrayList<>();
+                stocks.add(newStock);
+                stockMap.put(newStock.getSymbol(), stocks);
+            }
+            return null;
+        }
+    }
+
+    private static class TotalPriceAnswer implements Answer<BigDecimal> {
+        @SuppressWarnings("Duplicates")
+        @Override
+        public BigDecimal answer(InvocationOnMock invocation) {
+            BigDecimal total = BigDecimal.ZERO;
+            for (String symbol : stockMap.keySet()) {
+                for (Stock stock : stockMap.get(symbol)) {
+                    total = total.add(stock.getPrice());
+                }
+            }
+            return total;
+        }
+    }
+
+    @Test
+    public void testUsingAnswer() {
+        stockMap.clear();
+        doAnswer(new BuyAnswer()).when(portfolio).buy(isA(Stock.class));
+        when(portfolio.getCurrentValue()).then(new TotalPriceAnswer());
+
+        portfolio.buy(new Stock("A", "A", BigDecimal.TEN));
+        portfolio.buy(new Stock("B", "B", BigDecimal.ONE));
+
+        assertEquals(new BigDecimal("11"), portfolio.getCurrentValue());
+    }
+
+    @Test
+    public void testSpying() {
+        Stock realStock = new Stock("A", "Company A", BigDecimal.ONE);
+        Stock spyStock = spy(realStock);
+
+        // call real method from spy
+        assertEquals("A", spyStock.getSymbol());
+
+        // Changing value using spy
+        spyStock.updatePrice(BigDecimal.ZERO);
+
+        // verify spy has the changed value
+        assertEquals(BigDecimal.ZERO, spyStock.getPrice());
+
+        // Stubbing method
+        when(spyStock.getPrice()).thenReturn(BigDecimal.TEN);
+
+        // Changing value using spy
+        spyStock.updatePrice(new BigDecimal("7"));
+
+        assertNotEquals(new BigDecimal("7"), spyStock.getPrice());
+        assertEquals(BigDecimal.TEN, spyStock.getPrice());
     }
 }

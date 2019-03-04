@@ -13,5 +13,10 @@
  *
  * <h3>Stubbing consecutive calls</h3>
  * Use varargs version of {@code thenReturn(...)} method.
+ *
+ * <h3>Stubbing with an Answer</h3>
+ *
+ * <h3>Spying objects</h3>
+ *
  */
 package learn.mutumju.ch04mockito;
