@@ -18,5 +18,20 @@
  *
  * <h3>Spying objects</h3>
  *
+ * <h3>Stubbing void methods</h3>
+ *
+ * <h3>Capturing arguments with ArgumentCaptor</h3>
+ *
+ * <h3>Verifying the invocation order</h3>
+ *
+ * <h3>Changing the default settings</h3>
+ *
+ * <h3>Resetting mock objects</h3>
+ *
+ * <h3>Exploring Mockito annotations</h3>
+ *
+ * <h3>Working with inline stubbing</h3>
+ *
+ * <h3>Determining mocking details</h3>
  */
 package learn.mutumju.ch04mockito;

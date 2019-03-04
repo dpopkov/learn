@@ -3,6 +3,8 @@ package learn.mutumju.ch04mockito.stocks.dto;
 import java.math.BigDecimal;
 
 public class Stock {
+    public static final Stock EMPTY = new Stock(null, null, null);
+
     private final String symbol;
     private final String name;
     private BigDecimal price;

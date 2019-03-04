@@ -6,7 +6,10 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
@@ -177,5 +180,111 @@ public class StockBrokerTest {
 
         assertNotEquals(new BigDecimal("7"), spyStock.getPrice());
         assertEquals(BigDecimal.TEN, spyStock.getPrice());
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void playWithVoidMethods() {
+        Answer dummy = invocation -> {
+            System.out.println("Dummy answer");
+            return null;
+        };
+        doAnswer(dummy)     // prints "Dummy answer"
+        .doNothing()        // does nothing
+        .doAnswer(dummy)    // prints "Dummy answer"
+        .doThrow(new RuntimeException()).when(portfolio).buy(Stock.EMPTY);
+
+        portfolio.buy(Stock.EMPTY);
+        portfolio.buy(Stock.EMPTY);
+        portfolio.buy(Stock.EMPTY);
+        portfolio.buy(Stock.EMPTY);
+    }
+
+    @Test
+    public void testArgumentCaptor() {
+        when(portfolio.getAvgPrice(isA(Stock.class))).thenReturn(new BigDecimal("10.00"));
+        Stock aCorp = new Stock("A", "A Corp", new BigDecimal("11.20"));
+        when(marketWatcher.getQuote(anyString())).thenReturn(aCorp);
+        broker.perform(portfolio, aCorp);
+
+        ArgumentCaptor<String> stockIdCaptor = ArgumentCaptor.forClass(String.class);
+
+        verify(marketWatcher).getQuote(stockIdCaptor.capture());
+        assertThat(stockIdCaptor.getValue(), Is.is("A"));
+
+        // Using two captors
+        ArgumentCaptor<Stock> stockCaptor = ArgumentCaptor.forClass(Stock.class);
+        ArgumentCaptor<Integer> stockSellCountCaptor = ArgumentCaptor.forClass(Integer.class);
+
+        verify(portfolio).sell(stockCaptor.capture(), stockSellCountCaptor.capture());
+        assertThat(stockCaptor.getValue().getSymbol(), Is.is("A"));
+        assertThat(stockSellCountCaptor.getValue(), Is.is(10));
+    }
+
+    @Test
+    public void testInvocationInOrder() {
+        Stock aCorp = new Stock("A", "A Corp", new BigDecimal("11.20"));
+        portfolio.getAvgPrice(aCorp);
+        portfolio.getCurrentValue();
+        marketWatcher.getQuote("X");
+        portfolio.buy(aCorp);
+        InOrder inOrder = inOrder(portfolio, marketWatcher);
+        inOrder.verify(portfolio).getAvgPrice(isA(Stock.class));
+        inOrder.verify(portfolio).getCurrentValue();
+        inOrder.verify(marketWatcher).getQuote(anyString());
+        inOrder.verify(portfolio).buy(isA(Stock.class));
+    }
+
+    @Test
+    public void testChangingDefaults() {
+        Stock aCorp = new Stock("A", "A Corp", new BigDecimal("11.20"));
+        Portfolio pf0 = Mockito.mock(Portfolio.class);
+        // default null is returned
+        assertNull(pf0.getAvgPrice(aCorp));
+
+        Portfolio pf1 = Mockito.mock(Portfolio.class, RETURNS_SMART_NULLS);
+        System.out.println("#1 " + pf1.getAvgPrice(aCorp));
+        assertNotNull(pf1.getAvgPrice(aCorp));
+
+        Portfolio pf2 = Mockito.mock(Portfolio.class, RETURNS_MOCKS);
+        System.out.println("#2 " + pf2.getAvgPrice(aCorp));
+        assertNotNull(pf2.getAvgPrice(aCorp));
+
+        Portfolio pf3 = Mockito.mock(Portfolio.class, RETURNS_DEEP_STUBS);
+        System.out.println("#3 " + pf3.getAvgPrice(aCorp));
+        assertNotNull(pf3.getAvgPrice(aCorp));
+    }
+
+    @Test
+    public void testResetMock() {
+        Stock aCorp = new Stock("A", "A Corp", new BigDecimal(11.20));
+        Portfolio portfolio = Mockito.mock(Portfolio.class);
+        when(portfolio.getAvgPrice(eq(aCorp))).thenReturn(BigDecimal.ONE);
+        BigDecimal price = portfolio.getAvgPrice(aCorp);
+        assertNotNull(price);
+        assertThat(price, Is.is(BigDecimal.ONE));
+
+        //Resets the stub, so getAvgPrice returns NULL
+        Mockito.reset(portfolio);
+        assertNull(portfolio.getAvgPrice(aCorp));
+    }
+
+    /** Example if inline stubbing (create mocks while stubbing it). */
+    final Stock globalStock = when(Mockito.mock(Stock.class).getPrice()).thenReturn(BigDecimal.ONE).getMock();
+
+    @Test
+    public void testAccessingGlobalMock() {
+        assertEquals(BigDecimal.ONE, globalStock.getPrice());
+    }
+
+    @Test
+    public void testGettingMockingDetails() {
+        Portfolio pf1 = Mockito.mock(Portfolio.class, Mockito.RETURNS_MOCKS);
+        BigDecimal result = pf1.getAvgPrice(globalStock);
+        assertNotNull(result);
+        assertTrue(Mockito.mockingDetails(pf1).isMock());
+
+        Stock myStock = new Stock(null, null, null);
+        Stock spy = spy(myStock);
+        assertTrue(Mockito.mockingDetails(spy).isSpy());
     }
 }
