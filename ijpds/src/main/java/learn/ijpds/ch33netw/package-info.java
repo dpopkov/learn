@@ -11,5 +11,11 @@
  * <h3>33.4 Serving Multiple Clients</h3>
  * package multithread
  * Listing 33.4     MultiThreadServer.java
+ *
+ * <h3>33.5 Sending and Receiving Objects</h3>
+ * package objects;<br>
+ * Listing 33.5     StudentAddress.java<br>
+ * Listing 33.6     StudentClient.java<br>
+ * Listing 33.7     StudentServer.java<br>
  */
 package learn.ijpds.ch33netw;
