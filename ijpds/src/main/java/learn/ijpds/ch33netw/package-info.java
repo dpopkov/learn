@@ -17,5 +17,9 @@
  * Listing 33.5     StudentAddress.java<br>
  * Listing 33.6     StudentClient.java<br>
  * Listing 33.7     StudentServer.java<br>
+ *
+ * <h3>33.6 Case Study: Distributed Tic-Tac-Toe Games</h3>
+ * package distributed;<br>
+ *
  */
 package learn.ijpds.ch33netw;
