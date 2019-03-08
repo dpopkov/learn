@@ -50,7 +50,7 @@ public class HandleSession implements Runnable, TicTacToeConstants {
                     sendMove(toPlayer2, row, column);
                     break;
                 } else {
-                    sendToBoth(CONTINUE);
+                    toPlayer2.writeInt(CONTINUE);
                     sendMove(toPlayer2, row, column);
                 }
                 row = fromPlayer2.readInt();
