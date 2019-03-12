@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.Socket;
 
 public class TicTacClient extends Application implements TicTacToeConstants {
@@ -75,9 +76,12 @@ public class TicTacClient extends Application implements TicTacToeConstants {
             socket = new Socket(host, PORT);
             fromServer = new DataInputStream(socket.getInputStream());
             toServer = new DataOutputStream(socket.getOutputStream());
+        } catch (ConnectException ce) {
+            System.err.println("Cannot connect to server. Check that the server is running.");
+            System.exit(-1);
         } catch (IOException e) {
             e.printStackTrace();
-            return;
+            System.exit(-2);
         }
         new Thread(() -> {
             try {
