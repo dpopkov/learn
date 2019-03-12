@@ -10,9 +10,11 @@ import java.net.Socket;
 import java.net.SocketException;
 
 /**
- * Listens to the socket and prints every input.
+ * Listens to the socket and prints logging events.
  */
 public class SocketPrinter {
+    private static final long MS_PER_HOUR = 60 * 60 * 1000;
+
     public static void main(String[] args) throws IOException {
         int port = 4712;
         if (args.length == 1) {
@@ -27,7 +29,7 @@ public class SocketPrinter {
             //noinspection InfiniteLoopStatement
             while (true) {
                 LoggingEvent event = (LoggingEvent) ois.readObject();
-                System.out.printf("%s: %s%n", event.getLevel(), event.getMessage());
+                printEvent(event);
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -35,5 +37,10 @@ public class SocketPrinter {
             System.out.println("Closing connection");
         }
         System.out.println("Finished.");
+    }
+
+    private static void printEvent(LoggingEvent event) {
+        long timeStamp = event.getTimeStamp();
+        System.out.printf("%d: %s: %s%n", timeStamp % MS_PER_HOUR, event.getLevel(), event.getMessage());
     }
 }
