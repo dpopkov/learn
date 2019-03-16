@@ -14,5 +14,13 @@
  * FAVDemo2 - Listing 12-10. Determining Specific File Attribute View Support<br>
  * BFAVDemo - Listing 12-11. Reading Basic File Attributes in Bulk<br>
  * UDAVDemo - Listing 12-19. Associating a Description with a File<br>
+ *
+ * <h4>Managing Files and Directories</h4>
+ *
+ * CheckPath - Listing 12-20. Checking Paths for Various Conditions<br>
+ * DumpText - Listing 12-24. Dumping a Text File to the Standard Output Stream<br>
+ * DumpText2 - Listing 12-25. Dumping a Text File to the Standard Output Stream, Revisited<br>
+ * SavePage - Listing 12-26. Saving Web Page HTML to a Text File<br>
+ * DSDemo - Listing 12-32. Obtaining and Outputting All Entries in a Directory<br>
  */
 package learn.jionio.ch12fs;
