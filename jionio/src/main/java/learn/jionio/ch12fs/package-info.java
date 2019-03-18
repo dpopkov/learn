@@ -1,6 +1,8 @@
 /**
  * <h3>Chapter 12. Improved File System Interface</h3>
  *
+ * The classes are listed here in order of implementation.<br><br>
+ *
  * ListProviders - Listing 12-1. Identifying Installed File System Providers<br>
  * PathDemo - Listing 12-2. Constructing a Path and Accessing Its Name Elements<br>
  * PathDemo2 - Listing 12-3. Demonstrating Root Directory Iteration and Absolute Path Creation<br>
@@ -22,5 +24,8 @@
  * DumpText2 - Listing 12-25. Dumping a Text File to the Standard Output Stream, Revisited<br>
  * SavePage - Listing 12-26. Saving Web Page HTML to a Text File<br>
  * DSDemo - Listing 12-32. Obtaining and Outputting All Entries in a Directory<br>
+ * Move - Listing 12-38. Moving a Source Path to a Target Path<br>
+ * FTWDemo - Listing 12-44. Visiting a File Tree and Reporting Last Modified Times and Sizes<br>
+ * Copy - Listing 12-45. Copying a File Tree<br>
  */
 package learn.jionio.ch12fs;
