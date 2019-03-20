@@ -1,11 +1,15 @@
 package learn.hfdp.ch05singleton;
 
 public class ChocolateBoiler {
-    private static ChocolateBoiler instance;
+    private volatile static ChocolateBoiler instance;
 
     public static ChocolateBoiler getInstance() {
         if (instance == null) {
-            instance = new ChocolateBoiler();
+            synchronized (ChocolateBoiler.class) {
+                if (instance == null) {
+                    instance = new ChocolateBoiler();
+                }
+            }
         }
         return instance;
     }
