@@ -11,9 +11,13 @@ public class JdbcUtil {
     }
 
     static Connection connectToDb() throws IOException, SQLException {
+        return connectToDb("ijpds");
+    }
+
+    static Connection connectToDb(String dbName) throws IOException, SQLException {
         Properties props = new Properties();
         props.load(SimpleJdbc.class.getResourceAsStream("/db.properties"));
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/ijpds",
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName,
                 props.getProperty("username"), props.getProperty("password"));
         System.out.println("Database connected.");
         return connection;
