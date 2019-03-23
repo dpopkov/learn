@@ -1,26 +1,19 @@
 package learn.ijpds.ch34db;
 
-import java.io.Closeable;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class FindGrade implements Closeable {
+public class FindGrade extends FindGradeAbstract {
     private Statement statement;
-    private Connection connection;
 
     public FindGrade() throws SQLException, IOException, ClassNotFoundException {
-        initializeDb();
+        super();
+        statement = getConnection().createStatement();
     }
 
-    private void initializeDb() throws ClassNotFoundException, IOException, SQLException {
-        JdbcUtil.loadDriver();
-        connection = JdbcUtil.connectToDb();
-        statement = connection.createStatement();
-    }
-
+    @Override
     public String readGrade(String ssn, String courseId) throws SQLException {
         String query = String.format("select firstName, mi, lastName, title, grade "
                 + "from Student, Enrollment, Course where Student.ssn = Enrollment.ssn "
@@ -50,17 +43,6 @@ public class FindGrade implements Closeable {
             System.out.println(result);
         } catch (ClassNotFoundException | IOException | SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void close() {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

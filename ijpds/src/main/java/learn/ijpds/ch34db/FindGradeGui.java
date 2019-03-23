@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 
 public class FindGradeGui extends Application {
-    private FindGrade findGrade;
+    private GradeReader findGrade;
     private final TextField tfSSN = new TextField();
     private final TextField tfCourseId = new TextField();
     private final Label lblStatus = new Label();
