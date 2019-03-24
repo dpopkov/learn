@@ -19,7 +19,7 @@ public class FindGradeGui extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        findGrade = new FindGrade();
+        findGrade = new FindGradeWithPreparedStmt();
         Button btShowGrade = new Button("Show Grade");
         HBox hBox = new HBox(5);
         hBox.getChildren().addAll(new Label("SSN"), tfSSN, new Label("Course ID"), tfCourseId, btShowGrade);
