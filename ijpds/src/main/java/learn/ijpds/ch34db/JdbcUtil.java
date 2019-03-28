@@ -14,7 +14,7 @@ public class JdbcUtil {
         return connectToDb("ijpds");
     }
 
-    static Connection connectToDb(String dbName) throws IOException, SQLException {
+    public static Connection connectToDb(String dbName) throws IOException, SQLException {
         Properties props = new Properties();
         props.load(SimpleJdbc.class.getResourceAsStream("/db.properties"));
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName,
@@ -23,7 +23,7 @@ public class JdbcUtil {
         return connection;
     }
 
-    static void loadDriver() throws ClassNotFoundException {
+    public static void loadDriver() throws ClassNotFoundException {
         final String mySqlDriver = "com.mysql.jdbc.Driver";
         Class.forName(mySqlDriver);
     }
