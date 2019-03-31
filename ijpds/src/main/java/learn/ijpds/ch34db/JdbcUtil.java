@@ -7,11 +7,13 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class JdbcUtil {
+    private static final String DEFAULT_DB_NAME = "ijpds";
+
     private JdbcUtil() {
     }
 
     static Connection connectToMysqlDb() throws IOException, SQLException {
-        return connectToMysqlDb("ijpds");
+        return connectToMysqlDb(DEFAULT_DB_NAME);
     }
 
     public static Connection connectToMysqlDb(String dbName) throws IOException, SQLException {
