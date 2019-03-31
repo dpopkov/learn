@@ -10,11 +10,11 @@ public class JdbcUtil {
     private JdbcUtil() {
     }
 
-    static Connection connectToDb() throws IOException, SQLException {
-        return connectToDb("ijpds");
+    static Connection connectToMysqlDb() throws IOException, SQLException {
+        return connectToMysqlDb("ijpds");
     }
 
-    public static Connection connectToDb(String dbName) throws IOException, SQLException {
+    public static Connection connectToMysqlDb(String dbName) throws IOException, SQLException {
         Properties props = new Properties();
         props.load(SimpleJdbc.class.getResourceAsStream("/db.properties"));
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName,
@@ -23,7 +23,7 @@ public class JdbcUtil {
         return connection;
     }
 
-    public static void loadDriver() throws ClassNotFoundException {
+    public static void loadMysqlDriver() throws ClassNotFoundException {
         final String mySqlDriver = "com.mysql.jdbc.Driver";
         Class.forName(mySqlDriver);
     }

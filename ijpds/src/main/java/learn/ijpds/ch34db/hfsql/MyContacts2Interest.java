@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class MyContacts2Interest {
     public void fill() throws IOException, SQLException {
-        try (Connection connection = JdbcUtil.connectToDb(Database.NAME)) {
+        try (Connection connection = JdbcUtil.connectToMysqlDb(Database.NAME)) {
             PreparedStatement find = connection.prepareStatement(
                     "select int_id from interest where interest = ?"
             );

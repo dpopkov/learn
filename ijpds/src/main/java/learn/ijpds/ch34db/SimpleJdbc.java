@@ -5,8 +5,8 @@ import java.sql.*;
 
 public class SimpleJdbc {
     public static void main(String[] args) throws ClassNotFoundException, IOException, SQLException {
-        JdbcUtil.loadDriver();
-        Connection connection = JdbcUtil.connectToDb();
+        JdbcUtil.loadMysqlDriver();
+        Connection connection = JdbcUtil.connectToMysqlDb();
         Statement statement = connection.createStatement();
         String sql = "select firstName, mi, lastName from Student where lastName = 'Smith'";
         ResultSet resultSet = statement.executeQuery(sql);

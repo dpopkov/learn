@@ -13,8 +13,8 @@ import java.sql.Statement;
  */
 public class MyContacts2 {
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
-        JdbcUtil.loadDriver();
-        try (Connection connection = JdbcUtil.connectToDb(Database.NAME)) {
+        JdbcUtil.loadMysqlDriver();
+        try (Connection connection = JdbcUtil.connectToMysqlDb(Database.NAME)) {
             Statement statement = connection.createStatement();
             String sql = "select contact_id, last_name, first_name from my_contacts2";
             ResultSet rs = statement.executeQuery(sql);

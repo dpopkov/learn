@@ -13,8 +13,8 @@ public abstract class FindGradeAbstract implements GradeReader, Closeable {
     }
 
     private void initializeConnection() throws ClassNotFoundException, IOException, SQLException {
-        JdbcUtil.loadDriver();
-        connection = JdbcUtil.connectToDb();
+        JdbcUtil.loadMysqlDriver();
+        connection = JdbcUtil.connectToMysqlDb("ijpds");
     }
 
     protected Connection getConnection() {
