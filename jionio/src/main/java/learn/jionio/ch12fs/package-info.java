@@ -27,5 +27,8 @@
  * Move - Listing 12-38. Moving a Source Path to a Target Path<br>
  * FTWDemo - Listing 12-44. Visiting a File Tree and Reporting Last Modified Times and Sizes<br>
  * Copy - Listing 12-45. Copying a File Tree<br>
+ * DeleteFileTree - Listing 12-46. Deleting a File Tree<br>
+ * MoveFileTree - Listing 12-47. Moving a File Tree<br>
+ * ListByExtensionDemo - Listing 12-48. Streaming and Outputting the Paths of All Files That Match a File Extension<br>
  */
 package learn.jionio.ch12fs;
