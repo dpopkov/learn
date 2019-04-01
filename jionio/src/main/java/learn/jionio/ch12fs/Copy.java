@@ -18,19 +18,25 @@ public class Copy {
             return;
         }
         if (!Files.isDirectory(source)) {
-            if (Files.isDirectory(target)) {
-                target = target.resolve(source.getFileName());
-            }
-            Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
-            return;
-        }
-        if (Files.exists(target) && !Files.isDirectory(target)) {
+            copyFile(source, target);
+        } else if (Files.exists(target) && !Files.isDirectory(target)) {
             System.err.printf("target %s is not a directory%n", target);
-            return;
+        } else {
+            copyDirTree(source, target);
         }
+    }
+
+    private static void copyDirTree(Path source, Path target) throws IOException {
         var options = EnumSet.of(FileVisitOption.FOLLOW_LINKS);
         var copier = new CopyVisitor(source, target);
         Files.walkFileTree(source, options, Integer.MAX_VALUE, copier);
+    }
+
+    private static void copyFile(Path source, Path target) throws IOException {
+        if (Files.isDirectory(target)) {
+            target = target.resolve(source.getFileName());
+        }
+        Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
     }
 
     private static class CopyVisitor extends SimpleFileVisitor<Path> {
