@@ -20,3 +20,9 @@ pj4w - Professional Java for Web Applications
 ptddjp - Practical Test-Driven Development for Java Programmers (Course)  
 threads3e - Java Threads, Third Edition  
 tij - Thinking in Java  
+
+todo:  
+jcip - Java Concurrency in Practice  
+pj4wd - Pro Java for Web Developers  
+sia - Spring in Action  
+hia - Hibernate in Action  
