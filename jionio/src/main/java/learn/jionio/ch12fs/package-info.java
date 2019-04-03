@@ -30,5 +30,11 @@
  * DeleteFileTree - Listing 12-46. Deleting a File Tree<br>
  * MoveFileTree - Listing 12-47. Moving a File Tree<br>
  * ListByExtensionDemo - Listing 12-48. Streaming and Outputting the Paths of All Files That Match a File Extension<br>
+ *
+ * <h4>Matching Paths</h4>
+ * PathMatcherDemo - Listing 12-50. Demonstrating Path-Matching<br>
+ *
+ * <h2>Watching Directories</h2>
+ *
  */
 package learn.jionio.ch12fs;
