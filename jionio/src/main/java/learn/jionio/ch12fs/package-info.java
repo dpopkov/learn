@@ -35,6 +35,6 @@
  * PathMatcherDemo - Listing 12-50. Demonstrating Path-Matching<br>
  *
  * <h2>Watching Directories</h2>
- *
+ * WatchServiceDemo - Listing 12-51. Watching a Directory for Creations, Deletions, and Modifications<br>
  */
 package learn.jionio.ch12fs;
