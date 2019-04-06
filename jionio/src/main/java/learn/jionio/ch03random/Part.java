@@ -1,6 +1,12 @@
 package learn.jionio.ch03random;
 
 public class Part {
+    public static final int NUMBER_LEN = 20;
+    public static final int DESC_LEN = 30;
+    public static final int QTY_LEN = 4;
+    public static final int COST_LEN = 4;
+    public static final int RECORD_LEN = 2 * NUMBER_LEN + 2 * DESC_LEN + QTY_LEN + COST_LEN;
+
     private String number;
     private String description;
     private int qty;
