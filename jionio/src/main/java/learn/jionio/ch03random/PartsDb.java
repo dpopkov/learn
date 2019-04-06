@@ -7,10 +7,10 @@ import java.io.RandomAccessFile;
 /**
  * Implementing the Parts Flat File Database.
  */
-public class PartsDb {
+public class PartsDb implements AutoCloseable {
     private RandomAccessFile file;
-    private PartWriter writer = new PartWriter();
-    private PartReader reader = new PartReader();
+    private final PartWriter writer = new PartWriter();
+    private final PartReader reader = new PartReader();
 
     public PartsDb(String path) throws FileNotFoundException {
         file = new RandomAccessFile(path, "rw");
@@ -33,6 +33,7 @@ public class PartsDb {
         writer.write(file, part);
     }
 
+    @Override
     public void close() {
         try {
             file.close();

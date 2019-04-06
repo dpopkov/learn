@@ -7,10 +7,10 @@ public class Part {
     public static final int COST_LEN = 4;
     public static final int RECORD_LEN = 2 * NUMBER_LEN + 2 * DESC_LEN + QTY_LEN + COST_LEN;
 
-    private String number;
-    private String description;
-    private int qty;
-    private int cost;
+    private final String number;
+    private final String description;
+    private final int qty;
+    private final int cost;
 
     public Part(String number, String description, int qty, int cost) {
         this.number = number;
@@ -23,31 +23,19 @@ public class Part {
         return number;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public int getQty() {
         return qty;
     }
 
-    public void setQty(int qty) {
-        this.qty = qty;
-    }
-
     public int getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
-        this.cost = cost;
+    public String format(String fmt) {
+        return String.format(fmt, number, description, qty, cost);
     }
 }
