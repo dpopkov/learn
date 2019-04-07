@@ -4,6 +4,6 @@
  *      then blasts it onto the console in one call to write().<br>
  * 2-3. NullOutputStream mimics the behavior of /dev/null on Unix operating systems.
  *      Data written into a null output stream is lost.<br>
- * 2-4. JStreamedTextArea component
+ * 2-4. JStreamedTextArea component that is connected to an output stream.<br>
  */
 package learn.javaio2e.ch02out;
