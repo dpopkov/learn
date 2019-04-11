@@ -16,9 +16,6 @@ import java.util.EnumMap;
  * -h   hex dump<br>
  */
 public class FileDumper {
-    enum Mode {
-        ASC, DEC, HEX
-    }
 
     public static void main(String[] args) {
         if (args.length < 1) {
@@ -26,13 +23,13 @@ public class FileDumper {
             return;
         }
         int firstArg = 0;
-        Mode mode = Mode.ASC;
+        DumpMode mode = DumpMode.ASC;
         if (args[0].startsWith("-")) {
             firstArg = 1;
             if (args[0].equals("-h")) {
-                mode = Mode.HEX;
+                mode = DumpMode.HEX;
             } else if (args[0].equals("-d")) {
-                mode = Mode.DEC;
+                mode = DumpMode.DEC;
             }
         }
         FileDumper dumper = new FileDumper(mode);
@@ -54,20 +51,20 @@ public class FileDumper {
         void accept(Path path, PrintStream printStream) throws IOException;
     }
 
-    private final EnumMap<Mode, PathStreamConsumer> dumpActions = new EnumMap<>(Mode.class);
+    private final EnumMap<DumpMode, PathStreamConsumer> dumpActions = new EnumMap<>(DumpMode.class);
     {
-        dumpActions.put(Mode.ASC, this::dumpAscii);
-        dumpActions.put(Mode.DEC, this::dumpDecimal);
-        dumpActions.put(Mode.HEX, this::dumpHex);
+        dumpActions.put(DumpMode.ASC, this::dumpAscii);
+        dumpActions.put(DumpMode.DEC, this::dumpDecimal);
+        dumpActions.put(DumpMode.HEX, this::dumpHex);
     }
 
-    private Mode mode;
+    private DumpMode mode;
 
     public FileDumper() {
-        this(Mode.ASC);
+        this(DumpMode.ASC);
     }
 
-    public FileDumper(Mode mode) {
+    public FileDumper(DumpMode mode) {
         this.mode = mode;
     }
 
