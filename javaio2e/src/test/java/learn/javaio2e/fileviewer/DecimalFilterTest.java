@@ -12,12 +12,15 @@ public class DecimalFilterTest {
 
     @Test
     public void testFill() throws IOException {
-        ByteArrayInputStream in = new ByteArrayInputStream("a".getBytes());
-        byte[] expected = "097 ".getBytes();
+        ByteArrayInputStream in = new ByteArrayInputStream("aJ".getBytes());
+        byte[] expected = "097 074 ".getBytes();
         InputStream df = new DecimalFilter(in);
-        assertEquals(expected[0], df.read());
-        assertEquals(expected[1], df.read());
-        assertEquals(expected[2], df.read());
-        assertEquals(expected[3], df.read());
+        assertBytes(expected, df);
+    }
+
+    private void assertBytes(byte[] expected, InputStream in) throws IOException {
+        for (byte b : expected) {
+            assertEquals(b, in.read());
+        }
     }
 }

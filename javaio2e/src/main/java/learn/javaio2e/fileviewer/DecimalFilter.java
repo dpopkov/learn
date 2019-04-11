@@ -10,12 +10,11 @@ public class DecimalFilter extends DumpFilter {
     private static final int RATIO = 4;
 
     protected DecimalFilter(InputStream in) {
-        super(in);
+        super(in, RATIO);
     }
 
     @Override
     protected void fill() throws IOException {
-        buf = new int[RATIO];
         int datum = in.read();
         numRead++;
         if (datum == -1) {

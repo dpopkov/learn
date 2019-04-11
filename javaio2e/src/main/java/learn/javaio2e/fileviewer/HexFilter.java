@@ -9,21 +9,17 @@ public class HexFilter extends DumpFilter {
     private static final int RATIO = 3;
 
     protected HexFilter(InputStream in) {
-        super(in);
+        super(in, RATIO);
     }
 
     @Override
     protected void fill() throws IOException {
-        buf = new int[RATIO];
         int datum = in.read();
         numRead++;
         if (datum == -1) {
             throw new EOFException();
         }
-        String hex = Integer.toHexString(datum) + " ";
-        if (datum < 16) {
-            hex = '0' + hex;
-        }
+        String hex = String.format("%02X", datum);
         numRead = fillBuffer(hex, BREAK_AFTER);
     }
 }

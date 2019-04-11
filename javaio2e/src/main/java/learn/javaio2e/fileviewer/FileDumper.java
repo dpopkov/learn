@@ -26,11 +26,7 @@ public class FileDumper {
         DumpMode mode = DumpMode.ASC;
         if (args[0].startsWith("-")) {
             firstArg = 1;
-            if (args[0].equals("-h")) {
-                mode = DumpMode.HEX;
-            } else if (args[0].equals("-d")) {
-                mode = DumpMode.DEC;
-            }
+            mode = DumpMode.from(args[0]);
         }
         FileDumper dumper = new FileDumper(mode);
         for (int i = firstArg; i < args.length; i++) {

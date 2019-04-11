@@ -14,13 +14,20 @@ import java.io.InputStream;
  */
 public abstract class DumpFilter extends FilterInputStream {
     /** Array of unsigned bytes. */
-    protected int[] buf = new int[0];
-    protected int index = 0;
+    protected int[] buf;
+    protected int index;
     /** Number of bytes read in the stream. */
     protected int numRead = 0;
 
-    protected DumpFilter(InputStream in) {
+    /**
+     * This constructor must be used in extending classes.
+     * @param in filtered input stream
+     * @param ratio number of bytes of output per byte of input
+     */
+    protected DumpFilter(InputStream in, int ratio) {
         super(in);
+        buf = new int[ratio];
+        index = buf.length; // first read() must invoke fill()
     }
 
     @Override

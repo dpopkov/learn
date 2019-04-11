@@ -12,11 +12,16 @@ public class HexFilterTest {
 
     @Test
     public void testFill() throws IOException {
-        ByteArrayInputStream in = new ByteArrayInputStream("a".getBytes());
-        byte[] expected = "61 ".getBytes();
+        ByteArrayInputStream in = new ByteArrayInputStream("aJ".getBytes());
+        byte[] expected = "61 4A ".getBytes();
         InputStream hf = new HexFilter(in);
-        assertEquals(expected[0], hf.read());
-        assertEquals(expected[1], hf.read());
-        assertEquals(expected[2], hf.read());
+        assertBytes(expected, hf);
+    }
+
+    private void assertBytes(byte[] expected, InputStream in) throws IOException {
+        for (byte b : expected) {
+            int n = in.read();
+            assertEquals(b, n);
+        }
     }
 }
