@@ -1,5 +1,6 @@
 package learn.javaio2e.fileviewer;
 
+import learn.javaio2e.fileviewer.filters.HexFilter;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;

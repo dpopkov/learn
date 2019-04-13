@@ -1,6 +1,8 @@
 package learn.javaio2e.fileviewer;
 
 import learn.javaio2e.ch03in.StreamCopier;
+import learn.javaio2e.fileviewer.filters.DecimalFilter;
+import learn.javaio2e.fileviewer.filters.HexFilter;
 
 import java.io.*;
 import java.nio.file.Files;

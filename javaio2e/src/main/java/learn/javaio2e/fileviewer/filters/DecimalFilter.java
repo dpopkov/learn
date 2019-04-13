@@ -1,4 +1,4 @@
-package learn.javaio2e.fileviewer;
+package learn.javaio2e.fileviewer.filters;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -9,7 +9,7 @@ public class DecimalFilter extends DumpFilter {
     /** Number of bytes of output per byte of input. */
     private static final int RATIO = 4;
 
-    protected DecimalFilter(InputStream in) {
+    public DecimalFilter(InputStream in) {
         super(in, RATIO);
     }
 

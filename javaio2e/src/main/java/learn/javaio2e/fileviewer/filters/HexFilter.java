@@ -1,4 +1,4 @@
-package learn.javaio2e.fileviewer;
+package learn.javaio2e.fileviewer.filters;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -8,7 +8,7 @@ public class HexFilter extends DumpFilter {
     private static final int BREAK_AFTER = 24;
     private static final int RATIO = 3;
 
-    protected HexFilter(InputStream in) {
+    public HexFilter(InputStream in) {
         super(in, RATIO);
     }
 

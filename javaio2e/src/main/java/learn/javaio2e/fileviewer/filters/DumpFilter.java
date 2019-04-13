@@ -1,4 +1,4 @@
-package learn.javaio2e.fileviewer;
+package learn.javaio2e.fileviewer.filters;
 
 import java.io.EOFException;
 import java.io.FilterInputStream;
