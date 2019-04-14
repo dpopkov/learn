@@ -50,7 +50,7 @@ public abstract class DumpFilter extends FilterInputStream {
     protected abstract void fill() throws IOException;
 
     /**
-     * Fills buffer with bytes received from byte of the current byte string representation.
+     * Fills buffer with bytes received from the current byte's string representation.
      * @param byteStr string representation of the current byte
      * @param breakAfter number of bytes after which new line is inserted
      * @return updated number of bytes read in the stream if line break is inserted

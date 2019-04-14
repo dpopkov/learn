@@ -1,22 +1,22 @@
 package learn.javaio2e.fileviewer;
 
-enum DumpMode {
-    ASC, DEC, HEX;
+import java.util.Map;
 
-    public static DumpMode from(String param) {
-        DumpMode mode;
-        switch (param) {
-            case "-h":
-                mode = DumpMode.HEX;
-                break;
-            case "-d":
-                mode = DumpMode.DEC;
-                break;
-            case "-a":
-            default:
-                mode = DumpMode.ASC;
-                break;
-        }
-        return mode;
+enum DumpMode {
+    ASC, DEC, HEX, SHORT, INT, LONG, FLOAT, DOUBLE;
+
+    private final static Map<String, DumpMode> map = Map.of(
+            "a", ASC,
+            "d", DEC,
+            "h", HEX,
+            "s", SHORT,
+            "i", INT,
+            "l", LONG,
+            "f", FLOAT,
+            "x", DOUBLE
+    );
+
+    public static DumpMode from(String shortName) {
+        return map.get(shortName);
     }
 }

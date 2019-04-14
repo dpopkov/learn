@@ -1,6 +1,5 @@
-package learn.javaio2e.fileviewer;
+package learn.javaio2e.fileviewer.filters;
 
-import learn.javaio2e.fileviewer.filters.DecimalFilter;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
