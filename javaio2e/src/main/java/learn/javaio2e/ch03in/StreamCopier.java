@@ -9,10 +9,17 @@ import java.io.OutputStream;
  */
 public class StreamCopier {
     public static void copy(InputStream in, OutputStream out) throws IOException {
+        copy(in, out, false);
+    }
+
+    public static void copy(InputStream in, OutputStream out, boolean closeInput) throws IOException {
         byte[] buffer = new byte[1024];
         int bytesRead;
         while ((bytesRead = in.read(buffer)) != -1) {
             out.write(buffer, 0, bytesRead);
+        }
+        if (closeInput) {
+            in.close();
         }
     }
 
