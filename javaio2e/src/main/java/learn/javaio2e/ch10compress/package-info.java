@@ -7,6 +7,8 @@
  * 10-6. GUnzipper - reads a list of files from the command line and gunzips each one.<br>
  * 10-7. zip.ZipLister - lists the entries in a zip file specified on the command line.<br>
  * 10-8. zip.Unzipper - simple unzip program that unpacks a zip archive named on the command line.<br>
- * 10-9. FancyZipLister - prints information about the files in a zip archive.
+ * 10-9. zip.FancyZipLister - prints information about the files in a zip archive.<br>
+ * 10-10. zip.Zipper - uses a zip output stream chained to a file output stream to create a single zip archive.<br>
+ * 10-11. zip.Unzipper2 - An alternative unzipper that uses a ZipInputStream instead of a ZipFile.<br>
  */
 package learn.javaio2e.ch10compress;
