@@ -50,6 +50,7 @@ public class DigestDecryptor {
         }
     }
 
+    @SuppressWarnings("Duplicates")
     private static Cipher prepareCipher(byte[] desKeyData) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException {
         DESKeySpec desKeySpec = new DESKeySpec(desKeyData);
         SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
