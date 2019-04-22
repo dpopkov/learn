@@ -5,5 +5,7 @@
  * 12-3. FileDigest - reads data from a specified url and copies it into a file on the local system.<br>
  * 12-4. FileEncryptor - reads a filename and a password and encrypts the file with DES.<br>
  * 12-5. FileDecryptor - reads a filename and a password and decrypts the file.<br>
+ * 12-6. DigestEncryptor - combines encryption with a digest. Uses CipherInputStream to DES-encrypt a file.<br>
+ * 12-7. DigestDecryptor - uses CipherOutputStream to decrypt files encrypted by the DigestEncryptor.<br>
  */
 package learn.javaio2e.ch12crypto;
