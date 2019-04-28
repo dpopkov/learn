@@ -1,5 +1,6 @@
 package learn.dsai.helpers.combinations;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Combination {
@@ -8,38 +9,35 @@ public class Combination {
      * @param data  temporary array to store current combination
      * @param start staring index in arr
      * @param end   ending index in arr
-     * @param index current index in data
-     * @param r     size of a combination to be printed
+     * @param dataIdx current index in data
      */
     static void combinationUtil(int[] arr, int[] data, int start,
-                                int end, int index, int r) {
+                                int end, int dataIdx) {
         // If current combination is ready to be printed, print it
-        if (index == r) {
-            for (int j = 0; j < r; j++) {
-                System.out.print(data[j] + " ");
-            }
-            System.out.println();
+        if (dataIdx == data.length) {
+            System.out.println(Arrays.toString(data));
             return;
         }
-
         // replace index with all possible elements. The condition
-        // "end-i+1 >= r-index" makes sure that including one element
+        // "end - arrIdx + 1 >= data.length - dataIdx" makes sure that including one element
         // at index will make a combination with remaining elements
         // at remaining positions
-        for (int i = start; i <= end && end - i + 1 >= r - index; i++) {
-            data[index] = arr[i];
-            combinationUtil(arr, data, i + 1, end, index + 1, r);
+        for (int arrIdx = start;
+             arrIdx <= end && end - arrIdx + 1 >= data.length - dataIdx;
+             arrIdx++) {
+            data[dataIdx] = arr[arrIdx];
+            combinationUtil(arr, data, arrIdx + 1, end, dataIdx + 1);
         }
     }
 
     /**
-     * The main function that prints all combinations of size r in arr of size n.
+     * The main function that prints all combinations of size r in arr.
      */
-    static void printCombination(int[] arr, int n, int r) {
+    static void printCombination(int[] arr, int r) {
         // A temporary array to store all combination one by one
         int[] data = new int[r];
         // Print all combinations
-        combinationUtil(arr, data, 0, n - 1, 0, r);
+        combinationUtil(arr, data, 0, arr.length - 1, 0);
     }
 
     public static void main(String[] args) {
@@ -47,6 +45,6 @@ public class Combination {
         System.out.print("Enter r: ");
         int r = in.nextInt();
         int[] arr = {1, 2, 3, 4};
-        printCombination(arr, arr.length, r);
+        printCombination(arr, r);
     }
 }

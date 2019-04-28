@@ -5,7 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class RecursiveCombinationGenerator {
+public class RecursiveCombinationGenerator implements CombinationGenerator {
+    @Override
     public List<int[]> generate(int n, int r) {
         List<int[]> combinations = new ArrayList<>();
         helper(combinations, new int[r], 0, n - 1, 0);
