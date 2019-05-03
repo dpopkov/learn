@@ -24,7 +24,7 @@ public class SocketHttpGet {
         String host = url.getHost();
         int port = url.getPort();
         String file = url.getFile();
-        file = (file == null) ? "/" : file;
+        file = (file == null || file.isEmpty()) ? "/" : file;
         port = (port <= 0) ? 80 : port;
         Socket socket = null;
         try {

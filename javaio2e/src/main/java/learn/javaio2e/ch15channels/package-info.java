@@ -4,5 +4,6 @@
  * 15-3. LockingCopier - demonstrates locking a file before copying data into it.<br>
  * 15-4. NioUnzipper - shows how to decompress a gzipped file by first decompressing it with a GZipInputStream,
  *                      then converting this input stream info a ReadableByteChannel.<br>
+ * 15-5. HttpGrab - demonstrates usage of socket channel.<br>
  */
 package learn.javaio2e.ch15channels;
