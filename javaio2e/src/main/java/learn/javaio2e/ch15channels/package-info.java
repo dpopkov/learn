@@ -7,5 +7,7 @@
  * 15-5. HttpGrab - demonstrates usage of socket channel.<br>
  * 15-6. NewIoHelloServer - demonstrates usage of ServerSocketChannel using blocking mode.<br>
  * 15-7. UdpTimeClient - sends and receives some data over UDP.<br>
+ * 15-8. UdpTimeServer - time server using UDP.<br>
+ * 15-9. ConnectedTimeClient - demonstrates the UDP time client that first connects to the server.<br>
  */
 package learn.javaio2e.ch15channels;
