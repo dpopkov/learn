@@ -6,5 +6,6 @@
  *                      then converting this input stream info a ReadableByteChannel.<br>
  * 15-5. HttpGrab - demonstrates usage of socket channel.<br>
  * 15-6. NewIoHelloServer - demonstrates usage of ServerSocketChannel using blocking mode.<br>
+ * 15-7. UdpTimeClient - sends and receives some data over UDP.<br>
  */
 package learn.javaio2e.ch15channels;

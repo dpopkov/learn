@@ -32,9 +32,9 @@ public class NewIoHelloServer {
         int count = 0;
         while (count < CONNECTION_LIMIT) {
             try {
+                count++;
                 // 4. Accept an incoming connection to get a socket channel
                 SocketChannel clientChannel = serverChannel.accept();
-                count++;
                 System.out.println("connection count: " + count);
                 String response = makeResponse(clientChannel, serverInfo);
                 byte[] data = response.getBytes(StandardCharsets.UTF_8);
