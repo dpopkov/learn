@@ -35,6 +35,10 @@ public class JStreamedTextArea extends JTextArea {
         return theOutput;
     }
 
+    public void reset() {
+        super.setText("");
+    }
+
     private class TextAreaOutputStream extends OutputStream {
         private boolean closed = false;
 
