@@ -6,5 +6,6 @@
  * 21-5. PercentTable - prints a table of percents between 0% and 100%.<br>
  * 21-6. PrettierTable - using a FieldPosition object to figure out how many spaces
  *                      to add to the front of the string.<br>
+ * 21-8. RootFinder - demonstrates parsing with NumberFormat.<br>
  */
 package learn.javaio2e.ch21format;
