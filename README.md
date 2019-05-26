@@ -6,6 +6,7 @@ core1 - Core Java vol1
 core2 - Core Java vol2  
 csia - Computer Science. An Interdisciplinary Approach  
 dsai - Data Structures and Algorithms in Java, 2nd edition  
+dsajg6e - Data Structures and Algorithms in Java, 6th edition, Goodrich  
 esolid - Encapsulation and SOLID  
 fsa4jd - Full Stack AngularJS for Java Developers  
 fpfj - Functional Programming For Java  
