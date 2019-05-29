@@ -14,7 +14,7 @@ public class CreditCard {
     /** Account identifier (e.g., "5391 0375 9387 5309") */
     private final String account;
     /** Credit limit measured in dollars. */
-    private final int limit;
+    private int limit;
     protected double balance;
 
     public CreditCard(String customer, String bank, String account, int limit, double balance) {
@@ -37,7 +37,11 @@ public class CreditCard {
         return true;
     }
 
+
     public void makePayment(double amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Payment amount can not be negative: " + amount);
+        }
         balance -= amount;
     }
 
@@ -61,6 +65,10 @@ public class CreditCard {
         return balance;
     }
 
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
     public static void printSummary(CreditCard card) {
         System.out.println("Customer = " + card.customer);
         System.out.println("Bank = " + card.bank);
@@ -79,17 +87,26 @@ public class CreditCard {
                 "5391 0375 9387 5309", 2500, 300);
 
         for (int val = 1; val <= 16; val++) {
-            wallet[0].charge(3 * val);
-            wallet[1].charge(2 * val);
-            wallet[2].charge(val);
+            tryToCharge(wallet[0],4 * val * 10);
+            tryToCharge(wallet[1],2 * val);
+            tryToCharge(wallet[2], val);
         }
 
         for (CreditCard card : wallet) {
+            System.out.println();
             CreditCard.printSummary(card);
             while (card.getBalance() > 200.0) {
                 card.makePayment(200);
                 System.out.println("card.getBalance() = " + card.getBalance());
             }
+        }
+    }
+
+    private static void tryToCharge(CreditCard card, int amount) {
+        boolean rst = card.charge(amount);
+        if (!rst) {
+            System.out.println("Attempt to charge failed on card:");
+            CreditCard.printSummary(card);
         }
     }
 }
