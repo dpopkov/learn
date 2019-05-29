@@ -18,6 +18,11 @@ public class Input {
         return instance.getScanner().nextLong();
     }
 
+    public static int nextInt(String prompt) {
+        System.out.print(prompt);
+        return instance.getScanner().nextInt();
+    }
+
     public static String next(String prompt) {
         System.out.print(prompt);
         return instance.getScanner().next();
