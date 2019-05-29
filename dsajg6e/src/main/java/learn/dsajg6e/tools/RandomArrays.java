@@ -21,4 +21,17 @@ public class RandomArrays {
         }
         return a;
     }
+
+    /**
+     * Creates an array of random float values.
+     * @param size size of the array
+     * @return array of random numbers
+     */
+    public static float[] makeFloat(int size) {
+        float[] a = new float[size];
+        for (int i = 0; i < a.length; i++) {
+            a[i] = random.nextFloat();
+        }
+        return a;
+    }
 }
