@@ -1,7 +1,7 @@
 package learn.dsajg6e.ch01primer;
 
 /**
- * CF 1.5
+ * CF 1.5 - 1.6
  * Models a simplified version of traditional credit card.
  * It stores information about the customer, issuing bank, account identifier, credit limit,
  * and current balance.
@@ -69,12 +69,22 @@ public class CreditCard {
         this.limit = limit;
     }
 
-    public static void printSummary(CreditCard card) {
-        System.out.println("Customer = " + card.customer);
-        System.out.println("Bank = " + card.bank);
-        System.out.println("Account = " + card.account);
-        System.out.println("Balance = " + card.balance);
-        System.out.println("Limit = " + card.limit);
+    /* Made non-static for C-1.24 */
+    @SuppressWarnings("unused")
+    public void printSummary() {
+        System.out.println(this.toString());
+    }
+
+    /* Added for C-1.25 */
+    @Override
+    public String toString() {
+        final String nl = System.lineSeparator();
+        return "CreditCard:" + nl +
+                "Customer = " + customer + nl +
+                "Bank = " + bank + nl +
+                "Account = " + account + nl +
+                "Balance = " + balance + nl +
+                "Limit = " + limit + nl;
     }
 
     public static void main(String[] args) {
@@ -94,7 +104,7 @@ public class CreditCard {
 
         for (CreditCard card : wallet) {
             System.out.println();
-            CreditCard.printSummary(card);
+            System.out.print(card);
             while (card.getBalance() > 200.0) {
                 card.makePayment(200);
                 System.out.println("card.getBalance() = " + card.getBalance());
@@ -106,7 +116,7 @@ public class CreditCard {
         boolean rst = card.charge(amount);
         if (!rst) {
             System.out.println("Attempt to charge failed on card:");
-            CreditCard.printSummary(card);
+            System.out.print(card);
         }
     }
 }
