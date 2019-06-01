@@ -3,7 +3,7 @@ package learn.dsajg6e.ch02oop;
 /**
  * CF 2.5
  */
-public class FibonacciProgression extends Progression {
+public class FibonacciProgression extends AbstractProgression {
     private long previous;
 
     public FibonacciProgression() {

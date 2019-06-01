@@ -3,7 +3,7 @@ package learn.dsajg6e.ch02oop;
 /**
  * CF 2.4
  */
-public class GeometricProgression extends Progression {
+public class GeometricProgression extends AbstractProgression {
     /** Fixed multiplier. */
     protected final long base;
 

@@ -93,3 +93,8 @@ ADT реализуется конкретной структурой данны�
 * Factory Method (Sections 8.3.1 and 11.2.1)
 * Comparator (Sections 9.2.2, 10.3, and Chapter 12)
 * Locator (Section 9.5.1)
+
+### Template method
+
+An abstract base class provides a concrete behavior that relies upon calls to other abstract behavior
+as in learn.dsajg6e.ch02oop.AbstractProgression::advance method.

@@ -3,7 +3,7 @@ package learn.dsajg6e.ch02oop;
 /**
  * CF 2.3
  */
-public class ArithmeticProgression extends Progression {
+public class ArithmeticProgression extends AbstractProgression {
     protected final long increment;
 
     public ArithmeticProgression() {

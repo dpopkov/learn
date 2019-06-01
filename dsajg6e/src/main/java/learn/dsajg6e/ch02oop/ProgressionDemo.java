@@ -15,7 +15,7 @@ public class ProgressionDemo {
         print("Fibonacci progression with values 4 and 6:", new FibonacciProgression(4, 6));
     }
 
-    private static void print(String title, Progression progression) {
+    private static void print(String title, AbstractProgression progression) {
         System.out.println(title);
         progression.print(PROGRESSION_LENGTH);
     }
