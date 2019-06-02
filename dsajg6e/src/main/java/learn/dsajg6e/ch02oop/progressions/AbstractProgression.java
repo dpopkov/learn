@@ -1,4 +1,4 @@
-package learn.dsajg6e.ch02oop;
+package learn.dsajg6e.ch02oop.progressions;
 
 /**
  * CF 2.12

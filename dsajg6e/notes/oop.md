@@ -97,4 +97,4 @@ ADT реализуется конкретной структурой данны�
 ### Template method
 
 An abstract base class provides a concrete behavior that relies upon calls to other abstract behavior
-as in learn.dsajg6e.ch02oop.AbstractProgression::advance method.
+as in learn.dsajg6e.ch02oop.progressions.AbstractProgression::advance method.

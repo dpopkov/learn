@@ -1,4 +1,4 @@
-package learn.dsajg6e.ch02oop;
+package learn.dsajg6e.ch02oop.progressions;
 
 /**
  * CF 2.2
@@ -32,6 +32,7 @@ public class Progression {
     }
 
     /** Prints the next n values of the progression. */
+    @SuppressWarnings("unused")
     public void print(int n) {
         System.out.print(nextValue());
         for (int j = 1; j < n; j++) {
