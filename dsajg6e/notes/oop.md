@@ -98,3 +98,10 @@ ADT реализуется конкретной структурой данны�
 
 An abstract base class provides a concrete behavior that relies upon calls to other abstract behavior
 as in learn.dsajg6e.ch02oop.progressions.AbstractProgression::advance method.
+
+### Composition design pattern
+
+If we wish to treat a pair of related values as a single object, for example, so that the pair can be
+returned from a method, then a solution is to define a new class whose instances store both values
+as in learn.dsajg6e.ch02oop.generics.ObjectPair.
+ 
