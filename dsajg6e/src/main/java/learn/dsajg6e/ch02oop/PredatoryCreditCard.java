@@ -7,7 +7,7 @@ import learn.dsajg6e.ch01primer.CreditCard;
  */
 @SuppressWarnings("unused")
 public class PredatoryCreditCard extends CreditCard {
-    private static final double ATTEMPTED_OVERCHARGE_PENALTY = 5.0;
+    static final double ATTEMPTED_OVERCHARGE_PENALTY = 5.0;
 
     /** Annual percentage rate. */
     private final double apr;
