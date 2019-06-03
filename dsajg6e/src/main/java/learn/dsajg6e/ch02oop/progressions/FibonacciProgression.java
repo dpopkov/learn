@@ -22,8 +22,7 @@ public class FibonacciProgression extends AbstractProgression {
      */
     @Override
     protected void advance() {
-        long nextCurrent = previous + current;
-        previous = current;
-        current = nextCurrent;
+        current += previous;    // C-2.23: getting rid of temporary variable
+        previous = current - previous;
     }
 }

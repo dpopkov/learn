@@ -8,7 +8,6 @@ import learn.dsajg6e.ch01primer.CreditCard;
  * each additional call to that method in the current month
  * results in an additional $1 surcharge.
  */
-@SuppressWarnings("unused")
 public class C0218PredatoryCreditCard extends CreditCard {
     static final double ATTEMPTED_OVERCHARGE_PENALTY = 5.0;
     static final int CHARGES_PER_MONTH_LIMIT = 10;
