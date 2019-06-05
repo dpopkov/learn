@@ -11,15 +11,17 @@ import java.util.function.Supplier;
  * Simulation of an ecosystem containing two types of creatures,
  * bears and fish. The ecosystem consists of a river, which is modeled as a relatively
  * large array. Each cell of the array should contain an Animal object, which can
- * be a Bear object, a Fish object, or null. In each time step, based on a random
+ * be a Bear object, a Fish object, or null. An animal has a gender and strength.
+ * In each time step, based on a random
  * process, each animal either attempts to move into an adjacent array cell or stay
- * where it is. If two animals of the same type are about to collide in the same
+ * where it is. If two animals of the same type and different genders are about to collide in the same
  * cell, then they stay where they are, but they create a new instance of that type
  * of animal, which is placed in a random empty cell in the array.
+ * If two animals of the same type and gender try to collide, then only the one of larger strength survives.
  * If a bear and a fish collide, however, then the fish dies.
  */
 @SuppressWarnings("Duplicates")
-public class P0231Ecosystem {
+public class P0232EcosystemGender {
     private static final Random random = new Random();
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -37,7 +39,7 @@ public class P0231Ecosystem {
                 System.exit(-1);
             }
         }
-        P0231Ecosystem es = new P0231Ecosystem(side, Bear.make(numBears), Fish.make(numFishes));
+        P0232EcosystemGender es = new P0232EcosystemGender(side, Bear.make(numBears), Fish.make(numFishes));
         es.start();
     }
 
@@ -48,7 +50,7 @@ public class P0231Ecosystem {
     /** Number of animals living in the ecosystem. */
     private int numAnimals;
 
-    public P0231Ecosystem(int side, List<Animal> bears, List<Animal> fishes) {
+    public P0232EcosystemGender(int side, List<Animal> bears, List<Animal> fishes) {
         this.side = side;
         river = new Animal[side * side];
         allocate(fishes);
@@ -76,33 +78,53 @@ public class P0231Ecosystem {
         int x1 = x0;
         int y1 = y0;
         int dir = random.nextInt(4);
+        boolean moving = false;
         switch (dir) {
             case 0:
                 if (x0 > 0) {
                     x1--;
+                    moving = true;
                 }
                 break;
             case 1:
                 if (y0 > 0) {
                     y1--;
+                    moving = true;
                 }
                 break;
             case 2:
                 if (x0 < side - 1) {
                     x1++;
+                    moving = true;
                 }
                 break;
             case 3:
                 if (y0 < side - 1) {
                     y1++;
+                    moving = true;
                 }
                 break;
         }
-        Animal animal = get(x0, y0);
-        if (isFree(x1, y1)) {
-            move(x0, y0, x1, y1, animal);
+        if (moving) {
+            Animal animal = get(x0, y0);
+            if (isFree(x1, y1)) {
+                move(x0, y0, x1, y1, animal);
+            } else {
+                liveOrDie(animal, x0, y0, x1, y1);
+            }
+        }
+    }
+
+    private void breedOrFight(Animal animal, int x0, int y0, Animal other, int x1, int y1) {
+        if (animal.canMateWith(other)) {
+            tryToStartNewLife(animal);
         } else {
-            liveOrDie(animal, x0, y0, x1, y1);
+            if (animal.getStrength() <= other.getStrength()) {
+                endLife(x0, y0);
+            } else {
+                endLife(x1, y1);
+                move(x0, y0, x1, y1, animal);
+            }
         }
     }
 
@@ -110,7 +132,7 @@ public class P0231Ecosystem {
         Animal other = get(x1, y1);
         if (animal instanceof Bear) {
             if (other instanceof Bear) {
-                tryToStartNewLife(Bear::new);
+                breedOrFight(animal, x0, y0, other, x1, y1);
             } else if (other instanceof Fish) {
                 endLife(x1, y1);
                 move(x0, y0, x1, y1, animal);
@@ -119,16 +141,16 @@ public class P0231Ecosystem {
             if (other instanceof Bear) {
                 endLife(x0, y0);
             } else if (other instanceof Fish) {
-                tryToStartNewLife(Fish::new);
+                breedOrFight(animal, x0, y0, other, x1, y1);
             }
         }
     }
 
-    private void tryToStartNewLife(Supplier<Animal> constructor) {
+    private void tryToStartNewLife(Animal parent) {
         if (numAnimals == river.length) {
             System.out.println("Cannot start a new life because the ecosystem is full!");
         } else {
-            Animal animal = constructor.get();
+            Animal animal = parent.make();
             allocate(List.of(animal));
             System.out.printf("A new %s is born!%n", animal.getClass().getSimpleName());
         }
@@ -223,7 +245,32 @@ public class P0231Ecosystem {
         return scanner.nextLine();
     }
 
+    private enum Gender {
+        MALE, FEMALE
+    }
     private static abstract class Animal {
+        private final Gender gender;
+        private final int strength;
+
+        public Animal() {
+            gender = Math.random() > 0.5 ? Gender.MALE : Gender.FEMALE;
+            strength = random.nextInt(10);
+        }
+
+        public boolean canMateWith(Animal other) {
+            return this.getClass() == other.getClass() && this.getGender() != other.getGender();
+        }
+
+        public Gender getGender() {
+            return gender;
+        }
+
+        public int getStrength() {
+            return strength;
+        }
+
+        public abstract Animal make();
+
         public static List<Animal> make(int number, Supplier<Animal> constructor) {
             ArrayList<Animal> list = new ArrayList<>(number);
             for (int i = 0; i < number; i++) {
@@ -236,22 +283,32 @@ public class P0231Ecosystem {
     private static class Bear extends Animal {
         @Override
         public String toString() {
-            return "B";
+            return getGender() == Gender.MALE ? "B" : "b";
         }
 
         public static List<Animal> make(int number) {
             return Animal.make(number, Bear::new);
+        }
+
+        @Override
+        public Animal make() {
+            return new Bear();
         }
     }
 
     private static class Fish extends Animal {
         @Override
         public String toString() {
-            return "~";
+            return getGender() == Gender.MALE ? "~" : ".";
         }
 
         public static List<Animal> make(int number) {
             return Animal.make(number, Fish::new);
+        }
+
+        @Override
+        public Animal make() {
+            return new Fish();
         }
     }
 
