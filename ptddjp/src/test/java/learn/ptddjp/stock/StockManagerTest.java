@@ -9,7 +9,10 @@ public class StockManagerTest {
     public void testCanGetACorrectLocatorCode() {
         String isbn = "0140177396";
         StockManager manager = new StockManager();
-        manager.setService(i -> new Book("0140177396", "Of Mice And Men", "J. Steinbeck"));
+        ExternalIsbnDataService dbService = i -> null;
+        ExternalIsbnDataService webService = i -> new Book("0140177396", "Of Mice And Men", "J. Steinbeck");
+        manager.setDbService(dbService);
+        manager.setWebService(webService);
         String code = manager.getLocatorCode(isbn);
         assertEquals("7396J4", code);
     }
