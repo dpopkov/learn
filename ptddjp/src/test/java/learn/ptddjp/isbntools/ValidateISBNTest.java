@@ -58,7 +58,4 @@ public class ValidateISBNTest {
         ValidateISBN validator = new ValidateISBN();
         validator.checkISBN("helloworld");
     }
-
-    // 978-0135166307
-    // 978-1853260087
 }
