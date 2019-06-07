@@ -8,6 +8,7 @@ import static org.mockito.Mockito.*;
 public class StockManagerTest {
 
     private static final Book OF_MICE_AND_MEN = new Book("0140177396", "Of Mice And Men", "J. Steinbeck");
+    private static final String ISBN = OF_MICE_AND_MEN.getIsbn();
 
     @Test
     public void testCanGetACorrectLocatorCode() {
@@ -22,32 +23,26 @@ public class StockManagerTest {
 
     @Test
     public void databaseIsUsedIfDataIsPresent() {
-        StockManager manager = new StockManager();
-        ExternalIsbnDataService dbService = mock(ExternalIsbnDataService.class);
-        ExternalIsbnDataService webService = mock(ExternalIsbnDataService.class);
-        String isbn = OF_MICE_AND_MEN.getIsbn();
-        when(dbService.lookup(isbn)).thenReturn(OF_MICE_AND_MEN);
-        manager.setDbService(dbService);
-        manager.setWebService(webService);
+        var dbService = mock(ExternalIsbnDataService.class);
+        var webService = mock(ExternalIsbnDataService.class);
+        when(dbService.lookup(ISBN)).thenReturn(OF_MICE_AND_MEN);
+        StockManager manager = new StockManager(dbService, webService);
 
-        manager.getLocatorCode(isbn);
-        verify(dbService).lookup(isbn);
+        manager.getLocatorCode(ISBN);
+        verify(dbService).lookup(ISBN);
         verify(webService, never()).lookup(anyString());
     }
 
     @Test
     public void webServiceIsUsedIfDataIsNotPresentInDatabase() {
-        StockManager manager = new StockManager();
-        ExternalIsbnDataService dbService = mock(ExternalIsbnDataService.class);
-        ExternalIsbnDataService webService = mock(ExternalIsbnDataService.class);
-        String isbn = OF_MICE_AND_MEN.getIsbn();
-        when(dbService.lookup(isbn)).thenReturn(null);
-        when(webService.lookup(isbn)).thenReturn(OF_MICE_AND_MEN);
-        manager.setDbService(dbService);
-        manager.setWebService(webService);
+        var dbService = mock(ExternalIsbnDataService.class);
+        var webService = mock(ExternalIsbnDataService.class);
+        when(dbService.lookup(ISBN)).thenReturn(null);
+        when(webService.lookup(ISBN)).thenReturn(OF_MICE_AND_MEN);
+        StockManager manager = new StockManager(dbService, webService);
 
-        manager.getLocatorCode(isbn);
-        verify(dbService).lookup(isbn);
-        verify(webService).lookup(isbn);
+        manager.getLocatorCode(ISBN);
+        verify(dbService).lookup(ISBN);
+        verify(webService).lookup(ISBN);
     }
 }

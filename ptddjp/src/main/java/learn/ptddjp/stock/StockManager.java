@@ -4,6 +4,13 @@ public class StockManager {
     private ExternalIsbnDataService dbService;
     private ExternalIsbnDataService webService;
 
+    public StockManager() {}
+
+    public StockManager(ExternalIsbnDataService dbService, ExternalIsbnDataService webService) {
+        this.dbService = dbService;
+        this.webService = webService;
+    }
+
     public String getLocatorCode(String isbn) {
         Book book = dbService.lookup(isbn);
         if (book == null) {
