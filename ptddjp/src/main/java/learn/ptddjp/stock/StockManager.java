@@ -1,10 +1,8 @@
 package learn.ptddjp.stock;
 
 public class StockManager {
-    private ExternalIsbnDataService dbService;
-    private ExternalIsbnDataService webService;
-
-    public StockManager() {}
+    private final ExternalIsbnDataService dbService;
+    private final ExternalIsbnDataService webService;
 
     public StockManager(ExternalIsbnDataService dbService, ExternalIsbnDataService webService) {
         this.dbService = dbService;
@@ -20,13 +18,5 @@ public class StockManager {
         char firstAuthor = book.getAuthor().charAt(0);
         int numWords = book.getTitle().split(" ").length;
         return last4isbn + firstAuthor + numWords;
-    }
-
-    public void setWebService(ExternalIsbnDataService webService) {
-        this.webService = webService;
-    }
-
-    public void setDbService(ExternalIsbnDataService dbService) {
-        this.dbService = dbService;
     }
 }
