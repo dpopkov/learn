@@ -3,6 +3,7 @@
  *
  * 3.1 Using Arrays<br>
  *     ScoreBoard, GameEntry<br>
+ *     InsertionSort<br>
  * 3.2 Singly Linked Lists<br>
  * 3.3 Circularly Linked Lists<br>
  * 3.4 Doubly Linked Lists<br>
