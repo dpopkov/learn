@@ -38,8 +38,30 @@ public class TicTacToe {
     }
 
     public boolean isWin(int mark) {
-        // TODO: implement
-        return false;
+        boolean leftDiagonalWins = true;
+        boolean rightDiagonalWins = true;
+        for (int i = 0; i < SIZE; i++) {
+            boolean rowWins = true;
+            boolean colWins = true;
+            for (int j = 0; j < SIZE; j++) {
+                if (board[i][j] != mark) {
+                    rowWins = false;
+                }
+                if (board[j][i] != mark) {
+                    colWins = false;
+                }
+            }
+            if (rowWins || colWins) {
+                return true;
+            }
+            if (board[i][i] != mark) {
+                leftDiagonalWins = false;
+            }
+            if (board[i][SIZE - 1 - i] != mark) {
+                rightDiagonalWins = false;
+            }
+        }
+        return leftDiagonalWins || rightDiagonalWins;
     }
 
     public int winner() {
@@ -54,11 +76,44 @@ public class TicTacToe {
 
     @Override
     public String toString() {
-        // TODO: implement
-        return super.toString();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                sb.append(symbol(board[i][j]));
+                sb.append(' ');
+            }
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
+    }
+
+    private char symbol(int i) {
+        if (i == X) {
+            return 'X';
+        } else if (i == O) {
+            return 'O';
+        } else {
+            return ' ';
+        }
     }
 
     public static void main(String[] args) {
-        // TODO: implement
+        TicTacToe game = new TicTacToe();
+        putMarks(game, 1, 1, 0, 2,
+                2, 2, 0, 0,
+                0, 1, 2, 1,
+                1, 2, 1, 0,
+                2, 0
+        );
+        System.out.println(game);
+        int winning = game.winner();
+        String[] outcome = {"O wins", "Tie", "X wins"};
+        System.out.println(outcome[1 + winning]);
+    }
+
+    private static void putMarks(TicTacToe game, int... xy) {
+        for (int i = 0; i < xy.length; i += 2) {
+            game.putMark(xy[i], xy[i + 1]);
+        }
     }
 }
