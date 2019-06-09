@@ -7,6 +7,7 @@
  *     ArrayTest, CaesarCipher,<br>
  *     TicTacToe<br>
  * 3.2 Singly Linked Lists<br>
+ *     SinglyLinkedList<br>
  * 3.3 Circularly Linked Lists<br>
  * 3.4 Doubly Linked Lists<br>
  * 3.5 Equivalence Testing<br>
