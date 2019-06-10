@@ -9,4 +9,5 @@ Projects:
 
 ### Linked Lists
 
-learn.dsajg6e.ch03fund.linked.[SinglyLinkedList](dsajg6e/src/main/java/learn/dsajg6e/ch03fund/linked/SinglyLinkedList.java)
+learn.dsajg6e.ch03fund.linked.[SinglyLinkedList](dsajg6e/src/main/java/learn/dsajg6e/ch03fund/linked/SinglyLinkedList.java)  
+learn.dsajg6e.ch03fund.linked.[CircularlyLinkedList](dsajg6e/src/main/java/learn/dsajg6e/ch03fund/linked/CircularlyLinkedList.java)
