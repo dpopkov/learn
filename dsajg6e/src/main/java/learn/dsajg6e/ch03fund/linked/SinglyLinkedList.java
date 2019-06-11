@@ -64,9 +64,38 @@ public class SinglyLinkedList<E> {
         return e;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        SinglyLinkedList<?> that = (SinglyLinkedList<?>) obj;
+        if (size != that.size) {
+            return false;
+        }
+        Node<E> cur1 = head;
+        Node<?> cur2 = that.head;
+        while (cur1 != null) {
+            if (!cur1.getElement().equals(cur2.getElement())) {
+                return false;
+            }
+            cur1 = cur1.getNext();
+            cur2 = cur2.getNext();
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        throw new UnsupportedOperationException("Method hashCode is not implemented yet");
+    }
+
     private static class Node<E> {
         /** Element stored at this node. */
-        private E element;
+        private final E element;
         /** Subsequent node in the list. */
         private Node<E> next;
 
