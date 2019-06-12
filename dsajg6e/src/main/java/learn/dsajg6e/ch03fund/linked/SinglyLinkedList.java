@@ -5,7 +5,7 @@ package learn.dsajg6e.ch03fund.linked;
  * @param <E>
  */
 @SuppressWarnings("unused")
-public class SinglyLinkedList<E> {
+public class SinglyLinkedList<E> implements Cloneable {
     private Node<E> head;
     private Node<E> tail;
     private int size;
@@ -91,6 +91,26 @@ public class SinglyLinkedList<E> {
     @Override
     public int hashCode() {
         throw new UnsupportedOperationException("Method hashCode is not implemented yet");
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        @SuppressWarnings("unchecked")
+        SinglyLinkedList<E> other = (SinglyLinkedList<E>) super.clone();
+        if (head != null) {
+            Node<E> newNode = new Node<>(head.getElement(), null);
+            other.head = newNode;
+            Node<E> walk = head.getNext();
+            Node<E> destPrev = other.head;
+            while (walk != null) {
+                newNode = new Node<>(walk.getElement(), null);
+                destPrev.setNext(newNode);
+                destPrev = newNode;
+                walk = walk.getNext();
+            }
+            other.tail = newNode;
+        }
+        return other;
     }
 
     private static class Node<E> {
