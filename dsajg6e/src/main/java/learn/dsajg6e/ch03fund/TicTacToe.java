@@ -11,6 +11,7 @@ public class TicTacToe {
 
     private final int[][] board = new int[SIZE][SIZE];
     private int player;
+    private boolean gameOver;   // added for exercise R-3.4
 
     public TicTacToe() {
         clearBoard();
@@ -23,10 +24,14 @@ public class TicTacToe {
             }
         }
         player = X;
+        gameOver = false;
     }
 
     /** Puts an X or O mark at position i, j. */
     public void putMark(int i, int j) {
+        if (gameOver) {
+            throw new IllegalStateException("Game is over. You can not put marks.");
+        }
         if (i < 0 || i > SIZE - 1 || j < 0 || j > SIZE - 1) {
             throw new IllegalArgumentException("Invalid board position");
         }
@@ -66,8 +71,10 @@ public class TicTacToe {
 
     public int winner() {
         if (isWin(X)) {
+            gameOver = true;
             return X;
         } else if (isWin(O)) {
+            gameOver = true;
             return O;
         } else {
             return EMPTY;

@@ -5,8 +5,8 @@ package learn.dsajg6e.ch03fund.linked;
  * @param <E>
  */
 public class DoublyLinkedList<E> {
-    private final Node<E> header;
-    private final Node<E> trailer;
+    protected final Node<E> header;
+    protected final Node<E> trailer;
     private int size;
 
     public DoublyLinkedList() {
@@ -93,7 +93,7 @@ public class DoublyLinkedList<E> {
         return n.getElement();
     }
 
-    private static class Node<E> {
+    protected static class Node<E> {
 
         /** Element stored at this node. */
         private final E element;

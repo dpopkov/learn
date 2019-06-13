@@ -6,9 +6,9 @@ package learn.dsajg6e.ch03fund.linked;
  */
 @SuppressWarnings("unused")
 public class SinglyLinkedList<E> implements Cloneable {
-    private Node<E> head;
-    private Node<E> tail;
-    private int size;
+    protected Node<E> head;
+    protected Node<E> tail;
+    protected int size;
 
     public int size() {
         return size;
@@ -113,7 +113,7 @@ public class SinglyLinkedList<E> implements Cloneable {
         return other;
     }
 
-    private static class Node<E> {
+    protected static class Node<E> {
         /** Element stored at this node. */
         private final E element;
         /** Subsequent node in the list. */

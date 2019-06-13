@@ -34,8 +34,7 @@ public class CircularlyLinkedList<E> {
 
     public void addFirst(E e) {
         if (tail != null) {
-            Node<E> n = new Node<>(e, tail.getNext());
-            tail.setNext(n);
+            tail.setNext(new Node<>(e, tail.getNext()));
         } else {
             tail = new Node<>(e, null);
             tail.setNext(tail);
