@@ -85,6 +85,36 @@ public class CircularlyLinkedList<E> {
         return sb.toString();
     }
 
+    // R-3.15
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        CircularlyLinkedList<?> that = (CircularlyLinkedList<?>) obj;
+        if (size != that.size) {
+            return false;
+        }
+        Node<E> n0 = this.tail.getNext();
+        Node<?> n1 = that.tail.getNext();
+        for (int i = 0; i < size && n0 != null && n1 != null; i++) {
+            if (!n0.getElement().equals(n1.getElement())) {
+                return false;
+            }
+            n0 = n0.getNext();
+            n1 = n1.getNext();
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        throw new UnsupportedOperationException("Method hashCode is not implemented yet");
+    }
+
     private static class Node<E> {
         /** Element stored at this node. */
         private final E element;

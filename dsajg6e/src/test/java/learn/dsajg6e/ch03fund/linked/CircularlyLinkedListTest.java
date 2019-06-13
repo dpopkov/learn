@@ -63,4 +63,20 @@ public class CircularlyLinkedListTest {
         assertThat(list.first(), is(2));
         assertThat(list.toString(), is("[2, 3, 1]"));
     }
+
+    @Test
+    public void testEquals() {
+        CircularlyLinkedList<Integer> list1 = new CircularlyLinkedList<>();
+        list1.addLast(1);
+        list1.addLast(2);
+        CircularlyLinkedList<Integer> list2 = new CircularlyLinkedList<>();
+        assertThat(list1.equals(list2), is(false));
+        list2.addLast(1);
+        list2.addLast(2);
+        assertThat(list1.equals(list2), is(true));
+        list2.rotate();
+        assertThat(list1.equals(list2), is(false));
+        list1.rotate();
+        assertThat(list1.equals(list2), is(true));
+    }
 }

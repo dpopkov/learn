@@ -113,6 +113,38 @@ public class SinglyLinkedList<E> implements Cloneable {
         return other;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        if (size > 0) {
+            Node<E> n = head;
+            sb.append(n.getElement());
+            for (int i = 1; i < size; i++) {
+                n = n.getNext();
+                sb.append(", ");
+                sb.append(n.getElement());
+            }
+        }
+        sb.append(']');
+        return sb.toString();
+    }
+
+    /**
+     * Moves the first element to the end of the list.
+     * (R-3.12)
+     */
+    public void rotate() {
+        if (head == null) {
+            return;
+        }
+        Node<E> first = head;
+        head = head.getNext();
+        tail.setNext(first);
+        tail = first;
+        first.setNext(null);
+    }
+
     protected static class Node<E> {
         /** Element stored at this node. */
         private final E element;
