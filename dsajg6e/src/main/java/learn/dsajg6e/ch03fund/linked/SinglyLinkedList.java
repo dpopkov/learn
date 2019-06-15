@@ -64,6 +64,17 @@ public class SinglyLinkedList<E> implements Cloneable {
         return e;
     }
 
+    public E get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("This index is not valid for the list: " + index);
+        }
+        Node<E> node = head;
+        for (int i = 0; i < index; i++) {
+            node = node.getNext();
+        }
+        return node.getElement();
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -166,6 +177,11 @@ public class SinglyLinkedList<E> implements Cloneable {
 
         public void setNext(Node<E> next) {
             this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            return "(" + element + ")";
         }
     }
 }
