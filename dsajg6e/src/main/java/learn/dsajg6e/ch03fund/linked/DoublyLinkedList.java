@@ -4,10 +4,9 @@ package learn.dsajg6e.ch03fund.linked;
  * CF 3.17-18
  * @param <E>
  */
-public class DoublyLinkedList<E> implements IDoublyList<E> {
+public class DoublyLinkedList<E> extends AbstractDoublyLinkedList<E> {
     protected final Node<E> header;
     protected final Node<E> trailer;
-    private int size;
 
     public DoublyLinkedList() {
         header = new Node<>();
@@ -16,12 +15,9 @@ public class DoublyLinkedList<E> implements IDoublyList<E> {
         trailer.setPrev(header);
     }
 
-    public int size() {
-        return size;
-    }
-
-    public boolean isEmpty() {
-        return size == 0;
+    @Override
+    protected Node<E> firstNode() {
+        return header.getNext();
     }
 
     public E first() {
@@ -62,23 +58,6 @@ public class DoublyLinkedList<E> implements IDoublyList<E> {
         return remove(trailer.getPrev());
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append('[');
-        if (size > 0) {
-            Node<E> cur = header.getNext();
-            sb.append(cur.getElement());
-            for (int i = 1; i < size; i++) {
-                cur = cur.getNext();
-                sb.append(", ");
-                sb.append(cur.getElement());
-            }
-        }
-        sb.append(']');
-        return sb.toString();
-    }
-
     private void addBetween(E e, Node<E> before, Node<E> after) {
         Node<E> n = new Node<>(e, after, before);
         before.setNext(n);
@@ -91,45 +70,5 @@ public class DoublyLinkedList<E> implements IDoublyList<E> {
         n.getNext().setPrev(n.getPrev());
         size--;
         return n.getElement();
-    }
-
-    protected static class Node<E> {
-
-        /** Element stored at this node. */
-        private final E element;
-        /** Previous node in the list. */
-        private Node<E> prev;
-        /** Subsequent node in the list. */
-        private Node<E> next;
-
-        private Node() {
-            this.element = null;
-        }
-
-        private Node(E element, Node<E> next, Node<E> prev) {
-            this.element = element;
-            this.next = next;
-            this.prev = prev;
-        }
-
-        public E getElement() {
-            return element;
-        }
-
-        public Node<E> getNext() {
-            return next;
-        }
-
-        public void setNext(Node<E> next) {
-            this.next = next;
-        }
-
-        public Node<E> getPrev() {
-            return prev;
-        }
-
-        public void setPrev(Node<E> prev) {
-            this.prev = prev;
-        }
     }
 }
