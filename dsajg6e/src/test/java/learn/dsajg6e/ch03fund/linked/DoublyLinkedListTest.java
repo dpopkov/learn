@@ -9,7 +9,7 @@ public class DoublyLinkedListTest {
 
     @Test
     public void testAddFirst() {
-        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        IList<Integer> list = new DoublyLinkedList<>();
         list.addFirst(1);
         assertThat(list.first(), is(1));
         assertThat(list.last(), is(1));
@@ -22,7 +22,7 @@ public class DoublyLinkedListTest {
 
     @Test
     public void testAddLast() {
-        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        IList<Integer> list = new DoublyLinkedList<>();
         list.addLast(1);
         assertThat(list.first(), is(1));
         assertThat(list.last(), is(1));
@@ -35,7 +35,7 @@ public class DoublyLinkedListTest {
 
     @Test
     public void testRemoveFirst() {
-        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        IList<Integer> list = new DoublyLinkedList<>();
         list.addLast(2);
         list.addLast(1);
         Integer i = list.removeFirst();
@@ -51,7 +51,7 @@ public class DoublyLinkedListTest {
 
     @Test
     public void testRemoveLast() {
-        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        IDoublyList<Integer> list = new DoublyLinkedList<>();
         list.addLast(2);
         list.addLast(1);
         Integer i = list.removeLast();

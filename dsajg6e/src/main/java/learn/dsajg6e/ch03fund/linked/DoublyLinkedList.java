@@ -4,7 +4,7 @@ package learn.dsajg6e.ch03fund.linked;
  * CF 3.17-18
  * @param <E>
  */
-public class DoublyLinkedList<E> {
+public class DoublyLinkedList<E> implements IDoublyList<E> {
     protected final Node<E> header;
     protected final Node<E> trailer;
     private int size;

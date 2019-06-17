@@ -4,7 +4,7 @@ package learn.dsajg6e.ch03fund.linked;
  * CF 3.16
  * @param <E>
  */
-public class CircularlyLinkedList<E> {
+public class CircularlyLinkedList<E> implements IList<E> {
     protected Node<E> tail;
     private int size;
 

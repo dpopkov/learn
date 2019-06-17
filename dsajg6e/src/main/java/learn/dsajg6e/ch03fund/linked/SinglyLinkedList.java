@@ -5,7 +5,7 @@ package learn.dsajg6e.ch03fund.linked;
  * @param <E>
  */
 @SuppressWarnings("unused")
-public class SinglyLinkedList<E> implements Cloneable {
+public class SinglyLinkedList<E> implements IList<E>, Cloneable {
     protected Node<E> head;
     protected Node<E> tail;
     protected int size;
