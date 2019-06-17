@@ -2,14 +2,17 @@ package learn.dsajg6e.ch03fund.linked;
 
 import org.junit.Test;
 
+import java.util.function.Supplier;
+
 import static org.hamcrest.core.Is.*;
 import static org.junit.Assert.*;
 
 public class DoublyLinkedListTest {
+    private final Supplier<IDoublyList<Integer>> constructor = DoublyLinkedList::new;
 
     @Test
     public void testAddFirst() {
-        IList<Integer> list = new DoublyLinkedList<>();
+        IList<Integer> list = constructor.get();
         list.addFirst(1);
         assertThat(list.first(), is(1));
         assertThat(list.last(), is(1));
@@ -22,7 +25,7 @@ public class DoublyLinkedListTest {
 
     @Test
     public void testAddLast() {
-        IList<Integer> list = new DoublyLinkedList<>();
+        IList<Integer> list = constructor.get();
         list.addLast(1);
         assertThat(list.first(), is(1));
         assertThat(list.last(), is(1));
@@ -35,7 +38,7 @@ public class DoublyLinkedListTest {
 
     @Test
     public void testRemoveFirst() {
-        IList<Integer> list = new DoublyLinkedList<>();
+        IList<Integer> list = constructor.get();
         list.addLast(2);
         list.addLast(1);
         Integer i = list.removeFirst();
@@ -51,7 +54,7 @@ public class DoublyLinkedListTest {
 
     @Test
     public void testRemoveLast() {
-        IDoublyList<Integer> list = new DoublyLinkedList<>();
+        IDoublyList<Integer> list = constructor.get();
         list.addLast(2);
         list.addLast(1);
         Integer i = list.removeLast();
