@@ -5,7 +5,7 @@ package learn.dsajg6e.ch03fund.linked;
  * @param <E>
  */
 public class CircularlyLinkedList<E> {
-    private Node<E> tail;
+    protected Node<E> tail;
     private int size;
 
     public int size() {
@@ -115,7 +115,7 @@ public class CircularlyLinkedList<E> {
         throw new UnsupportedOperationException("Method hashCode is not implemented yet");
     }
 
-    private static class Node<E> {
+    protected static class Node<E> {
         /** Element stored at this node. */
         private final E element;
         /** Subsequent node in the list. */
