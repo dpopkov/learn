@@ -4,7 +4,7 @@ package learn.dsajg6e.ch03fund.linked;
  * CF 3.16
  * @param <E>
  */
-public class CircularlyLinkedList<E> implements IList<E> {
+public class CircularlyLinkedList<E> implements IList<E>, Cloneable {
     protected Node<E> tail;
     private int size;
 
@@ -113,6 +113,31 @@ public class CircularlyLinkedList<E> implements IList<E> {
     @Override
     public int hashCode() {
         throw new UnsupportedOperationException("Method hashCode is not implemented yet");
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Object clone() {
+        CircularlyLinkedList<E> cloned = null;
+        try {
+            cloned = (CircularlyLinkedList<E>) super.clone();
+            if (isEmpty()) {
+                return cloned;
+            }
+            cloned.tail = new Node<>(tail.getElement(), null);
+            Node<E> prev = cloned.tail;
+            Node<E> source = tail.getNext();
+            for (int i = 1; i < size; i++) {
+                Node<E> node = new Node<>(source.getElement(), null);
+                prev.setNext(node);
+                source = source.getNext();
+                prev = node;
+            }
+        } catch (CloneNotSupportedException e) {
+            // should not happen
+            e.printStackTrace();
+        }
+        return cloned;
     }
 
     protected static class Node<E> {

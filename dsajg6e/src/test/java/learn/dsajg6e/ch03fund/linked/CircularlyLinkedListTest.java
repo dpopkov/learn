@@ -2,7 +2,7 @@ package learn.dsajg6e.ch03fund.linked;
 
 import org.junit.Test;
 
-import static org.hamcrest.core.Is.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 public class CircularlyLinkedListTest {
@@ -78,5 +78,18 @@ public class CircularlyLinkedListTest {
         assertThat(list1.equals(list2), is(false));
         list1.rotate();
         assertThat(list1.equals(list2), is(true));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testClone() {
+        CircularlyLinkedList<Integer> list1 = new CircularlyLinkedList<>();
+        list1.addLast(1);
+        list1.addLast(2);
+        CircularlyLinkedList<Integer> list2 = (CircularlyLinkedList<Integer>) list1.clone();
+        assertThat(list1.equals(list2), is(true));
+        list1.addFirst(10);
+        assertThat(list1.first(), not(equalTo(list2.first())));
+        assertThat(list1.equals(list2), is(false));
     }
 }

@@ -4,7 +4,7 @@ package learn.dsajg6e.ch03fund.linked;
  * CF 3.17-18
  * @param <E>
  */
-public class DoublyLinkedList<E> extends AbstractDoublyLinkedList<E> {
+public class DoublyLinkedList<E> extends AbstractDoublyLinkedList<E> implements Cloneable {
     protected final Node<E> header;
     protected final Node<E> trailer;
 
@@ -70,5 +70,17 @@ public class DoublyLinkedList<E> extends AbstractDoublyLinkedList<E> {
         n.getNext().setPrev(n.getPrev());
         size--;
         return n.getElement();
+    }
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public Object clone() {
+        DoublyLinkedList<E> cloned = new DoublyLinkedList<>();
+        Node<E> source = this.header.getNext();
+        while (source != this.trailer) {
+            cloned.addLast(source.getElement());
+            source = source.getNext();
+        }
+        return cloned;
     }
 }
