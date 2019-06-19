@@ -5,8 +5,8 @@ package learn.dsajg6e.ch03fund;
  */
 public class CaesarCipher {
     public enum Alphabet {
-        ENGLISH("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
-        RUSSIAN("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ");
+        ENGLISH("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"),
+        RUSSIAN("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдеёжзийклмнопрстуфхцчшщьыъэюя");
 
         private final String letters;
 
@@ -45,8 +45,9 @@ public class CaesarCipher {
     private String transform(String s, char[] code) {
         char[] chars = s.toCharArray();
         for (int i = 0; i < chars.length; i++) {
-            if (Character.isUpperCase(chars[i])) {
-                chars[i] = code[indexInAlphabet(chars[i])];
+            int index = indexInAlphabet(chars[i]);
+            if (index >= 0) {
+                chars[i] = code[index];
             }
         }
         return new String(chars);
@@ -58,6 +59,6 @@ public class CaesarCipher {
                 return i;
             }
         }
-        throw new IllegalStateException("Character not found in the current alphabet: " + aChar);
+        return -1;
     }
 }
