@@ -22,6 +22,17 @@ public class P0337ScoresListTest {
     }
 
     @Test
+    public void testAddNoMoreThanLimit() {
+        P0337ScoresList list = new P0337ScoresList(2);
+        list.add(new GameEntry("b", 20));
+        list.add(new GameEntry("c", 25));
+        list.add(new GameEntry("a", 10));
+        list.add(new GameEntry("d", 30));
+        assertThat(list.size(), is(2));
+        assertThat(list.toString(), is("[('d', 30), ('c', 25)]"));
+    }
+
+    @Test
     public void testRemove() {
         P0337ScoresList list = new P0337ScoresList();
         GameEntry a = new GameEntry("a", 10);

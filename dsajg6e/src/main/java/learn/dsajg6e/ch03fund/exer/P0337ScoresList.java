@@ -7,8 +7,22 @@ import learn.dsajg6e.ch03fund.GameEntry;
  * using a singly linked list.
  */
 public class P0337ScoresList {
+    public static final int DEFAULT_LIMIT = 10;
     private Node head;
     private int size;
+    private final int limit;
+
+    public P0337ScoresList() {
+        this(DEFAULT_LIMIT);
+    }
+
+    public P0337ScoresList(int limit) {
+        this.limit = limit;
+    }
+
+    public int size() {
+        return size;
+    }
 
     public void add(GameEntry e) {
         if (head == null || head.getEntry().getScore() <= e.getScore()) {
@@ -16,7 +30,7 @@ public class P0337ScoresList {
         } else {
             Node prev = head;
             Node newNode = new Node(e);
-            do {
+            while (true) {
                 Node next = prev.getNext();
                 if (next == null) {
                     prev.setNext(newNode);
@@ -27,9 +41,17 @@ public class P0337ScoresList {
                     break;
                 }
                 prev = next;
-            } while (true);
+            }
         }
         size++;
+        if (size > limit) {
+            Node prev = head;
+            for (int i = 0; i < limit; i++) {
+                prev = prev.getNext();
+            }
+            prev.setNext(null);
+            size--;
+        }
     }
 
     public boolean remove(GameEntry e) {
