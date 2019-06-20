@@ -1,8 +1,9 @@
 package learn.dsajg6e.ch03fund.exer;
 
 public class P0340SubstitutionCipher {
-    private static final char FIRST_CHAR = 'A';
-    private static final int ALPHABET_LENGTH = 26;
+    protected static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final char FIRST_CHAR = ALPHABET.charAt(0);
+    protected static final int ALPHABET_LENGTH = ALPHABET.length();
 
     private final char[] encoding;
     private final char[] decoding;
