@@ -5,7 +5,7 @@
  *     Factorial, EnglishRuler, BinarySearch<br>
  * 5.2 Analyzing Recursive Algorithms<br>
  * 5.3 Further Examples of Recursion:<br>
- *     LinearRecursion, BinaryRecursion<br>
+ *     LinearRecursion, BinaryRecursion, PuzzlePermutations<br>
  * 5.4 Designing Recursive Algorithms<br>
  * 5.5 Recursion Run Amok<br>
  * 5.6 Eliminating Tail Recursion<br>
