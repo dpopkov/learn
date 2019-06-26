@@ -7,7 +7,8 @@
  * 5.3 Further Examples of Recursion:<br>
  *     LinearRecursion, BinaryRecursion, PuzzlePermutations<br>
  * 5.4 Designing Recursive Algorithms<br>
- * 5.5 Recursion Run Amok<br>
+ * 5.5 Recursion Run Amok:<br>
+ *     BadRecursion, GoodRecursion<br>
  * 5.6 Eliminating Tail Recursion<br>
  * 5.7 Exercises<br>
  */
