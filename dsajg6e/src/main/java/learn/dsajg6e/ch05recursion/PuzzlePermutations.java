@@ -3,6 +3,8 @@ package learn.dsajg6e.ch05recursion;
 import java.util.ArrayList;
 import java.util.List;
 
+import static learn.dsajg6e.tools.ArrayTools.deleteChar;
+
 /**
  * Implementation of pseudo code of code fragment 5.11
  */
@@ -19,15 +21,10 @@ public class PuzzlePermutations {
     }
 
     static char[] remove(char[] universe, int index) {
-        char[] result = new char[universe.length - 1];
-        for (int i = 0, j = 0; i < result.length; j++) {
-            if (j != index) {
-                result[i] = universe[j];
-                i++;
-            }
-        }
-        return result;
+        return deleteChar(universe, index);
     }
+
+
 
     public static void main(String[] args) {
         List<String> output = new ArrayList<>();
