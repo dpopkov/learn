@@ -1,5 +1,7 @@
 package learn.dsajg6e.tools;
 
+import java.util.Arrays;
+
 /**
  * Contains utility methods for array manipulations.
  */
@@ -19,5 +21,38 @@ public class ArrayTools {
             }
         }
         return result;
+    }
+
+    /**
+     * Splits the array into two sub-arrays beginning with the specified index.
+     * @param array source array
+     * @param splitIndex index of the first element in the second sub-array
+     * @return array of 2 sub-arrays
+     */
+    public static int[][] split(int[] array, int splitIndex) {
+        int[] head = Arrays.copyOfRange(array, 0, splitIndex);
+        int[] tail = Arrays.copyOfRange(array, splitIndex, array.length);
+        int[][] result = new int[2][];
+        result[0] = head;
+        result[1] = tail;
+        return result;
+    }
+
+    public static boolean allEven(int[] a) {
+        for (int i : a) {
+            if (i % 2 != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean allOdd(int[] a) {
+        for (int i : a) {
+            if (i % 2 == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }
