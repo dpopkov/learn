@@ -6,6 +6,23 @@ import java.util.Arrays;
  * Contains utility methods for array manipulations.
  */
 public class ArrayTools {
+
+    /**
+     * Tries to find the specified character in the array before the boundary index.
+     * @param chars array of characters
+     * @param bound boundary index in array
+     * @param c character to find
+     * @return index of the found character or -1
+     */
+    public static int find(char[] chars, int bound, char c) {
+        for (int i = 0; i < bound; i++) {
+            if (chars[i] == c) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     /**
      * Deletes one char element at the specified index.
      * @param charArray source array that remains intact

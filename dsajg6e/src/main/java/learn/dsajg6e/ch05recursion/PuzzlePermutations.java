@@ -24,8 +24,6 @@ public class PuzzlePermutations {
         return deleteChar(universe, index);
     }
 
-
-
     public static void main(String[] args) {
         List<String> output = new ArrayList<>();
         char[] universe = {'a', 'b', 'c', 'd'};
