@@ -4,7 +4,8 @@
  * 6.1 Stacks<br>
  *     Stack, ArrayStack, LinkedStack, ReverseArray, MatchingParentheses, MatchingTags<br>
  * 6.2 Queues<br>
- *     Queue, ArrayQueue, LinkedQueue<br>
+ *     Queue, ArrayQueue, LinkedQueue, <br>
+ *     CircularQueue, LinkedCircularQueue, JosephusProblem<br>
  * 6.3 Double-Ended Queues<br>
  * 6.4 Exercises<br>
  */
