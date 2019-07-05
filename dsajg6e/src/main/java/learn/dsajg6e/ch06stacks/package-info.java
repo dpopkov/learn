@@ -7,6 +7,7 @@
  *     Queue, ArrayQueue, LinkedQueue, <br>
  *     CircularQueue, LinkedCircularQueue, JosephusProblem<br>
  * 6.3 Double-Ended Queues<br>
+ *     Deque, LinkedDeque<br>
  * 6.4 Exercises<br>
  */
 package learn.dsajg6e.ch06stacks;

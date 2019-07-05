@@ -6,14 +6,14 @@ package learn.dsajg6e.ch06stacks;
  * @param <E> the type of elements held in this queue
  */
 public class ArrayQueue<E> implements Queue<E> {
-    private final E[] data;
+    protected final E[] data;
     /** Index of the front element. */
-    private int front;
+    protected int front;
     /** Number of elements in the queue. */
-    private int size;
+    protected int size;
 
     @SuppressWarnings("unchecked")
-    ArrayQueue(int capacity) {
+    protected ArrayQueue(int capacity) {
         data = (E[]) new Object[capacity];
     }
 
