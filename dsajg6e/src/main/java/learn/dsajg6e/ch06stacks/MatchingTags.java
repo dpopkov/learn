@@ -1,14 +1,22 @@
 package learn.dsajg6e.ch06stacks;
 
+import java.util.function.Function;
+
 /**
  * CF 6.8
  */
 public class MatchingTags {
+    private final Function<String, ITagFinder> constructor;
+
+    public MatchingTags(Function<String, ITagFinder> constructor) {
+        this.constructor = constructor;
+    }
+
     /**
      * Tests if every opening tag has a matching closing tag in html string.
      */
-    static boolean isHtmlMatched(String html) {
-        TagFinder finder = new TagFinder(html);
+    public boolean isHtmlMatched(String html) {
+        ITagFinder finder = constructor.apply(html);
         Stack<TagPosition> stack = new LinkedStack<>();
         while (finder.hasNext()) {
             TagPosition current = finder.next();
