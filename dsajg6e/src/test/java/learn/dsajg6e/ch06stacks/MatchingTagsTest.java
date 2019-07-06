@@ -13,7 +13,6 @@ public class MatchingTagsTest {
         assertThat(isHtmlMatched("<html></html>"), is(true));
         assertThat(isHtmlMatched("<html></head></html>"), is(false));
         assertThat(isHtmlMatched("<html></html><head>"), is(false));
-        assertThat(isHtmlMatched("<html"), is(false));
         assertThat(isHtmlMatched("</html>"), is(false));
     }
 }
