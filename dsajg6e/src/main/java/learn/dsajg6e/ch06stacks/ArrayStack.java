@@ -1,14 +1,16 @@
 package learn.dsajg6e.ch06stacks;
 
+import java.util.Arrays;
+
 /**
  * CF 6.2
  * Array-based implementation of the {@link Stack} interface.
  * @param <E> type of the elements
  */
 @SuppressWarnings("unused")
-public class ArrayStack<E> implements Stack<E> {
+public class ArrayStack<E> implements Stack<E>, Cloneable {
     public static final int DEFAULT_CAPACITY = 1000;
-    private final E[] data;
+    private E[] data;
     private int topIdx = -1;
 
     public ArrayStack() {
@@ -55,5 +57,19 @@ public class ArrayStack<E> implements Stack<E> {
         data[topIdx] = null;
         topIdx--;
         return e;
+    }
+
+    /* Method clone() implemented as C-6.27 */
+    @SuppressWarnings("unchecked")
+    @Override
+    public Object clone() {
+        ArrayStack<E> cloned = null;
+        try {
+            cloned = (ArrayStack<E>) super.clone();
+            cloned.data = Arrays.copyOf(this.data, this.data.length);
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace(); // this should not happen
+        }
+        return cloned;
     }
 }

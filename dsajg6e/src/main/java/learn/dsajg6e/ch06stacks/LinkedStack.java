@@ -35,4 +35,13 @@ public class LinkedStack<E> implements Stack<E> {
     public E pop() {
         return list.removeFirst();
     }
+
+    @SuppressWarnings("unchecked")
+    public static <E> LinkedStack<E> of(E... values) {
+        LinkedStack<E> stack = new LinkedStack<>();
+        for (E v : values) {
+            stack.push(v);
+        }
+        return stack;
+    }
 }
