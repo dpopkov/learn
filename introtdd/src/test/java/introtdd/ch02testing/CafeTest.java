@@ -1,5 +1,6 @@
 package introtdd.ch02testing;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.*;
@@ -13,10 +14,17 @@ public class CafeTest {
     private static final int NO_MILK = 0;
     private static final int NO_BEANS = 0;
 
+    private Cafe cafe;
+
+    @Before
+    public void setup() {
+        cafe = new Cafe();
+    }
+
     @Test
     public void canBrewEspresso() {
         /* Given: Preconditions */
-        Cafe cafe = cafeWithBeans(ESPRESSO_BEANS);
+        withBeans(ESPRESSO_BEANS);
         /* When: Behavior */
         Coffee coffee = cafe.brew(CoffeeType.Espresso);
         /* Then: Post-conditions */
@@ -28,7 +36,7 @@ public class CafeTest {
     @Test
     public void canBrewLatte() {
         /* Given: Preconditions */
-        Cafe cafe = cafeWithBeans(LATTE_BEANS);
+        withBeans(LATTE_BEANS);
         cafe.restockMilk(LATTE_MILK);
         /* When: Behavior */
         Coffee coffee = cafe.brew(CoffeeType.Latte);
@@ -41,7 +49,7 @@ public class CafeTest {
     @Test
     public void brewingEspressoConsumesBeans() {
         // Given
-        Cafe cafe = cafeWithBeans(ESPRESSO_BEANS);
+        withBeans(ESPRESSO_BEANS);
         // When
         cafe.brew(CoffeeType.Espresso);
         // Then
@@ -50,7 +58,7 @@ public class CafeTest {
 
     @Test
     public void brewingLatteConsumesMilk() {
-        Cafe cafe = cafeWithBeans(LATTE_BEANS);
+        withBeans(LATTE_BEANS);
         cafe.restockMilk(LATTE_MILK);
         cafe.brew(CoffeeType.Latte);
         assertThat("Wrong amount of milk", cafe.getMilkInStock(), is(NO_MILK));
@@ -58,19 +66,17 @@ public class CafeTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void negativeAmountThrowsException() {
-        cafeWithBeans(-ESPRESSO_BEANS);
+        withBeans(-ESPRESSO_BEANS);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void latteRequiresMilk() {
-        Cafe cafe = cafeWithBeans(ESPRESSO_BEANS);
+        withBeans(ESPRESSO_BEANS);
         cafe.restockMilk(1);
         cafe.brew(CoffeeType.Latte);
     }
 
-    private Cafe cafeWithBeans(int beans) {
-        Cafe cafe = new Cafe();
+    private void withBeans(int beans) {
         cafe.restockBeans(beans);
-        return cafe;
     }
 }
