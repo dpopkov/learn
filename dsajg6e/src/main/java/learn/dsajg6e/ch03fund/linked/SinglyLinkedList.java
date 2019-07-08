@@ -156,6 +156,21 @@ public class SinglyLinkedList<E> implements IList<E>, Cloneable {
         first.setNext(null);
     }
 
+    /* Implemented for exercise C-6.29 */
+    /** Adds all the elements from other linked list that is empty after this operation. */
+    public void append(SinglyLinkedList<E> other) {
+        if (this.head == null) {
+            this.head = other.head;
+        } else {
+            this.tail.setNext(other.head);
+        }
+        this.tail = other.tail;
+        this.size += other.size;
+        other.head = null;
+        other.tail = null;
+        other.size = 0;
+    }
+
     protected static class Node<E> {
         /** Element stored at this node. */
         private final E element;

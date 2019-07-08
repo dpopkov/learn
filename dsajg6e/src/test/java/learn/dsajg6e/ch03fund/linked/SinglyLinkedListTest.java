@@ -45,4 +45,28 @@ public class SinglyLinkedListTest {
         assertThat(list1.last(), is(2));
         assertThat(list1.toString(), is("[3, 1, 2]"));
     }
+
+    @Test
+    public void whenAppendOtherListThenContainsAllElementsAndOtherIsEmpty() {
+        SinglyLinkedList<Integer> list1 = new SinglyLinkedList<>();
+        list1.addLast(10);
+        list1.addLast(20);
+        SinglyLinkedList<Integer> list2 = new SinglyLinkedList<>();
+        list2.addLast(30);
+        list2.addLast(40);
+        list1.append(list2);
+        assertThat(list1.toString(), is("[10, 20, 30, 40]"));
+        assertThat(list2.isEmpty(), is(true));
+    }
+
+    @Test
+    public void whenAppendToEmptyListThenContainsAll() {
+        SinglyLinkedList<Integer> list1 = new SinglyLinkedList<>();
+        SinglyLinkedList<Integer> list2 = new SinglyLinkedList<>();
+        list2.addLast(30);
+        list2.addLast(40);
+        list1.append(list2);
+        assertThat(list1.toString(), is("[30, 40]"));
+        assertThat(list2.isEmpty(), is(true));
+    }
 }

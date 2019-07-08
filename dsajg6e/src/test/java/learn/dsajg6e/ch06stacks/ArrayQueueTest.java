@@ -29,4 +29,16 @@ public class ArrayQueueTest {
         queue.enqueue(10);
         queue.enqueue(20);
     }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void whenCloneThenNewQueueIsNotLinkedWithOld() {
+        ArrayQueue<Integer> queue1 = new ArrayQueue<>(2);
+        queue1.enqueue(10);
+        queue1.enqueue(20);
+        ArrayQueue<Integer> queue2 = (ArrayQueue<Integer>) queue1.clone();
+        queue1.dequeue();
+        Integer rst = queue2.dequeue();
+        assertThat(rst, is(10));
+    }
 }
