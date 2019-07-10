@@ -3,7 +3,7 @@ package introtdd.ch02testing;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.core.Is.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 public class CafeTest {
@@ -30,7 +30,7 @@ public class CafeTest {
         /* Then: Post-conditions */
         assertThat("Wrong type of coffee", coffee.getType(), is(CoffeeType.Espresso));
         assertThat("Wrong quantity of milk", coffee.getMilk(), is(NO_MILK));
-        assertThat("Wrong quantity of beans", coffee.getBeans(), is(ESPRESSO_BEANS));
+        assertThat(coffee, hasProperty("beans", equalTo(ESPRESSO_BEANS)));
     }
 
     @Test
