@@ -1,12 +1,12 @@
 package learn.dsajg6e.ch07list;
 
 /**
- * Simple implementation of {@link List} with bounded capacity.
+ * Simple dynamic implementation of {@link List} with unbounded capacity.
  * @param <E> type of elements in the list
  */
 public class ArrayList<E> implements List<E> {
     public static final int CAPACITY = 16;
-    private final E[] data;
+    private E[] data;
     private int size = 0;
 
     public ArrayList() {
@@ -45,7 +45,7 @@ public class ArrayList<E> implements List<E> {
     @Override
     public void add(int i, E e) throws IndexOutOfBoundsException {
         checkIndex(i, size + 1);
-        checkSize();
+        ensureCapacity(size + 1);
         if (i < size) {
             System.arraycopy(data, i, data, i + 1, size - i);
         }
@@ -55,7 +55,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public void add(E e) {
-        checkSize();
+        ensureCapacity(size + 1);
         data[size++] = e;
     }
 
@@ -75,9 +75,16 @@ public class ArrayList<E> implements List<E> {
         }
     }
 
-    private void checkSize() {
-        if (size == data.length) {
-            throw new IllegalStateException("Array is full");
+    private void ensureCapacity(int capacity) {
+        if (capacity > data.length) {
+            resize(data.length * 2);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void resize(int capacity) {
+        E[] temp = (E[]) new Object[capacity];
+        System.arraycopy(data, 0, temp, 0, data.length);
+        data = temp;
     }
 }
