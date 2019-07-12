@@ -1,11 +1,14 @@
 package learn.dsajg6e.ch07list.positional;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * CF 7.9-7.12
  * Implementation of a positional list stored as a doubly linked list.
  * @param <E> type of elements in the list
  */
-public class LinkedPositionalList<E> implements PositionalList<E> {
+public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
     private final Node<E> headerSentinel;
     private final Node<E> trailerSentinel;
     private int size;
@@ -132,6 +135,79 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
         return node;
     }
 
+    @Override
+    public Iterator<E> iterator() {
+        return new LinkedPositionalListIterator();
+    }
+
+    public Iterator<Position<E>> positions() {
+        return new PositionIterator();
+    }
+
+    private class LinkedPositionalListIterator implements Iterator<E> {
+        private Node<E> node = headerSentinel.getNext();
+        private boolean removable = false;
+
+        @Override
+        public boolean hasNext() {
+            return node != trailerSentinel;
+        }
+
+        @Override
+        public E next() throws NoSuchElementException {
+            if (node == trailerSentinel) {
+                throw new NoSuchElementException("No next element");
+            }
+            E element = node.getElement();
+            node = node.getNext();
+            removable = true;
+            return element;
+        }
+
+        @Override
+        public void remove() throws IllegalStateException {
+            if (!removable || node.getPrev() == headerSentinel) {
+                throw new IllegalStateException("Nothing to remove");
+            }
+            Node<E> prev = node.getPrev();
+            LinkedPositionalList.this.remove(prev);
+            removable = false;
+        }
+    }
+
+    private class PositionIterator implements Iterator<Position<E>> {
+        /** Position of the next element to report. */
+        private Position<E> cursor = LinkedPositionalList.this.first();
+        /** Position of last reported element. */
+        private Position<E> recent = null;
+
+        @Override
+        public boolean hasNext() {
+            return cursor != null;
+        }
+
+        @Override
+        public Position<E> next() {
+            if (cursor == null) {
+                throw new NoSuchElementException("Nothing left");
+            }
+            recent = cursor;
+            cursor = LinkedPositionalList.this.after(cursor);
+            return recent;
+        }
+
+        @Override
+        public void remove() throws IllegalStateException {
+            if (recent == null) {
+                throw new IllegalStateException("Nothing to remove");
+            }
+            LinkedPositionalList.this.remove(recent);
+            recent = null;
+        }
+    }
+
+    // TODO: PositionIterable (and change return type of positions() method)
+
     private static class Node<E> implements Position<E> {
         private E element;
         private Node<E> prev;
@@ -169,6 +245,11 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
 
         public void setNext(Node<E> next) {
             this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{element=" + element + '}';
         }
     }
 }

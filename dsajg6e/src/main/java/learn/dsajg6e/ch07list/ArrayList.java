@@ -1,10 +1,13 @@
 package learn.dsajg6e.ch07list;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * Simple dynamic implementation of {@link List} with unbounded capacity.
  * @param <E> type of elements in the list
  */
-public class ArrayList<E> implements List<E> {
+public class ArrayList<E> implements List<E>, Iterable<E> {
     public static final int CAPACITY = 16;
     private E[] data;
     private int size = 0;
@@ -86,5 +89,55 @@ public class ArrayList<E> implements List<E> {
         E[] temp = (E[]) new Object[capacity];
         System.arraycopy(data, 0, temp, 0, data.length);
         data = temp;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new ArrayIterator();
+    }
+
+    private class ArrayIterator implements Iterator<E> {
+        /** Index of the next element to report. */
+        private int j = 0;
+        /** Flag - can remove be called at this time? */
+        private boolean removable = false;
+
+        /**
+         * Tests whether the iterator has a next object.
+         * @return true if there are further objects, false otherwise
+         */
+        @Override
+        public boolean hasNext() {
+            return j < ArrayList.this.size;
+        }
+
+        /**
+         * Returns the next object in the iterator.
+         * @return next object
+         * @throws NoSuchElementException if there are no further elements
+         */
+        @Override
+        public E next() throws NoSuchElementException {
+            if (j == ArrayList.this.size) {
+                throw new NoSuchElementException("No next element");
+            }
+            removable = true;
+            return ArrayList.this.data[j++];
+        }
+
+        /**
+         * Removes the element returned by most recent call to next.
+         * @throws IllegalStateException if next has not yet been called
+         *                               or if remove was already called since recent next.
+         */
+        @Override
+        public void remove() throws IllegalStateException {
+            if (!removable) {
+                throw new IllegalStateException("Nothing to remove");
+            }
+            ArrayList.this.remove(j - 1);
+            j--;
+            removable = false;
+        }
     }
 }

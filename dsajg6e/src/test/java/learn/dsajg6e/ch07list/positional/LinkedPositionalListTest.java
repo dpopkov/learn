@@ -2,6 +2,8 @@ package learn.dsajg6e.ch07list.positional;
 
 import org.junit.Test;
 
+import java.util.Iterator;
+
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
@@ -73,5 +75,39 @@ public class LinkedPositionalListTest {
         list.remove(p10);
         list.remove(p30);
         assertThat(list.isEmpty(), is(true));
+    }
+
+    @Test
+    public void canIterate() {
+        LinkedPositionalList<Integer> list = new LinkedPositionalList<>();
+        list.addLast(10);
+        list.addLast(20);
+        list.addLast(30);
+        Iterator<Integer> it = list.iterator();
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(10));
+        assertThat(it.next(), is(20));
+        it.remove();
+        assertThat(it.next(), is(30));
+        assertThat(it.hasNext(), is(false));
+        assertThat(list.first().getElement(), is(10));
+        assertThat(list.last().getElement(), is(30));
+    }
+
+    @Test
+    public void canIteratePositions() {
+        LinkedPositionalList<Integer> list = new LinkedPositionalList<>();
+        list.addLast(10);
+        list.addLast(20);
+        list.addLast(30);
+        Iterator<Position<Integer>> it = list.positions();
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next().getElement(), is(10));
+        assertThat(it.next().getElement(), is(20));
+        it.remove();
+        assertThat(it.next().getElement(), is(30));
+        assertThat(it.hasNext(), is(false));
+        assertThat(list.first().getElement(), is(10));
+        assertThat(list.last().getElement(), is(30));
     }
 }
