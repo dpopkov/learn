@@ -8,7 +8,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CsvSalesRepository {
+public class CsvSalesRepository implements SalesRepository {
     private final String fileLocation;
     private PrintStream error;
     private List<Sale> sales;
@@ -26,6 +26,7 @@ public class CsvSalesRepository {
         return Integer.parseInt(value.trim());
     }
 
+    @Override
     public List<Sale> loadSales() {
         if (sales == null) {
             sales = new ArrayList<>();

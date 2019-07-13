@@ -6,7 +6,10 @@ public class SaleReportRunner {
             System.out.println("You must provide a command line argument specifying the file to analyse.");
             System.exit(-1);
         }
-        SaleReport report = new SaleReport(System.out, args[0]);
+        CsvSalesRepository repo = new CsvSalesRepository(args[0]);
+        repo.setError(System.err);
+        SalesAnalysisService analyser = new SalesAnalysisService(repo);
+        SaleReport report = new SaleReport(System.out, analyser);
         report.report();
     }
 }

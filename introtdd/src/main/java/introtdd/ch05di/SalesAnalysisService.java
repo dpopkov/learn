@@ -7,10 +7,10 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingInt;
 
 public class SalesAnalysisService {
-    private final String fileLocation;
+    private final SalesRepository repo;
 
-    public SalesAnalysisService(String fileLocation) {
-        this.fileLocation = fileLocation;
+    public SalesAnalysisService(SalesRepository repo) {
+        this.repo = repo;
     }
 
     public Map<String, Integer> tallyProductSales() {
@@ -22,7 +22,6 @@ public class SalesAnalysisService {
     }
 
     private Map<String, Integer> tallySalesBy(Function<Sale, String> classifier) {
-        CsvSalesRepository repo = new CsvSalesRepository(fileLocation);
         return repo.loadSales()
                 .stream()
                 .collect(groupingBy(classifier,
