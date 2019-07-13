@@ -40,4 +40,26 @@ public interface PositionalList<E> {
 
     /** Removes the element stored at position p and returns it (invalidating p). */
     E remove(Position<E> p) throws IllegalArgumentException;
+
+    /** Insertion sort of a list into non-decreasing order. */
+    static <E extends Comparable<E>> void insertionSort(PositionalList<E> list) {
+        if (list.size() < 2) {
+            return;
+        }
+        Position<E> marker = list.first();
+        while (marker != list.last()) {
+            Position<E> pivot = list.after(marker);
+            E value = pivot.getElement();
+            if (value.compareTo(marker.getElement()) > 0) {
+                marker = pivot;
+            } else {
+                Position<E> walk = marker;
+                while (walk != list.first() && list.before(walk).getElement().compareTo(value) > 0) {
+                    walk = list.before(walk);
+                }
+                list.remove(pivot);
+                list.addBefore(walk, value);
+            }
+        }
+    }
 }
