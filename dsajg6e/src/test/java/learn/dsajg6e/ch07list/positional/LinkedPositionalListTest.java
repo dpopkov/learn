@@ -100,7 +100,7 @@ public class LinkedPositionalListTest {
         list.addLast(10);
         list.addLast(20);
         list.addLast(30);
-        Iterator<Position<Integer>> it = list.positions();
+        Iterator<Position<Integer>> it = list.positions().iterator();
         assertThat(it.hasNext(), is(true));
         assertThat(it.next().getElement(), is(10));
         assertThat(it.next().getElement(), is(20));

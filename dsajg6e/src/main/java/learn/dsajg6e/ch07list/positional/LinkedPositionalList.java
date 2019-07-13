@@ -137,41 +137,38 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new LinkedPositionalListIterator();
+        return new ElementIterator();
     }
 
-    public Iterator<Position<E>> positions() {
-        return new PositionIterator();
+    /** Returns an iterable representation o the list's positions. */
+    public Iterable<Position<E>> positions() {
+        return new PositionIterable();
     }
 
-    private class LinkedPositionalListIterator implements Iterator<E> {
-        private Node<E> node = headerSentinel.getNext();
-        private boolean removable = false;
+    /** Adapts the iteration produced by {@link #positions()} to return elements. */
+    private class ElementIterator implements Iterator<E> {
+        private final Iterator<Position<E>> posIterator = new PositionIterator();
 
         @Override
         public boolean hasNext() {
-            return node != trailerSentinel;
+            return posIterator.hasNext();
         }
 
         @Override
         public E next() throws NoSuchElementException {
-            if (node == trailerSentinel) {
-                throw new NoSuchElementException("No next element");
-            }
-            E element = node.getElement();
-            node = node.getNext();
-            removable = true;
-            return element;
+            return posIterator.next().getElement();
         }
 
         @Override
         public void remove() throws IllegalStateException {
-            if (!removable || node.getPrev() == headerSentinel) {
-                throw new IllegalStateException("Nothing to remove");
-            }
-            Node<E> prev = node.getPrev();
-            LinkedPositionalList.this.remove(prev);
-            removable = false;
+            posIterator.remove();
+        }
+    }
+
+    private class PositionIterable implements Iterable<Position<E>> {
+        @Override
+        public Iterator<Position<E>> iterator() {
+            return new PositionIterator();
         }
     }
 
@@ -205,8 +202,6 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
             recent = null;
         }
     }
-
-    // TODO: PositionIterable (and change return type of positions() method)
 
     private static class Node<E> implements Position<E> {
         private E element;
