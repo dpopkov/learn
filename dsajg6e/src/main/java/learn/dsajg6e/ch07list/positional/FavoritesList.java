@@ -7,7 +7,7 @@ import java.util.Iterator;
  * Maintains a list of elements ordered according to access frequency.
  */
 public class FavoritesList<E> {
-    private final LinkedPositionalList<Item<E>> list = new LinkedPositionalList<>();
+    protected final LinkedPositionalList<Item<E>> list = new LinkedPositionalList<>();
 
     public FavoritesList() {
     }
