@@ -1,5 +1,6 @@
 package learn.dsajg6e.ch07list;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -70,6 +71,14 @@ public class ArrayList<E> implements List<E>, Iterable<E> {
         size--;
         data[size] = null;
         return removed;
+    }
+
+    /* Implemented as R-7.5 */
+    /** Trims the capacity of the list to the current size. */
+    public void trimToSize() {
+        if (size < data.length) {
+            data = Arrays.copyOf(data, size);
+        }
     }
 
     private void checkIndex(int i, int upperBound) {

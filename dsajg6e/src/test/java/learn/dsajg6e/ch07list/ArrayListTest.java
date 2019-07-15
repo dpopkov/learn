@@ -68,4 +68,16 @@ public class ArrayListTest {
         assertThat(list.get(0), is(10));
         assertThat(list.get(1), is(30));
     }
+
+    @Test
+    public void whenTrimToSizeThenAllElementsRemain() {
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(10);
+        list.add(20);
+        list.add(30);
+        list.trimToSize();
+        assertThat(list.get(0), is(10));
+        assertThat(list.get(1), is(20));
+        assertThat(list.get(2), is(30));
+    }
 }
