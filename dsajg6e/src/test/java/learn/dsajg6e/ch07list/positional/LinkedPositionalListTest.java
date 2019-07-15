@@ -110,4 +110,41 @@ public class LinkedPositionalListTest {
         assertThat(list.first().getElement(), is(10));
         assertThat(list.last().getElement(), is(30));
     }
+
+    @Test
+    public void canFindIndexByPosition() {
+        PositionalList<Integer> list = new LinkedPositionalList<>();
+        Position<Integer> p10 = list.addLast(10);
+        list.addLast(20);
+        Position<Integer> p30 = list.addLast(30);
+        assertThat(list.indexOf(p10), is(0));
+        assertThat(list.indexOf(p30), is(2));
+    }
+
+    @Test
+    public void canFindPositions() {
+        PositionalList<Integer> list = new LinkedPositionalList<>();
+        list.addLast(10);
+        list.addLast(20);
+        list.addLast(30);
+        assertThat(list.findPosition(10).getElement(), is(10));
+        assertThat(list.findPosition(30).getElement(), is(30));
+    }
+
+    /* R-7.14
+     When using Position from other list then checking if a given position is
+     actually a member of the relevant list is not done.
+     Therefore, the result is wrong.*/
+    @Test
+    public void addingPositionFromOtherListChangesOtherListAndSizesIncorrectly() {
+        PositionalList<Integer> list = new LinkedPositionalList<>();
+        list.addLast(10);
+        list.addLast(20);
+        PositionalList<Integer> other = new LinkedPositionalList<>();
+        Position<Integer> p = other.addLast(30);
+        list.addAfter(p, 40);
+        assertThat(list.size(), is(3));
+        assertThat(other.size(), is(1));
+        assertThat(other.last().getElement(), is(40));
+    }
 }

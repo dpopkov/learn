@@ -46,12 +46,20 @@ public class ArrayList<E> implements List<E>, Iterable<E> {
         return replaced;
     }
 
+
     @Override
     public void add(int i, E e) throws IndexOutOfBoundsException {
         checkIndex(i, size + 1);
-        ensureCapacity(size + 1);
-        if (i < size) {
-            System.arraycopy(data, i, data, i + 1, size - i);
+        if (i == size) {
+            ensureCapacity(size + 1);
+        } else if (i < size) {
+            if (size + 1 > data.length) {
+                /* Improved resizing so that the elements are copied into their final place
+                in the new array (R-7.9). */
+                resizeWidthGapForInsert(increasedCapacity(), i);
+            } else {
+                System.arraycopy(data, i, data, i + 1, size - i);
+            }
         }
         data[i] = e;
         size++;
@@ -73,6 +81,7 @@ public class ArrayList<E> implements List<E>, Iterable<E> {
         return removed;
     }
 
+
     /* Implemented as R-7.5 */
     /** Trims the capacity of the list to the current size. */
     public void trimToSize() {
@@ -80,7 +89,7 @@ public class ArrayList<E> implements List<E>, Iterable<E> {
             data = Arrays.copyOf(data, size);
         }
     }
-
+    /** Checks that the index is in the range from 0 to the specified upperBound (exclusive). */
     private void checkIndex(int i, int upperBound) {
         if (i < 0 || i >= upperBound) {
             throw new IndexOutOfBoundsException("Illegal index: " + i);
@@ -89,14 +98,26 @@ public class ArrayList<E> implements List<E>, Iterable<E> {
 
     private void ensureCapacity(int capacity) {
         if (capacity > data.length) {
-            resize(data.length * 2);
+            resize(increasedCapacity());
         }
+    }
+
+    private int increasedCapacity() {
+        return data.length * 2;
     }
 
     @SuppressWarnings("unchecked")
     private void resize(int capacity) {
         E[] temp = (E[]) new Object[capacity];
         System.arraycopy(data, 0, temp, 0, data.length);
+        data = temp;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void resizeWidthGapForInsert(int capacity, int newElementIdx) {
+        E[] temp = (E[]) new Object[capacity];
+        System.arraycopy(data, 0, temp, 0, newElementIdx);
+        System.arraycopy(data, newElementIdx, temp, newElementIdx + 1, data.length - newElementIdx);
         data = temp;
     }
 

@@ -107,6 +107,41 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
         return removed;
     }
 
+    /* R-7.12 */
+    /**
+     * Returns the current index of the element stored at position p.
+     * @param p position of the element
+     */
+    @Override
+    public int indexOf(Position<E> p) {
+        Node<E> node = validate(p);
+        Node<E> current = headerSentinel.getNext();
+        int index = 0;
+        while (current != trailerSentinel && current != node) {
+            current = current.getNext();
+            index++;
+        }
+        if (current == node) {
+            return index;
+        } else {
+            return -1;
+        }
+    }
+
+    /* R-7.13 */
+    /**
+     * Returns the first position containing an element equal to e or null if not found.
+     * @param e element
+     */
+    @Override
+    public Position<E> findPosition(E e) {
+        Position<E> pos = first();
+        while (pos != null && !pos.getElement().equals(e)) {
+            pos = after(pos);
+        }
+        return pos;
+    }
+
     private Position<E> addBetween(E e, Node<E> predecessor, Node<E> successor) {
         Node<E> node = new Node<>(e, predecessor, successor);
         predecessor.setNext(node);

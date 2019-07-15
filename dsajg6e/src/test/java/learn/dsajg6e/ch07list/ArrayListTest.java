@@ -20,13 +20,18 @@ public class ArrayListTest {
 
     @Test
     public void whenAddInTheMiddleThenAdded() {
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>(1);
         list.add(0, 10);
         list.add(1, 20);
         list.add(1, 15);
+        list.add(1, 12);
+        list.add(1, 11);
+        assertThat(list.size(), is(5));
         assertThat(list.get(0), is(10));
-        assertThat(list.get(1), is(15));
-        assertThat(list.get(2), is(20));
+        assertThat(list.get(1), is(11));
+        assertThat(list.get(2), is(12));
+        assertThat(list.get(3), is(15));
+        assertThat(list.get(4), is(20));
     }
 
     @Test

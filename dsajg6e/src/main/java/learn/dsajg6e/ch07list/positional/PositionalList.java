@@ -41,6 +41,14 @@ public interface PositionalList<E> {
     /** Removes the element stored at position p and returns it (invalidating p). */
     E remove(Position<E> p) throws IllegalArgumentException;
 
+    /* R-7.12 */
+    /** Returns the current index of the element stored at position p. */
+    int indexOf(Position<E> p);
+
+    /* R-7.13 */
+    /** Returns the first position containing an element equal to e. */
+    Position<E> findPosition(E e);
+
     /** Insertion sort of a list into non-decreasing order. */
     static <E extends Comparable<E>> void insertionSort(PositionalList<E> list) {
         if (list.size() < 2) {
