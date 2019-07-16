@@ -85,4 +85,32 @@ public class ArrayListTest {
         assertThat(list.get(1), is(20));
         assertThat(list.get(2), is(30));
     }
+
+    /* R-7.18 */
+    @Test
+    public void whenAddElementThenContainsIt() {
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(10);
+        list.add(20);
+        assertThat(list.contains(10), is(true));
+        assertThat(list.contains(20), is(true));
+    }
+
+    @Test
+    public void whenNotHavingElementsThenContainsReturnsFalse() {
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(5);
+        assertThat(list.contains(10), is(false));
+    }
+
+    /* R-7.19 */
+    @Test
+    public void afterClearListIsEmpty() {
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(10);
+        list.add(20);
+        assertThat(list.isEmpty(), is(false));
+        list.clear();
+        assertThat(list.isEmpty(), is(true));
+    }
 }

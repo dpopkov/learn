@@ -46,7 +46,6 @@ public class ArrayList<E> implements List<E>, Iterable<E> {
         return replaced;
     }
 
-
     @Override
     public void add(int i, E e) throws IndexOutOfBoundsException {
         checkIndex(i, size + 1);
@@ -81,6 +80,25 @@ public class ArrayList<E> implements List<E>, Iterable<E> {
         return removed;
     }
 
+    /* R-7.18 */
+    /** Checks whether this list contains the specified value. */
+    public boolean contains(E value) {
+        for (int i = 0; i < size; i++) {
+            if (data[i].equals(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /* R-7.19 */
+    /** Removes oll elements from the list. */
+    public void clear() {
+        for (int i = 0; i < size; i++) {
+            data[i] = null;
+        }
+        size = 0;
+    }
 
     /* Implemented as R-7.5 */
     /** Trims the capacity of the list to the current size. */

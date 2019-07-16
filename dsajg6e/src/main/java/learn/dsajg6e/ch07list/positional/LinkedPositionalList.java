@@ -181,7 +181,7 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
     }
 
     /** Adapts the iteration produced by {@link #positions()} to return elements. */
-    private class ElementIterator implements Iterator<E> {
+    protected class ElementIterator implements Iterator<E> {
         private final Iterator<Position<E>> posIterator = new PositionIterator();
 
         @Override
@@ -235,6 +235,11 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
             }
             LinkedPositionalList.this.remove(recent);
             recent = null;
+        }
+
+        @Override
+        public String toString() {
+            return "(" + cursor + ")";
         }
     }
 
