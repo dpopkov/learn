@@ -6,23 +6,12 @@ package learn.dsajg6e.ch07list.exer;
  * well as insertions and removals at the end of the array list.
  */
 public class C0725CircularArrayList<E> extends RandomAccessAbstractList<E> {
-    private final E[] data;
-    private int size;
-    private int front;
+    protected E[] data;
+    protected int front;
 
     @SuppressWarnings("unchecked")
     public C0725CircularArrayList(int capacity) {
         data = (E[]) new Object[capacity];
-    }
-
-    @Override
-    public int size() {
-        return size;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
     }
 
     @Override
@@ -31,7 +20,7 @@ public class C0725CircularArrayList<E> extends RandomAccessAbstractList<E> {
         return data[position(i)];
     }
 
-    private int position(int index) {
+    protected int position(int index) {
         return (front + index) % data.length;
     }
 
