@@ -113,4 +113,17 @@ public class ArrayListTest {
         list.clear();
         assertThat(list.isEmpty(), is(true));
     }
+
+    /* C-7.29 */
+    @Test
+    public void whenActualNumberOfElementsLessThanQuarterCapacityThenShrinkTwice() {
+        ArrayList<Integer> list = new ArrayList<>(8);
+        assertThat(list.getCapacity(), is(8));
+        list.add(10);
+        list.add(20);
+        list.remove(1);
+        assertThat(list.getCapacity(), is(4));
+        assertThat(list.get(0), is(10));
+        assertThat(list.size(), is(1));
+    }
 }

@@ -77,7 +77,16 @@ public class ArrayList<E> implements List<E>, Iterable<E> {
         System.arraycopy(data, i + 1, data, i, size - i - 1);
         size--;
         data[size] = null;
+        /* C-7.29 */
+        checkForShrinking();
         return removed;
+    }
+
+    /* C-7.29 */
+    private void checkForShrinking() {
+        if (size < data.length / 4) {
+            resize(data.length / 2);
+        }
     }
 
     /* R-7.18 */
@@ -127,7 +136,7 @@ public class ArrayList<E> implements List<E>, Iterable<E> {
     @SuppressWarnings("unchecked")
     private void resize(int capacity) {
         E[] temp = (E[]) new Object[capacity];
-        System.arraycopy(data, 0, temp, 0, data.length);
+        System.arraycopy(data, 0, temp, 0, size);
         data = temp;
     }
 
@@ -142,6 +151,11 @@ public class ArrayList<E> implements List<E>, Iterable<E> {
     @Override
     public Iterator<E> iterator() {
         return new ArrayIterator();
+    }
+
+    /* Returns capacity of the list for testing purposes */
+    int getCapacity() {
+        return data.length;
     }
 
     private class ArrayIterator implements Iterator<E> {
