@@ -9,8 +9,8 @@ import java.util.NoSuchElementException;
  * @param <E> type of elements in the list
  */
 public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
-    private final Node<E> headerSentinel;
-    private final Node<E> trailerSentinel;
+    private Node<E> headerSentinel;
+    private Node<E> trailerSentinel;
     private int size;
 
     public LinkedPositionalList() {
@@ -180,6 +180,39 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
         return new PositionIterable();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        if (size > 0) {
+            Position<E> pos = first();
+            sb.append(pos.getElement());
+            for (int i = 1; i < size; i++) {
+                pos = after(pos);
+                sb.append(", ");
+                sb.append(pos.getElement());
+            }
+        }
+        sb.append(']');
+        return sb.toString();
+    }
+
+    /* C-7.42 */
+    public void reverse() {
+        if (size < 2) {
+            return;
+        }
+        Node<E> current = headerSentinel;
+        while (current != null) {
+            Node<E> next = current.getNext();
+            current.swapNextPrev();
+            current = next;
+        }
+        Node<E> tmp = headerSentinel;
+        headerSentinel = trailerSentinel;
+        trailerSentinel = tmp;
+    }
+
     /** Adapts the iteration produced by {@link #positions()} to return elements. */
     protected class ElementIterator implements Iterator<E> {
         private final Iterator<Position<E>> posIterator = new PositionIterator();
@@ -280,6 +313,12 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
 
         public void setNext(Node<E> next) {
             this.next = next;
+        }
+
+        private void swapNextPrev() {
+            Node<E> tmp = next;
+            next = prev;
+            prev = tmp;
         }
 
         @Override

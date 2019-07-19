@@ -147,4 +147,16 @@ public class LinkedPositionalListTest {
         assertThat(other.size(), is(1));
         assertThat(other.last().getElement(), is(40));
     }
+
+    /* C-7.42 */
+    @Test
+    public void canReverseOrderOfElements() {
+        LinkedPositionalList<Integer> list = new LinkedPositionalList<>();
+        list.addLast(10);
+        list.addLast(20);
+        list.addLast(30);
+        assertThat(list.toString(), is("[10, 20, 30]"));
+        list.reverse();
+        assertThat(list.toString(), is("[30, 20, 10]"));
+    }
 }
