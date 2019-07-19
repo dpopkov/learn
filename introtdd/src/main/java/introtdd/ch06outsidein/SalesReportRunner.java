@@ -15,6 +15,9 @@ public class SalesReportRunner {
     }
 
     void run(String fileLocation) {
-        out.println("Hello World");
+        SalesRepository repo = new SalesRepository(fileLocation);
+        SalesAnalyser analyzer = new SalesAnalyser(repo);
+        SalesReport report = new SalesReport(analyzer);
+        report.run();
     }
 }
