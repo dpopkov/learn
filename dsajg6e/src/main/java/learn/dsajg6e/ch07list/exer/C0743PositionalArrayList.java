@@ -47,32 +47,4 @@ public class C0743PositionalArrayList<E> {
     public E get(int index) {
         return data[index].getElement();
     }
-
-    public static class PositionInArray<E> implements Position<E> {
-        private int index;
-        private final E element;
-
-        public PositionInArray(int index, E element) {
-            this.index = index;
-            this.element = element;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        @Override
-        public E getElement() {
-            return element;
-        }
-
-        @Override
-        public String toString() {
-            return "{" + index + ", " + element + '}';
-        }
-
-        public void incrementIndex() {
-            index++;
-        }
-    }
 }
