@@ -2,6 +2,7 @@ package learn.dsajg6e.ch07list.positional;
 
 import org.junit.Test;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.ListIterator;
 
@@ -254,5 +255,16 @@ public class LinkedPositionalListTest {
         it.add(5);
         assertThat(list.toString(), is("[5, 10]"));
         assertThat(it.next(), is(10));
+    }
+
+    /* C-7.50 */
+    @Test(expected = ConcurrentModificationException.class)
+    public void whenListIsChangedThenListIteratorFailsFast() {
+        LinkedPositionalList<Integer> list = new LinkedPositionalList<>();
+        list.addLast(10);
+        ListIterator<Integer> it = list.listIterator();
+        list.addLast(20);
+        Integer n = it.next();
+        System.out.println(n);
     }
 }

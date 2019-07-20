@@ -1,5 +1,6 @@
 package learn.dsajg6e.ch07list.positional;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
@@ -13,6 +14,8 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
     protected Node<E> headerSentinel;
     protected Node<E> trailerSentinel;
     private int size;
+    /* C-7.50 */
+    private int modCount;
 
     public LinkedPositionalList() {
         headerSentinel = new Node<>(null, null, null);
@@ -101,6 +104,7 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
         successor.setPrev(predecessor);
         predecessor.setNext(successor);
         size--;
+        modCount++;
         E removed = node.getElement();
         node.setNext(null);
         node.setNext(null);
@@ -153,6 +157,7 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
         predecessor.setNext(node);
         successor.setPrev(node);
         size++;
+        modCount++;
         return node;
     }
 
@@ -217,6 +222,7 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
         Node<E> tmp = headerSentinel;
         headerSentinel = trailerSentinel;
         trailerSentinel = tmp;
+        modCount++;
     }
 
     /** Adapts the iteration produced by {@link #positions()} to return elements. */
@@ -244,9 +250,12 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
         private Node<E> next = headerSentinel.getNext();
         private int nextIndex = 0;
         private Node<E> lastReturned;
+        /* C-7.50 */
+        private int expectedModCount = modCount;
 
         @Override
         public boolean hasNext() {
+            checkForComodification();
             return next != trailerSentinel;
         }
 
@@ -264,6 +273,7 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
 
         @Override
         public boolean hasPrevious() {
+            checkForComodification();
             return next.getPrev() != headerSentinel;
         }
 
@@ -298,10 +308,12 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
 
         @Override
         public void remove() {
+            checkForComodification();
             if (lastReturned == null) {
                 throw new IllegalStateException("Nothing to remove");
             }
             LinkedPositionalList.this.remove(lastReturned);
+            expectedModCount++;
             lastReturned = null;
         }
 
@@ -316,7 +328,14 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
         @Override
         public void add(E e) {
             LinkedPositionalList.this.addBetween(e, next.getPrev(), next);
+            expectedModCount++;
             lastReturned = null;
+        }
+
+        private void checkForComodification() {
+            if (expectedModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
         }
     }
 
