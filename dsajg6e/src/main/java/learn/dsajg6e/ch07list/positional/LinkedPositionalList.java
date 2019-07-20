@@ -1,6 +1,7 @@
 package learn.dsajg6e.ch07list.positional;
 
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -9,8 +10,8 @@ import java.util.NoSuchElementException;
  * @param <E> type of elements in the list
  */
 public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
-    private Node<E> headerSentinel;
-    private Node<E> trailerSentinel;
+    protected Node<E> headerSentinel;
+    protected Node<E> trailerSentinel;
     private int size;
 
     public LinkedPositionalList() {
@@ -142,6 +143,11 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
         return pos;
     }
 
+    /* C-7.49 */
+    public ListIterator<E> listIterator() {
+        return new ElementListIterator();
+    }
+
     private Position<E> addBetween(E e, Node<E> predecessor, Node<E> successor) {
         Node<E> node = new Node<>(e, predecessor, successor);
         predecessor.setNext(node);
@@ -233,6 +239,87 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
         }
     }
 
+    /* C-7.49 */
+    private class ElementListIterator implements ListIterator<E> {
+        private Node<E> next = headerSentinel.getNext();
+        private int nextIndex = 0;
+        private Node<E> lastReturned;
+
+        @Override
+        public boolean hasNext() {
+            return next != trailerSentinel;
+        }
+
+        @Override
+        public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            E element = next.getElement();
+            lastReturned = next;
+            next = next.getNext();
+            nextIndex++;
+            return element;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return next.getPrev() != headerSentinel;
+        }
+
+        @Override
+        public E previous() {
+            if (!hasPrevious()) {
+                throw new NoSuchElementException();
+            }
+            Node<E> prev = next.getPrev();
+            E element = prev.getElement();
+            lastReturned = prev;
+            next = prev;
+            nextIndex--;
+            return element;
+        }
+
+        @Override
+        public int nextIndex() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return nextIndex;
+        }
+
+        @Override
+        public int previousIndex() {
+            if (!hasPrevious()) {
+                throw new NoSuchElementException();
+            }
+            return nextIndex - 1;
+        }
+
+        @Override
+        public void remove() {
+            if (lastReturned == null) {
+                throw new IllegalStateException("Nothing to remove");
+            }
+            LinkedPositionalList.this.remove(lastReturned);
+            lastReturned = null;
+        }
+
+        @Override
+        public void set(E e) {
+            if (lastReturned == null) {
+                throw new IllegalStateException("No position to set new value");
+            }
+            lastReturned.setElement(e);
+        }
+
+        @Override
+        public void add(E e) {
+            LinkedPositionalList.this.addBetween(e, next.getPrev(), next);
+            lastReturned = null;
+        }
+    }
+
     private class PositionIterable implements Iterable<Position<E>> {
         @Override
         public Iterator<Position<E>> iterator() {
@@ -276,7 +363,7 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
         }
     }
 
-    private static class Node<E> implements Position<E> {
+    protected static class Node<E> implements Position<E> {
         private E element;
         private Node<E> prev;
         private Node<E> next;
