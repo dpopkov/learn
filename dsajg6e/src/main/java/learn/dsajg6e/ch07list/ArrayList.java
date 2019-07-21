@@ -116,6 +116,23 @@ public class ArrayList<E> implements List<E>, Iterable<E> {
             data = Arrays.copyOf(data, size);
         }
     }
+
+    /* C-.52 */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        if (size > 1) {
+            sb.append(data[0]);
+            for (int i = 1; i < size; i++) {
+                sb.append(", ");
+                sb.append(data[i]);
+            }
+        }
+        sb.append(']');
+        return sb.toString();
+    }
+
     /** Checks that the index is in the range from 0 to the specified upperBound (exclusive). */
     private void checkIndex(int i, int upperBound) {
         if (i < 0 || i >= upperBound) {
