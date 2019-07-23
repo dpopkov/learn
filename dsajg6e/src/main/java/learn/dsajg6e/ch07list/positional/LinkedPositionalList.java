@@ -10,10 +10,9 @@ import java.util.NoSuchElementException;
  * Implementation of a positional list stored as a doubly linked list.
  * @param <E> type of elements in the list
  */
-public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
+public class LinkedPositionalList<E> extends AbstractPositionalList<E> implements Iterable<E> {
     protected Node<E> headerSentinel;
     protected Node<E> trailerSentinel;
-    private int size;
     /* C-7.50 */
     private int modCount;
 
@@ -47,18 +46,6 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
     public Position<E> after(Position<E> p) throws IllegalArgumentException {
         Node<E> node = validate(p);
         return position(node.getNext());
-    }
-
-    /** Tests whether the list is empty. */
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
-    /** Returns the number of elements in the list. */
-    @Override
-    public int size() {
-        return size;
     }
 
     /** Inserts element e at the front of the list and returns its new position. */
@@ -189,23 +176,6 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
     /** Returns an iterable representation o the list's positions. */
     public Iterable<Position<E>> positions() {
         return new PositionIterable();
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append('[');
-        if (size > 0) {
-            Position<E> pos = first();
-            sb.append(pos.getElement());
-            for (int i = 1; i < size; i++) {
-                pos = after(pos);
-                sb.append(", ");
-                sb.append(pos.getElement());
-            }
-        }
-        sb.append(']');
-        return sb.toString();
     }
 
     /* C-7.42 */
