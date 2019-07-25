@@ -4,6 +4,7 @@
  * 8.1 General Trees<br>
  *     Tree, AbstractTree<br>
  * 8.2 Binary Trees<br>
+ *     BinaryTree, AbstractBinaryTree<br>
  * 8.3 Implementing Trees<br>
  * 8.4 Tree Traversal Algorithms<br>
  * 8.5 Exercises<br>
