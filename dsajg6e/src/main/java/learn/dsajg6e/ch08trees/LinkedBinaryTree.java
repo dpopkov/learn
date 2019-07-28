@@ -2,8 +2,6 @@ package learn.dsajg6e.ch08trees;
 
 import learn.dsajg6e.ch07list.positional.Position;
 
-import java.util.Iterator;
-
 public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
     protected static class Node<E> implements Position<E> {
@@ -108,16 +106,6 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     @Override
     public int size() {
         return size;
-    }
-
-    @Override
-    public Iterator<E> iterator() {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-    @Override
-    public Iterable<Position<E>> positions() {
-        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     /* Update methods*/

@@ -2,6 +2,10 @@ package learn.dsajg6e.ch08trees;
 
 import learn.dsajg6e.ch07list.positional.Position;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * An abstract base class providing some functionality of the {@link Tree} interface.
  * @param <E> type of elements in the tree
@@ -54,5 +58,66 @@ public abstract class AbstractTree<E> implements Tree<E> {
             h = Math.max(h, 1 + height(c));
         }
         return h;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new ElementIterator();
+    }
+
+    /** Iterates all elements of {@code AbstractTree} instance, based upon
+     * an iteration of the positions of the tree. */
+    private class ElementIterator implements Iterator<E> {
+        private final Iterator<Position<E>> positionIterator = positions().iterator();
+
+        @Override
+        public boolean hasNext() {
+            return positionIterator.hasNext();
+        }
+
+        @Override
+        public E next() {
+            return positionIterator.next().getElement();
+        }
+
+        @Override
+        public void remove() {
+            positionIterator.remove();
+        }
+    }
+
+    @Override
+    public Iterable<Position<E>> positions() {
+        return preOrder();
+    }
+
+    /** Returns iterable container of the positions of the tree in pre-order. */
+    public Iterable<Position<E>> preOrder() {
+        List<Position<E>> snapshot = new ArrayList<>(size());
+        preOrderSubtree(root(), snapshot);
+        return snapshot;
+    }
+
+    /** Performs a pre-order traversal of the sub-tree rooted at position p of a tree. */
+    private void preOrderSubtree(Position<E> p, List<Position<E>> snapshot) {
+        snapshot.add(p);
+        for (Position<E> c : children(p)) {
+            preOrderSubtree(c, snapshot);
+        }
+    }
+
+    /** Returns an iterable collection of positions of the tree, reported in post-order. */
+    public Iterable<Position<E>> postOrder() {
+        List<Position<E>> snapshot = new ArrayList<>(size());
+        postOrderSubtree(root(), snapshot);
+        return snapshot;
+    }
+
+    /** Adds positions of the sub-tree rooted at position p to the given snapshot in post-order. */
+    private void postOrderSubtree(Position<E> p, List<Position<E>> snapshot) {
+        for (Position<E> c : children(p)) {
+            preOrderSubtree(c, snapshot);
+        }
+        snapshot.add(p);
     }
 }
