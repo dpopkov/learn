@@ -11,11 +11,7 @@ public class AbstractTreeTest {
 
     @Test
     public void iteratorCanIterate() {
-        LinkedBinaryTree<Integer> tree = new LinkedBinaryTree<>();
-        var p20 = tree.addRoot(20);
-        tree.addLeft(p20, 10);
-        tree.addRight(p20, 30);
-        Iterator<Integer> it = tree.iterator();
+        Iterator<Integer> it = makeTree().iterator();
         assertThat(it.next(), is(20));
         assertThat(it.next(), is(10));
         assertThat(it.next(), is(30));
@@ -24,14 +20,27 @@ public class AbstractTreeTest {
 
     @Test
     public void canTraversePostOrder() {
-        LinkedBinaryTree<Integer> tree = new LinkedBinaryTree<>();
-        var p20 = tree.addRoot(20);
-        tree.addLeft(p20, 10);
-        tree.addRight(p20, 30);
-        var it = tree.postOrder().iterator();
+        var it = makeTree().postOrder().iterator();
         assertThat(it.next().getElement(), is(10));
         assertThat(it.next().getElement(), is(30));
         assertThat(it.next().getElement(), is(20));
         assertThat(it.hasNext(), is(false));
+    }
+
+    @Test
+    public void canTraverseBreadthFirst() {
+        var it = makeTree().breadthFirst().iterator();
+        assertThat(it.next().getElement(), is(20));
+        assertThat(it.next().getElement(), is(10));
+        assertThat(it.next().getElement(), is(30));
+        assertThat(it.hasNext(), is(false));
+    }
+
+    private LinkedBinaryTree<Integer> makeTree() {
+        LinkedBinaryTree<Integer> tree = new LinkedBinaryTree<>();
+        var p20 = tree.addRoot(20);
+        tree.addLeft(p20, 10);
+        tree.addRight(p20, 30);
+        return tree;
     }
 }

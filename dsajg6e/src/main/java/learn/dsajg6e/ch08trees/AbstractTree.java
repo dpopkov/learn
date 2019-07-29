@@ -2,9 +2,7 @@ package learn.dsajg6e.ch08trees;
 
 import learn.dsajg6e.ch07list.positional.Position;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * An abstract base class providing some functionality of the {@link Tree} interface.
@@ -119,5 +117,21 @@ public abstract class AbstractTree<E> implements Tree<E> {
             preOrderSubtree(c, snapshot);
         }
         snapshot.add(p);
+    }
+
+    public Iterable<Position<E>> breadthFirst() {
+        List<Position<E>> snapshot = new ArrayList<>(size());
+        if (!isEmpty()) {
+            Queue<Position<E>> queue = new ArrayDeque<>();
+            queue.add(root());
+            while (!queue.isEmpty()) {
+                Position<E> p = queue.remove();
+                snapshot.add(p);
+                for (Position<E> child : children(p)) {
+                    queue.add(child);
+                }
+            }
+        }
+        return snapshot;
     }
 }
