@@ -2,6 +2,9 @@ package learn.dsajg6e.ch08trees;
 
 import learn.dsajg6e.ch07list.positional.Position;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
     protected static class Node<E> implements Position<E> {
@@ -61,6 +64,11 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
             left = null;
             right = null;
             parent = null;
+        }
+
+        @Override
+        public String toString() {
+            return "(" + element.toString() + ")";
         }
     }
 
@@ -201,5 +209,29 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         node.setNullsForGC();
         node.setParent(node);
         return temp;
+    }
+
+    /**
+     * Creates {@code LinkedBinaryTree} instance populated with specified elements
+     * in breadth-first order. That is elements 20, 10, 30 make tree where 20 is root,
+     * 10 is left, 30 is right.
+     * @param elements elements in breadth-first order
+     * @param <E> type of elements
+     * @return tree populated with elements
+     */
+    @SafeVarargs
+    public static <E> LinkedBinaryTree<E> of(E... elements) {
+        LinkedBinaryTree<E> tree = new LinkedBinaryTree<>();
+        var r = tree.addRoot(elements[0]);
+        Queue<Position<E>> queue = new ArrayDeque<>();
+        queue.add(r);
+        int i = 1;
+        while (!queue.isEmpty() && i < elements.length) {
+            r = queue.remove();
+            queue.add(tree.addLeft(r, elements[i]));
+            queue.add(tree.addRight(r, elements[i + 1]));
+            i += 2;
+        }
+        return tree;
     }
 }

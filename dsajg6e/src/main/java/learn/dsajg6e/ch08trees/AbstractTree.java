@@ -134,4 +134,38 @@ public abstract class AbstractTree<E> implements Tree<E> {
         }
         return snapshot;
     }
+
+    public void printPreOrderIndent() {
+        printPreOrderIndent(this, root(), 0);
+    }
+
+    static <E> void printPreOrderIndent(AbstractTree<E> tree, Position<E> p, int depth) {
+        System.out.println(spaces(depth * 2) + p.getElement());
+        for (Position<E> c : tree.children(p)) {
+            printPreOrderIndent(tree, c, depth + 1);
+        }
+    }
+
+    public void printPreOrderLabeled() {
+        printPreOrderLabeled(this, root(), new ArrayList<>());
+    }
+
+    static <E> void printPreOrderLabeled(Tree<E> tree, Position<E> p, ArrayList<Integer> path) {
+        int depth = path.size();
+        System.out.print(spaces((depth * 2)));
+        for (int j = 0; j < depth; j++) {
+            System.out.print(path.get(j) + (j == depth - 1 ? " " : "."));
+        }
+        System.out.println(p.getElement());
+        path.add(1);
+        for (Position<E> c : tree.children(p)) {
+            printPreOrderLabeled(tree, c, path);
+            path.set(depth, 1 + path.get(depth));
+        }
+        path.remove(depth);
+    }
+
+    private static String spaces(int num) {
+        return " ".repeat(num);
+    }
 }
