@@ -114,7 +114,7 @@ public abstract class AbstractTree<E> implements Tree<E> {
     /** Adds positions of the sub-tree rooted at position p to the given snapshot in post-order. */
     private void postOrderSubtree(Position<E> p, List<Position<E>> snapshot) {
         for (Position<E> c : children(p)) {
-            preOrderSubtree(c, snapshot);
+            postOrderSubtree(c, snapshot);
         }
         snapshot.add(p);
     }

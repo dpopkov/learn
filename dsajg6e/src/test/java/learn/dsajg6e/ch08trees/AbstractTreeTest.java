@@ -22,8 +22,12 @@ public class AbstractTreeTest {
 
     @Test
     public void canTraversePostOrder() {
-        var it = LinkedBinaryTree.of(20, 10, 30).postOrder().iterator();
+        var it = LinkedBinaryTree.of(20, 10, 30, 5, 15, 25, 35).postOrder().iterator();
+        assertThat(it.next().getElement(), is(5));
+        assertThat(it.next().getElement(), is(15));
         assertThat(it.next().getElement(), is(10));
+        assertThat(it.next().getElement(), is(25));
+        assertThat(it.next().getElement(), is(35));
         assertThat(it.next().getElement(), is(30));
         assertThat(it.next().getElement(), is(20));
         assertThat(it.hasNext(), is(false));
