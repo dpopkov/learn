@@ -1,5 +1,6 @@
 package learn.dsajg6e.ch08trees;
 
+import learn.dsajg6e.ch07list.positional.Position;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.*;
@@ -62,5 +63,21 @@ public class LinkedBinaryTreeTest {
         var v20 = tree.set(root, 22);
         assertThat(v20, is(20));
         assertThat(root.getElement(), is(22));
+    }
+
+    @Test
+    public void whenOfThenAddsElementsBreadthFirst() {
+        LinkedBinaryTree<Integer> tree = LinkedBinaryTree.of(20, 10, 30, null, 15, 25, null);
+        Position<Integer> root = tree.root();
+        Position<Integer> left = tree.left(root);
+        Position<Integer> right = tree.right(root);
+        assertThat(root.getElement(), is(20));
+        assertThat(left.getElement(), is(10));
+        assertThat(right.getElement(), is(30));
+        assertNull(tree.left(left).getElement());
+        assertThat(tree.right(left).getElement(), is(15));
+        assertThat(tree.left(right).getElement(), is(25));
+        assertNull(tree.right(right).getElement());
+        assertThat(tree.size(), is(7));
     }
 }
