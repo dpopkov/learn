@@ -2,7 +2,6 @@ package learn.dsajg6e.ch08trees;
 
 import learn.dsajg6e.ch07list.positional.Position;
 
-import java.io.IOException;
 import java.util.Iterator;
 
 /**
@@ -42,21 +41,4 @@ public interface Tree<E> extends Iterable<E> {
 
     /** Returns an iterable collection of all positions of the tree. */
     Iterable<Position<E>> positions();
-
-    static <E> void parenthesize(Tree<E> tree, Position<E> position, Appendable out) throws IOException {
-        out.append(position.getElement().toString());
-        if (tree.isInternal(position)) {
-            boolean first = true;
-            for (Position<E> c : tree.children(position)) {
-                if (first) {
-                    out.append(" (");
-                    first = false;
-                } else {
-                    out.append(", ");
-                }
-                parenthesize(tree, c, out);
-            }
-            out.append(')');
-        }
-    }
 }
