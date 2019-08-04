@@ -20,4 +20,33 @@ public class C0836PruneSubtreeTest {
         assertThat(tree.size(), is(2));
         assertNull(tree.left(root));
     }
+
+    /* C-8.37 - Swap */
+    @Test
+    public void testSwapAdjacentNodes() {
+        C0836PruneSubtree<Integer> tree = new C0836PruneSubtree<>();
+        LinkedBinaryTree.populate(tree, 20, 10, 30, 5, 15, 25, 35);
+        Position<Integer> root = tree.root();
+        var p = tree.left(root);
+        var q = tree.right(root);
+        tree.swap(p, q);
+        assertThat(tree.left(root).getElement(), is(30));
+        Position<Integer> right = tree.right(root);
+        assertThat(right.getElement(), is(10));
+        assertThat(tree.firstChild(right), is(5));
+    }
+
+    @Test
+    public void testSwapNonAdjacentNodes() {
+        C0836PruneSubtree<Integer> tree = new C0836PruneSubtree<>();
+        LinkedBinaryTree.populate(tree, 20, 10, 30, 5, 15, 25, 35);
+        Position<Integer> root = tree.root();
+        var left = tree.left(root);
+        var right = tree.right(root);
+        var p = tree.left(left);
+        var q = tree.right(right);
+        tree.swap(p, q);
+        assertThat(tree.left(left).getElement(), is(35));
+        assertThat(tree.right(right).getElement(), is(5));
+    }
 }

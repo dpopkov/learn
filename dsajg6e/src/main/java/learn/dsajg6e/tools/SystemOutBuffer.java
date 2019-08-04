@@ -6,6 +6,7 @@ import java.io.PrintStream;
 /**
  * Encapsulates buffer that receives data sent to {@code System.out}.
  * Accumulated output is returned by {@link #toString()} method.
+ * Use try-with-resources to perform auto-closing.
  */
 public class SystemOutBuffer implements AutoCloseable {
     private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
