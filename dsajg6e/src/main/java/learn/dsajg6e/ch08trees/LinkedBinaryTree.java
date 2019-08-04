@@ -222,16 +222,21 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     @SafeVarargs
     public static <E> LinkedBinaryTree<E> of(E... elements) {
         LinkedBinaryTree<E> tree = new LinkedBinaryTree<>();
-        var r = tree.addRoot(elements[0]);
+        populate(tree, elements);
+        return tree;
+    }
+
+    @SafeVarargs
+    public static <E> void populate(LinkedBinaryTree<E> tree, E... elements) {
+        Position<E> p = tree.addRoot(elements[0]);
         Queue<Position<E>> queue = new ArrayDeque<>();
-        queue.add(r);
+        queue.add(p);
         int i = 1;
         while (!queue.isEmpty() && i < elements.length) {
-            r = queue.remove();
-            queue.add(tree.addLeft(r, elements[i]));
-            queue.add(tree.addRight(r, elements[i + 1]));
+            p = queue.remove();
+            queue.add(tree.addLeft(p, elements[i]));
+            queue.add(tree.addRight(p, elements[i + 1]));
             i += 2;
         }
-        return tree;
     }
 }
