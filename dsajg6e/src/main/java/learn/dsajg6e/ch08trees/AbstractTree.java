@@ -30,6 +30,7 @@ public abstract class AbstractTree<E> implements Tree<E> {
     }
 
     /** Returns the number of levels separating Position p from the root. */
+    @SuppressWarnings("unused")
     public int depth(Position<E> p) {
         if (isRoot(p)) {
             return 0;
@@ -38,18 +39,8 @@ public abstract class AbstractTree<E> implements Tree<E> {
         }
     }
 
-    /** Returns the height of the tree. (Not efficient implementation). */
-    private int heightBad() {
-        int h = 0;
-        for (Position<E> p : positions()) {
-            if (isExternal(p)) {
-                h = Math.max(h, depth(p));
-            }
-        }
-        return h;
-    }
-
     /** Returns the height of the subtree rooted at Position p. */
+    @SuppressWarnings("unused")
     public int height(Position<E> p) {
         int h = 0;
         for (Position<E> c : children(p)) {
@@ -87,6 +78,11 @@ public abstract class AbstractTree<E> implements Tree<E> {
     @Override
     public Iterable<Position<E>> positions() {
         return preOrder();
+    }
+
+    @Override
+    public E firstChild(Position<E> p) {
+        return children(p).iterator().next().getElement();
     }
 
     /** Returns iterable container of the positions of the tree in pre-order. */
@@ -135,6 +131,7 @@ public abstract class AbstractTree<E> implements Tree<E> {
         return snapshot;
     }
 
+    @SuppressWarnings("unused")
     public void printPreOrderIndent() {
         printPreOrderIndent(this, root(), 0);
     }
