@@ -7,7 +7,7 @@ import java.util.Queue;
 
 public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
-    protected static class Node<E> implements Position<E> {
+    protected static class Node<E> implements BinaryNode<E> {
         private E element;
         private Node<E> parent;
         private Node<E> left;
