@@ -135,7 +135,7 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
         return null;
     }
 
-    private BinaryNode<E> findMostLeft(BinaryNode<E> p) {
+    protected BinaryNode<E> findMostLeft(BinaryNode<E> p) {
         Position<E> left = left(p);
         while (left(left) != null) {
             left = left(left);
@@ -143,7 +143,7 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
         return (BinaryNode<E>) left;
     }
 
-    private BinaryNode<E> findMostLeftInRightSubTree(BinaryNode<E> p) {
+    protected BinaryNode<E> findMostLeftInRightSubTree(BinaryNode<E> p) {
         BinaryNode<E> right = (BinaryNode<E>) right(p);
         Position<E> left = left(right);
         if (left == null) {
@@ -155,7 +155,7 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
         return (BinaryNode<E>) left;
     }
 
-    private Position<E> findParentOfLeftSubTree(BinaryNode<E> p) {
+    protected BinaryNode<E> findParentOfLeftSubTree(BinaryNode<E> p) {
         BinaryNode<E> up = p.getParent();
         while (up != null && left(up) != p) {
             p = up;
@@ -169,7 +169,7 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
         return parent != null && right(parent) == p;
     }
 
-    private boolean isLeftSubTree(BinaryNode<E> p) {
+    protected boolean isLeftSubTree(BinaryNode<E> p) {
         BinaryNode<E> parent = p.getParent();
         return parent != null && left(parent) == p;
     }
