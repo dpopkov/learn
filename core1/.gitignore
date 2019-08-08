@@ -4,4 +4,7 @@
 # files in input folder
 /input/
 
+# io-data folder
+/io-data/
+
 Tmp*.java
