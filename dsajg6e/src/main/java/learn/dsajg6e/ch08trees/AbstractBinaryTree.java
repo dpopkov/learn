@@ -1,11 +1,12 @@
 package learn.dsajg6e.ch08trees;
 
 import learn.dsajg6e.ch07list.positional.Position;
+import learn.dsajg6e.ch08trees.exer.OrderedTree;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements BinaryTree<E> {
+public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements BinaryTree<E>, OrderedTree<E> {
     protected interface BinaryNode<T> extends Position<T> {
         BinaryNode<T> getParent();
         BinaryNode<T> getLeft();
@@ -58,6 +59,7 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
     }
 
     /** Returns an iterable collection of positions of the tree, reported in in-order. */
+    @Override
     public Iterable<Position<E>> inOrder() {
         List<Position<E>> snapshot = new ArrayList<>();
         if (!isEmpty()) {

@@ -4,14 +4,16 @@ import learn.dsajg6e.ch07list.positional.Position;
 import learn.dsajg6e.ch08trees.AbstractTree;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-public class NTree<E> extends AbstractTree<E> {
+public class NTree<E> extends AbstractTree<E> implements OrderedTree<E> {
+
     private static class Node<T> implements Position<T> {
         private T element;
+        private Node<T> parent;
         private List<Position<T>> children;
-
         public Node(T element) {
             this.element = element;
         }
@@ -25,12 +27,21 @@ public class NTree<E> extends AbstractTree<E> {
             this.element = element;
         }
 
+        public Node<T> getParent() {
+            return parent;
+        }
+
+        public void setParent(Node<T> parent) {
+            this.parent = parent;
+        }
+
         public Node<T> add(T element) {
             Node<T> node = new Node<>(element);
             if (children == null) {
                 children = new ArrayList<>();
             }
             children.add(node);
+            node.setParent(this);
             return node;
         }
 
@@ -86,7 +97,7 @@ public class NTree<E> extends AbstractTree<E> {
 
     @Override
     public Position<E> parent(Position<E> p) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not implemented");
+        return validate(p).getParent();
     }
 
     @Override
@@ -102,5 +113,33 @@ public class NTree<E> extends AbstractTree<E> {
     @Override
     public int size() {
         return size;
+    }
+
+    @Override
+    public Iterable<Position<E>> inOrder() {
+        List<Position<E>> snapshot = new ArrayList<>();
+        inOrderSubTree(root(), snapshot);
+        return snapshot;
+    }
+
+    private void inOrderSubTree(Position<E> p, List<Position<E>> snapshot) {
+        Iterable<Position<E>> children = children(p);
+        Iterator<Position<E>> it = null;
+        int num = -1;
+        if (children != null) {
+            num = numChildren(p);
+            it = children.iterator();
+            int n = num / 2;
+            for (int i = 0; i < n; i++) {
+                inOrderSubTree(it.next(), snapshot);
+            }
+        }
+        snapshot.add(p);
+        if (it != null && num > 0) {
+            int n  = num - num / 2;
+            for (int i = 0; i < n; i++) {
+                inOrderSubTree(it.next(), snapshot);
+            }
+        }
     }
 }

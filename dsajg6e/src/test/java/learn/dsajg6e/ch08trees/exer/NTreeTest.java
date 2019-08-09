@@ -1,6 +1,10 @@
 package learn.dsajg6e.ch08trees.exer;
 
+import learn.dsajg6e.ch07list.positional.Position;
 import org.junit.Test;
+
+import java.util.Iterator;
+import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -38,7 +42,31 @@ public class NTreeTest {
         NTree<Integer> tree = new NTree<>();
         var root = tree.addRoot(10);
         var p20 = tree.add(root, 20);
-        tree.set(p20, 22);
+        var p22 = tree.set(p20, 22);
+        assertThat(p22.getElement(), is(22));
         assertThat(tree.children(tree.root()).iterator().next().getElement(), is(22));
+    }
+
+    @Test
+    public void canIterateInOrder() {
+        NTree<Integer> tree = new NTree<>();
+        var root = tree.addRoot(40);
+        var p20 = tree.add(root, 20);
+        var p60 = tree.add(root, 60);
+        tree.add(p20, 10);
+        tree.add(p20, 25);
+        tree.add(p20, 30);
+        tree.add(p60, 50);
+        tree.add(p60, 55);
+        tree.add(p60, 70);
+        tree.add(p60, 75);
+        Iterator<Integer> expIt = List.of(10, 20, 25, 30, 40, 50, 55, 60, 70, 75).iterator();
+        Iterable<Position<Integer>> positions = tree.inOrder();
+        for (Position<Integer> p : positions) {
+            Integer expected = expIt.next();
+            Integer actual = p.getElement();
+            assertThat(actual, is(expected));
+        }
+        assertThat(expIt.hasNext(), is(false));
     }
 }
