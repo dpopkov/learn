@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class NTree<E> extends AbstractTree<E> implements OrderedTree<E> {
 
-    private static class Node<T> implements Position<T> {
+    protected static class Node<T> implements Position<T> {
         private T element;
         private Node<T> parent;
         private List<Position<T>> children;
@@ -82,7 +82,7 @@ public class NTree<E> extends AbstractTree<E> implements OrderedTree<E> {
         return node;
     }
 
-    private Node<E> validate(Position<E> p) {
+    protected Node<E> validate(Position<E> p) {
         Objects.requireNonNull(p);
         if (!(p instanceof Node)) {
             throw new IllegalArgumentException("This position is not from the tree");
