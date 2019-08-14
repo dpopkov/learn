@@ -80,4 +80,18 @@ public class LinkedBinaryTreeTest {
         assertNull(tree.right(right).getElement());
         assertThat(tree.size(), is(7));
     }
+
+
+    @Test
+    public void whenPopulateTreeWithNullElementsThenNotAddsNulls() {
+        LinkedBinaryTree<Integer> tree = new LinkedBinaryTree<>();
+        LinkedBinaryTree.populate(tree, true, 20, null, 30, null, null, 25, 35);
+        assertThat(tree.size(), is(4));
+        var root = tree.root();
+        assertThat(root.getElement(), is(20));
+        Position<Integer> right = tree.right(root);
+        assertThat(right.getElement(), is(30));
+        assertThat(tree.left(right).getElement(), is(25));
+        assertThat(tree.right(right).getElement(), is(35));
+    }
 }

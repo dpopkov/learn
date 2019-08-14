@@ -2,7 +2,7 @@ package learn.dsajg6e.ch08trees;
 
 import learn.dsajg6e.ch07list.positional.Position;
 
-import java.util.ArrayDeque;
+import java.util.LinkedList;
 import java.util.Queue;
 
 public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
@@ -228,14 +228,33 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
     @SafeVarargs
     public static <E> void populate(LinkedBinaryTree<E> tree, E... elements) {
+        populate(tree, false, elements);
+    }
+
+    @SafeVarargs
+    public static <E> void populate(LinkedBinaryTree<E> tree, boolean skipNulls, E... elements) {
         Position<E> p = tree.addRoot(elements[0]);
-        Queue<Position<E>> queue = new ArrayDeque<>();
+        Queue<Position<E>> queue = new LinkedList<>();
         queue.add(p);
         int i = 1;
         while (!queue.isEmpty() && i < elements.length) {
             p = queue.remove();
-            queue.add(tree.addLeft(p, elements[i]));
-            queue.add(tree.addRight(p, elements[i + 1]));
+
+            E leftElement = elements[i];
+            if (skipNulls && leftElement == null) {
+                queue.add(null);
+            } else {
+                Position<E> newLeftPos = tree.addLeft(p, leftElement);
+                queue.add(newLeftPos);
+            }
+            E rightElement = elements[i + 1];
+            if (skipNulls && rightElement == null) {
+                queue.add(null);
+            } else {
+                Position<E> newRightPos = tree.addRight(p, rightElement);
+                queue.add(newRightPos);
+            }
+
             i += 2;
         }
     }
