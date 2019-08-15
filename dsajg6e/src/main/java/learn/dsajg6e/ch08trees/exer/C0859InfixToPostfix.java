@@ -3,7 +3,8 @@ package learn.dsajg6e.ch08trees.exer;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Scanner;
-import java.util.regex.Pattern;
+
+import static learn.dsajg6e.ch08trees.exer.Expressions.*;
 
 /**
  * Converter of infix arithmetic expressions to equivalent postfix notation.
@@ -29,8 +30,8 @@ public class C0859InfixToPostfix {
                 } else {
                     stack.push(infixExpr);
                 }
-            } else if (Number.isNumber(token)) {
-                Number number = new Number(token);
+            } else if (IntNumber.isNumber(token)) {
+                IntNumber number = new IntNumber(token);
                 if (stack.isEmpty()) {
                     stack.push(number);
                 } else {
@@ -64,127 +65,5 @@ public class C0859InfixToPostfix {
         Operation operation = (Operation) stack.pop();
         Expression first = (Expression) stack.pop();
         stack.push(new Infix(first, operation, (Expression) second));
-    }
-
-    interface Token {}
-
-    private static class RoundBracket implements Token {
-        static final String OPENING = "(";
-        static final String CLOSING = ")";
-
-        private boolean opening;
-        private final String symbol;
-
-        public RoundBracket(String s) {
-            symbol = s;
-            if (OPENING.equals(s)) {
-                opening = true;
-            } else if (CLOSING.equals(s)) {
-                opening = false;
-            } else {
-                throw new IllegalArgumentException("Invalid symbol for round bracket: " + s);
-            }
-        }
-
-        public boolean isOpening() {
-            return opening;
-        }
-
-        @Override
-        public String toString() {
-            return symbol;
-        }
-    }
-
-    interface Expression extends Token {
-        @SuppressWarnings("unused")
-        int value();
-    }
-
-    private enum Operation implements Token {
-        ADD("+"),
-        SUBTRACT("-"),
-        MULTIPLY("*"),
-        DIVIDE("/");
-
-        private final String symbol;
-
-        Operation(String symbol) {
-            this.symbol = symbol;
-        }
-
-        public static boolean isOperation(String s) {
-            return s.matches("[+\\-*/]");
-        }
-
-        public static Operation of(String s) {
-            switch (s) {
-                case "+": return ADD;
-                case "-": return SUBTRACT;
-                case "*": return MULTIPLY;
-                case "/": return DIVIDE;
-                default:
-                    throw new IllegalArgumentException("Illegal symbol for operation: " + s);
-            }
-        }
-
-        @Override
-        public String toString() {
-            return symbol;
-        }
-    }
-
-    private static class Infix implements Expression {
-        private final Expression first;
-        private final Expression second;
-        private final Operation operation;
-
-        public Infix(Expression first, Operation operation, Expression second) {
-            this.first = first;
-            this.second = second;
-            this.operation = operation;
-        }
-
-        public String toStringPostfix() {
-            return first + " " + second + " " + operation;
-        }
-
-        @Override
-        public String toString() {
-            return toStringPostfix();
-        }
-
-        @Override
-        public int value() {
-            throw new UnsupportedOperationException("Not implemented");
-        }
-    }
-
-    private static class Number implements Expression {
-        private static final Pattern numberPattern = Pattern.compile("\\d+");
-
-        private final int value;
-
-        public Number(String value) {
-            this(Integer.parseInt(value));
-        }
-
-        public Number(int value) {
-            this.value = value;
-        }
-
-        @Override
-        public int value() {
-            return value;
-        }
-
-        @Override
-        public String toString() {
-            return Integer.toString(value);
-        }
-
-        static boolean isNumber(String s) {
-            return numberPattern.matcher(s).matches();
-        }
     }
 }
