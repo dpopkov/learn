@@ -1,7 +1,6 @@
 package learn.dsajg6e.ch08trees.exer;
 
 import learn.dsajg6e.ch08trees.LinkedBinaryTree;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.*;
@@ -20,7 +19,7 @@ public class C0860RomanPositionsTest {
         var p05 = tree.addLeft(p10, 5);
         var p15 = tree.addRight(p10, 15);
         tree.addLeft(p05, 2);
-        tree.addRight(p05, 4);
+        tree.addRight(p05, 6);
         tree.addLeft(p15, 12);
         tree.addRight(p15, 17);
         rst = tree.isRomanPosition(tree.root());

@@ -5,7 +5,7 @@ import learn.dsajg6e.ch07list.positional.Position;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
+public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> implements AppendableBinaryTree<E> {
 
     protected static class Node<E> implements BinaryNode<E> {
         private E element;
@@ -118,6 +118,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
     /* Update methods*/
 
+    @Override
     public Position<E> addRoot(E e) throws IllegalStateException {
         if (!isEmpty()) {
             throw new IllegalStateException("Tree is not empty");
@@ -128,6 +129,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     }
 
     /** Creates a new left child of position p storing element e; returns its Position */
+    @Override
     public Position<E> addLeft(Position<E> p, E e) {
         Node<E> parent = validate(p);
         if (parent.getLeft() != null) {
@@ -140,6 +142,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     }
 
     /** Creates a new right child of position p storing element e; returns its Position */
+    @Override
     public Position<E> addRight(Position<E> p, E e) {
         Node<E> parent = validate(p);
         if (parent.getRight() != null) {
@@ -152,6 +155,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     }
 
     /** Replaces the element at position p with e and returns the replaced element. */
+    @Override
     public E set(Position<E> p, E e) {
         Node<E> node = validate(p);
         E old = node.getElement();
