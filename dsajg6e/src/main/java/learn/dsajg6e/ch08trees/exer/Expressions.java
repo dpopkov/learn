@@ -1,5 +1,7 @@
 package learn.dsajg6e.ch08trees.exer;
 
+import java.util.Objects;
+import java.util.function.IntBinaryOperator;
 import java.util.regex.Pattern;
 
 public class Expressions {
@@ -39,15 +41,23 @@ public class Expressions {
     }
 
     enum Operation implements Token {
-        ADD("+"),
-        SUBTRACT("-"),
-        MULTIPLY("*"),
-        DIVIDE("/");
+        ADD("+", Integer::sum),
+        SUBTRACT("-", (x, y) -> x - y),
+        MULTIPLY("*", (x, y) -> x * y),
+        DIVIDE("/", (x, y) -> x / y);
 
         private final String symbol;
+        private final IntBinaryOperator operator;
 
-        Operation(String symbol) {
+        Operation(String symbol, IntBinaryOperator operator) {
             this.symbol = symbol;
+            this.operator = operator;
+        }
+
+        public int evaluate(Expression first, Expression second) {
+            int v1 = first.value();
+            int v2 = second.value();
+            return operator.applyAsInt(v1, v2);
         }
 
         public static boolean isOperation(String s) {
@@ -86,6 +96,18 @@ public class Expressions {
             return first + " " + second + " " + operation;
         }
 
+        public Expression getFirst() {
+            return first;
+        }
+
+        public Expression getSecond() {
+            return second;
+        }
+
+        public Operation getOperation() {
+            return operation;
+        }
+
         @Override
         public String toString() {
             return toStringPostfix();
@@ -93,7 +115,7 @@ public class Expressions {
 
         @Override
         public int value() {
-            throw new UnsupportedOperationException("Not implemented");
+            return operation.evaluate(first, second);
         }
     }
 
@@ -118,6 +140,22 @@ public class Expressions {
         @Override
         public String toString() {
             return Integer.toString(value);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (other == null || getClass() != other.getClass()) {
+                return false;
+            }
+            return value == ((IntNumber) other).value;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(value);
         }
 
         static boolean isNumber(String s) {
