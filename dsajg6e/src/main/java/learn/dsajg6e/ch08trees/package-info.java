@@ -1,6 +1,8 @@
 /**
  * <h3>Chapter 8. Trees</h3>
  *
+ * <p><strong>This chapter is complicated and will need to be repeated.</strong></p>
+ *
  * 8.1 General Trees<br>
  *     Tree, AbstractTree<br>
  * 8.2 Binary Trees<br>
