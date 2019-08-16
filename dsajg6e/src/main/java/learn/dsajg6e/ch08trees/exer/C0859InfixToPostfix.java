@@ -4,8 +4,6 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import static learn.dsajg6e.ch08trees.exer.Expressions.*;
-
 /**
  * Converter of infix arithmetic expressions to equivalent postfix notation.
  * All tokens must be separated with spaces.
@@ -64,6 +62,6 @@ public class C0859InfixToPostfix {
     private static void popTokensThenPushNewInfix(Deque<Token> stack, Token second) {
         Operation operation = (Operation) stack.pop();
         Expression first = (Expression) stack.pop();
-        stack.push(new Infix(first, operation, (Expression) second));
+        stack.push(new InfixExpression(first, operation, (Expression) second));
     }
 }

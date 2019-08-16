@@ -9,17 +9,17 @@ import java.util.Scanner;
  */
 public class P0865ConvertToExpressionTree {
 
-    public Expressions.Infix convert(String expression) {
+    public InfixExpression convert(String expression) {
         Scanner scanner = new Scanner(expression);
-        Deque<Expressions.Token> stack = new LinkedList<>();
+        Deque<Token> stack = new LinkedList<>();
         while (scanner.hasNext()) {
             String token = scanner.next();
-            if (Expressions.RoundBracket.OPENING.equals(token)) {
-                stack.push(new Expressions.RoundBracket(token));
-            } else if (Expressions.RoundBracket.CLOSING.equals(token)) {
-                Expressions.Token infixExpr = stack.pop();
-                Expressions.Token t = stack.pop();
-                if (t instanceof Expressions.RoundBracket && ((Expressions.RoundBracket) t).isOpening()) {
+            if (RoundBracket.OPENING.equals(token)) {
+                stack.push(new RoundBracket(token));
+            } else if (RoundBracket.CLOSING.equals(token)) {
+                Token infixExpr = stack.pop();
+                Token t = stack.pop();
+                if (t instanceof RoundBracket && ((RoundBracket) t).isOpening()) {
                     if (stack.isEmpty()) {
                         stack.push(infixExpr);
                     } else {
@@ -28,27 +28,27 @@ public class P0865ConvertToExpressionTree {
                 } else {
                     stack.push(infixExpr);
                 }
-            } else if (Expressions.IntNumber.isNumber(token)) {
-                Expressions.IntNumber number = new Expressions.IntNumber(token);
+            } else if (IntNumber.isNumber(token)) {
+                IntNumber number = new IntNumber(token);
                 if (stack.isEmpty()) {
                     stack.push(number);
                 } else {
-                    if (stack.peek() instanceof Expressions.Operation) {
+                    if (stack.peek() instanceof Operation) {
                         popTokensThenPushNewInfix(stack, number);
                     } else {
                         stack.push(number);
                     }
                 }
-            } else if (Expressions.Operation.isOperation(token)) {
-                stack.push(Expressions.Operation.of(token));
+            } else if (Operation.isOperation(token)) {
+                stack.push(Operation.of(token));
             }
         }
-        return (Expressions.Infix) stack.pop();
+        return (InfixExpression) stack.pop();
     }
 
-    private static void popTokensThenPushNewInfix(Deque<Expressions.Token> stack, Expressions.Token second) {
-        Expressions.Operation operation = (Expressions.Operation) stack.pop();
-        Expressions.Expression first = (Expressions.Expression) stack.pop();
-        stack.push(new Expressions.Infix(first, operation, (Expressions.Expression) second));
+    private static void popTokensThenPushNewInfix(Deque<Token> stack, Token second) {
+        Operation operation = (Operation) stack.pop();
+        Expression first = (Expression) stack.pop();
+        stack.push(new InfixExpression(first, operation, (Expression) second));
     }
 }
