@@ -4,6 +4,7 @@
  * 9.1 The Priority Queue Abstract Data Type<br>
  *     PriorityQueue, Entry<br>
  * 9.2 Implementing a Priority Queue<br>
+ *     StringLengthComparator, DefaultComparator, AbstractPriorityQueue<br>
  * 9.3 Heaps<br>
  * 9.4 Sorting with a Priority Queue<br>
  * 9.5 Adaptable Priority Queues<br>
