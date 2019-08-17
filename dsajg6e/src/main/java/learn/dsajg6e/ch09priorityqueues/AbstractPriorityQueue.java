@@ -37,6 +37,11 @@ public abstract class AbstractPriorityQueue<K, V> implements PriorityQueue<K, V>
         protected void setValue(V value) {
             this.value = value;
         }
+
+        @Override
+        public String toString() {
+            return "{" + key + ", " + value + '}';
+        }
     }
 
     /** The comparator defining the ordering of keys in the priority queue. */
