@@ -27,10 +27,9 @@ public class Inventory {
     public List<Guitar> search(GuitarSpec spec) {
         List<Guitar> result = new LinkedList<>();
         for (Guitar g : guitars) {
-            if (!spec.equals(g.getSpec())) {
-                continue;
+            if (spec.equals(g.getSpec())) {
+                result.add(g);
             }
-            result.add(g);
         }
         return result;
     }
