@@ -8,6 +8,7 @@
  *     UnsortedPriorityQueue<br>
  *     SortedPriorityQueue<br>
  * 9.3 Heaps<br>
+ *     HeapPriorityQueue<br>
  * 9.4 Sorting with a Priority Queue<br>
  * 9.5 Adaptable Priority Queues<br>
  * 9.6 Exercises<br>
