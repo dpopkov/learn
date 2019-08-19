@@ -27,6 +27,16 @@ public class HeapPriorityQueueTest {
         assertEntry(queue.removeMin(), 30, "Thirty");
     }
 
+    @Test
+    public void whenConstructWithKeysAndValuesThenHeapIsInitialized() {
+        Integer[] keys = {20, 30, 10};
+        String[] values = {"Twenty", "Thirty", "Ten"};
+        HeapPriorityQueue<Integer, String> queue = new HeapPriorityQueue<>(keys, values);
+        assertEntry(queue.removeMin(), 10, "Ten");
+        assertEntry(queue.removeMin(), 20, "Twenty");
+        assertEntry(queue.removeMin(), 30, "Thirty");
+    }
+
     private static void assertEntry(Entry<Integer, String> entry, int key, String value) {
         assertThat(entry.getKey(), is(key));
         assertThat(entry.getValue(), is(value));
