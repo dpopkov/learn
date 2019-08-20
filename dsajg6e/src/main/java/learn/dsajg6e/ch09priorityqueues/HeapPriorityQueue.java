@@ -55,7 +55,7 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
     }
 
     /** Moves the entry at index j higher, if necessary, to restore the heap property. */
-    private void upHeap(int j) {
+    protected void upHeap(int j) {
         while (j > 0) {
             int p = parent(j);
             if (compare(heap.get(j), heap.get(p)) >= 0) {
@@ -89,7 +89,7 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
 
     /** Moves the entry at index j lower, if necessary, to restore the heap property. */
     @SuppressWarnings("SameParameterValue")
-    private void downHeap(int j) {
+    protected void downHeap(int j) {
         while (hasLeft(j)) {
             int leftIdx = left(j);
             int smallChildIdx = leftIdx;

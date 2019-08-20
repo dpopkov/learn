@@ -11,6 +11,7 @@
  *     HeapPriorityQueue<br>
  * 9.4 Sorting with a Priority Queue<br>
  * 9.5 Adaptable Priority Queues<br>
+ *     AdaptablePriorityQueue, HeapAdaptablePriorityQueue<br>
  * 9.6 Exercises<br>
  */
 package learn.dsajg6e.ch09priorityqueues;
