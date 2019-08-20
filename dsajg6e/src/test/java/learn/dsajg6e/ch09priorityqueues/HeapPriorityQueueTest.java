@@ -1,6 +1,9 @@
 package learn.dsajg6e.ch09priorityqueues;
 
+import learn.dsajg6e.ch07list.positional.LinkedPositionalList;
 import org.junit.Test;
+
+import java.util.Iterator;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -35,6 +38,23 @@ public class HeapPriorityQueueTest {
         assertEntry(queue.removeMin(), 10, "Ten");
         assertEntry(queue.removeMin(), 20, "Twenty");
         assertEntry(queue.removeMin(), 30, "Thirty");
+    }
+
+    @Test
+    public void canSortElements() {
+        Integer[] keys = {20, 30, 10, 40, 50};
+        LinkedPositionalList<Integer> list = new LinkedPositionalList<>();
+        for (Integer i : keys) {
+            list.addLast(i);
+        }
+        HeapPriorityQueue.pqSort(list);
+        Iterator<Integer> it = list.iterator();
+        assertThat(it.next(), is(10));
+        assertThat(it.next(), is(20));
+        assertThat(it.next(), is(30));
+        assertThat(it.next(), is(40));
+        assertThat(it.next(), is(50));
+        assertThat(it.hasNext(), is(false));
     }
 
     private static void assertEntry(Entry<Integer, String> entry, int key, String value) {
