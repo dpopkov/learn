@@ -11,7 +11,7 @@ import java.util.Comparator;
  */
 public class UnsortedPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
     /** Primary collection of priority queue entries. */
-    private LinkedPositionalList<Entry<K, V>> list = new LinkedPositionalList<>();
+    protected final LinkedPositionalList<Entry<K, V>> list = new LinkedPositionalList<>();
 
     /** Creates an empty priority queue based on the natural ordering of its keys. */
     public UnsortedPriorityQueue() {
@@ -19,6 +19,7 @@ public class UnsortedPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
     }
 
     /** Creates an empty priority queue using the given comparator to order keys. */
+    @SuppressWarnings("unused")
     public UnsortedPriorityQueue(Comparator<K> comparator) {
         super(comparator);
     }
@@ -53,7 +54,7 @@ public class UnsortedPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
     }
 
     /** Finds the position of an entry having minimal key. */
-    private Position<Entry<K, V>> findMin() {
+    protected Position<Entry<K, V>> findMin() {
         Position<Entry<K, V>> small = list.first();
         for (Position<Entry<K, V>> walk : list.positions()) {
             if (compare(walk.getElement(), small.getElement()) < 0) {
