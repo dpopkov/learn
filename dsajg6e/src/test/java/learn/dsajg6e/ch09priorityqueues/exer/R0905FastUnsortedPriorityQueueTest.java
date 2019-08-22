@@ -1,10 +1,8 @@
 package learn.dsajg6e.ch09priorityqueues.exer;
 
-import learn.dsajg6e.ch09priorityqueues.Entry;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static learn.dsajg6e.ch09priorityqueues.EntryAssertions.assertEntry;
 
 public class R0905FastUnsortedPriorityQueueTest {
     @Test
@@ -25,10 +23,5 @@ public class R0905FastUnsortedPriorityQueueTest {
         assertEntry(queue.removeMin(), 10, "Ten");
         assertEntry(queue.removeMin(), 20, "Twenty");
         assertEntry(queue.removeMin(), 30, "Thirty");
-    }
-
-    private static void assertEntry(Entry<Integer, String> entry, int key, String value) {
-        assertThat(entry.getKey(), is(key));
-        assertThat(entry.getValue(), is(value));
     }
 }

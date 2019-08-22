@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.Iterator;
 
+import static learn.dsajg6e.ch09priorityqueues.EntryAssertions.assertEntry;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
@@ -55,10 +56,5 @@ public class HeapPriorityQueueTest {
         assertThat(it.next(), is(40));
         assertThat(it.next(), is(50));
         assertThat(it.hasNext(), is(false));
-    }
-
-    private static void assertEntry(Entry<Integer, String> entry, int key, String value) {
-        assertThat(entry.getKey(), is(key));
-        assertThat(entry.getValue(), is(value));
     }
 }

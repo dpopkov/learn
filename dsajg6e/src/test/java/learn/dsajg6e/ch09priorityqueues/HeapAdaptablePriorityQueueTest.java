@@ -2,6 +2,7 @@ package learn.dsajg6e.ch09priorityqueues;
 
 import org.junit.Test;
 
+import static learn.dsajg6e.ch09priorityqueues.EntryAssertions.assertEntry;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
@@ -64,10 +65,5 @@ public class HeapAdaptablePriorityQueueTest {
         assertEntry(queue.removeMin(), 10, "Ten");
         assertEntry(queue.removeMin(), 20, "Twenty");
         assertEntry(queue.removeMin(), 30, "THIRTY");
-    }
-
-    private static void assertEntry(Entry<Integer, String> entry, int key, String value) {
-        assertThat(entry.getKey(), is(key));
-        assertThat(entry.getValue(), is(value));
     }
 }
