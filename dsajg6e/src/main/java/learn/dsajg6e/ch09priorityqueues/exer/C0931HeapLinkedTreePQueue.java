@@ -8,95 +8,8 @@ A binary linked tree representation of a priority queue ADT.
  */
 public class C0931HeapLinkedTreePQueue<K, V> extends AbstractPriorityQueue<K, V> {
 
-    private static class Node<K, V> {
-        private Entry<K, V> entry;
-        private Node<K, V> parent;
-        private Node<K, V> left;
-        private Node<K, V> right;
-
-        public Node(Entry<K, V> entry) {
-            this(entry, null, null, null);
-        }
-
-        public Node(Entry<K, V> entry, Node<K, V> parent, Node<K, V> left, Node<K, V> right) {
-            this.entry = entry;
-            this.parent = parent;
-            this.left = left;
-            this.right = right;
-        }
-
-        public void add(Node<K, V> n) {
-            if (left == null) {
-                left = n;
-            } else if (right == null) {
-                right = n;
-            } else {
-                throw new IllegalStateException("This node has no empty slots: " + this);
-            }
-            n.setParent(this);
-        }
-
-        public boolean isRight(Node<K, V> child) {
-            return right == child;
-        }
-
-        public boolean isLeft(Node<K ,V> child) {
-            return left == child;
-        }
-
-        public void removeChild(Node<K, V> child) {
-            if (isRight(child)) {
-                right = null;
-            } else if (isLeft(child)) {
-                left = null;
-            } else {
-                throw new IllegalStateException("This node is not a child: " + child);
-            }
-            child.setParent(null);
-        }
-
-        public Entry<K, V> getEntry() {
-            return entry;
-        }
-
-        public void setEntry(Entry<K, V> entry) {
-            this.entry = entry;
-        }
-
-        public Node<K, V> getParent() {
-            return parent;
-        }
-
-        public void setParent(Node<K, V> parent) {
-            this.parent = parent;
-        }
-
-        public Node<K, V> getLeft() {
-            return left;
-        }
-
-        public Node<K, V> getRight() {
-            return right;
-        }
-
-        public boolean isLeaf() {
-            return left == null && right == null;
-        }
-
-        public void swapEntries(Node<K, V> other) {
-            Entry<K, V> otherEntry = other.getEntry();
-            other.setEntry(this.getEntry());
-            this.setEntry(otherEntry);
-        }
-
-        @Override
-        public String toString() {
-            return "Node{entry=" + entry + '}';
-        }
-    }
-
-    private Node<K, V> root;
-    private Node<K, V> last;
+    protected HTNode<K, V> root;
+    private HTNode<K, V> last;
     private int size;
 
     @Override
@@ -108,7 +21,7 @@ public class C0931HeapLinkedTreePQueue<K, V> extends AbstractPriorityQueue<K, V>
     public Entry<K, V> insert(K key, V value) throws IllegalArgumentException {
         checkKey(key);
         Entry<K, V> entry = new PQEntry<>(key, value);
-        Node<K, V> node = new Node<>(entry);
+        HTNode<K, V> node = new HTNode<>(entry);
         if (isEmpty()) {
             root = node;
             last = node;
@@ -118,11 +31,10 @@ public class C0931HeapLinkedTreePQueue<K, V> extends AbstractPriorityQueue<K, V>
             size++;
             upHeap(node);
         }
-
         return entry;
     }
 
-    private Node<K, V> addNext(Node<K, V> next) {
+    private HTNode<K, V> addNext(HTNode<K, V> next) {
         if (last == root) {
             last.add(next);
             return next;
@@ -142,7 +54,7 @@ public class C0931HeapLinkedTreePQueue<K, V> extends AbstractPriorityQueue<K, V>
         return next;
     }
 
-    private Node<K, V> findParentForExtendingBottomRow(Node<K, V> node) {
+    private HTNode<K, V> findParentForExtendingBottomRow(HTNode<K, V> node) {
         var parent = node.getParent();
         if (parent != null) {
             var superParent = parent.getParent();
@@ -153,15 +65,15 @@ public class C0931HeapLinkedTreePQueue<K, V> extends AbstractPriorityQueue<K, V>
         return null;
     }
 
-    private Node<K, V> findLeftLeaf() {
-        Node<K, V> n = root;
+    private HTNode<K, V> findLeftLeaf() {
+        HTNode<K, V> n = root;
         while (n.getLeft() != null) {
             n = n.getLeft();
         }
         return n;
     }
 
-    private void upHeap(Node<K, V> node) {
+    private void upHeap(HTNode<K, V> node) {
         var parent = node.getParent();
         while (parent != null && compare(parent.getEntry(), node.getEntry()) > 0) {
             node.swapEntries(parent);
@@ -182,8 +94,8 @@ public class C0931HeapLinkedTreePQueue<K, V> extends AbstractPriorityQueue<K, V>
     public Entry<K, V> removeMin() {
         Entry<K, V> minEntry = root.getEntry();
         root.swapEntries(last);
-        Node<K, V> parentLast = last.getParent();
-        Node<K, V> prev = findPrev(last);
+        HTNode<K, V> parentLast = last.getParent();
+        HTNode<K, V> prev = findPrev(last);
         if (parentLast != null) {
             parentLast.removeChild(last);
         }
@@ -193,14 +105,14 @@ public class C0931HeapLinkedTreePQueue<K, V> extends AbstractPriorityQueue<K, V>
         return minEntry;
     }
 
-    private Node<K, V> findPrev(Node<K, V> node) {
-        Node<K, V> p = node.getParent();
+    private HTNode<K, V> findPrev(HTNode<K, V> node) {
+        HTNode<K, V> p = node.getParent();
         if (p == null) {
             return null;
         } else if (p.isRight(node)) {
             return p.getLeft();
         } else if (p.isLeft(node)) {
-            Node<K, V> rightSibling = findRightSibling(node);
+            HTNode<K, V> rightSibling = findRightSibling(node);
             if (rightSibling != null) {
                 return rightSibling;
             } else {
@@ -210,7 +122,7 @@ public class C0931HeapLinkedTreePQueue<K, V> extends AbstractPriorityQueue<K, V>
         return p;
     }
 
-    private Node<K, V> findRightSibling(Node<K, V> node) {
+    private HTNode<K, V> findRightSibling(HTNode<K, V> node) {
         var p = node.getParent();
         if (p != null) {
             var pp = p.getParent();
@@ -224,16 +136,16 @@ public class C0931HeapLinkedTreePQueue<K, V> extends AbstractPriorityQueue<K, V>
         return null;
     }
 
-    private Node<K, V> findMostRight() {
-        Node<K, V> n = root;
+    private HTNode<K, V> findMostRight() {
+        HTNode<K, V> n = root;
         while (n.getRight() != null) {
             n = n.getRight();
         }
         return n;
     }
 
-    private void downHeap(Node<K, V> node) {
-        Node<K, V> target;
+    private void downHeap(HTNode<K, V> node) {
+        HTNode<K, V> target;
         while (!node.isLeaf()) {
             if (node.getRight() == null) {
                 target = node.getLeft();
