@@ -39,6 +39,11 @@ class HTNode<K, V> {
         return left == child;
     }
 
+    public boolean isLeftChild() {
+        HTNode<K, V> parent = getParent();
+        return parent != null && parent.getLeft() == this;
+    }
+
     public void removeChild(HTNode<K, V> child) {
         if (isRight(child)) {
             right = null;

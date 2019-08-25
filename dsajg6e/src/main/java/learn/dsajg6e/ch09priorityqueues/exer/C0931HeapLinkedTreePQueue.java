@@ -1,21 +1,12 @@
 package learn.dsajg6e.ch09priorityqueues.exer;
 
-import learn.dsajg6e.ch09priorityqueues.AbstractPriorityQueue;
 import learn.dsajg6e.ch09priorityqueues.Entry;
 
 /**
 A binary linked tree representation of a priority queue ADT.
  */
-public class C0931HeapLinkedTreePQueue<K, V> extends AbstractPriorityQueue<K, V> {
-
-    protected HTNode<K, V> root;
+public class C0931HeapLinkedTreePQueue<K, V> extends AbstractLinkedTreePriorityQueue<K, V> {
     private HTNode<K, V> last;
-    private int size;
-
-    @Override
-    public int size() {
-        return size;
-    }
 
     @Override
     public Entry<K, V> insert(K key, V value) throws IllegalArgumentException {
@@ -43,7 +34,7 @@ public class C0931HeapLinkedTreePQueue<K, V> extends AbstractPriorityQueue<K, V>
         if (parentOfLast.isLeft(last)) {
             parentOfLast.add(next);
         } else {
-            var parentForNext = findParentForExtendingBottomRow(last);
+            var parentForNext = rightSiblingOfParent(last);
             if (parentForNext != null) {
                 parentForNext.add(next);
             } else {
@@ -52,42 +43,6 @@ public class C0931HeapLinkedTreePQueue<K, V> extends AbstractPriorityQueue<K, V>
             }
         }
         return next;
-    }
-
-    private HTNode<K, V> findParentForExtendingBottomRow(HTNode<K, V> node) {
-        var parent = node.getParent();
-        if (parent != null) {
-            var superParent = parent.getParent();
-            if (superParent != null) {
-                return superParent.getRight();
-            }
-        }
-        return null;
-    }
-
-    private HTNode<K, V> findLeftLeaf() {
-        HTNode<K, V> n = root;
-        while (n.getLeft() != null) {
-            n = n.getLeft();
-        }
-        return n;
-    }
-
-    private void upHeap(HTNode<K, V> node) {
-        var parent = node.getParent();
-        while (parent != null && compare(parent.getEntry(), node.getEntry()) > 0) {
-            node.swapEntries(parent);
-            node = parent;
-            parent = parent.getParent();
-        }
-    }
-
-    @Override
-    public Entry<K, V> min() {
-        if (isEmpty()) {
-            return null;
-        }
-        return root.getEntry();
     }
 
     @Override
@@ -144,22 +99,4 @@ public class C0931HeapLinkedTreePQueue<K, V> extends AbstractPriorityQueue<K, V>
         return n;
     }
 
-    private void downHeap(HTNode<K, V> node) {
-        HTNode<K, V> target;
-        while (!node.isLeaf()) {
-            if (node.getRight() == null) {
-                target = node.getLeft();
-            } else if (compare(node.getLeft().getEntry(), node.getRight().getEntry()) < 0) {
-                target = node.getLeft();
-            } else {
-                target = node.getRight();
-            }
-            if (compare(node.getEntry(), target.getEntry()) > 0) {
-                node.swapEntries(target);
-                node = target;
-            } else {
-                break;
-            }
-        }
-    }
 }
