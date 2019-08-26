@@ -2,6 +2,7 @@ package learn.dsajg6e.ch09priorityqueues.exer;
 
 import learn.dsajg6e.ch07list.positional.Position;
 import learn.dsajg6e.ch09priorityqueues.Entry;
+import learn.dsajg6e.ch09priorityqueues.PQEntry;
 import learn.dsajg6e.ch09priorityqueues.UnsortedPriorityQueue;
 
 public class R0905FastUnsortedPriorityQueue<K, V> extends UnsortedPriorityQueue<K, V> {

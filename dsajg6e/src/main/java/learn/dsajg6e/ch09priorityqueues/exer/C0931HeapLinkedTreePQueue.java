@@ -1,6 +1,7 @@
 package learn.dsajg6e.ch09priorityqueues.exer;
 
 import learn.dsajg6e.ch09priorityqueues.Entry;
+import learn.dsajg6e.ch09priorityqueues.PQEntry;
 
 /**
 A binary linked tree representation of a priority queue ADT.

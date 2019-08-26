@@ -2,6 +2,7 @@ package learn.dsajg6e.ch09priorityqueues.exer;
 
 import learn.dsajg6e.ch09priorityqueues.AbstractPriorityQueue;
 import learn.dsajg6e.ch09priorityqueues.Entry;
+import learn.dsajg6e.ch09priorityqueues.PQEntry;
 
 /** Re-implementation of the SortedPriorityQueue using a Java array. */
 public class C0928SortedArrayPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {

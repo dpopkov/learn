@@ -1,6 +1,7 @@
 package learn.dsajg6e.ch09priorityqueues.exer;
 
 import learn.dsajg6e.ch09priorityqueues.Entry;
+import learn.dsajg6e.ch09priorityqueues.PQEntry;
 
 public class C0933HeapLinkedTreePQueueBin<K, V> extends AbstractLinkedTreePriorityQueue<K, V> {
     private static final char TURN_LEFT = '0';
