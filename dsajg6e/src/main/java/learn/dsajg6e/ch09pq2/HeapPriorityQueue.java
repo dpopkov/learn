@@ -9,7 +9,7 @@ import java.util.Comparator;
  */
 public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
     /** Primary collection of priority queue entries. */
-    protected ArrayList<Entry<K, V>> heap = new ArrayList<>();
+    protected final ArrayList<Entry<K, V>> heap = new ArrayList<>();
 
     /** Creates an empty priority queue based on the natural ordering of its keys. */
     public HeapPriorityQueue() {
@@ -21,24 +21,43 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
         super(comp);
     }
 
+    /** Inserts a key/value pair and returns the entry created. */
     @Override
     public Entry<K, V> insert(K key, V value) throws IllegalArgumentException {
-        return null;
+        checkKey(key);
+        Entry<K, V> entry = new PQEntry<>(key, value);
+        heap.add(entry);
+        upHeap(heap.size() - 1);
+        return entry;
     }
 
+    /** Returns (but does not remove) an entry with minimal key (if any). */
     @Override
     public Entry<K, V> min() {
-        return null;
+        if (heap.isEmpty()) {
+            return null;
+        }
+        return heap.get(0);
     }
 
+    /** Removes and returns an entry with minimal key (if any). */
     @Override
     public Entry<K, V> removeMin() {
-        return null;
+        if (heap.isEmpty()) {
+            return null;
+        }
+        Entry<K, V> entry =heap.get(0);
+        int last = heap.size() - 1;
+        swap(0, last);
+        heap.remove(last);
+        downHeap(0);
+        return entry;
     }
 
+    /** Returns the number of items in the priority queue. */
     @Override
     public int size() {
-        return 0;
+        return heap.size();
     }
 
     /* Protected utilities */
@@ -82,7 +101,22 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
         }
     }
 
+    /** Moves the entry at index j lower, if necessary, to restore the heap property. */
     protected void downHeap(int j) {
-        // todo: implement
+        while (hasLeft(j)) {
+            int leftIdx = left(j);
+            int smallIdx = leftIdx;
+            if (hasRight(j)) {
+                int rightIdx = right(j);
+                if (compare(heap.get(leftIdx), heap.get(rightIdx)) > 0) {
+                    smallIdx = rightIdx;
+                }
+            }
+            if (compare(heap.get(j), heap.get(smallIdx)) <= 0) {
+                break;
+            }
+            swap(j, smallIdx);
+            j = smallIdx;
+        }
     }
 }
