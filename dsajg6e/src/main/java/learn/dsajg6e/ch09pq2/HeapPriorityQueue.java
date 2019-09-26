@@ -21,6 +21,16 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
         super(comp);
     }
 
+    /** Creates a priority queue initialized with the given key-value pairs. */
+    public HeapPriorityQueue(K[] keys, V[] values) {
+        super();
+        int n = Math.min(keys.length, values.length);
+        for (int i = 0; i < n; i++) {
+            heap.add(new PQEntry<>(keys[i], values[i]));
+        }
+        heapify();
+    }
+
     /** Inserts a key/value pair and returns the entry created. */
     @Override
     public Entry<K, V> insert(K key, V value) throws IllegalArgumentException {
@@ -60,8 +70,8 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
         return heap.size();
     }
 
-    /* Protected utilities */
 
+    /* Protected utilities */
     protected int parent(int j) {
         return (j - 1) / 2;
     }
@@ -117,6 +127,14 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
             }
             swap(j, smallIdx);
             j = smallIdx;
+        }
+    }
+
+    /** Performs a bottom-up construction of the heap in linear time. */
+    protected void heapify() {
+        int start = parent(size() - 1);
+        for (int j = start; j >= 0; j--) {
+            downHeap(j);
         }
     }
 }
