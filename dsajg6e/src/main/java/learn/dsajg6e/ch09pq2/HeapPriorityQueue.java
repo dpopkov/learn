@@ -1,6 +1,7 @@
 package learn.dsajg6e.ch09pq2;
 
 import learn.dsajg6e.ch07list.ArrayList;
+import learn.dsajg6e.ch07list.positional.PositionalList;
 
 import java.util.Comparator;
 
@@ -70,6 +71,18 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
         return heap.size();
     }
 
+    /** Sorts sequence, using initially empty priority queue to produce the order. */
+    public static <E> void pqSort(PositionalList<E> sequence, PriorityQueue<E, ?> priorityQueue) {
+        int n = sequence.size();
+        for (int j = 0; j < n; j++) {
+            E element = sequence.remove(sequence.first());
+            priorityQueue.insert(element, null);
+        }
+        for (int j = 0; j < n; j++) {
+            E element = priorityQueue.removeMin().getKey();
+            sequence.addLast(element);
+        }
+    }
 
     /* Protected utilities */
     protected int parent(int j) {
