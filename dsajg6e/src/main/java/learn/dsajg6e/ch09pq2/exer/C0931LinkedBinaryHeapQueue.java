@@ -3,6 +3,11 @@ package learn.dsajg6e.ch09pq2.exer;
 import learn.dsajg6e.ch09pq2.AbstractPriorityQueue;
 import learn.dsajg6e.ch09pq2.Entry;
 
+/**
+ * C-9.31
+ * Heap queue that uses a complete linked binary tree
+ * and a reference to the last node of that tree.
+ */
 public class C0931LinkedBinaryHeapQueue<K, V> extends AbstractPriorityQueue<K, V> {
 
     protected static class BNode<K, V> {
@@ -44,12 +49,6 @@ public class C0931LinkedBinaryHeapQueue<K, V> extends AbstractPriorityQueue<K, V
             left = null;
         }
 
-        public void swapLeft() {
-            Entry<K, V> tmp = left.getEntry();
-            left.setEntry(getEntry());
-            setEntry(tmp);
-        }
-
         public BNode<K, V> getRight() {
             return right;
         }
@@ -61,20 +60,6 @@ public class C0931LinkedBinaryHeapQueue<K, V> extends AbstractPriorityQueue<K, V
 
         public void removeRight() {
             right = null;
-        }
-
-        public void removeLast() {
-            if (right != null) {
-                right = null;
-            } else if (left != null) {
-                left = null;
-            }
-        }
-
-        public void swapRight() {
-            Entry<K, V> tmp = right.getEntry();
-            right.setEntry(getEntry());
-            setEntry(tmp);
         }
 
         public boolean hasLeft() {
@@ -95,6 +80,16 @@ public class C0931LinkedBinaryHeapQueue<K, V> extends AbstractPriorityQueue<K, V
             return p != null && p.getRight() == this;
         }
 
+        public void addChild(BNode<K, V> child) {
+            if (!hasLeft()) {
+                setLeft(child);
+            } else if (!hasRight()) {
+                setRight(child);
+            } else {
+                throw new IllegalStateException("Cannot add child because has 2 already");
+            }
+        }
+
         @Override
         public String toString() {
             return "BNode{entry=" + entry + '}';
@@ -113,7 +108,11 @@ public class C0931LinkedBinaryHeapQueue<K, V> extends AbstractPriorityQueue<K, V
         if (root == null) {
             root = node;
         } else {
-            if (size == 1) {
+            BNode<K, V> parentOfNext = findParentForNext(last);
+            parentOfNext.addChild(node);
+            last = node;
+            upHeap(last);
+            /*if (size == 1) {
                 root.setLeft(node);
                 if (compare(root.getEntry(), entry) > 0) {
                     root.swapLeft();
@@ -123,7 +122,7 @@ public class C0931LinkedBinaryHeapQueue<K, V> extends AbstractPriorityQueue<K, V
                 if (compare(root.getEntry(), entry) > 0) {
                     root.swapRight();
                 }
-            }
+            }*/
         }
         last = node;
         size++;
@@ -144,12 +143,12 @@ public class C0931LinkedBinaryHeapQueue<K, V> extends AbstractPriorityQueue<K, V
             return null;
         }
         Entry<K, V> entry = root.getEntry();
-        if (size() == 1) {
+        if (size == 1) {
             root = null;
             last = null;
         } else {
             swap(root, last);
-            BNode<K, V> newLast = previous(last);
+            BNode<K, V> newLast = findPrevious(last);
             removeFromParent(last);
             last = newLast;
             downHeap(root);
@@ -158,18 +157,70 @@ public class C0931LinkedBinaryHeapQueue<K, V> extends AbstractPriorityQueue<K, V
         return entry;
     }
 
-    private BNode<K, V> previous(BNode<K, V> node) {
-        /*var p = node.getParent();
-        if (p.getRight() == node) {
-            return p.getLeft();
-        }*/
+    private void upHeap(BNode<K, V> node) {
+        while (node.getParent() != null) {
+            var p = node.getParent();
+            if (compare(p.getEntry(), node.getEntry()) <= 0) {
+                break;
+            }
+            swap(p, node);
+            node = p;
+        }
+    }
+
+    protected void downHeap(BNode<K, V> node) {
+        while (node.hasLeft()) {
+            var smallest = node.getLeft();
+            if (node.hasRight()) {
+                var right = node.getRight();
+                if (compare(smallest.getEntry(), right.getEntry()) > 0) {
+                    smallest = right;
+                }
+            }
+            if (compare(node.getEntry(), smallest.getEntry()) <= 0) {
+                break;
+            }
+            swap(node, smallest);
+            node = smallest;
+        }
+    }
+
+    private BNode<K, V> findParentForNext(BNode<K, V> last) {
+        if (last.isLeftChild()) {
+            return last.getParent();
+        }
+        BNode<K, V> parentForNext = findParentForNextOnSameRow(last);
+        if (parentForNext != null) {
+            return parentForNext;
+        }
+        return findMostLeft();
+    }
+
+    private BNode<K, V> findParentForNextOnSameRow(BNode<K, V> last) {
+        int rows = 0;
+        BNode<K, V> node = last;
+        while (node.isRightChild()) {
+            node = node.getParent();
+            rows--;
+        }
+        // post condition: node has no parent (is root) OR node is left child
+        if (node.getParent() == null) {
+            return null;    // is was the last node in the row
+        }
+        node = node.getParent().getRight();
+        while (rows != -1) {
+            node = node.getLeft();
+            rows++;
+        }
+        return node;
+    }
+
+    private BNode<K, V> findPrevious(BNode<K, V> node) {
         BNode<K, V> prev = findPreviousOnSameRow(node);
-
-
-        // 2. If this node is last on the row, then find the most right on the upper row
-        // todo: implement this case
-
-        return prev;
+        if (prev != null) {
+            return prev;
+        }
+        return findMostRight();
     }
 
     private BNode<K, V> findPreviousOnSameRow(BNode<K, V> node) {
@@ -196,6 +247,22 @@ public class C0931LinkedBinaryHeapQueue<K, V> extends AbstractPriorityQueue<K, V
         return node;
     }
 
+    private BNode<K, V> findMostLeft() {
+        BNode<K, V> node = root;
+        while (node.hasLeft()) {
+            node = node.getLeft();
+        }
+        return node;
+    }
+
+    private BNode<K, V> findMostRight() {
+        BNode<K, V> node = root;
+        while (node.getRight() != null) {
+            node = node.getRight();
+        }
+        return node;
+    }
+
     private void removeFromParent(BNode<K, V> node) {
         if (node.hasLeft() || node.hasRight()) {
             throw new IllegalStateException("Node has children");
@@ -207,23 +274,6 @@ public class C0931LinkedBinaryHeapQueue<K, V> extends AbstractPriorityQueue<K, V
             p.removeLeft();
         } else {
             throw new IllegalStateException("This node is not a child of its parent");
-        }
-    }
-
-    protected void downHeap(BNode<K, V> node) {
-        while (node.hasLeft()) {
-            var smallest = node.getLeft();
-            if (node.hasRight()) {
-                var right = node.getRight();
-                if (compare(smallest.getEntry(), right.getEntry()) > 0) {
-                    smallest = right;
-                }
-            }
-            if (compare(node.getEntry(), smallest.getEntry()) <= 0) {
-                break;
-            }
-            swap(node, smallest);
-            node = smallest;
         }
     }
 
