@@ -110,18 +110,4 @@ public class C0931LinkedBinaryHeapQueue<K, V> extends AbstractLinkedBinaryTreeHe
         }
         return node;
     }
-
-    private void removeFromParent(BNode<K, V> node) {
-        if (node.hasLeft() || node.hasRight()) {
-            throw new IllegalStateException("Node has children");
-        }
-        var p = node.getParent();
-        if (node == p.getRight()) {
-            p.removeRight();
-        } else if (node == p.getLeft()) {
-            p.removeLeft();
-        } else {
-            throw new IllegalStateException("This node is not a child of its parent");
-        }
-    }
 }

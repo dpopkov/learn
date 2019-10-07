@@ -1,11 +1,7 @@
 package learn.dsajg6e.ch09pq2.exer;
 
+import learn.dsajg6e.ch09priorityqueues.exer.TestUtils;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -73,27 +69,11 @@ public class C0931LinkedBinaryHeapQueueTest {
     public void testInsertRemoveMany() {
         var queue = new C0931LinkedBinaryHeapQueue<Integer, String>();
         final int size = 16;
-        var data = prepareData(size);
-        fillQueue(queue, data);
+        var data = TestUtils.prepareNonRandomShuffledNumbers(size);
+        TestUtils.fillQueueWithKeys(queue, data);
         for (int i = 0; i < size; i++) {
             assertThat(queue.removeMin().getKey(), is(i));
         }
         assertThat(queue.isEmpty(), is(true));
-    }
-
-    private void fillQueue(C0931LinkedBinaryHeapQueue<Integer, String> queue, List<Integer> numbers) {
-        for (Integer n : numbers) {
-            queue.insert(n, null);
-        }
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    private static List<Integer> prepareData(int size) {
-        List<Integer> list = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            list.add(i);
-        }
-        Collections.shuffle(list, new Random(3));
-        return list;
     }
 }

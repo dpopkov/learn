@@ -155,4 +155,21 @@ public abstract class AbstractLinkedBinaryTreeHeapQueue<K, V> extends AbstractPr
         }
         return node;
     }
+
+    protected void removeFromParent(BNode<K, V> node) {
+        if (node.hasLeft() || node.hasRight()) {
+            throw new IllegalStateException("Can not remove: this node has children");
+        }
+        var p = node.getParent();
+        if (p == null) {
+            throw new IllegalStateException("Can not remove from parent: parent is null");
+        } else if (node == p.getRight()) {
+            p.removeRight();
+        } else if (node == p.getLeft()) {
+            p.removeLeft();
+        } else {
+            throw new IllegalStateException("This node is not a child of its parent");
+        }
+    }
+
 }

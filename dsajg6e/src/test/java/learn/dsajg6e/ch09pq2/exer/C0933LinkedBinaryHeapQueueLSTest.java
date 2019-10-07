@@ -1,6 +1,6 @@
 package learn.dsajg6e.ch09pq2.exer;
 
-import org.junit.Ignore;
+import learn.dsajg6e.ch09priorityqueues.exer.TestUtils;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
@@ -17,7 +17,6 @@ public class C0933LinkedBinaryHeapQueueLSTest {
         assertThat(queue.isEmpty(), is(true));
     }
 
-    @Ignore     // todo: remove when the class is finished
     @Test
     public void testInsertRemoveThree() {
         var queue = new C0933LinkedBinaryHeapQueueLS<Integer, String>();
@@ -27,6 +26,18 @@ public class C0933LinkedBinaryHeapQueueLSTest {
         assertThat(queue.removeMin().getKey(), is(10));
         assertThat(queue.removeMin().getKey(), is(20));
         assertThat(queue.removeMin().getKey(), is(30));
+        assertThat(queue.isEmpty(), is(true));
+    }
+
+    @Test
+    public void testInsertRemoveMany() {
+        var queue = new C0933LinkedBinaryHeapQueueLS<Integer, String>();
+        final int size = 32;
+        var keys = TestUtils.prepareNonRandomShuffledNumbers(size);
+        TestUtils.fillQueueWithKeys(queue, keys);
+        for (int i = 0; i < size; i++) {
+            assertThat(queue.removeMin().getKey(), is(i));
+        }
         assertThat(queue.isEmpty(), is(true));
     }
 }
