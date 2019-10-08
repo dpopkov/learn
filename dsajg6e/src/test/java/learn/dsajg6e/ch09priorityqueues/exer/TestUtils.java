@@ -17,6 +17,11 @@ public class TestUtils {
         }
     }
 
+    /**
+     * Creates a list of non randomly shuffled numbers from 0 to the specified number exclusive
+     * @param size size of the list that serves as the upper bound (exclusive)
+     * @return list of numbers
+     */
     public static List<Integer> prepareNonRandomShuffledNumbers(int size) {
         List<Integer> list = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
