@@ -94,4 +94,16 @@ public class LinkedBinaryTreeTest {
         assertThat(tree.left(right).getElement(), is(25));
         assertThat(tree.right(right).getElement(), is(35));
     }
+
+    @Test
+    public void whenCreatingTreeOf4ElementsThenDoesGood() {
+        BinaryTree<Integer> tree = LinkedBinaryTree.of(11, 12, 13, 44);
+        var root = tree.root();
+        assertThat(root.getElement(), is(11));
+        Position<Integer> left = tree.left(root);
+        Position<Integer> right = tree.right(root);
+        assertThat(left.getElement(), is(12));
+        assertThat(right.getElement(), is(13));
+        assertThat(tree.left(left).getElement(), is(44));
+    }
 }

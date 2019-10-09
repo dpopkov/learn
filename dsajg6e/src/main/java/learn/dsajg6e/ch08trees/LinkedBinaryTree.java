@@ -251,15 +251,17 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> implements Append
                 Position<E> newLeftPos = tree.addLeft(p, leftElement);
                 queue.add(newLeftPos);
             }
-            E rightElement = elements[i + 1];
-            if (skipNulls && rightElement == null) {
-                queue.add(null);
-            } else {
-                Position<E> newRightPos = tree.addRight(p, rightElement);
-                queue.add(newRightPos);
+            i++;
+            if (!queue.isEmpty() && i < elements.length) {
+                E rightElement = elements[i];
+                if (skipNulls && rightElement == null) {
+                    queue.add(null);
+                } else {
+                    Position<E> newRightPos = tree.addRight(p, rightElement);
+                    queue.add(newRightPos);
+                }
+                i++;
             }
-
-            i += 2;
         }
     }
 }
