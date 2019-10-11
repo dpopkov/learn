@@ -22,6 +22,25 @@ public class RandomArrays {
         return a;
     }
 
+    public static long nextLong(long bound) {
+        return (long) (random.nextDouble() * bound);
+    }
+
+    /**
+     * Creates an array of long values where each value is between 0 ane the specified bound (exclusive).
+     * @param size size of the array
+     * @param bound upper bound (exclusive) of arrays elements
+     * @return array of random long values
+     */
+    public static long[] makeLong(int size, int bound) {
+        random.nextLong();
+        long[] a = new long[size];
+        for (int i = 0; i < a.length; i++) {
+            a[i] = nextLong(bound);
+        }
+        return a;
+    }
+
     /**
      * Creates an array of random float values.
      * @param size size of the array

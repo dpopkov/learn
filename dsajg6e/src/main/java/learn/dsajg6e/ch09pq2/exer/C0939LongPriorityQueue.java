@@ -1,5 +1,7 @@
 package learn.dsajg6e.ch09pq2.exer;
 
+import java.util.Arrays;
+
 public class C0939LongPriorityQueue implements LongPriorityQueue {
     public static final LongBiPredicate MINIMUM_ORIENTED = (a, b) -> a <= b;
     public static final LongBiPredicate MAXIMUM_ORIENTED = (a, b) -> a >= b;
@@ -15,6 +17,25 @@ public class C0939LongPriorityQueue implements LongPriorityQueue {
     public C0939LongPriorityQueue(LongBiPredicate heapOrder, int capacity) {
         this.heapOrder = heapOrder;
         heap = new long[capacity];
+    }
+
+    public C0939LongPriorityQueue(long[] values) {
+        this(MINIMUM_ORIENTED, values);
+    }
+
+    public C0939LongPriorityQueue(LongBiPredicate heapOrder, long[] values) {
+        this.heapOrder = heapOrder;
+        heap = Arrays.copyOf(values, values.length);
+        size = heap.length;
+        heapify();
+    }
+
+    /** Creates heap in place using bottom-up approach. */
+    private void heapify() {
+        int start = parent(size - 1);
+        for (int j = start; j >= 0; j--) {
+            downHeap(j);
+        }
     }
 
     @Override
@@ -53,12 +74,11 @@ public class C0939LongPriorityQueue implements LongPriorityQueue {
         }
         long value = heap[0];
         swap(0, --size);
-        downHeapFromRoot();
+        downHeap(0);
         return value;
     }
 
-    private void downHeapFromRoot() {
-        int i = 0;
+    private void downHeap(int i) {
         while (i < size) {
             int left = left(i);
             if (left >= size) {

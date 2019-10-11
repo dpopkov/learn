@@ -39,4 +39,15 @@ public class C0939LongPriorityQueueTest {
         }
         assertThat(queue.isEmpty(), is(true));
     }
+
+    @Test
+    public void testConstructionUsingArray() {
+        long[] values = {3, 4, 2, 5, 1, 7, 6};
+        LongPriorityQueue queue = new C0939LongPriorityQueue(values);
+        for (int expected = 1; expected <= 7; expected++) {
+            assertEquals("Min should be " + expected, expected, queue.min());
+            assertEquals("Removed min should be " + expected, expected, queue.removeMin());
+        }
+        assertThat(queue.isEmpty(), is(true));
+    }
 }
