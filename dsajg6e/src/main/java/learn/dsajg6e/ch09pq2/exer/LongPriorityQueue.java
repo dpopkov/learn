@@ -10,4 +10,7 @@ public interface LongPriorityQueue {
     interface LongBiPredicate {
         boolean test(long a, long b);
     }
+
+    LongBiPredicate MINIMUM_ORIENTED = (a, b) -> a <= b;
+    LongBiPredicate MAXIMUM_ORIENTED = (a, b) -> a >= b;
 }

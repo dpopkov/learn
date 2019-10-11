@@ -27,7 +27,7 @@ public class C0939LongPriorityQueueTest {
     @Test
     public void testInsertRemoveMaximum() {
         LongPriorityQueue queue = new C0939LongPriorityQueue(
-                C0939LongPriorityQueue.MAXIMUM_ORIENTED, 5);
+                LongPriorityQueue.MAXIMUM_ORIENTED, 5);
         queue.insert(3);
         queue.insert(2);
         queue.insert(4);

@@ -3,9 +3,6 @@ package learn.dsajg6e.ch09pq2.exer;
 import java.util.Arrays;
 
 public class C0939LongPriorityQueue implements LongPriorityQueue {
-    public static final LongBiPredicate MINIMUM_ORIENTED = (a, b) -> a <= b;
-    public static final LongBiPredicate MAXIMUM_ORIENTED = (a, b) -> a >= b;
-
     private final long[] heap;
     private int size;
     private final LongBiPredicate heapOrder;

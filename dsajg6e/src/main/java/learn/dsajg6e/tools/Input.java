@@ -32,4 +32,14 @@ public class Input {
         System.out.print(prompt);
         return instance.getScanner().nextLine();
     }
+
+    public static int optionalIntArgument(String[] args, int argIdx, String prompt) {
+        int argValue;
+        if (args.length > argIdx) {
+            argValue = Integer.parseInt(args[argIdx]);
+        } else {
+            argValue = Input.nextInt(prompt);
+        }
+        return argValue;
+    }
 }
