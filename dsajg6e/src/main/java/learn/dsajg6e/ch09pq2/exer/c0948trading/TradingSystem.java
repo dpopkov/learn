@@ -13,27 +13,25 @@ public class TradingSystem {
 
     public void enter(Order order) {
         if (order.getType() == Order.Type.BUY) {
-            if (!sellingQueue.isEmpty()) {
-                Order selling = sellingQueue.min().getValue();
-                if (pairIsEligibleToProcess(order, selling)) {
-                    selling = sellingQueue.removeMin().getValue();
-                    order.setProcessed(true);
-                    selling.setProcessed(true);
-                }
+            if (!sellingQueue.isEmpty()
+                    && pairIsEligibleToProcess(order, sellingQueue.min().getValue())) {
+                Order selling = sellingQueue.removeMin().getValue();
+                order.setProcessed(true);
+                selling.setProcessed(true);
             } else {
                 buyingQueue.insert(order.getPrice(), order);
             }
         } else if (order.getType() == Order.Type.SELL) {
-            if (!buyingQueue.isEmpty()) {
-                Order buy = buyingQueue.min().getValue();
-                if (pairIsEligibleToProcess(buy, order)) {
-                    buy = buyingQueue.removeMin().getValue();
-                    buy.setProcessed(true);
-                    order.setProcessed(true);
-                }
+            if (!buyingQueue.isEmpty()
+                    && pairIsEligibleToProcess(buyingQueue.min().getValue(), order)) {
+                Order buy = buyingQueue.removeMin().getValue();
+                buy.setProcessed(true);
+                order.setProcessed(true);
             } else {
                 sellingQueue.insert(order.getPrice(), order);
             }
+        } else {
+            throw new IllegalStateException("Unknown order type: " + order.getType());
         }
     }
 

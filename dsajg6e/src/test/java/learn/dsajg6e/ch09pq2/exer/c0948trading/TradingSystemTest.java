@@ -62,4 +62,37 @@ public class TradingSystemTest {
         assertThat(sellBy5.isProcessed(), is(true));
         assertThat(buyBy5.isProcessed(), is(true));
     }
+
+    @Test
+    public void ifSystemHasSellingGreaterThenWaitUntilAddSellingLess() {
+        TradingSystem system = new TradingSystem();
+
+        Order sellBy5 = Order.sell(100, 5);
+        system.enter(sellBy5);
+
+        Order buyBy3 = Order.buy(100, 3);
+        system.enter(buyBy3);
+        assertThat(buyBy3.isProcessed(), is(false));
+
+        Order buyBy5 = Order.buy(100, 5);
+        system.enter(buyBy5);
+
+        assertThat(sellBy5.isProcessed(), is(true));
+        assertThat(buyBy5.isProcessed(), is(true));
+        assertThat(buyBy3.isProcessed(), is(false));
+    }
+
+    @Test
+    public void ifSystemHasBuyOrderLessThanSellOrderThenSellOrderProcessedLater() {
+        TradingSystem system = new TradingSystem();
+        Order buyBy3 = Order.buy(100, 3);
+        system.enter(buyBy3);
+        Order sellBy5 = Order.sell(100, 5);
+        system.enter(sellBy5);
+        Order buyBy5 = Order.buy(100, 5);
+        system.enter(buyBy5);
+        assertThat(sellBy5.isProcessed(), is(true));
+        assertThat(buyBy5.isProcessed(), is(true));
+        assertThat(buyBy3.isProcessed(), is(false));
+    }
 }
