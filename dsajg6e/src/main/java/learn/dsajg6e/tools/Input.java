@@ -33,6 +33,14 @@ public class Input {
         return instance.getScanner().nextLine();
     }
 
+    /**
+     * Tries to receive argument from command line arguments array if present,
+     * otherwise prompts to receive it from the standard input.
+     * @param args command line arguments from <code>main</code>
+     * @param argIdx index of the argument
+     * @param prompt prompt when requesting value from standard input
+     * @return integer value of the argument
+     */
     public static int optionalIntArgument(String[] args, int argIdx, String prompt) {
         int argValue;
         if (args.length > argIdx) {

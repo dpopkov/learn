@@ -9,6 +9,7 @@ public class StopWatch {
         if (started) {
             throw new IllegalStateException("Not stopped yet");
         }
+        elapsed = 0;
         startTime = System.currentTimeMillis();
         started = true;
     }
