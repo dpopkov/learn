@@ -5,17 +5,17 @@ import learn.dsajg6e.ch09pq2.PriorityQueue;
 
 import java.util.Comparator;
 
-public class TradingSystem {
-    private static final Comparator<Integer> MAXIMUM_FIRST = (a, b) -> Integer.compare(b, a);
+public class TradingSystem<T extends Order> {
+    protected static final Comparator<Integer> MAXIMUM_FIRST = (a, b) -> Integer.compare(b, a);
 
-    private final PriorityQueue<Integer, Order> sellingQueue = new HeapPriorityQueue<>();
-    private final PriorityQueue<Integer, Order> buyingQueue = new HeapPriorityQueue<>(MAXIMUM_FIRST);
+    private final PriorityQueue<Integer, T> sellingQueue = new HeapPriorityQueue<>();
+    private final PriorityQueue<Integer, T> buyingQueue = new HeapPriorityQueue<>(MAXIMUM_FIRST);
 
-    public void enter(Order order) {
+    public void enter(T order) {
         if (order.getType() == Order.Type.BUY) {
             if (!sellingQueue.isEmpty()
                     && pairIsEligibleToProcess(order, sellingQueue.min().getValue())) {
-                Order selling = sellingQueue.removeMin().getValue();
+                T selling = sellingQueue.removeMin().getValue();
                 order.setProcessed(true);
                 selling.setProcessed(true);
             } else {
@@ -24,7 +24,7 @@ public class TradingSystem {
         } else if (order.getType() == Order.Type.SELL) {
             if (!buyingQueue.isEmpty()
                     && pairIsEligibleToProcess(buyingQueue.min().getValue(), order)) {
-                Order buy = buyingQueue.removeMin().getValue();
+                T buy = buyingQueue.removeMin().getValue();
                 buy.setProcessed(true);
                 order.setProcessed(true);
             } else {
@@ -35,7 +35,7 @@ public class TradingSystem {
         }
     }
 
-    private boolean pairIsEligibleToProcess(Order buying, Order selling) {
+    protected boolean pairIsEligibleToProcess(T buying, T selling) {
         return buying.getPrice() >= selling.getPrice()
                 && buying.getNumShares() == selling.getNumShares();
     }

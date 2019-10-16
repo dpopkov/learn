@@ -6,13 +6,14 @@ import java.util.regex.Pattern;
 public class Order {
     private static final Pattern pattern = Pattern.compile("(buy|sell)\\s+(\\d+)\\s+shares\\s+at\\s+\\$(\\d+) each");
 
-    enum Type {
+    public enum Type {
         BUY,
         SELL
     }
+
     private Type type;
     private int numShares;
-    private int price;
+    protected int price;
     private boolean processed;
 
     public Order(Type type, int numShares, int price) {

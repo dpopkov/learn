@@ -9,7 +9,7 @@ public class TradingSystemTest {
 
     @Test
     public void buyOrderCanBeProcessedIfThereIsSellOrderWithPriceNotGreater() {
-        TradingSystem system = new TradingSystem();
+        TradingSystem<Order> system = new TradingSystem<>();
         Order buyOrder = new Order("buy 100 shares at $5 each");
         assertThat(buyOrder.isProcessed(), is(false));
         system.enter(new Order("sell 100 shares at $3 each"));
@@ -19,7 +19,7 @@ public class TradingSystemTest {
 
     @Test
     public void buyOrderCanBeProcessedIfLaterIsAddedSellOrderWithPriceNotGreater() {
-        TradingSystem system = new TradingSystem();
+        TradingSystem<Order> system = new TradingSystem<>();
         Order buyOrder = new Order("buy 100 shares at $5 each");
         system.enter(buyOrder);
         assertThat(buyOrder.isProcessed(), is(false));
@@ -31,7 +31,7 @@ public class TradingSystemTest {
 
     @Test
     public void sellOrderCanBeProcessedIfThereIsBuyOrderWithPriceNotLess() {
-        TradingSystem system = new TradingSystem();
+        TradingSystem<Order> system = new TradingSystem<>();
         Order selling = Order.sell(200, 3);
         assertThat(selling.isProcessed(), is(false));
         system.enter(Order.buy(200, 3));
@@ -41,7 +41,7 @@ public class TradingSystemTest {
 
     @Test
     public void sellOrderCanNotBeProcessedIfThereIsBuyOrderWithPriceLess() {
-        TradingSystem system = new TradingSystem();
+        TradingSystem<Order> system = new TradingSystem<>();
         Order selling = Order.sell(100, 5);
         assertThat(selling.isProcessed(), is(false));
         system.enter(Order.buy(100, 4));
@@ -51,7 +51,7 @@ public class TradingSystemTest {
 
     @Test
     public void ifSellOrderAddedToSystemWithTwoBuyingOrdersItIsProcessedWithGreater() {
-        TradingSystem system = new TradingSystem();
+        TradingSystem<Order> system = new TradingSystem<>();
         Order sellBy5 = Order.sell(100, 5);
         assertThat(sellBy5.isProcessed(), is(false));
         Order buyBy5 = Order.buy(100, 5);
@@ -65,18 +65,14 @@ public class TradingSystemTest {
 
     @Test
     public void ifSystemHasSellingGreaterThenWaitUntilAddSellingLess() {
-        TradingSystem system = new TradingSystem();
-
+        TradingSystem<Order> system = new TradingSystem<>();
         Order sellBy5 = Order.sell(100, 5);
         system.enter(sellBy5);
-
         Order buyBy3 = Order.buy(100, 3);
         system.enter(buyBy3);
         assertThat(buyBy3.isProcessed(), is(false));
-
         Order buyBy5 = Order.buy(100, 5);
         system.enter(buyBy5);
-
         assertThat(sellBy5.isProcessed(), is(true));
         assertThat(buyBy5.isProcessed(), is(true));
         assertThat(buyBy3.isProcessed(), is(false));
@@ -84,7 +80,7 @@ public class TradingSystemTest {
 
     @Test
     public void ifSystemHasBuyOrderLessThanSellOrderThenSellOrderProcessedLater() {
-        TradingSystem system = new TradingSystem();
+        TradingSystem<Order> system = new TradingSystem<>();
         Order buyBy3 = Order.buy(100, 3);
         system.enter(buyBy3);
         Order sellBy5 = Order.sell(100, 5);
