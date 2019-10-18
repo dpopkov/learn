@@ -32,6 +32,15 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
         heapify();
     }
 
+    public HeapPriorityQueue(Comparator<K> comp, K[] keys, V[] values) {
+        super(comp);
+        int n = Math.min(keys.length, values.length);
+        for (int i = 0; i < n; i++) {
+            heap.add(new PQEntry<>(keys[i], values[i]));
+        }
+        heapify();
+    }
+
     /** Inserts a key/value pair and returns the entry created. */
     @Override
     public Entry<K, V> insert(K key, V value) throws IllegalArgumentException {
