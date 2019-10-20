@@ -30,6 +30,7 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
             this.key = key;
         }
 
+        /** Sets the specified value and returns the old value. */
         public V setValue(V value) {
             V old = this.value;
             this.value = value;
@@ -42,7 +43,7 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
         }
     }
 
-    /** This iterator is used in public {@link #keySet} method. */
+    /** This iterator is used in public {@link #keySet()} method. */
     private class KeyIterator implements Iterator<K> {
         private final Iterator<Entry<K, V>> entries = entrySet().iterator();
 
@@ -62,19 +63,12 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
         }
     }
 
-    private class KeyIterable implements Iterable<K> {
-        @Override
-        public Iterator<K> iterator() {
-            return new KeyIterator();
-        }
-    }
-
     @Override
     public Iterable<K> keySet() {
-        return new KeyIterable();   // todo: when the class is complete then substitute method-ref for this inner class
+        return KeyIterator::new;
     }
 
-    /** This iterator is used in public {@link @values} method. */
+    /** This iterator is used in public {@link @values()} method. */
     private class ValueIterator implements Iterator<V> {
         private final Iterator<Entry<K, V>> entries = entrySet().iterator();
 
@@ -94,17 +88,9 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
         }
     }
 
-    private class ValueIterable implements Iterable<V> {
-        @Override
-        public Iterator<V> iterator() {
-            return new ValueIterator();
-        }
-    }
-
     @Override
     public Iterable<V> values() {
-//        return ValueIterator::new;
-        return new ValueIterable(); // todo: when the class is complete then substitute method-ref above for the inner class.
+        return ValueIterator::new;
     }
 
     @Override

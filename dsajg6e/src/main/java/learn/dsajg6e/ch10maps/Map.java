@@ -23,7 +23,7 @@ public interface Map<K, V> {
      */
     V put(K key, V value);
 
-    /** Removes from the amp the entry with the specified key, and returns its value;
+    /** Removes from the map the entry with the specified key, and returns its value;
      * if the map has no such entry, then returns null. */
     V remove(K key);
 
