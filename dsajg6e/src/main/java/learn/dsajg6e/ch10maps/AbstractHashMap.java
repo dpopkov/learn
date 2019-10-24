@@ -18,7 +18,7 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
     protected static final int DEFAULT_CAPACITY = 17;
 
     /** Current number of entries in the map. */
-    private int n = 0;
+    private int size = 0;
     /** Length of the table. */
     protected int capacity;
     /** Prime factor. */
@@ -47,15 +47,15 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
 
     @Override
     public int size() {
-        return n;
+        return size;
     }
 
     protected void increaseSize(int growth) {
-        n += growth;
+        size += growth;
     }
 
     protected void decreaseSize(int reduction) {
-        n -= reduction;
+        size -= reduction;
     }
 
     @Override
@@ -71,7 +71,7 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
     @Override
     public V put(K key, V value) {
         V answer = bucketPut(hashValue(key), key, value);
-        if (n > capacity / 2) {
+        if (size > capacity / 2) {
             resize(2 * capacity - 1);
         }
         return answer;
@@ -86,7 +86,7 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
         }
         capacity = newCapacity;
         createTable();
-        n = 0;
+        size = 0;
         for (Entry<K, V> e : buffer) {
             put(e.getKey(), e.getValue());
         }

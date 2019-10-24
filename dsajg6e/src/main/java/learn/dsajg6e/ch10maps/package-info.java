@@ -7,6 +7,7 @@
  * 10.2 Hash Tables<br>
  *     AbstractHashMap<br>
  *     ChainHashMap<br>
+ *     ProbeHashMap<br>
  * 10.3 Sorted Maps<br>
  * 10.4 Skip Lists<br>
  * 10.5 Sets, Multisets, and Multimaps<br>
