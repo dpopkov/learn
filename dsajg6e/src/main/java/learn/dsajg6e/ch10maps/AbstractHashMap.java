@@ -18,7 +18,7 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
     protected static final int DEFAULT_CAPACITY = 17;
 
     /** Current number of entries in the map. */
-    protected int n = 0;
+    private int n = 0;
     /** Length of the table. */
     protected int capacity;
     /** Prime factor. */
@@ -48,6 +48,14 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
     @Override
     public int size() {
         return n;
+    }
+
+    protected void increaseSize(int growth) {
+        n += growth;
+    }
+
+    protected void decreaseSize(int reduction) {
+        n -= reduction;
     }
 
     @Override
