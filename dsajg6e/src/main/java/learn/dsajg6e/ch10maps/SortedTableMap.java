@@ -5,6 +5,9 @@ import learn.dsajg6e.ch09pq2.Entry;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * An implementation of {@link SortedMap} that uses {@link ArrayList} as underlying table.
+ */
 public class SortedTableMap<K, V> extends AbstractSortedMap<K, V> {
     private final ArrayList<MapEntry<K, V>> table = new ArrayList<>();
 
