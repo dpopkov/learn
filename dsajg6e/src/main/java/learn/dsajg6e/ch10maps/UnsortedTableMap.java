@@ -30,6 +30,12 @@ public class UnsortedTableMap<K, V> extends AbstractMap<K, V> {
         return table.get(idx).getValue();
     }
 
+    /* R-10.3 */
+    /** Checks whether the map contains the specified key. */
+    public boolean containsKey(K key) {
+        return findIndex(key) != -1;
+    }
+
     /**
      * If the map does not have an entry with the key, then adds entry to the map and
      * returns null;

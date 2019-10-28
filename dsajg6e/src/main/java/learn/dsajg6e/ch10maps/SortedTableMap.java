@@ -115,6 +115,12 @@ public class SortedTableMap<K, V> extends AbstractSortedMap<K, V> {
         return null;
     }
 
+    /* R-10.19 */
+    public boolean containsKey(K key) {
+        int j = findIndex(key);
+        return j < size() && compare(key, table.get(j)) == 0;
+    }
+
     /** Returns the entry at index j, or else null if j is out of bounds. */
     private Entry<K, V> safeEntry(int j) {
         if (j < 0 || j >= table.size()) {
