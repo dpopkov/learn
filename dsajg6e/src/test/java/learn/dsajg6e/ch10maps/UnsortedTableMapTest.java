@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.Iterator;
 
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 public class UnsortedTableMapTest {
@@ -25,5 +26,17 @@ public class UnsortedTableMapTest {
         assertThat(it.next(), is(30));
         assertThat(it.next(), is(20));
         assertThat(it.hasNext(), is(false));
+    }
+
+    /* C-10.34 */
+    @Test
+    public void whenPutIfAbsentThenOnlyAddsNonExistingKey() {
+        UnsortedTableMap<String, Integer> map = new UnsortedTableMap<>();
+        Integer value;
+        value = map.putIfAbsent("1", 1);
+        assertNull(value);
+        value = map.putIfAbsent("1", 11);
+        assertThat(value, is(1));
+        assertThat(map.get("1"), is(1));
     }
 }

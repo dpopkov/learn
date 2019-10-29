@@ -51,6 +51,18 @@ public class ChainHashMap<K, V> extends AbstractHashMap<K, V> {
         return answer;
     }
 
+    /* C-10.34 */
+    protected V bucketPutIfAbsent(int hash, K key, V value) {
+        UnsortedTableMap<K, V> bucket = table[hash];
+        if (bucket == null) {
+            bucket = table[hash] = new UnsortedTableMap<>();
+        }
+        int oldSize = bucket.size();
+        V answer = bucket.putIfAbsent(key, value);
+        increaseSize(bucket.size() - oldSize);
+        return answer;
+    }
+
     @Override
     protected V bucketRemove(int hash, K key) {
         UnsortedTableMap<K, V> bucket = table[hash];

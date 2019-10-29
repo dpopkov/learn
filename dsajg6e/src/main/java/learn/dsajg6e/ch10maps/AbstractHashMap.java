@@ -77,9 +77,17 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
         return answer;
     }
 
+    public V putIfAbsent(K key, V value) {
+        V answer = bucketPutIfAbsent(hashValue(key), key, value);
+        if (size() > capacity / 2) {
+            resize(2 * capacity - 1);
+        }
+        return answer;
+    }
+
     /* Private utilities. */
 
-    private void resize(int newCapacity) {
+    protected void resize(int newCapacity) {
         ArrayList<Entry<K, V>> buffer = new ArrayList<>();
         for (Entry<K, V> e : entrySet()) {
             buffer.add(e);
@@ -98,7 +106,7 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
      * @param key the key
      * @return hash value that can be used to access a bucket in the underlying hash table.
      */
-    private int hashValue(K key) {
+    protected int hashValue(K key) {
         return (int) ((Math.abs(key.hashCode() * scale + shift) % prime) % capacity);
     }
 
@@ -118,6 +126,13 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
      * but for a key that is known to hash to bucket {@code hash}.
      */
     protected abstract V bucketPut(int hash, K key, V value);
+
+    /* C-10.34 */
+    /**
+     * Should mimic the semantics of the public {@code putIfAbsent} method,
+     * but for a key that is known to hash to bucket {@code hash}.
+     */
+    protected abstract V bucketPutIfAbsent(int hash, K key, V value);
 
     /**
      * Should mimic the semantics of the public {@code remove} method,

@@ -53,6 +53,22 @@ public class UnsortedTableMap<K, V> extends AbstractMap<K, V> {
         }
     }
 
+    /* C-10.33 */
+    /**
+     * Adds a new entry only if the map does not have an entry with the specified key
+     * and returns null,
+     * else returns the current value.
+     */
+    public V putIfAbsent(K key, V value) {
+        int idx = findIndex(key);
+        if (idx == -1) {
+            table.add(new MapEntry<>(key, value));
+            return null;
+        } else {
+            return table.get(idx).getValue();
+        }
+    }
+
     /** Removes from the map the entry with the specified key, and returns its value;
      * if the map has no such entry, then returns null. */
     @Override

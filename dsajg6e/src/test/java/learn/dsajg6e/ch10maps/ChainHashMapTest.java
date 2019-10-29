@@ -19,4 +19,17 @@ public class ChainHashMapTest {
         assertThat(map.get("2"), is(2));
         assertThat(map.get("3"), is(3));
     }
+
+    /* C-10.34 */
+    @Test
+    public void testPutIfAbsent() {
+        ChainHashMap<String, Integer> map = new ChainHashMap<>();
+        map.put("1", 1);
+        Integer value = map.putIfAbsent("1", 11);
+        assertThat(value, is(1));
+        assertThat(map.get("1"), is(1));
+        value = map.putIfAbsent("2", 2);
+        assertNull(value);
+        assertThat(map.get("2"), is(2));
+    }
 }

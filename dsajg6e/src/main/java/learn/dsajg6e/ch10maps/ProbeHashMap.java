@@ -81,6 +81,11 @@ public class ProbeHashMap<K, V> extends AbstractHashMap<K, V> {
         return table[j].setValue(value);
     }
 
+    @Override
+    protected V bucketPutIfAbsent(int hash, K key, V value) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
     /** Removes entry having the key from bucket with the hash value (if any). */
     @Override
     protected V bucketRemove(int hash, K key) {
