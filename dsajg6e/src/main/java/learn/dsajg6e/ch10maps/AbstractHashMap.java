@@ -16,11 +16,14 @@ import java.util.Random;
 public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
     protected static final int DEFAULT_PRIME = 109345121;
     protected static final int DEFAULT_CAPACITY = 17;
+    protected static final double DEFAULT_LOAD_FACTOR = 0.5;
 
     /** Current number of entries in the map. */
     private int size = 0;
     /** Length of the table. */
     protected int capacity;
+    /** Load factor when the hash table is resized. */
+    private final double loadFactor;
     /** Prime factor. */
     private final int prime;
     /** The scaling factor. */
@@ -28,21 +31,22 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
     /** The shift factor. */
     private final long shift;
 
-    public AbstractHashMap(int capacity, int prime) {
+    public AbstractHashMap(int capacity, double loadFactor, int prime) {
         this.capacity = capacity;
+        this.loadFactor = loadFactor;
         this.prime = prime;
         Random rand = new Random();
         scale = rand.nextInt(prime - 1) + 1;
         shift = rand.nextInt(prime);
-        createTable();
+        createTable(capacity);
     }
 
-    public AbstractHashMap(int capacity) {
-        this(capacity, DEFAULT_PRIME);
+    public AbstractHashMap(int capacity, double loadFactor) {
+        this(capacity, loadFactor, DEFAULT_PRIME);
     }
 
     public AbstractHashMap() {
-        this(DEFAULT_CAPACITY);
+        this(DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR);
     }
 
     @Override
@@ -76,9 +80,7 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
     @Override
     public V put(K key, V value) {
         V answer = bucketPut(hashValue(key), key, value);
-        if (size > capacity / 2) {
-            resize(2 * capacity - 1);
-        }
+        ensureSizeWithinLoadFactor();
         return answer;
     }
 
@@ -89,10 +91,14 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
      */
     public V putIfAbsent(K key, V value) {
         V answer = bucketPutIfAbsent(hashValue(key), key, value);
-        if (size() > capacity / 2) {
+        ensureSizeWithinLoadFactor();
+        return answer;
+    }
+
+    private void ensureSizeWithinLoadFactor() {
+        if ((double) size / capacity > loadFactor) {
             resize(2 * capacity - 1);
         }
-        return answer;
     }
 
     /* Private utilities. */
@@ -103,7 +109,7 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
             buffer.add(e);
         }
         capacity = newCapacity;
-        createTable();
+        createTable(capacity);
         size = 0;
         for (Entry<K, V> e : buffer) {
             put(e.getKey(), e.getValue());
@@ -123,7 +129,7 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
     /* Protected abstract methods to be implemented by subclasses. */
 
     /** Should create an initially empty table having size equal to a designated {@code capacity} instance variable. */
-    protected abstract void createTable();
+    protected abstract void createTable(int capacity);
 
     /**
      * Should mimic the semantics of the public {@code get} method,

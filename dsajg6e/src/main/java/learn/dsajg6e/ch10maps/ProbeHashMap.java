@@ -19,18 +19,18 @@ public class ProbeHashMap<K, V> extends AbstractHashMap<K, V> {
         super();
     }
 
-    public ProbeHashMap(int capacity) {
-        super(capacity);
+    public ProbeHashMap(int capacity, double loadFactor) {
+        super(capacity, loadFactor);
     }
 
-    public ProbeHashMap(int capacity ,int prime) {
-        super(capacity, prime);
+    public ProbeHashMap(int capacity, double loadFactor, int prime) {
+        super(capacity, loadFactor, prime);
     }
 
     /** Creates an empty table having length equal to current capacity. */
     @SuppressWarnings("unchecked")
     @Override
-    protected void createTable() {
+    protected void createTable(int capacity) {
         table = (MapEntry<K, V>[]) new MapEntry[capacity];
     }
 

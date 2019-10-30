@@ -44,4 +44,18 @@ public class ProbeHashMapTest {
         assertThat(map.containsKey("1"), is(true));
         assertThat(map.containsKey("2"), is(false));
     }
+
+    @Test
+    public void whenMapIsBiggerThanCapacityThenResize() {
+        ProbeHashMap<String, Integer> map = new ProbeHashMap<>(3, 0.5);
+        map.put("1", 1);
+        map.put("2", 2);
+        map.put("3", 3);
+        map.put("4", 4);
+        assertThat(map.size(), is(4));
+        assertThat(map.get("1"), is(1));
+        assertThat(map.get("2"), is(2));
+        assertThat(map.get("3"), is(3));
+        assertThat(map.get("4"), is(4));
+    }
 }

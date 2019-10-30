@@ -12,8 +12,8 @@ public class ChainHashMap<K, V> extends AbstractHashMap<K, V> {
         super();
     }
 
-    public ChainHashMap(int capacity) {
-        super(capacity);
+    public ChainHashMap(int capacity, double loadFactor) {
+        super(capacity, loadFactor);
     }
 
     public ChainHashMap(int capacity, int prime) {
@@ -22,7 +22,7 @@ public class ChainHashMap<K, V> extends AbstractHashMap<K, V> {
 
     @SuppressWarnings("unchecked")
     @Override
-    protected void createTable() {
+    protected void createTable(int capacity) {
         table = (UnsortedTableMap<K, V>[]) new UnsortedTableMap[capacity];
     }
 
