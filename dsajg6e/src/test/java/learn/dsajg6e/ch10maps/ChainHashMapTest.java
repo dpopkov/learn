@@ -32,4 +32,13 @@ public class ChainHashMapTest {
         assertNull(value);
         assertThat(map.get("2"), is(2));
     }
+
+    /* C-10.36 */
+    @Test
+    public void testContainsKey() {
+        ChainHashMap<String, Integer> map = new ChainHashMap<>();
+        map.put("1", 1);
+        assertThat(map.containsKey("1"), is(true));
+        assertThat(map.containsKey("2"), is(false));
+    }
 }

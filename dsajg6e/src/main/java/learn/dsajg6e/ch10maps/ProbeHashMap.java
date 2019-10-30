@@ -69,6 +69,13 @@ public class ProbeHashMap<K, V> extends AbstractHashMap<K, V> {
         return table[j].getValue();
     }
 
+    /* C-10.36 */
+    @Override
+    protected boolean bucketContainsKey(int hash, K key) {
+        int j = findSlot(hash, key);
+        return j >= 0;
+    }
+
     /** Associates the key with the value in bucket with the specified hash; returns old value. */
     @Override
     protected V bucketPut(int hash, K key, V value) {
@@ -81,9 +88,16 @@ public class ProbeHashMap<K, V> extends AbstractHashMap<K, V> {
         return table[j].setValue(value);
     }
 
+    /* C-10.35 */
     @Override
     protected V bucketPutIfAbsent(int hash, K key, V value) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        int j = findSlot(hash, key);
+        if (j < 0) {
+            table[-j - 1] = new MapEntry<>(key, value);
+            increaseSize(1);
+            return null;
+        }
+        return table[j].getValue();
     }
 
     /** Removes entry having the key from bucket with the hash value (if any). */

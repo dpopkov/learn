@@ -22,4 +22,26 @@ public class ProbeHashMapTest {
         assertNull(map.get("2"));
         assertThat(map.size(), is(2));
     }
+
+    /* C-10.35 */
+    @Test
+    public void canPutIfAbsent() {
+        ProbeHashMap<String, Integer> map = new ProbeHashMap<>();
+        map.put("1", 1);
+        Integer value = map.putIfAbsent("1", 11);
+        assertThat(value, is(1));
+        assertThat(map.get("1"), is(1));
+        value = map.putIfAbsent("2", 2);
+        assertNull(value);
+        assertThat(map.get("2"), is(2));
+    }
+
+    /* C-10.36 */
+    @Test
+    public void testContainsKey() {
+        ProbeHashMap<String, Integer> map = new ProbeHashMap<>();
+        map.put("1", 1);
+        assertThat(map.containsKey("1"), is(true));
+        assertThat(map.containsKey("2"), is(false));
+    }
 }

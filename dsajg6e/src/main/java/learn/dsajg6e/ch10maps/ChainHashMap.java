@@ -39,6 +39,13 @@ public class ChainHashMap<K, V> extends AbstractHashMap<K, V> {
         return bucket.get(key);
     }
 
+    /* C-10.36 */
+    @Override
+    protected boolean bucketContainsKey(int hash, K key) {
+        UnsortedTableMap<K, V> bucket = table[hash];
+        return bucket != null && bucket.containsKey(key);
+    }
+
     @Override
     protected V bucketPut(int hash, K key, V value) {
         UnsortedTableMap<K, V> bucket = table[hash];

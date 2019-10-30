@@ -63,6 +63,11 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
         return bucketGet(hashValue(key), key);
     }
 
+    /* C-10.36 */
+    public boolean containsKey(K key) {
+        return bucketContainsKey(hashValue(key), key);
+    }
+
     @Override
     public V remove(K key) {
         return bucketRemove(hashValue(key), key);
@@ -77,6 +82,11 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
         return answer;
     }
 
+    /**
+     * Adds the specified key-value pair to map only if there does not yet exist
+     * some other entry with the specified key.
+     * Returns the found existing value or null.
+     */
     public V putIfAbsent(K key, V value) {
         V answer = bucketPutIfAbsent(hashValue(key), key, value);
         if (size() > capacity / 2) {
@@ -120,6 +130,13 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
      * but for a key that is known to hash to bucket {@code hash}.
      */
     protected abstract V bucketGet(int hash, K key);
+
+    /* C-10.36 */
+    /**
+     * Should mimic the semantics of the public {@code containsKey} method,
+     * but for a key that is known to hash to bucket {@code hash}.
+     */
+    protected abstract boolean bucketContainsKey(int hash, K key);
 
     /**
      * Should mimic the semantics of the public {@code put} method,
