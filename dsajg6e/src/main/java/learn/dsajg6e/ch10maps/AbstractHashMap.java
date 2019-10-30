@@ -17,6 +17,7 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
     protected static final int DEFAULT_PRIME = 109345121;
     protected static final int DEFAULT_CAPACITY = 17;
     protected static final double DEFAULT_LOAD_FACTOR = 0.5;
+    protected static final double MINIMUM_LOAD_FACTOR = 0.25;
 
     /** Current number of entries in the map. */
     private int size = 0;
@@ -74,7 +75,12 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
 
     @Override
     public V remove(K key) {
-        return bucketRemove(hashValue(key), key);
+        V value = bucketRemove(hashValue(key), key);
+        if ((double) size / capacity < MINIMUM_LOAD_FACTOR) {
+            capacity = capacity / 2;
+            resize(capacity);
+        }
+        return value;
     }
 
     @Override

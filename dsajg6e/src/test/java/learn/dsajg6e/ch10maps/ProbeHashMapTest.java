@@ -1,5 +1,6 @@
 package learn.dsajg6e.ch10maps;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
@@ -57,5 +58,21 @@ public class ProbeHashMapTest {
         assertThat(map.get("2"), is(2));
         assertThat(map.get("3"), is(3));
         assertThat(map.get("4"), is(4));
+    }
+
+    @Ignore("Set Ignore because I am not sure whether the random code in AbstractHashMap will produce stable results for hashValue.")
+    @Test
+    public void whenRemoveThenMapIsResized() {
+        ProbeHashMap<String, Integer> map = new ProbeHashMap<>(3, 0.5);
+        map.put("1", 1);
+        map.put("2", 2);    // size=2, size/capacity > 0.5  --> capacity=5
+        map.put("3", 3);    // size=3, size/capacity > 0.5  --> capacity=9
+        map.put("4", 4);
+        int hash1 = map.hashValue("4");
+        assertThat(map.size(), is(4));
+        map.remove("1");
+        map.remove("2");    // size = 2, size/capacity < 0.25
+        int hash2 = map.hashValue("4");
+        assertNotEquals(hash1, hash2);
     }
 }
