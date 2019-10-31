@@ -116,7 +116,7 @@ public class ProbeHashMap<K, V> extends AbstractHashMap<K, V> {
     @Override
     public Iterable<Entry<K, V>> entrySet() {
         ArrayList<Entry<K, V>> buffer = new ArrayList<>();
-        for (int h = 0; h < capacity; h++) {
+        for (int h = 0; h < table.length; h++) {
             if (!isAvailable(h)) {
                 buffer.add(table[h]);
             }

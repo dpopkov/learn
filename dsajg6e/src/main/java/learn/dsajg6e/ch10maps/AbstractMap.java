@@ -8,7 +8,7 @@ import java.util.Iterator;
 public abstract class AbstractMap<K, V> implements Map<K, V> {
 
     protected static class MapEntry<K, V> implements Entry<K, V> {
-        private K key;
+        private final K key;
         private V value;
 
         public MapEntry(K key, V value) {
@@ -24,10 +24,6 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
         @Override
         public V getValue() {
             return value;
-        }
-
-        public void setKey(K key) {
-            this.key = key;
         }
 
         /** Sets the specified value and returns the old value. */

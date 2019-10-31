@@ -42,6 +42,16 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
         createTable(capacity);
     }
 
+    /* This constructor should be used for testing of sub-classes. */
+    public AbstractHashMap(int capacity, double loadFactor, int prime, long scale, long shift) {
+        this.capacity = capacity;
+        this.loadFactor = loadFactor;
+        this.prime = prime;
+        this.scale = scale;
+        this.shift = shift;
+        createTable(capacity);
+    }
+
     public AbstractHashMap(int capacity, double loadFactor) {
         this(capacity, loadFactor, DEFAULT_PRIME);
     }
