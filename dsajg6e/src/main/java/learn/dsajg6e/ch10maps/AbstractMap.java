@@ -4,10 +4,11 @@ package learn.dsajg6e.ch10maps;
 import learn.dsajg6e.ch09pq2.Entry;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 public abstract class AbstractMap<K, V> implements Map<K, V> {
 
-    protected static class MapEntry<K, V> implements Entry<K, V> {
+    public static class MapEntry<K, V> implements Entry<K, V> {
         private final K key;
         private V value;
 
@@ -36,6 +37,23 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
         @Override
         public String toString() {
             return "{" + key + ":" + value + '}';
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null || getClass() != obj.getClass()) {
+                return false;
+            }
+            MapEntry<?, ?> mapEntry = (MapEntry<?, ?>) obj;
+            return key.equals(mapEntry.key) && value.equals(mapEntry.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(key, value);
         }
     }
 
