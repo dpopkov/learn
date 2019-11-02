@@ -19,6 +19,10 @@ public class SortedTableMap<K, V> extends AbstractSortedMap<K, V> {
         super();
     }
 
+    protected Iterable<MapEntry<K, V>> getTable() {
+        return table;
+    }
+
     /**
      * Returns the smallest index for range table[low..high] inclusive storing an entry
      * with a key greater than or equal to the key (or else index high + 1, by convention).
