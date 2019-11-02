@@ -20,6 +20,10 @@ public class ChainHashMap<K, V> extends AbstractHashMap<K, V> {
         super(capacity, prime);
     }
 
+    protected UnsortedTableMap<K, V>[] getTable() {
+        return table;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     protected void createTable(int capacity) {
