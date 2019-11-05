@@ -59,6 +59,7 @@ public abstract class AbstractSkipList<E extends Comparable<E>> implements SkipL
 
     protected final E minKey;
     protected final E maxKey;
+    /** Start position sentinel. */
     protected Node<E> topLeft;
     protected Node<E> topRight;
     protected int size;
@@ -70,6 +71,13 @@ public abstract class AbstractSkipList<E extends Comparable<E>> implements SkipL
         topRight = new Node<>(maxKey);
         topLeft.setRight(topRight);
         topRight.setLeft(topLeft);
+    }
+
+    protected Node<E> toNode(Position<E> position) {
+        if (!(position instanceof Node)) {
+            throw new IllegalArgumentException("This position is not a node of a skip list.");
+        }
+        return (Node<E>) position;
     }
 
     public int size() {
