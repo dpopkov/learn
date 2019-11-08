@@ -10,12 +10,14 @@ public class SimpleSkipListTest {
 
     @Test
     public void canInsert() {
-        SkipList<Integer> list = new SimpleSkipList<>(0, 100);
+        SkipList<Integer> list = new IntegerSkipList();
         Position<Integer> pos = list.put(50);
         assertThat(pos.getElement(), is(50));
-        pos = list.search(50);
+        pos = list.skipSearch(50);
         assertThat(pos.getElement(), is(50));
-        pos = list.search(51);
+        pos = list.skipSearch(51);
         assertThat(pos.getElement(), is(50));
     }
+
+    // todo: write more tests
 }

@@ -4,7 +4,7 @@ import learn.dsajg6e.ch07list.positional.Position;
 
 public abstract class AbstractSkipList<E extends Comparable<E>> implements SkipList<E> {
     protected static class Node<K extends Comparable<K>> implements Position<K> {
-        private K key;
+        private final K key;
         private Node<K> up;
         private Node<K> down;
         private Node<K> left;
@@ -51,6 +51,10 @@ public abstract class AbstractSkipList<E extends Comparable<E>> implements SkipL
             this.right = right;
         }
 
+        public Node<K> copy() {
+            return new Node<>(key);
+        }
+
         @Override
         public String toString() {
             return "Node{" + key + '}';
@@ -67,10 +71,28 @@ public abstract class AbstractSkipList<E extends Comparable<E>> implements SkipL
     public AbstractSkipList(E minKey, E maxKey) {
         this.minKey = minKey;
         this.maxKey = maxKey;
+        initSentinels();
+    }
+
+    private void initSentinels() {
         topLeft = new Node<>(minKey);
         topRight = new Node<>(maxKey);
-        topLeft.setRight(topRight);
-        topRight.setLeft(topLeft);
+        connectHorizontal(topLeft, topRight);
+        Node<E> bottomLeft = new Node<>(minKey);
+        Node<E> bottomRight = new Node<>(maxKey);
+        connectHorizontal(bottomLeft, bottomRight);
+        connectVertical(topLeft, bottomLeft);
+        connectVertical(topRight, bottomRight);
+    }
+
+    protected void connectHorizontal(Node<E> left, Node<E> right) {
+        left.setRight(right);
+        right.setLeft(left);
+    }
+
+    protected void connectVertical(Node<E> up, Node<E> down) {
+        up.setDown(down);
+        down.setUp(up);
     }
 
     protected Node<E> toNode(Position<E> position) {
