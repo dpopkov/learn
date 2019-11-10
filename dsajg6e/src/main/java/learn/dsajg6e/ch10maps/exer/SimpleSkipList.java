@@ -19,45 +19,37 @@ public class SimpleSkipList<E extends Comparable<E>> extends AbstractSkipList<E>
         }
         Node<E> newNode = new Node<>(key);
         Node<E> prev = (Node<E>) p;
-        Node<E> next = prev.getRight();
-        insertInRow(prev, newNode, next);
+        insertInRow(prev, newNode, prev.getRight());
         size++;
-        /* Build a tower */
-        // todo: refactor to method buildTower
-        Node<E> lastInserted = newNode;
-        while (RANDOM.nextBoolean()) {
-            //      backtrack to higher level
-            while (above(prev) == null) {
-                prev = (Node<E>) prev(prev);
-            }   // post-condition: above(prev) != null
-            prev = (Node<E>) above(prev);
-            if (prev == topLeft) {
-                /* Build one more level */
-                // todo: refactor to method buildLevel (m.b get rig of 2nd level in initial state ?)
-                Node<E> newTopLeft = topLeft.copy();
-                Node<E> newTopRight = topRight.copy();
-                connectHorizontal(newTopLeft, newTopRight);
-                connectVertical(newTopLeft, topLeft);
-                connectVertical(newTopRight, topRight);
-                topLeft = newTopLeft;
-                topRight = newTopRight;
-            }
-            //      insert the node
-            // todo: refactor to method
-            next = (Node<E>) next(prev);
-            Node<E> towerNode = lastInserted.copy();
-            insertInRow(prev, towerNode, next);
-            connectVertical(towerNode, lastInserted);
-            lastInserted = towerNode;
-        }
-        return newNode;
+        return buildTower(prev, newNode);
     }
 
-    private void insertInRow(Node<E> prev, Node<E> node, Node<E> next) {
-        node.setLeft(prev);
-        node.setRight(next);
-        prev.setRight(node);
-        next.setLeft(node);
+    private Node<E> buildTower(Node<E> prev, final Node<E> insertedNode) {
+        Node<E> lastInserted = insertedNode;
+        while (RANDOM.nextBoolean()) {
+            while (above(prev) == null) {
+                prev = (Node<E>) prev(prev);
+            }
+            prev = (Node<E>) above(prev);
+            if (prev == topLeft) {
+                buildNewLevel();
+            }
+            Node<E> towerTopNode = lastInserted.copy();
+            insertInRow(prev, towerTopNode, (Node<E>) next(prev));
+            connectVertical(towerTopNode, lastInserted);
+            lastInserted = towerTopNode;
+        }
+        return lastInserted;
+    }
+
+    private void buildNewLevel() {
+        Node<E> newTopLeft = topLeft.copy();
+        Node<E> newTopRight = topRight.copy();
+        connectHorizontal(newTopLeft, newTopRight);
+        connectVertical(newTopLeft, topLeft);
+        connectVertical(newTopRight, topRight);
+        topLeft = newTopLeft;
+        topRight = newTopRight;
     }
 
     @Override

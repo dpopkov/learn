@@ -102,6 +102,13 @@ public abstract class AbstractSkipList<E extends Comparable<E>> implements SkipL
         return (Node<E>) position;
     }
 
+    protected void insertInRow(Node<E> prev, Node<E> node, Node<E> next) {
+        node.setLeft(prev);
+        node.setRight(next);
+        prev.setRight(node);
+        next.setLeft(node);
+    }
+
     public int size() {
         return size;
     }
