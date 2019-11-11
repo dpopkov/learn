@@ -10,7 +10,7 @@ public class SimpleSkipListTest {
 
     @Test
     public void canInsert() {
-        AbstractSkipList<Integer> list = new IntegerSkipList();
+        SkipList<Integer> list = new IntegerSkipList();
         Position<Integer> pos = list.put(50);
         assertThat(list.size(), is(1));
         assertThat(pos.getElement(), is(50));
@@ -22,7 +22,7 @@ public class SimpleSkipListTest {
 
     @Test
     public void canInsertMany() {
-        AbstractSkipList<Integer> list = new IntegerSkipList();
+        SkipList<Integer> list = new IntegerSkipList();
         Integer[] keys = {38, 40, 50, 20, 31, 42, 25, 55, 17};
         for (int i = 0; i < keys.length; i++) {
             Integer key = keys[i];
@@ -33,6 +33,37 @@ public class SimpleSkipListTest {
                 assertThat(list.skipSearch(existingKey).getElement(), is(existingKey));
             }
         }
+    }
+
+    @Test
+    public void canRemoveKeys() {
+        SkipList<Integer> list = new IntegerSkipList();
+        Position<Integer> pos = list.remove(50);
+        assertNull(pos);
+        list.put(50);
+        assertThat(list.size(), is(1));
+        pos = list.remove(50);
+        assertThat(pos.getElement(), is(50));
+        assertThat(list.size(), is(0));
+        pos = list.remove(50);
+        assertNull(pos);
+    }
+
+    @Test
+    public void canRemoveManyKeys() {
+        SkipList<Integer> list = new IntegerSkipList();
+        Integer[] keys = {38, 40, 50, 20, 31, 42, 25, 55, 17};
+        for (Integer key : keys) {
+            list.put(key);
+        }
+        assertThat(list.size(), is(keys.length));
+        for (Integer key : keys) {
+            Position<Integer> pos = list.remove(key);
+            assertThat(pos.getElement(), is(key));
+            pos = list.remove(key);
+            assertNull(pos);
+        }
+        assertThat(list.size(), is(0));
     }
 
     private void assertPutKey(SkipList<Integer> list, int key) {

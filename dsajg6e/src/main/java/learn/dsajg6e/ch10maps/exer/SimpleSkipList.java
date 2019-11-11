@@ -65,6 +65,36 @@ public class SimpleSkipList<E extends Comparable<E>> extends AbstractSkipList<E>
     }
 
     @Override
+    public Position<E> remove(E key) {
+        Position<E> p = skipSearch(key);
+        if (!p.getElement().equals(key)) {
+            return null;
+        }
+        Node<E> node = (Node<E>) p;
+        removeNode(node);
+        while (above(node) != null) {
+            node = (Node<E>) above(node);
+            removeNode(node);
+        }
+        size--;
+        return p;
+    }
+
+    private void removeNode(Node<E> node) {
+        Node<E> prev = node.getLeft();
+        Node<E> next = node.getRight();
+        prev.setRight(next);
+        next.setLeft(prev);
+        node.setRight(null);
+        node.setLeft(null);
+        Node<E> below = node.getDown();
+        if (below != null) {
+            below.setUp(null);
+            node.setDown(null);
+        }
+    }
+
+    @Override
     public Position<E> next(Position<E> p) {
         return toNode(p).getRight();
     }

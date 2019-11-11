@@ -109,6 +109,7 @@ public abstract class AbstractSkipList<E extends Comparable<E>> implements SkipL
         next.setLeft(node);
     }
 
+    @Override
     public int size() {
         return size;
     }

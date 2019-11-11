@@ -14,4 +14,8 @@ public interface SkipList<K extends Comparable<K>> {
     Position<K> below(Position<K> p);
     /** Returns position with the largest key that is less or equal to the specified key. */
     Position<K> skipSearch(K key);
+    /** Removes the specified key and returns its position, or null if no key found. */
+    Position<K> remove(K key);
+    /** Returns the number of elements in the list. */
+    int size();
 }
