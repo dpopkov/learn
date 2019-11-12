@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.Map;
 
 @SuppressWarnings("unused")
-public class HashMultiMap<K, V> {
+public class HashMultiMap<K, V> implements MultiMap<K, V> {
     @SuppressWarnings("rawtypes")
     private static final List EMPTY_LIST = Collections.emptyList();
 
@@ -14,27 +14,32 @@ public class HashMultiMap<K, V> {
     private int total;
 
     /** Returns the total number of entries in the multi-map. */
+    @Override
     public int size() {
         return total;
     }
 
+    @Override
     public boolean isEmpty() {
         return total == 0;
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public Iterable<V> get(K key) {
         List<V> secondary = map.get(key);
         return secondary != null ? secondary : (List<V>) EMPTY_LIST;
     }
 
     /** Adds a new entry associating key with the value. */
+    @Override
     public void put(K key, V value) {
         map.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
         total++;
     }
 
     /** Removes the key-value entry if it exists. */
+    @Override
     public boolean remove(K key, V value) {
         boolean removed = false;
         List<V> secondary = map.get(key);
@@ -51,6 +56,7 @@ public class HashMultiMap<K, V> {
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public Iterable<V> removeAll(K key) {
         List<V> secondary = map.get(key);
         if (secondary != null) {
