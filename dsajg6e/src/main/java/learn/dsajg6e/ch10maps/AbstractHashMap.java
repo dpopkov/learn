@@ -20,7 +20,7 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
     protected static final double MINIMUM_LOAD_FACTOR = 0.25;
 
     /** Current number of entries in the map. */
-    private int size = 0;
+    protected int size = 0;
     /** Length of the table. */
     protected int capacity;
     /** Load factor when the hash table is resized. */
@@ -111,9 +111,11 @@ public abstract class AbstractHashMap<K, V> extends AbstractMap<K, V> {
         return answer;
     }
 
-    private void ensureSizeWithinLoadFactor() {
+    protected void ensureSizeWithinLoadFactor() {
         if ((double) size / capacity > loadFactor) {
-            resize(2 * capacity - 1);
+            int newCapacity = 2 * capacity - 1;
+            newCapacity = newCapacity > capacity ? newCapacity : capacity * 2;
+            resize(newCapacity);
         }
     }
 
