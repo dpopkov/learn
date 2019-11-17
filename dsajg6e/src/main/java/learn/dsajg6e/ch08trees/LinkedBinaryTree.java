@@ -123,7 +123,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> implements Append
         if (!isEmpty()) {
             throw new IllegalStateException("Tree is not empty");
         }
-        root = createNode(e, null);
+        root = createNode(e, null, null, null);
         size = 1;
         return root;
     }
@@ -135,7 +135,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> implements Append
         if (parent.getLeft() != null) {
             throw new IllegalArgumentException("position already has a left child");
         }
-        Node<E> child = createNode(e, parent);
+        Node<E> child = createNode(e, parent, null, null);
         parent.setLeft(child);
         size++;
         return child;
@@ -148,7 +148,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> implements Append
         if (parent.getRight() != null) {
             throw new IllegalArgumentException("position already has a right child");
         }
-        Node<E> child = createNode(e, parent);
+        Node<E> child = createNode(e, parent, null, null);
         parent.setRight(child);
         size++;
         return child;
@@ -163,8 +163,8 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> implements Append
         return old;
     }
 
-    private Node<E> createNode(E e, Node<E> parent) {
-        return new Node<>(e, parent, null, null);
+    protected Node<E> createNode(E e, Node<E> parent, Node<E> left, Node<E> right) {
+        return new Node<>(e, parent, left, right);
     }
 
     /** Attaches trees t1 and t2 as left and right subtrees of external p. */

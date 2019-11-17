@@ -9,13 +9,81 @@ import learn.dsajg6e.ch10maps.AbstractSortedMap;
  * An implementation of a sorted map using a binary search tree.
  */
 public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
+    /** A specialized version of LinkedBinaryTree with support for balancing. */
     protected static class BalanceableBinaryTree<K, V> extends LinkedBinaryTree<Entry<K, V>> {
-        protected void rotate(Position<Entry<K, V>> p) {
-            throw new UnsupportedOperationException("Not implemented yet");
+
+        protected static class BSTNode<E> extends Node<E> {
+            private int aux = 0;
+
+            public BSTNode(E element, Node<E> parent, Node<E> left, Node<E> right) {
+                super(element, parent, left, right);
+            }
+
+            public int getAux() {
+                return aux;
+            }
+
+            public void setAux(int aux) {
+                this.aux = aux;
+            }
         }
 
-        protected Position<Entry<K, V>> restructure(Position<Entry<K, V>> x) {
-            throw new UnsupportedOperationException("Not implemented yet");
+        public int getAux(Position<Entry<K, V>> p) {
+            return ((BSTNode<Entry<K, V>>)p).getAux();
+        }
+
+        public void setAux(Position<Entry<K, V>> p, int value) {
+            ((BSTNode<Entry<K, V>>)p).setAux(value);
+        }
+
+        @Override
+        protected Node<Entry<K, V>> createNode(Entry<K, V> entry, Node<Entry<K, V>> parent, Node<Entry<K, V>> left, Node<Entry<K, V>> right) {
+            return new BSTNode<>(entry, parent, left, right);
+        }
+
+        /** Rotates Position p above its parent. */
+        public void rotate(Position<Entry<K, V>> p) {
+            Node<Entry<K, V>> x = validate(p);
+            Node<Entry<K, V>> y = x.getParent();    // we assume that the parent exists
+            Node<Entry<K, V>> z = y.getParent();    // grandparent can possibly be null
+            if (z == null) {
+                root = x;               // x becomes root of the tree
+                x.setParent(null);
+            } else {
+                relink(z, x, y == z.getLeft());
+            }
+            if (x == y.getLeft()) {
+                relink(y, x.getRight(), true);
+                relink(x, y, false);
+            } else {
+                relink(y, x.getLeft(), false);
+                relink(x, y, true);
+            }
+        }
+
+        /** Performs a trinode restructuring of Position x with its parent/grandparent. */
+        public Position<Entry<K, V>> restructure(Position<Entry<K, V>> x) {
+            Position<Entry<K, V>> y = parent(x);
+            Position<Entry<K, V>> z = parent(y);
+            if ((x == right(y)) == (y == right(z))) {
+                rotate(y);
+                return y;
+            } else {
+                rotate(x);
+                rotate(x);
+                return x;
+            }
+        }
+        // todo: continue form page 476
+
+        /** Re-links a parent node with its oriented child node. */
+        private void relink(Node<Entry<K, V>> parent, Node<Entry<K, V>> child, boolean makeLeftChild) {
+            child.setParent(parent);
+            if (makeLeftChild) {
+                parent.setLeft(child);
+            } else {
+                parent.setRight(child);
+            }
         }
     }
 
