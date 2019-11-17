@@ -117,11 +117,12 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
         V old = null;
         if (isExternal(p)) {
             expandExternal(p, newEntry);
+            rebalanceInsert(p);
         } else {
             old = p.getElement().getValue();
             set(p, newEntry);
+            rebalanceAccess(p);
         }
-        rebalanceAccess(p);
         return old;
     }
 
@@ -192,14 +193,6 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
         return null;
     }
 
-    private void rebalanceAccess(Position<Entry<K, V>> p) {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-    private void rebalanceDelete(Position<Entry<K,V>> p) {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
     @Override
     public Entry<K, V> firstEntry() {
         return null;
@@ -223,5 +216,23 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
     @Override
     public Iterable<Entry<K, V>> entrySet() {
         return null;
+    }
+
+    /*
+        Trivial definitions of TreeMap methods that serve as hooks
+        for a re-balancing framework. These methods may be overridden by subclasses
+        in order to perform appropriate re-balancing operations.
+     */
+
+    protected void rebalanceInsert(Position<Entry<K, V>> p) {
+        // the body of the method does nothing
+    }
+
+    protected void rebalanceAccess(Position<Entry<K, V>> p) {
+        // the body of the method does nothing
+    }
+
+    protected void rebalanceDelete(Position<Entry<K,V>> p) {
+        // the body of the method does nothing
     }
 }
