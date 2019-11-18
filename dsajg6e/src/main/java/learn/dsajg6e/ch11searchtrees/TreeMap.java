@@ -13,6 +13,7 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
     protected static class BalanceableBinaryTree<K, V> extends LinkedBinaryTree<Entry<K, V>> {
 
         protected static class BSTNode<E> extends Node<E> {
+            /** Auxiliary balancing information. */
             private int aux = 0;
 
             public BSTNode(E element, Node<E> parent, Node<E> left, Node<E> right) {
@@ -74,7 +75,6 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
                 return x;
             }
         }
-        // todo: continue form page 476
 
         /** Re-links a parent node with its oriented child node. */
         private void relink(Node<Entry<K, V>> parent, Node<Entry<K, V>> child, boolean makeLeftChild) {
@@ -269,32 +269,32 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
     @Override
     public Entry<K, V> lowerEntry(K key) {
         // todo: implement when the rest of the code is in place
-        return null;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public Entry<K, V> firstEntry() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public Entry<K, V> ceilingEntry(K key) {
-        return null;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public Entry<K, V> higherEntry(K key) {
-        return null;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public Iterable<Entry<K, V>> subMap(K key1, K key2) {
-        return null;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public Iterable<Entry<K, V>> entrySet() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     /*
