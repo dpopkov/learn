@@ -5,6 +5,8 @@ import learn.dsajg6e.ch08trees.LinkedBinaryTree;
 import learn.dsajg6e.ch09pq2.Entry;
 import learn.dsajg6e.ch10maps.AbstractSortedMap;
 
+import java.util.Comparator;
+
 /**
  * An implementation of a sorted map using a binary search tree.
  */
@@ -92,6 +94,10 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
     public TreeMap() {
         super();
         tree.addRoot(null);
+    }
+
+    public TreeMap(Comparator<K> comparator) {
+        super(comparator);
     }
 
     /** Returns the number of entries in the map. */
