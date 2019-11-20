@@ -89,11 +89,15 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
         }
     }
 
-    protected BalanceableBinaryTree<K, V> tree = new BalanceableBinaryTree<>();
+    protected final BalanceableBinaryTree<K, V> tree;
+
+    {
+        tree = new BalanceableBinaryTree<>();
+        tree.addRoot(null);
+    }
 
     public TreeMap() {
         super();
-        tree.addRoot(null);
     }
 
     public TreeMap(Comparator<K> comparator) {

@@ -7,6 +7,7 @@ import java.util.Comparator;
 
 /** An implementation of a sorted map using an AVL tree. */
 public class AvlTreeMap<K, V> extends TreeMap<K, V> {
+
     /** Constructs an empty map using the natural ordering of keys. */
     public AvlTreeMap() {
         super();
@@ -32,6 +33,7 @@ public class AvlTreeMap<K, V> extends TreeMap<K, V> {
         return Math.abs(height(left(p)) - height(right(p))) <= 1;
     }
 
+    /** Returns a child of p with height no smaller than that of the other child. */
     protected Position<Entry<K, V>> tallerChild(Position<Entry<K, V>> p) {
         var leftChild = left(p);
         var rightChild = right(p);
@@ -49,5 +51,40 @@ public class AvlTreeMap<K, V> extends TreeMap<K, V> {
         }
         // return aligned child
         return p == left(parent(p)) ? leftChild : rightChild;
+    }
+
+    /**
+     * Utility used to rebalance after an insert or removal operation. This traverses the
+     * path upward from p, performing a trinode restructuring when imbalance is found,
+     * continuing until balance is restored.
+     */
+    protected void rebalance(Position<Entry<K, V>> p) {
+        int oldHeight;
+        int newHeight;
+        do {
+            oldHeight = height(p);
+            if (!isBalanced(p)) {
+                p = restructure(tallerChild(tallerChild(p)));
+                recomputeHeight(left(p));
+                recomputeHeight(right(p));
+            }
+            recomputeHeight(p);
+            newHeight = height(p);
+            p = parent(p);
+        } while (oldHeight != newHeight && p != null);
+    }
+
+    /** Overrides the TreeMap re-balancing hook that is called after an insertion. */
+    @Override
+    protected void rebalanceInsert(Position<Entry<K, V>> p) {
+        rebalance(p);
+    }
+
+    /** Overrides the TreeMap re-balancing hook that is called after a deletion. */
+    @Override
+    protected void rebalanceDelete(Position<Entry<K, V>> p) {
+        if (!isRoot(p)) {
+            rebalance(parent(p));
+        }
     }
 }
