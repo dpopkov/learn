@@ -8,6 +8,7 @@
  * 11.3 AVL Trees<br>
  *     AvlTreeMap<br>
  * 11.4 Splay Trees<br>
+ *     SplayTreeMap<br>
  * 11.5 (2,4) Trees<br>
  * 11.6 Red-Black Trees<br>
  * 11.7 Exercises<br>
