@@ -68,7 +68,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> implements Append
 
         @Override
         public String toString() {
-            return "(" + element.toString() + ")";
+            return "(" + (element != null ? element.toString() : "null") + ")";
         }
     }
 

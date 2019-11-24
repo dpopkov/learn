@@ -29,6 +29,11 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
             public void setAux(int aux) {
                 this.aux = aux;
             }
+
+            @Override
+            public String toString() {
+                return "{" + super.toString() + "(" + aux + ")}";
+            }
         }
 
         public int getAux(Position<Entry<K, V>> p) {
