@@ -2,22 +2,15 @@ package learn.dsajg6e.ch11searchtrees;
 
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
-
-public class RbTreeMapTest {
+public class RbTreeMapTest extends TreeMapBaseTest {
 
     @Test
-    public void canInsert() {
+    public void canInsertAndGet() {
         TreeMap<Integer, String> map = new RbTreeMap<>();
         assertPutGet(map,10, "10", 1);
-    }
-
-    // todo: add tests
-
-    private void assertPutGet(TreeMap<Integer, String> map, int key, String value, int size) {
-        map.put(key, value);
-        assertThat(map.size(), is(size));
-        assertThat(map.get(key), is(value));
+        assertPutGet(map,20, "20", 2);
+        assertPutGet(map,25, "25", 3);
+        assertPutGet(map,30, "30", 4);
+        assertPutGet(map,35, "35", 5);
     }
 }

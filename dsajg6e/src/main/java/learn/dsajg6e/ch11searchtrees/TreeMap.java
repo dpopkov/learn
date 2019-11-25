@@ -176,7 +176,7 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
     }
 
     /** Returns the position in p's subtree having given key (or else the terminal leaf). */
-    private Position<Entry<K, V>> treeSearch(Position<Entry<K, V>> p, K key) {
+    protected Position<Entry<K, V>> treeSearch(Position<Entry<K, V>> p, K key) {
         if (isExternal(p)) {
             return p;   // not found
         }
