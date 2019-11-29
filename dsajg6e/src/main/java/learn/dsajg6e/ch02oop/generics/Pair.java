@@ -18,6 +18,15 @@ public class Pair<A, B> {
         return second;
     }
 
+    @Override
+    public String toString() {
+        return "Pair{" + first + ", " + second + '}';
+    }
+
+    public static <K, V> Pair<K, V> of(K first, V second) {
+        return new Pair<>(first, second);
+    }
+
     public static void main(String[] args) {
         Pair[] nonGeneric = new Pair[2];
         @SuppressWarnings("unchecked") Pair<String, Long>[] pa = nonGeneric;
