@@ -1,4 +1,4 @@
-package learn.ijpds2.ch14fx;
+package learn.ijpds2nd.ch14fx;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
