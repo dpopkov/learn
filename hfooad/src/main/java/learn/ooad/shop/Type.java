@@ -1,4 +1,4 @@
-package learn.ooad.ch01;
+package learn.ooad.shop;
 
 public enum Type {
 

@@ -1,14 +1,13 @@
-package learn.ooad.ch01;
+package learn.ooad.shop;
 
-public class Guitar {
+public abstract class Instrument {
     private final String serialNumber;
     private double price;
-    private final GuitarSpec spec;
+    protected InstrumentSpec spec;
 
-    public Guitar(String serialNumber, double price, GuitarSpec spec) {
+    public Instrument(String serialNumber, double price) {
         this.serialNumber = serialNumber;
         this.price = price;
-        this.spec = spec;
     }
 
     public String getSerialNumber() {
@@ -23,7 +22,7 @@ public class Guitar {
         this.price = price;
     }
 
-    public GuitarSpec getSpec() {
+    public InstrumentSpec getSpec() {
         return spec;
     }
 }

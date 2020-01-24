@@ -1,20 +1,18 @@
-package learn.ooad.ch01;
+package learn.ooad.shop;
 
 import java.util.Objects;
 
-public class GuitarSpec {
+public abstract class InstrumentSpec {
     private final Builder builder;
     private final String model;
     private final Type type;
-    private final int numStrings;
     private final Wood backWood;
     private final Wood topWood;
 
-    public GuitarSpec(Builder builder, String model, Type type, int numStrings, Wood backWood, Wood topWood) {
+    public InstrumentSpec(Builder builder, String model, Type type, Wood backWood, Wood topWood) {
         this.builder = builder;
         this.model = model;
         this.type = type;
-        this.numStrings = numStrings;
         this.backWood = backWood;
         this.topWood = topWood;
     }
@@ -31,10 +29,6 @@ public class GuitarSpec {
         return type;
     }
 
-    public int getNumStrings() {
-        return numStrings;
-    }
-
     public Wood getBackWood() {
         return backWood;
     }
@@ -47,7 +41,7 @@ public class GuitarSpec {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GuitarSpec that = (GuitarSpec) o;
+        InstrumentSpec that = (InstrumentSpec) o;
         return builder == that.builder &&
                 Objects.equals(model, that.model) &&
                 type == that.type &&
