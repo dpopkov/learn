@@ -11,14 +11,7 @@ public class Inventory {
     }
 
     public void addInstrument(String serialNumber, double price, InstrumentSpec spec) {
-        Instrument instrument;
-        if (spec instanceof GuitarSpec) {
-            instrument = new Guitar(serialNumber, price, (GuitarSpec) spec);
-        } else if (spec instanceof MandolinSpec) {
-            instrument = new Mandolin(serialNumber, price, (MandolinSpec) spec);
-        } else {
-            throw new IllegalArgumentException("Don't know how to use this spec: " + spec);
-        }
+        Instrument instrument = new Instrument(serialNumber, price, spec);
         instruments.add(instrument);
     }
 
@@ -31,21 +24,11 @@ public class Inventory {
         return null;
     }
 
-    public List<Guitar> search(GuitarSpec spec) {
-        List<Guitar> result = new LinkedList<>();
+    public List<Instrument> search(InstrumentSpec spec) {
+        List<Instrument> result = new LinkedList<>();
         for (Instrument g : instruments) {
-            if ((g instanceof Guitar) && spec.equals(g.getSpec())) {
-                result.add((Guitar) g);
-            }
-        }
-        return result;
-    }
-
-    public List<Mandolin> search(MandolinSpec spec) {
-        List<Mandolin> result = new LinkedList<>();
-        for (Instrument g : instruments) {
-            if ((g instanceof Mandolin) && spec.equals(g.getSpec())) {
-                result.add((Mandolin) g);
+            if (spec.equals(g.getSpec())) {
+                result.add(g);
             }
         }
         return result;
