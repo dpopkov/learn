@@ -27,7 +27,7 @@ public class Inventory {
     public List<Instrument> search(InstrumentSpec spec) {
         List<Instrument> result = new LinkedList<>();
         for (Instrument g : instruments) {
-            if (spec.equals(g.getSpec())) {
+            if (spec.matches(g.getSpec())) {
                 result.add(g);
             }
         }
