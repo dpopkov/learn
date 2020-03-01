@@ -12,13 +12,13 @@ public class SimpleRemoteControlTest {
     public void whenButtonPressedThenCommandExecuted() {
         SimpleRemoteControl remote = new SimpleRemoteControl();
 
-        Light light = new Light();
+        Light light = new Light("");
         LightOnCommand lightOn = new LightOnCommand(light);
         remote.setCommand(lightOn);
         remote.buttonPressed();
         assertTrue(light.isOn());
 
-        GarageDoor garage = new GarageDoor();
+        GarageDoor garage = new GarageDoor("");
         GarageDoorOpenCommand garageOpen = new GarageDoorOpenCommand(garage);
         remote.setCommand(garageOpen);
         remote.buttonPressed();

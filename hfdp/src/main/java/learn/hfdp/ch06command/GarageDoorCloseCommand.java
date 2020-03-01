@@ -5,15 +5,15 @@ import learn.hfdp.ch06command.devices.GarageDoor;
 /**
  * Defines the binding between an "up" action and a {@link GarageDoor} receiver.
  */
-public class GarageDoorOpenCommand implements Command {
+public class GarageDoorCloseCommand implements Command {
     private final GarageDoor door;
 
-    public GarageDoorOpenCommand(GarageDoor door) {
+    public GarageDoorCloseCommand(GarageDoor door) {
         this.door = door;
     }
 
     @Override
     public void execute() {
-        door.up();
+        door.down();
     }
 }
