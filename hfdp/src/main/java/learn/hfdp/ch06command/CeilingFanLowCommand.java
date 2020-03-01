@@ -2,18 +2,18 @@ package learn.hfdp.ch06command;
 
 import learn.hfdp.ch06command.devices.CeilingFan;
 
-public class CeilingFanOffCommand implements Command {
+public class CeilingFanLowCommand implements Command {
     private final CeilingFan ceilingFan;
     private int prevSpeed;
 
-    public CeilingFanOffCommand(CeilingFan ceilingFan) {
+    public CeilingFanLowCommand(CeilingFan ceilingFan) {
         this.ceilingFan = ceilingFan;
     }
 
     @Override
     public void execute() {
         prevSpeed = ceilingFan.getSpeed();
-        ceilingFan.off();
+        ceilingFan.low();
     }
 
     @Override

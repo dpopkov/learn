@@ -24,7 +24,7 @@ public class RemoteControlTest {
         LightOnCommand kitchenLightOn = new LightOnCommand(kitchenLight);
         LightOffCommand kitchenLightOff = new LightOffCommand(kitchenLight);
 
-        CeilingFanOnCommand ceilingFanOn = new CeilingFanOnCommand(ceilingFan);
+        CeilingFanLowCommand ceilingFanOn = new CeilingFanLowCommand(ceilingFan);
         CeilingFanOffCommand ceilingFanOff = new CeilingFanOffCommand(ceilingFan);
 
         GarageDoorOpenCommand garageDoorOpen = new GarageDoorOpenCommand(garageDoor);
@@ -60,5 +60,45 @@ public class RemoteControlTest {
         assertTrue(stereo.isOn());
         remote.offButtonPushed(3);
         assertFalse(stereo.isOn());
+    }
+
+    @Test
+    public void whenUndoThenLastActionReversed() {
+        RemoteControl remote = new RemoteControl();
+        Light livingRoomLight = new Light("Living Room");
+        LightOnCommand livingRoomLightOn = new LightOnCommand(livingRoomLight);
+        LightOffCommand livingRoomLightOff = new LightOffCommand(livingRoomLight);
+        remote.setCommand(0, livingRoomLightOn, livingRoomLightOff);
+
+        remote.onButtonPushed(0);
+        assertTrue(livingRoomLight.isOn());
+        remote.undoButtonPushed();
+        assertFalse(livingRoomLight.isOn());
+
+        remote.onButtonPushed(0);
+        remote.offButtonPushed(0);
+        remote.undoButtonPushed();
+        assertTrue(livingRoomLight.isOn());
+    }
+
+    @Test
+    public void whenUndoThenLastStateRestored() {
+        RemoteControl remote = new RemoteControl();
+        CeilingFan ceilingFan = new CeilingFan("Living Room");
+        CeilingFanLowCommand ceilingLow = new CeilingFanLowCommand(ceilingFan);
+        CeilingFanMediumCommand ceilingMedium = new CeilingFanMediumCommand(ceilingFan);
+        CeilingFanOffCommand ceilingOff = new CeilingFanOffCommand(ceilingFan);
+        remote.setCommand(0, ceilingLow, ceilingOff);
+        remote.setCommand(1, ceilingMedium, ceilingOff);
+
+        remote.onButtonPushed(0);
+        assertEquals(CeilingFan.LOW, ceilingFan.getSpeed());
+        remote.undoButtonPushed();
+        assertEquals(CeilingFan.OFF, ceilingFan.getSpeed());
+        remote.onButtonPushed(0);
+        remote.onButtonPushed(1);
+        assertEquals(CeilingFan.MEDIUM, ceilingFan.getSpeed());
+        remote.undoButtonPushed();
+        assertEquals(CeilingFan.LOW, ceilingFan.getSpeed());
     }
 }
