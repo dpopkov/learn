@@ -22,3 +22,22 @@ The Factory Method Pattern defines an interface for creating an object,
 but lets subclass decide which class to instantiate. Factory Method lets
 a class defer instantiation to subclasses.
 
+
+#### Singleton   - Chapter 5. One of a Kind Objects.
+
+The Singleton Pattern ensures a class has only one instance, and provides 
+a global point of access to it.
+
+
+#### Command    - Chapter 6. Encapsulating Invocation.
+
+The Command Pattern encapsulates a request as an object, thereby letting you
+parameterize other objects with different requests, queue or log requests,
+and support undoable operations.
+
+
+#### Adapter and Facade     - Chapter 7. Being Adaptive.
+
+The Adapter Pattern converts the interface of a class into another interface
+the clients expect. Adapter lets classes work together that couldn't otherwise
+because of incompatible interfaces.
