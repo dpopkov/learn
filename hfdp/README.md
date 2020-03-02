@@ -41,3 +41,11 @@ and support undoable operations.
 The Adapter Pattern converts the interface of a class into another interface
 the clients expect. Adapter lets classes work together that couldn't otherwise
 because of incompatible interfaces.
+
+The Facade Pattern provides a unified interface to a set of interfaces 
+in a subsystem. Facade defines a higher level interface that makes 
+the subsystem easier to use.
+
+Facades and Adapters may wrap multiple classes, but a facade's intent
+is to __simplify__, while an adapter's is to __convert__ the interface
+to something different.
