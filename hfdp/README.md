@@ -49,3 +49,10 @@ the subsystem easier to use.
 Facades and Adapters may wrap multiple classes, but a facade's intent
 is to __simplify__, while an adapter's is to __convert__ the interface
 to something different.
+
+
+#### Template Method    - Chapter 8. Encapsulating Algorithms
+
+The Template Method Pattern defines the skeleton of an algorithm in a method,
+deferring some steps to subclasses. Template Method lets subclasses redefine
+certain steps of an algorithm without changing the algorithm's structure.
