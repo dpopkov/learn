@@ -2,7 +2,8 @@ package learn.hfdp.ch09iterator;
 
 import java.util.Iterator;
 
-public class DinnerMenu implements Menu {
+@SuppressWarnings("SpellCheckingInspection")
+public class DinnerMenu implements Iterable<MenuItem> {
     private static final int MAX_ITEMS = 6;
     private int numberOfItems = 0;
     private MenuItem[] menuItems;
@@ -26,7 +27,7 @@ public class DinnerMenu implements Menu {
     }
 
     @Override
-    public Iterator<MenuItem> createIterator() {
+    public Iterator<MenuItem> iterator() {
         return new DinnerMenuIterator(menuItems, numberOfItems);
     }
 }

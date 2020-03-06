@@ -1,36 +1,15 @@
 package learn.hfdp.ch09iterator;
 
-import java.io.PrintStream;
-import java.util.Iterator;
-
 public class Waitress {
-    private PrintStream out;
-    private MenuItemPrinter printer;
-    private Menu pancakeHouseMenu;
-    private Menu dinnerMenu;
+    private MenuComponent allMenus;
 
-    public Waitress(PrintStream out, Menu pancakeHouseMenu, Menu dinnerMenu) {
-        this.out = out;
-        this.printer = new MenuItemPrinter(out);
-        this.pancakeHouseMenu = pancakeHouseMenu;
-        this.dinnerMenu = dinnerMenu;
+    public Waitress(MenuComponent allMenus) {
+        this.allMenus = allMenus;
     }
 
     /** Prints every item on the menu. */
     public void printMenu() {
-        out.println("MENU");
-        out.println("----");
-        out.println("BREAKFAST");
-        printMenuItems(pancakeHouseMenu.createIterator());
-        out.println();
-        out.println("LUNCH");
-        printMenuItems(dinnerMenu.createIterator());
-    }
-
-    private void printMenuItems(Iterator<MenuItem> iterator) {
-        while (iterator.hasNext()) {
-            printer.print(iterator.next());
-        }
+        allMenus.print();
     }
 
     /** Prints just breakfast items. */

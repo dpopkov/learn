@@ -1,6 +1,6 @@
 package learn.hfdp.ch09iterator;
 
-public class MenuItem {
+public class MenuItem implements MenuComponent {
     private String name;
     private String description;
     private boolean vegetarian;
@@ -15,6 +15,12 @@ public class MenuItem {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public void print() {
+        System.out.println("  " + getName() + (isVegetarian() ? " (v)" : "") + ", " + getPrice());
+        System.out.println("    -- " + getDescription());
     }
 
     public String getDescription() {

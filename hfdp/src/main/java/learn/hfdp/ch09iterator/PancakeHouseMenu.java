@@ -3,7 +3,7 @@ package learn.hfdp.ch09iterator;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class PancakeHouseMenu implements Menu {
+public class PancakeHouseMenu implements Iterable<MenuItem> {
     private ArrayList<MenuItem> menuItems;
 
     public PancakeHouseMenu() {
@@ -20,7 +20,7 @@ public class PancakeHouseMenu implements Menu {
     }
 
     @Override
-    public Iterator<MenuItem> createIterator() {
+    public Iterator<MenuItem> iterator() {
         return menuItems.iterator();
     }
 }

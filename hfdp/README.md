@@ -58,7 +58,14 @@ deferring some steps to subclasses. Template Method lets subclasses redefine
 certain steps of an algorithm without changing the algorithm's structure.
 
 
-#### Iterator       - Chapter 9. Well-Managed Collections
+#### Iterator, Composite       - Chapter 9. Well-Managed Collections
 
 The Iterator Pattern provides a way to access the elements of an aggregate object
 sequentially without exposing its underlying representation.
+
+The Composite Pattern allows you to compose object into tree structures to represent
+part-whole hierarchies. Composite lets clients treat individual objects and compositions
+of objects uniformly.  
+Using a composite structure, we can apply the same operations over both composites and 
+individual object. In other words, in most cases we can __ignore__ the differences
+between compositions of objects and individual objects.

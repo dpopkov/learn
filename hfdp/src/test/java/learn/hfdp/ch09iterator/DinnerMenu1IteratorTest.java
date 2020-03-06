@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class DinnerMenuIteratorTest {
+public class DinnerMenu1IteratorTest {
 
     @Test
     public void whenNextThenReturnsNextElement() {
