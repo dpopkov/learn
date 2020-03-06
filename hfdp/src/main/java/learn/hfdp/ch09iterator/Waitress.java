@@ -1,30 +1,41 @@
 package learn.hfdp.ch09iterator;
 
-public class Waitress {
-    private MenuComponent allMenus;
+import java.util.List;
 
-    public Waitress(MenuComponent allMenus) {
+public class Waitress {
+    private final MenuComponent allMenus;
+
+    public Waitress(Menu allMenus) {
         this.allMenus = allMenus;
     }
 
     /** Prints every item on the menu. */
     public void printMenu() {
-        allMenus.print();
+        CompositeIterator iterator = new CompositeIterator(List.of(allMenus).iterator());
+        while (iterator.hasNext()) {
+            iterator.next().print();
+        }
     }
 
     /** Prints just breakfast items. */
     public void printBreakfastMenu() {
-
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     /** Prints just lunch items. */
     public void printLunchMenu() {
-
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     /** Prints all vegetarian menu items. */
     public void printVegetarianMenu() {
-
+        CompositeIterator iterator = new CompositeIterator(List.of(allMenus).iterator());
+        while (iterator.hasNext()) {
+            MenuComponent menuComponent = iterator.next();
+            if (menuComponent.isVegetarian()) {
+                menuComponent.print();
+            }
+        }
     }
 
     /**
@@ -32,6 +43,6 @@ public class Waitress {
      * otherwise, returns false.
      */
     public boolean isItemVegetarian(String name) {
-        return false;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }

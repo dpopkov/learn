@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Menu implements MenuComponent, Iterable<MenuComponent> {
-    private List<MenuComponent> menuComponents = new ArrayList<>();
-    private String name;
-    private String description;
+    private final List<MenuComponent> menuComponents = new ArrayList<>();
+    private final String name;
+    private final String description;
 
     public Menu(String name, String description) {
         this.name = name;
@@ -36,9 +36,11 @@ public class Menu implements MenuComponent, Iterable<MenuComponent> {
         System.out.println();
         System.out.println(getName() + ", " + getDescription());
         System.out.println("---------------------------------");
-        for (MenuComponent mc : menuComponents) {
-            mc.print();
-        }
+    }
+
+    @Override
+    public boolean isVegetarian() {
+        return true;
     }
 
     @Override

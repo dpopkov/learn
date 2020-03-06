@@ -1,12 +1,22 @@
 package learn.hfdp.ch09iterator;
 
+import java.util.Scanner;
+
 @SuppressWarnings("SpellCheckingInspection")
 public class MenuTestDrive {
     public static void main(String[] args) {
         Menu allMenus = new Menu("ALL MENUS", "All menus combined");
         initMenus(allMenus);
         Waitress waitress = new Waitress(allMenus);
-        waitress.printMenu();
+        System.out.print("Choose menu type:\na - All menus\nv - Vegetarian menu\n> ");
+        String choice = new Scanner(System.in).nextLine();
+        if ("a".equalsIgnoreCase(choice)) {
+            waitress.printMenu();
+        } else if ("v".equalsIgnoreCase(choice)) {
+            waitress.printVegetarianMenu();
+        } else {
+            System.err.println("Invalid choice");
+        }
     }
 
     private static void initMenus(Menu allMenus) {
