@@ -3,23 +3,23 @@ package learn.hfdp.ch10state;
 public class GumballMachineTestDrive {
     public static void main(String[] args) {
         GumballMachine machine = new GumballMachine(5);
-        System.out.println(machine);
+        display(machine);
 
         machine.insertQuarter();
         machine.turnCrank();
-        System.out.println(machine);
+        display(machine);
 
         machine.insertQuarter();
         machine.ejectQuarter();
         machine.turnCrank();
-        System.out.println(machine);
+        display(machine);
 
         machine.insertQuarter();
         machine.turnCrank();
         machine.insertQuarter();
         machine.turnCrank();
         machine.ejectQuarter();
-        System.out.println(machine);
+        display(machine);
 
         machine.insertQuarter();
         machine.insertQuarter();
@@ -28,6 +28,11 @@ public class GumballMachineTestDrive {
         machine.turnCrank();
         machine.insertQuarter();
         machine.turnCrank();
+        display(machine);
+    }
+
+    private static void display(GumballMachine machine) {
         System.out.println(machine);
+        System.out.println();
     }
 }
