@@ -72,3 +72,5 @@ between compositions of objects and individual objects.
 
 #### State      - Chapter 10. The State of Things
 
+The State Pattern allows an object to alter its behavior when its internal state changes.
+The object will appear to change its class.

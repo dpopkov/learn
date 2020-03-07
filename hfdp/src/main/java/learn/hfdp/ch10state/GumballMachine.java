@@ -4,6 +4,7 @@ public class GumballMachine {
     private final State noQuarterState;
     private final State hasQuarterState;
     private final State soldState;
+    private final State winnerState;
     private final State soldOutState;
     private State state;
     private int count;
@@ -12,6 +13,7 @@ public class GumballMachine {
         noQuarterState = new NoQuarterState(this);
         hasQuarterState = new HasQuarterState(this);
         soldState = new SoldState(this);
+        winnerState = new WinnerState(this);
         soldOutState = new SoldOutState(this);
         this.count = count;
         if (count > 0) {
@@ -31,9 +33,14 @@ public class GumballMachine {
 
     public void turnCrank() {
         state.turnCrank();
-        if (state == soldState) {
+        if (state == soldState || state == winnerState) {
             state.dispense();
         }
+    }
+
+    public void refill(int count) {
+        this.count = count;
+        state = noQuarterState;
     }
 
     public void releaseBall() {
@@ -53,6 +60,10 @@ public class GumballMachine {
 
     public State getSoldState() {
         return soldState;
+    }
+
+    public State getWinnerState() {
+        return winnerState;
     }
 
     public State getSoldOutState() {
