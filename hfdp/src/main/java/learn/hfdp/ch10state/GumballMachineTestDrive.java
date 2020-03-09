@@ -2,7 +2,7 @@ package learn.hfdp.ch10state;
 
 public class GumballMachineTestDrive {
     public static void main(String[] args) {
-        GumballMachine machine = new GumballMachine(5);
+        GumballMachine machine = new GumballMachine("Test", 5);
         display(machine);
 
         machine.insertQuarter();

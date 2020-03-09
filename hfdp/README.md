@@ -74,3 +74,5 @@ between compositions of objects and individual objects.
 
 The State Pattern allows an object to alter its behavior when its internal state changes.
 The object will appear to change its class.
+
+#### Proxy      - Chapter 11. Controlling Object Access

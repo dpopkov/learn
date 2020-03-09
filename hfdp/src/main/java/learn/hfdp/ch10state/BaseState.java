@@ -1,7 +1,7 @@
 package learn.hfdp.ch10state;
 
 public abstract class BaseState implements State {
-    protected final GumballMachine machine;
+    protected transient final GumballMachine machine;
 
     public BaseState(GumballMachine machine) {
         this.machine = machine;

@@ -1,6 +1,8 @@
 package learn.hfdp.ch10state;
 
-public class GumballMachine {
+import learn.hfdp.ch11proxy.GumballMachineRemote;
+
+public class GumballMachine implements GumballMachineRemote {
     private final State noQuarterState;
     private final State hasQuarterState;
     private final State soldState;
@@ -8,8 +10,10 @@ public class GumballMachine {
     private final State soldOutState;
     private State state;
     private int count;
+    private final String location;
 
-    public GumballMachine(int count) {
+    public GumballMachine(String location, int count) {
+        this.location = location;
         noQuarterState = new NoQuarterState(this);
         hasQuarterState = new HasQuarterState(this);
         soldState = new SoldState(this);
@@ -74,8 +78,19 @@ public class GumballMachine {
         this.state = state;
     }
 
+    @Override
     public int getCount() {
         return count;
+    }
+
+    @Override
+    public String getLocation() {
+        return location;
+    }
+
+    @Override
+    public State getState() {
+        return state;
     }
 
     @Override
