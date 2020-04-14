@@ -1,18 +1,13 @@
 package learn.ijpds2nd.ch07arrays.exer;
 
+import learn.ijpds2nd.tools.ConsoleInput;
+
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class E0714LeastCommonMultiple {
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Enter number of values: ");
-        int n = in.nextInt();
-        int[] a = new int[n];
-        System.out.printf("Enter %d integer values: ", n);
-        for (int i = 0; i < a.length; i++) {
-            a[i] = in.nextInt();
-        }
+        ConsoleInput in = new ConsoleInput();
+        int[] a = in.inputSizeAndArray();
         int lcm = findLeastCommonMultiple(a);
         System.out.println("least common multiple = " + lcm);
     }

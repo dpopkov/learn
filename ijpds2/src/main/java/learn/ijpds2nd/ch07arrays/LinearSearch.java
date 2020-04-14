@@ -15,7 +15,7 @@ public class LinearSearch {
         System.out.println("Found at index " + idx);
     }
 
-    private static int linearSearch(int[] list, int key) {
+    public static int linearSearch(int[] list, int key) {
         for (int i = 0; i < list.length; i++) {
             if (list[i] == key) {
                 return i;

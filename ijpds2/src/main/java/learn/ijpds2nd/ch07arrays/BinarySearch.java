@@ -16,7 +16,7 @@ public class BinarySearch {
         System.out.println("Found at index " + idx);
     }
 
-    private static int binarySearch(int[] list, int key) {
+    public static int binarySearch(int[] list, int key) {
         int low = 0;
         int high = list.length - 1;
         while (low <= high) {
