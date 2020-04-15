@@ -14,8 +14,7 @@ public class ConsoleInput {
     }
 
     public int getInt(String prompt) {
-        prompt = ensureColon(prompt);
-        System.out.print(prompt);
+        printWithColon(prompt);
         return scanner.nextInt();
     }
 
@@ -32,8 +31,36 @@ public class ConsoleInput {
         return scanner.next();
     }
 
+    public String nextLine(String prompt) {
+        printWithColon(prompt);
+        return scanner.nextLine();
+    }
+
     public int nextInt() {
         return scanner.nextInt();
+    }
+
+    public int[] inputIntArray(String prompt) {
+        printWithColon(prompt);
+        StringBuilder buffer = new StringBuilder();
+        while (true) {
+            String line = scanner.nextLine();
+            if (line.isEmpty()) {
+                break;
+            }
+            buffer.append(line);
+        }
+        String[] tokens = buffer.toString().split(" ");
+        int[] a = new int[tokens.length];
+        for (int i = 0; i < a.length; i++) {
+            a[i] = Integer.parseInt(tokens[i]);
+        }
+        return a;
+    }
+
+    private void printWithColon(String prompt) {
+        prompt = ensureColon(prompt);
+        System.out.print(prompt);
     }
 
     private String ensureColon(String prompt) {
