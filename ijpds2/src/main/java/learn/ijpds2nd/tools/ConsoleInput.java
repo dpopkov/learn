@@ -42,15 +42,7 @@ public class ConsoleInput {
 
     public int[] inputIntArray(String prompt) {
         printWithColon(prompt);
-        StringBuilder buffer = new StringBuilder();
-        while (true) {
-            String line = scanner.nextLine();
-            if (line.isEmpty()) {
-                break;
-            }
-            buffer.append(line);
-        }
-        String[] tokens = buffer.toString().split(" ");
+        String[] tokens = scanner.nextLine().split(" ");
         int[] a = new int[tokens.length];
         for (int i = 0; i < a.length; i++) {
             a[i] = Integer.parseInt(tokens[i]);
