@@ -57,7 +57,11 @@ public class ConsoleInput {
 
     private String ensureColon(String prompt) {
         if (!prompt.endsWith(": ")) {
-            prompt = prompt + ": ";
+            if (prompt.endsWith(":")) {
+                prompt = prompt + " ";
+            } else {
+                prompt = prompt + ": ";
+            }
         }
         return prompt;
     }
