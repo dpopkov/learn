@@ -105,7 +105,7 @@ public class E0736EightQueens {
     private boolean placeQueenOnNextRow(char[][] a, int row) {
         int col = 0;
         while (col < size) {
-            if (colIsFree(a, col) && diagonalsAreFree(a, row, col)) {
+            if (countFreeCellsInColumn(a, col) != -1 && diagonalsAreFree(a, row, col)) {
                 a[row][col] = QUEEN;
                 return true;
             }
@@ -118,7 +118,9 @@ public class E0736EightQueens {
         if (board[row][col] == QUEEN) {
             return false;
         }
-        return rowIsFree(board, row) && colIsFree(board, row) && diagonalsAreFree(board, row, col);
+        return countFreeCellsInRow(board, row) != -1
+                && countFreeCellsInColumn(board, row) != -1
+                && diagonalsAreFree(board, row, col);
     }
 
     private boolean diagonalsAreFree(char[][] a, int row, int col) {
@@ -145,22 +147,26 @@ public class E0736EightQueens {
         return true;
     }
 
-    private boolean rowIsFree(char[][] a, int row) {
+    private int countFreeCellsInRow(char[][] a, int row) {
+        int count = 0;
         for (int i = 0; i < size; i++) {
             if (a[row][i] == QUEEN) {
-                return false;
+                return -1;
             }
+            count++;
         }
-        return true;
+        return count;
     }
 
-    private boolean colIsFree(char[][] a, int col) {
+    private int countFreeCellsInColumn(char[][] a, int col) {
+        int count = 0;
         for (int i = 0; i < size; i++) {
             if (a[i][col] == QUEEN) {
-                return false;
+                return -1;
             }
+            count++;
         }
-        return true;
+        return count;
     }
 
     // todo: put a Queen in position where it fires through least number of cells
