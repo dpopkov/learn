@@ -1,15 +1,20 @@
 package learn.ijpds2nd.ch07arrays.exer;
 
+/**
+ * Ex. 7.36 - not finished.
+ */
 public class E0736EightQueens {
-    private static final char EMPTY = ' ';
-    private static final char QUEEN = 'Q';
+    private static final String EMPTY = " ";
+    private static final String QUEEN = "Q";
 
-    private int size;
-    private char[][] board;
+    private final int size;
+    private final int[][] cells;
+    private final E0736Board board;
 
     public E0736EightQueens(int size) {
         this.size = size;
-        board = initBoard(size);
+        cells = new int[size][size];
+        board = new E0736Board(size);
     }
 
     @Override
@@ -17,16 +22,43 @@ public class E0736EightQueens {
         StringBuilder sb = new StringBuilder();
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
-                sb.append("|").append(board[r][c]);
+                sb.append("|").append(cells[r][c] == 0 ? EMPTY : QUEEN);
             }
             sb.append("|").append(System.lineSeparator());
         }
         return sb.toString();
     }
 
+    /*
+    Начать с кол=0
+    Разместить К на ближайшей возможной ячейке.
+    Попытаться разместить оставшиеся К на оставшихся столбцах.
+    Если получилось
+        процесс закончен
+    если не получилось
+        Перенести К на следующую возможную ячейку
+     */
+    void startRecursion() {
+        int id = 1;
+        int col = 0;
+        int row = 0;
+        placeAtNearestRow(col, row, id);
+        boolean ok = placeRecursively(col + 1, id + 1);
+
+    }
+
+    private boolean placeRecursively(int column, int id) {
+        return false;
+    }
+
+    private void placeAtNearestRow(int currentCol, int startingFromRow, int id) {
+        // todo: find place with least damage
+        int ct = board.countFreeCellsInAllDirections(startingFromRow, currentCol, id);
+    }
+
     public void start() {
         for (int col = 0; col < size; col++) {
-            boolean settled = tryToPutInColumn(col);
+            boolean settled = tryToPutInColumn(col, col + 1);
             if (!settled) {
                 boolean movedToSafe = false;
                 for (int altCol = 0; !movedToSafe && altCol < size; altCol++) {
@@ -50,7 +82,7 @@ public class E0736EightQueens {
                     }
                 }
                 if (movedToSafe) {
-                    settled = tryToPutInColumn(col);
+                    settled = tryToPutInColumn(col, col + 1);
                     if (!settled) {
                         System.out.println("Was able to move other Queen but could not put this queen.");
                     }
@@ -62,11 +94,11 @@ public class E0736EightQueens {
         System.out.println(this);
     }
 
-    private boolean tryToPutInColumn(int col) {
+    private boolean tryToPutInColumn(int col, int id) {
         for (int row = 0; row < size; row++) {
             // todo: m.b. I should count number of fired cells and choose minimal damage
             if (positionIsSafe(row, col)) {
-                board[row][col] = QUEEN;
+                cells[row][col] = id;
                 return true;
             }
         }
@@ -79,34 +111,25 @@ public class E0736EightQueens {
     }
 
     private void moveWithinColumn(int col, int fromRow, int toRow) {
-        board[fromRow][col] = EMPTY;
-        board[toRow][col] = QUEEN;
+        int tmp = cells[fromRow][col];
+        cells[fromRow][col] = cells[toRow][col];
+        cells[toRow][col] = tmp;
     }
 
     private int findRowWithQueenOnColumn(int col) {
         for (int row = 0; row < size; row++) {
-            if (board[row][col] == QUEEN) {
+            if (cells[row][col] != 0) {
                 return row;
             }
         }
         return -1;
     }
 
-    private static char[][] initBoard(int size) {
-        char[][] board = new char[size][size];
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                board[i][j] = EMPTY;
-            }
-        }
-        return board;
-    }
-
-    private boolean placeQueenOnNextRow(char[][] a, int row) {
+    private boolean placeQueenOnNextRow(int row, int id) {
         int col = 0;
         while (col < size) {
-            if (countFreeCellsInColumn(a, col) != -1 && diagonalsAreFree(a, row, col)) {
-                a[row][col] = QUEEN;
+            if (countFreeCellsInColumn(col) != -1 && diagonalsAreFree(row, col)) {
+                cells[row][col] = id;
                 return true;
             }
             col++;
@@ -115,42 +138,42 @@ public class E0736EightQueens {
     }
 
     private boolean positionIsSafe(int row, int col) {
-        if (board[row][col] == QUEEN) {
+        if (cells[row][col] != 0) {
             return false;
         }
-        return countFreeCellsInRow(board, row) != -1
-                && countFreeCellsInColumn(board, row) != -1
-                && diagonalsAreFree(board, row, col);
+        return countFreeCellsInRow(row) != -1
+                && countFreeCellsInColumn(row) != -1
+                && diagonalsAreFree(row, col);
     }
 
-    private boolean diagonalsAreFree(char[][] a, int row, int col) {
+    private boolean diagonalsAreFree(int row, int col) {
         for (int r = row - 1, c = col - 1; r >= 0 && c >= 0; r--, c--) {
-            if (a[r][c] == QUEEN) {
+            if (cells[r][c] != 0) {
                 return false;
             }
         }
-        for (int r = row + 1, c = col + 1; r < a.length && c < a.length; r++, c++) {
-            if (a[r][c] == QUEEN) {
+        for (int r = row + 1, c = col + 1; r < size && c < size; r++, c++) {
+            if (cells[r][c] != 0) {
                 return false;
             }
         }
-        for (int r = row - 1, c = col + 1; r >= 0 && c < a.length; r--, c++) {
-            if (a[r][c] == QUEEN) {
+        for (int r = row - 1, c = col + 1; r >= 0 && c < size; r--, c++) {
+            if (cells[r][c] != 0) {
                 return false;
             }
         }
-        for (int r = row + 1, c = col - 1; r < a.length && c >= 0; r++, c--) {
-            if (a[r][c] == QUEEN) {
+        for (int r = row + 1, c = col - 1; r < size && c >= 0; r++, c--) {
+            if (cells[r][c] != 0) {
                 return false;
             }
         }
         return true;
     }
 
-    private int countFreeCellsInRow(char[][] a, int row) {
+    private int countFreeCellsInRow(int row) {
         int count = 0;
         for (int i = 0; i < size; i++) {
-            if (a[row][i] == QUEEN) {
+            if (cells[row][i] != 0) {
                 return -1;
             }
             count++;
@@ -158,10 +181,10 @@ public class E0736EightQueens {
         return count;
     }
 
-    private int countFreeCellsInColumn(char[][] a, int col) {
+    private int countFreeCellsInColumn(int col) {
         int count = 0;
         for (int i = 0; i < size; i++) {
-            if (a[i][col] == QUEEN) {
+            if (cells[i][col] != 0) {
                 return -1;
             }
             count++;
