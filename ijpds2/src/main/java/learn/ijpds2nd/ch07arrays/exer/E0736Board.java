@@ -3,8 +3,8 @@ package learn.ijpds2nd.ch07arrays.exer;
 public class E0736Board {
     public static final int NOT_FOUND = -1;
 
-    private int[][] cells;
-    private int size;
+    private final int[][] cells;
+    private final int size;
 
     public E0736Board(int size) {
         this.size = size;
@@ -15,7 +15,25 @@ public class E0736Board {
         cells[row][col] = id;
     }
 
-    int countFreeCellsInOrthogonalDirections(int row, int col, int exceptId) {
+    public int countFreeCellsInAllDirections(int row, int col, int exceptId) {
+        int count = 0;
+        int r = countFreeCellsInOrthogonalDirections(row, col, exceptId);
+        if (r == NOT_FOUND) {
+            return NOT_FOUND;
+        }
+        count += r;
+        r = countFreeCellsInDiagonalDirections(row, col, exceptId);
+        if (r == NOT_FOUND) {
+            return NOT_FOUND;
+        }
+        count += r;
+        if (cells[row][col] == 0) {
+            count--;
+        }
+        return count;
+    }
+
+    private int countFreeCellsInOrthogonalDirections(int row, int col, int exceptId) {
         int count = 0;
         for (int c = 0, r = 0; c < size && r < size; c++, r++) {
             int cellInCol = cells[r][col];
@@ -37,7 +55,7 @@ public class E0736Board {
         return count;
     }
 
-    int countFreeCellsInDiagonalDirections(int row, int col, int exceptId) {
+    private int countFreeCellsInDiagonalDirections(int row, int col, int exceptId) {
         int count = 0;
         int c0 = row >= col ? 0 : col - row;
         int r0 = col >= row ? 0 : row - col;
@@ -66,21 +84,6 @@ public class E0736Board {
         if (cells[row][col] == 0) {
             count--;
         }
-        return count;
-    }
-
-    public int countFreeCellsInAllDirections(int row, int col, int exceptId) {
-        int count = 0;
-        int r = countFreeCellsInOrthogonalDirections(row, col, exceptId);
-        if (r == NOT_FOUND) {
-            return NOT_FOUND;
-        }
-        count += r;
-        r = countFreeCellsInDiagonalDirections(row, col, exceptId);
-        if (r == NOT_FOUND) {
-            return NOT_FOUND;
-        }
-        count += r;
         return count;
     }
 }

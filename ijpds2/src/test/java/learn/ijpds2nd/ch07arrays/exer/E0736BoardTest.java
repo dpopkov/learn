@@ -9,33 +9,10 @@ public class E0736BoardTest {
     public static final int ID = -42;
 
     @Test
-    public void countFreeCellsInOrthogonalDirections() {
+    public void whenEmptyBoardSize3ThenCountFromCenterReturns9() {
         E0736Board board = new E0736Board(3);
-        board.place(ID, 1, 1);
-        int r = board.countFreeCellsInOrthogonalDirections(1, 1, ID);
-        assertEquals(4, r);
-    }
-
-    @Test
-    public void countFreeCellsInOrthogonalDirectionsInEmptyBoard() {
-        E0736Board board = new E0736Board(3);
-        int r = board.countFreeCellsInOrthogonalDirections(1, 1, ID);
-        assertEquals(5, r);
-    }
-
-    @Test
-    public void countFreeCellsInDiagonalDirections() {
-        E0736Board board = new E0736Board(3);
-        board.place(ID, 1, 1);
-        int r = board.countFreeCellsInDiagonalDirections(1, 1, ID);
-        assertEquals(4, r);
-    }
-
-    @Test
-    public void countFreeCellsInDiagonalDirectionsInEmptyBoard() {
-        E0736Board board = new E0736Board(3);
-        int r = board.countFreeCellsInDiagonalDirections(1, 1, ID);
-        assertEquals(5, r);
+        int r = board.countFreeCellsInAllDirections(1, 1, ID);
+        assertEquals(9, r);
     }
 
     @Test
