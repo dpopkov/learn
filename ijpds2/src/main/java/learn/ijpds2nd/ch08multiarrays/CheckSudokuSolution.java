@@ -2,6 +2,7 @@ package learn.ijpds2nd.ch08multiarrays;
 
 import java.util.Scanner;
 
+/* Listing 8.4, modified to OOP */
 public class CheckSudokuSolution {
 
     private static class SudokuSolution {
