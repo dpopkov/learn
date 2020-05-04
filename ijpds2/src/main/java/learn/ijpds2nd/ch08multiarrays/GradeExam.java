@@ -34,6 +34,7 @@ public class GradeExam {
         }
     }
 
+    @SuppressWarnings("unused")
     private static void reformatInput() throws IOException {
         String filename = "in-grades.txt";
         Path path = Paths.get("");

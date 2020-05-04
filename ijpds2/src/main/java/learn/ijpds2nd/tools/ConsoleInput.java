@@ -1,12 +1,17 @@
 package learn.ijpds2nd.tools;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
  * Contains methods for input using standard system console and {@link Scanner}.
  */
 public class ConsoleInput {
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
+    {
+        scanner = new Scanner(System.in);
+        scanner.useLocale(Locale.US);
+    }
 
     public int[] inputSizeAndArray() {
         int n = getInt("Enter number of values: ");
@@ -48,6 +53,18 @@ public class ConsoleInput {
             a[i] = Integer.parseInt(tokens[i]);
         }
         return a;
+    }
+
+    public double[][] input2DMatrix(int height, int width) {
+        String prompt = String.format("Enter a %d-by-%d matrix row by row: ", height, width);
+        printWithColon(prompt);
+        double[][] m = new double[height][width];
+        for (int r = 0; r < height; r++) {
+            for (int c = 0; c < width; c++) {
+                m[r][c] = scanner.nextDouble();
+            }
+        }
+        return m;
     }
 
     private void printWithColon(String prompt) {
