@@ -54,4 +54,24 @@ public class ArrayUtils {
             System.out.println(Arrays.toString(a));
         }
     }
+
+    public static int[] parseToIntArray(String numbers) {
+        String[] tokens = numbers.trim().split("\\s+");
+        int[] result = new int[tokens.length];
+        for (int i = 0; i < tokens.length; i++) {
+            result[i] = Integer.parseInt(tokens[i]);
+        }
+        return result;
+    }
+
+    public static boolean equals(double[][] a, double[][] b, double delta) {
+        for (int r = 0; r < a.length; r++) {
+            for (int c = 0; c < a[r].length; c++) {
+                if (Math.abs(a[r][c] - b[r][c]) > delta) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
