@@ -1,12 +1,12 @@
 package learn.ijpds2nd.tools;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ArrayUtils {
     private static Random random;
 
+    @SuppressWarnings("unused")
     public static void shuffle(int[] array) {
         if (random == null) {
             random = ThreadLocalRandom.current();
@@ -35,26 +35,6 @@ public class ArrayUtils {
         }
     }
 
-    public static int[] shuffleCopy(int[] array) {
-        int[] result = Arrays.copyOf(array, array.length);
-        shuffle(result);
-        return result;
-    }
-
-    public static Object[] shuffleCopy(Object[] array) {
-        Object[] result = Arrays.copyOf(array, array.length);
-        shuffle(result);
-        return result;
-    }
-
-    public static void main(String[] args) {
-        for (int i = 0; i < 20; i++) {
-            int[] a = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-            shuffle(a);
-            System.out.println(Arrays.toString(a));
-        }
-    }
-
     public static int[] parseToIntArray(String numbers) {
         String[] tokens = numbers.trim().split("\\s+");
         int[] result = new int[tokens.length];
@@ -73,5 +53,16 @@ public class ArrayUtils {
             }
         }
         return true;
+    }
+
+    public static String toString(int[][] a) {
+        StringBuilder sb = new StringBuilder();
+        for (int[] row : a) {
+            for (int value : row) {
+                sb.append(value).append(' ');
+            }
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
     }
 }
