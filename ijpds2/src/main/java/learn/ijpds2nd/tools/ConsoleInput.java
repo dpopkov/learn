@@ -55,6 +55,19 @@ public class ConsoleInput {
         return a;
     }
 
+    public int[][] inputRectangularIntArray() {
+        printWithColon("Enter number of rows and columns: ");
+        int numRows = scanner.nextInt();
+        int numCols = scanner.nextInt();
+        int[][] a = new int[numRows][numCols];
+        for (int r = 0; r < numRows; r++) {
+            for (int c = 0; c < numCols; c++) {
+                a[r][c] = scanner.nextInt();
+            }
+        }
+        return a;
+    }
+
     public double[][] input2DMatrix(int height, int width) {
         String prompt = String.format("Enter a %d-by-%d matrix row by row: ", height, width);
         printWithColon(prompt);
