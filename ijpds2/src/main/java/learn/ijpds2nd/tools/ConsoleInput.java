@@ -32,6 +32,15 @@ public class ConsoleInput {
         return a;
     }
 
+    public double[] getDoubleArray(int size, String prompt) {
+        double[] a = new double[size];
+        printWithColon(prompt);
+        for (int i = 0; i < a.length; i++) {
+            a[i] = scanner.nextDouble();
+        }
+        return a;
+    }
+
     public String next() {
         return scanner.next();
     }
