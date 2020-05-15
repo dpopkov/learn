@@ -59,7 +59,24 @@ public class E0824CheckSudoku {
         public boolean valid(int[][] grid) {
             int size = grid.length;
             BitSet flags = new BitSet(size);
-            // todo: implement
+            for (int row = 0; row < size; row += 3) {
+                for (int col = 0; col < size; col += 3) {
+                    flags.clear();
+                    for (int r = 0; r < 3; r++) {
+                        for (int c = 0; c < 3; c++) {
+                            int v = grid[r][c];
+                            if (v > 0 && v <= size) {
+                                flags.set(v - 1);
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
+                    if (flags.cardinality() != size) {
+                        return false;
+                    }
+                }
+            }
             return true;
         }
     }
@@ -92,14 +109,18 @@ public class E0824CheckSudoku {
         }
 
         public boolean isValid() {
-            // check rows
-            // check columns
-            // check blocks
-            return false;
+            Validator rowValidator = new RowValidator();
+            Validator columnsValidator = new ColumnValidator();
+            Validator blocksValidator = new BlockValidator();
+            return rowValidator.valid(grid) && columnsValidator.valid(grid) && blocksValidator.valid(grid);
         }
+    }
 
-
-
-
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.print("Enter sudoku matrix: ");
+        SudokuSolution solution = new SudokuSolution(in);
+        boolean valid = solution.isValid();
+        System.out.println("solution is " + (valid ? "valid" : "not valid"));
     }
 }
