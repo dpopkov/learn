@@ -44,6 +44,27 @@ public class ArrayUtils {
         return result;
     }
 
+    public static char[][] parseToCharCharArray(String letters) {
+        String[] tokens = letters.trim().split("\\s+");
+        int size = tokens.length;
+        char[][] result = new char[size][size];
+        for (int i = 0; i < result.length; i++) {
+            for (int j = 0; j < size; j++) {
+                result[i][j] = tokens[i].charAt(j);
+            }
+        }
+        return result;
+    }
+
+    public static boolean allTrue(boolean[] a) {
+        for (boolean b : a) {
+            if (!b) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static boolean equals(double[][] a, double[][] b, double delta) {
         for (int r = 0; r < a.length; r++) {
             for (int c = 0; c < a[r].length; c++) {
