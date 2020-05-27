@@ -13,17 +13,22 @@ public class ConsoleInput {
         scanner.useLocale(Locale.US);
     }
 
-    public int[] inputSizeAndArray() {
-        int n = getInt("Enter number of values: ");
-        return getIntArray(n);
+    public int[] requestSizedArray() {
+        int n = requestInt("Enter number of values: ");
+        return inputIntArray(n);
     }
 
-    public int getInt(String prompt) {
+    public int requestInt(String prompt) {
         printWithColon(prompt);
         return scanner.nextInt();
     }
 
-    public int[] getIntArray(int size) {
+    public double requestDouble(String prompt) {
+        printWithColon(prompt);
+        return scanner.nextDouble();
+    }
+
+    public int[] inputIntArray(int size) {
         int[] a = new int[size];
         System.out.printf("Enter %d integer values: ", size);
         for (int i = 0; i < a.length; i++) {
@@ -32,7 +37,7 @@ public class ConsoleInput {
         return a;
     }
 
-    public double[] getDoubleArray(int size, String prompt) {
+    public double[] requestDoubleArray(int size, String prompt) {
         double[] a = new double[size];
         printWithColon(prompt);
         for (int i = 0; i < a.length; i++) {
@@ -45,7 +50,7 @@ public class ConsoleInput {
         return scanner.next();
     }
 
-    public String nextLine(String prompt) {
+    public String requestLine(String prompt) {
         printWithColon(prompt);
         return scanner.nextLine();
     }
@@ -54,7 +59,7 @@ public class ConsoleInput {
         return scanner.nextInt();
     }
 
-    public int[] inputIntArray(String prompt) {
+    public int[] requestIntArray(String prompt) {
         printWithColon(prompt);
         String[] tokens = scanner.nextLine().split(" ");
         int[] a = new int[tokens.length];

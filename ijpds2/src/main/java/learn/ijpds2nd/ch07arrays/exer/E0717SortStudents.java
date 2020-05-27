@@ -31,7 +31,7 @@ public class E0717SortStudents {
 
     public static void main(String[] args) {
         ConsoleInput in = new ConsoleInput();
-        int n = in.getInt("Enter number of students");
+        int n = in.requestInt("Enter number of students");
         Student[] students = new Student[n];
         for (int i = 0; i < n; i++) {
             System.out.printf("Enter name and score of student #%d: ", i);

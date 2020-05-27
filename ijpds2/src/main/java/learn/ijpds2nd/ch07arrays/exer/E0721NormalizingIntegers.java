@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class E0721NormalizingIntegers {
     public static void main(String[] args) {
         ConsoleInput in = new ConsoleInput();
-        int[] a = in.getIntArray(10);
+        int[] a = in.inputIntArray(10);
         double[] n = normalize(a);
         System.out.println("Normalized array:");
         System.out.println(Arrays.toString(n));

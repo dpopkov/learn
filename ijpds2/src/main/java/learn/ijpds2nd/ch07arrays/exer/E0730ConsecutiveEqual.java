@@ -9,7 +9,7 @@ with the same value.
 public class E0730ConsecutiveEqual {
     public static void main(String[] args) {
         ConsoleInput in = new ConsoleInput();
-        int[] a = in.inputIntArray("Enter integer values: ");
+        int[] a = in.requestIntArray("Enter integer values: ");
         boolean b = isConsecutiveFour(a);
         System.out.printf("The array %s consecutive four values.%n", b ? "has" : "has not");
     }

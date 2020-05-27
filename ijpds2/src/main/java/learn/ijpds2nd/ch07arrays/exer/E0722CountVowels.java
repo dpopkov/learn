@@ -5,7 +5,7 @@ import learn.ijpds2nd.tools.ConsoleInput;
 public class E0722CountVowels {
     public static void main(String[] args) {
         ConsoleInput in = new ConsoleInput();
-        String s = in.nextLine("Enter a string: ");
+        String s = in.requestLine("Enter a string: ");
         int count = countVowels(s);
         System.out.println("Number of vowels = " + count);
     }

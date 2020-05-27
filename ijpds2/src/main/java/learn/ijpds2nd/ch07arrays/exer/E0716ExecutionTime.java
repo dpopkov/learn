@@ -12,7 +12,7 @@ public class E0716ExecutionTime {
 
     public static void main(String[] args) {
         ConsoleInput in = new ConsoleInput();
-        int size = in.getInt("Enter size of array: ");
+        int size = in.requestInt("Enter size of array: ");
         int[] values = createArray(size);
         int[] keys = initQuarters(size);
         System.out.println("\nLinear Search");

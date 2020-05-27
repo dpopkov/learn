@@ -7,8 +7,8 @@ import java.util.Arrays;
 public class E0731MergeSortedArrays {
     public static void main(String[] args) {
         ConsoleInput in = new ConsoleInput();
-        int[] a = in.inputIntArray("Enter 1st list:");
-        int[] b = in.inputIntArray("Enter 2nd list:");
+        int[] a = in.requestIntArray("Enter 1st list:");
+        int[] b = in.requestIntArray("Enter 2nd list:");
         int[] r = merge(a, b);
         System.out.println("The merged list is");
         System.out.println(Arrays.toString(r));

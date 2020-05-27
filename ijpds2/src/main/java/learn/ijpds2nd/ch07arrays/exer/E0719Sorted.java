@@ -9,7 +9,7 @@ public class E0719Sorted {
 
     public static void main(String[] args) {
         ConsoleInput in = new ConsoleInput();
-        int[] a = in.inputIntArray("Enter list: ");
+        int[] a = in.requestIntArray("Enter list: ");
         boolean sorted = new E0719Sorted().isSorted(a, (p, c) -> p < c);
         System.out.printf("The list is %s sorted%n", sorted ? "already" : "not");
     }

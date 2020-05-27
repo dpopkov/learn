@@ -40,7 +40,7 @@ public class E0732Partitioning {
 
     public static void main(String[] args) {
         ConsoleInput in = new ConsoleInput();
-        int[] a = in.inputIntArray("Enter list: ");
+        int[] a = in.requestIntArray("Enter list: ");
         int idx = partition(a);
         System.out.println("Pivot at index = " + idx);
         System.out.println(Arrays.toString(a));

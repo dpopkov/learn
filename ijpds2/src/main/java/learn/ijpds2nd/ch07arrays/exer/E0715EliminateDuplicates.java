@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class E0715EliminateDuplicates {
     public static void main(String[] args) {
         ConsoleInput in = new ConsoleInput();
-        int[] a = in.inputSizeAndArray();
+        int[] a = in.requestSizedArray();
         System.out.println("Before:");
         System.out.println(Arrays.toString(a));
         int[] b = removeDupes(a);

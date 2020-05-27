@@ -9,7 +9,7 @@ and then displays all possible ways of arranging the four integers.
 public class E0728Permutations {
     public static void main(String[] args) {
         ConsoleInput in = new ConsoleInput();
-        int[] a = in.inputIntArray("Enter 4 integers: ");
+        int[] a = in.requestIntArray("Enter 4 integers: ");
         printPermutations(a);
     }
 

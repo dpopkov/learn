@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class E0714LeastCommonMultiple {
     public static void main(String[] args) {
         ConsoleInput in = new ConsoleInput();
-        int[] a = in.inputSizeAndArray();
+        int[] a = in.requestSizedArray();
         int lcm = findLeastCommonMultiple(a);
         System.out.println("least common multiple = " + lcm);
     }

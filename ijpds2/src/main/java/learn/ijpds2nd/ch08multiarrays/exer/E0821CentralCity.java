@@ -9,8 +9,8 @@ import learn.ijpds2nd.tools.ConsoleInput;
 public class E0821CentralCity {
     public static void main(String[] args) {
         ConsoleInput in = new ConsoleInput();
-        int n = in.getInt("Enter the number of cities: ");
-        double[] coordinates = in.getDoubleArray(n, "Enter the coordinates of the cities: ");
+        int n = in.requestInt("Enter the number of cities: ");
+        double[] coordinates = in.requestDoubleArray(n, "Enter the coordinates of the cities: ");
         double[] xy = findCentralCity(coordinates);
         System.out.printf("Coordinates of city in the center: %.2f, %.2f%n", xy[0], xy[1]);
     }

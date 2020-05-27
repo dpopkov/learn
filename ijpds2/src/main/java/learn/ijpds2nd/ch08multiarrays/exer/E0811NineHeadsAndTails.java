@@ -5,7 +5,7 @@ import learn.ijpds2nd.tools.ConsoleInput;
 public class E0811NineHeadsAndTails {
     public static void main(String[] args) {
         ConsoleInput in = new ConsoleInput();
-        int number = in.getInt("Enter a number between 0 and 511: ");
+        int number = in.requestInt("Enter a number between 0 and 511: ");
         String result = representAsHeadsAndTails(number);
         System.out.println(result);
     }
