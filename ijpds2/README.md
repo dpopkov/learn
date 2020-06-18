@@ -38,3 +38,22 @@ Ch.14 - JavaFX Basics
 
 * L14.8 - [FontDemo](src/main/java/learn/ijpds2nd/ch14fx/FontDemo.java) -
     displays a label using the font specified in command line.
+
+### 14.9 The Image and ImageView classes
+
+* L14.9 - [ShowImage](src/main/java/learn/ijpds2nd/ch14fx/ShowImage.java) -
+    displays an image in three image-views.
+
+### 14.10 Layout Panes and Groups
+
+* L14.10 - [ShowFlowPane](src/main/java/learn/ijpds2nd/ch14fx/ShowFlowPane.java) -
+    adds labels and text-fields to a FlowPane.
+
+* L14.11 - [ShowGridPane](src/main/java/learn/ijpds2nd/ch14fx/ShowGridPane.java) -
+    places the nodes in a gid with a specified column and row indices.
+
+* L14.12 - [ShowBorderPane](src/main/java/learn/ijpds2nd/ch14fx/ShowBorderPane.java) -
+    places five labels in the five regions of the pane.
+
+* L14.13 - [ShowHBoxVBox](src/main/java/learn/ijpds2nd/ch14fx/ShowHBoxVBox.java) -
+    places two buttons, and an image view in an HBox and five labels in a VBox.
