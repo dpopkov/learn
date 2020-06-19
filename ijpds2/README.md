@@ -57,3 +57,11 @@ Ch.14 - JavaFX Basics
 
 * L14.13 - [ShowHBoxVBox](src/main/java/learn/ijpds2nd/ch14fx/ShowHBoxVBox.java) -
     places two buttons, and an image view in an HBox and five labels in a VBox.
+
+### 14.11 Shapes
+
+* L14.14 - [ShowText](src/main/java/learn/ijpds2nd/ch14fx/ShowText.java) -
+    a Text object is created to display a text.
+
+* L14.15 - [ShowLine](src/main/java/learn/ijpds2nd/ch14fx/ShowLine.java) -
+    demonstrates the line shape.
