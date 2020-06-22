@@ -65,3 +65,9 @@ Ch.14 - JavaFX Basics
 
 * L14.15 - [ShowLine](src/main/java/learn/ijpds2nd/ch14fx/ShowLine.java) -
     demonstrates the line shape.
+
+* L14.16 - [ShowRectangle](src/main/java/learn/ijpds2nd/ch14fx/ShowRectangle.java) -
+    the program creates multiple rectangles.
+
+* L14.17 - [ShowEllipse](src/main/java/learn/ijpds2nd/ch14fx/ShowEllipse.java) -
+    demonstrates ellipses.
