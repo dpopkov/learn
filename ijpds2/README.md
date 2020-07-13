@@ -71,3 +71,6 @@ Ch.14 - JavaFX Basics
 
 * L14.17 - [ShowEllipse](src/main/java/learn/ijpds2nd/ch14fx/ShowEllipse.java) -
     demonstrates ellipses.
+
+* L14.18 - [ShowArc](src/main/java/learn/ijpds2nd/ch14fx/ShowArc.java) -
+    demonstrates arcs.
